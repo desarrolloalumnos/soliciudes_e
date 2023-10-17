@@ -1,2 +1,3 @@
-# soliciudes_e
-proyecto de solicitudes electronicas
+# BASE PARA PROYECTOS MVC
+Base para programacion MVC con php 
+Curso de ingenieria de software
