@@ -7,7 +7,7 @@ use Model\Protocolo;
 use Model\Dependencia;
 use MVC\Router;
 
-class ProtocoloSolController {
+class ProtocoloController {
     public static function index(Router $router){
         $dependencias = static::dependencias();
         $router->render('protocolos/index', [
