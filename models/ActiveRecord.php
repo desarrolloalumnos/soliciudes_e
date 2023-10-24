@@ -160,6 +160,9 @@ class ActiveRecord {
             $data[] = array_change_key_case( array_map( 'utf8_encode', $value) ); 
         }
         $resultado->closeCursor();
+        if (empty($respuesta)) {
+            return [];
+        }
         return $data;
     }
 

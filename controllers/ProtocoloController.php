@@ -86,16 +86,16 @@ class ProtocoloController {
             $sql .= " AND cmv_dependencia = $cmv_dependencia ";
         }
         
-        if ($cmv_tip != 'undefined') {           
-            $sql .= " AND cmv_tip LIKE '%$cmv_tip%' ";
+        if (!empty($cmv_tip)) {           
+            $sql .= " AND cmv_tip = '$cmv_tip' ";
         }
 
- 
-
-   
+       
+        
         try {
-            $protocolos = Protocolo::fetchArray($sql);
-            echo json_encode($protocolos);
+            $resultado = Protocolo::fetchArray($sql);
+            echo json_encode($resultado);
+            
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),

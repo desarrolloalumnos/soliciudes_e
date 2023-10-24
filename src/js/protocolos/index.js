@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { Dropdown } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
@@ -117,7 +118,8 @@ const guardar = async (evento) => {
 let cmv_dependencia;
 
 dependencias.addEventListener('change', () => {
-    cmv_dependencia = dependencias.value; 
+    buscar()
+
     
     
 });
@@ -125,15 +127,16 @@ dependencias.addEventListener('change', () => {
 let cmv_tip;
 
 tipos.addEventListener('change', () => {
-    cmv_tip = tipos.value; 
+    buscar()
   
    
 });
 const buscar = async () => {
 
-  
+    let dep_valor = dependencias.value 
+    let tipo = tipos.value 
     
-    const url = `/soliciudes_e/API/protocolos/buscar?cmv_dependencia=${cmv_dependencia}&cmv_tip=${cmv_tip}`;
+    const url = `/soliciudes_e/API/protocolos/buscar?cmv_dependencia=${dep_valor}&cmv_tip=${tipo}`;
     
 
     const config = {
@@ -143,7 +146,8 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-      
+        console.log (data)
+              
       
      
         datatable.clear().draw()
@@ -155,6 +159,7 @@ const buscar = async () => {
             Toast.fire({
                 title : 'No se encontraron registros',
                 icon : 'info'
+                
             })
         }
         
