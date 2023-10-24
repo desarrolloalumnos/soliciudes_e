@@ -5,9 +5,9 @@ namespace Model;
 class Dependencia extends ActiveRecord{
     public static $tabla = 'mdep';
     public static $columnasDB = ['dep_desc_lg','dep_desc_md','dep_desc_ct','dep_clase','dep_precio','dep_ejto'];
-    public static $idTabla = 'cmv_id';
+    public static $idTabla = 'dep_llave';
 
-    public $cmv_id ;
+    public $dep_llave ;
     public $dep_desc_lg;
     public $dep_desc_md;
     public $dep_desc_ct;
@@ -19,7 +19,7 @@ class Dependencia extends ActiveRecord{
 
     public function __construct($args =[])
     {
-        $this->cmv_id  = $args['cmv_id '] ?? null;
+        $this->dep_llave  = $args['dep_llave '] ?? null;
         $this->dep_desc_lg = $args['dep_desc_lg'] ?? '';
         $this->dep_desc_md = $args['dep_desc_md'] ?? '';
         $this->dep_desc_ct = $args['dep_desc_ct'] ?? '';

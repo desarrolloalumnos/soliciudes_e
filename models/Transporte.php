@@ -4,7 +4,7 @@ namespace Model;
 
 class Transporte extends ActiveRecord {
     protected static $tabla = 'se_transporte';
-    protected static $columnasDB = ['transporte_id', 'transporte_descripcion', 'transporte_situacion'];
+    protected static $columnasDB = ['transporte_descripcion', 'transporte_situacion'];
     protected static $idTabla = 'transporte_id';
     
     public $transporte_id;
