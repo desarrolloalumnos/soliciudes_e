@@ -4,7 +4,7 @@ namespace Model;
 
 class Salidapais extends ActiveRecord {
     protected static $tabla = 'se_salpais';
-    protected static $columnasDB = ['sal_id', 'sal_autorizacion', 'sal_salida', 'sal_ingreso', 'sal_situacion'];
+    protected static $columnasDB = ['sal_autorizacion', 'sal_salida', 'sal_ingreso', 'sal_situacion'];
     protected static $idTabla = 'sal_id';
     
     public $sal_id;
