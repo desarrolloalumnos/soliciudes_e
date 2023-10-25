@@ -32,6 +32,7 @@ $router->post('/API/motivos/eliminar', [MotivoController::class,'eliminarApi']);
 
 $router->get('/casamientos', [CasamientoController::class,'index']);
 $router->get('/API/casamientos/buscarCatalogo', [CasamientoController::class,'buscarCatalogoApi']);
+$router->get('/API/casamientos/buscarCatalogo2', [CasamientoController::class,'buscarCatalogo2Api']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();
