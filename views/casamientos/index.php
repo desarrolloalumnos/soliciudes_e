@@ -5,12 +5,13 @@
 
             <div class="carousel-indicators">
                 <button type="button" class="bg-dark active" data-bs-target="#carouselMatrimonio" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" class="bg-dark" data-bs-target="#carouselMatrimonio" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" class="bg-dark" id="botonSlide2" data-bs-target="#carouselMatrimonio" data-bs-slide-to="1" aria-label="Slide 2"></button>
 
             </div>
             <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" style="min-height: 50vh;">
                 <div class="text-center">
                     <h1>Matrimonio</h1>
+                    <input value="" id="mat_id" name="mat_id" class="form-control" type="hidden">
                 </div>
                 <div class="carousel-item active">
                     <div class="row justify-content-around mb-4">
@@ -25,7 +26,8 @@
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
-                                    <input value="" id="ste_id" name="ste_id" class="form-control" type="hidden">
+                                    <input value="text" id="mat_autorizacion" name="mat_autorizacion" class="form-control" type="hidden">
+                                    <input value="text" id="aut_id" name="aut_id" class="form-control" type="hidden">
                                     <label for="ste_cat">Catalogo</label>
                                     <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="numero de catalogo">
                                     <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
@@ -50,20 +52,14 @@
                                 </div>
 
                             </div>
-
-                            <input value=" " type="hidden" class="form-control" name="sol_id" id="sol_id">
-                            <input value="1" type="hidden" class="form-control" name="sol_tipo" id="sol_tipo">
+                            <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
+                            <input value="1" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
                             <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
+                            <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
-                                    <select name="sol_motivo" id="sol_motivo" class="form-select" style="display: none">
-                                        <option value="1" selected>Matrimonio</option>
-                                        <?php foreach ($motivos as $motivo) { ?>
-                                            <option value="<?= $motivo['mot_id'] ?>"><?= $motivo['mot_descripcion'] ?></option>
-
-                                        <?php } ?>
-                                    </select>
+                                    <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control" placeholde="Matrimonio" >
                                 </div>
 
                                 <div class="col-lg-6">
@@ -79,7 +75,6 @@
                             </div>
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-4">
-                                    <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                                     <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
                                     <label for="aut_cat">Catalogo</label>
                                     <input value="" id="aut_cat" name="aut_cat" class="form-control" type="text">
@@ -89,8 +84,8 @@
                                     <input value="" id="aut_comando" name="aut_comando" class="form-control" type="hidden">
                                 </div>
                                 <div class="col-lg-4">
-                                <label for="nombre2">Nombres y Apellidos</label>
-                                <input value="" id="nombre2" name="nombre2" class="form-control" type="text">
+                                    <label for="nombre2">Nombres y Apellidos</label>
+                                    <input value="" id="nombre2" name="nombre2" class="form-control" type="text">
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="aut_fecha">Fecha</label>
@@ -188,25 +183,27 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCLabel">Contenido del Modal</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h1 class="modal-title" id="modalMLabel">Datos de la Pareja</h1>
+                <span aria-hidden="true">&times;</span>
             </div>
             <div class="modal-body">
                 <form class="modal-body container" id="formCasamiento" novalidate>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label for="latitud">Latitud</label>
-                            <input type="number" name="latitud" id="latitud" class="form-control">
+                            <label for="parejac_nombres">Nombres</label>
+                            <input type="number" name="parejac_nombres" id="parejac_nombres" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="longitud">Longitud</label>
-                            <input type="number" name="longitud" id="longitud" class="form-control">
+                            <label for="parejac_apellidos">Apellidos</label>
+                            <input type="number" name="parejac_apellidos" id="parejac_apellidos" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="lugar">Lugar</label>
-                            <input type="text" name="lugar" id="lugar" class="form-control">
+                            <label for="parejac_direccion">Direccion</label>
+                            <input type="text" name="parejac_direccion" id="parejac_direccion" class="form-control">
+                        </div>
+                        <div class="col-lg-12">
+                            <label for="parejac_dpi">DPI</label>
+                            <input type="text" name="parejac_dpi" id="parejac_dpi" class="form-control">
                         </div>
                     </div>
                 </form>
@@ -223,25 +220,24 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalMLabel">Contenido del Modal</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h1 class="modal-title" id="modalMLabel">Datos de la Pareja</h1>
+                <span aria-hidden="true">&times;</span>
             </div>
             <div class="modal-body">
                 <form class="modal-body container" id="formCasamiento" novalidate>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label for="latitud">Latitud</label>
-                            <input type="number" name="latitud" id="latitud" class="form-control">
+                            <label for="pareja_cat">Catalogo</label>
+                            <input type="hidden" name="parejam_id" id="pareja_cat" class="form-control">
+                            <input type="number" name="parejam_cat" id="pareja_cat" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="longitud">Longitud</label>
-                            <input type="number" name="longitud" id="longitud" class="form-control">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="lugar">Lugar</label>
-                            <input type="text" name="lugar" id="lugar" class="form-control">
+                            <label for="nombre3">Nombres y Apellidos</label>
+                            <input type="text" name="nombre3" id="nombre3" class="form-control">
+                            <input type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
+                            <input type="hidden" name="parejam_gra" id="parejam_gra" class="form-control">
+                            <input type="hidden" name="parejam_arm" id="parejam_arm" class="form-control">
+                            <input type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
                         </div>
                     </div>
                 </form>

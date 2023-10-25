@@ -5,7 +5,7 @@ import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
 const formulario = document.getElementById('formularioMatrimonio');
-const botonSlide = document.getElementById ('botonSlide2');
+const botonSlide2 = document.getElementById('botonSlide2');
 const btnBuscar = document.getElementById('btnBuscar');
 const btnModificar = document.getElementById('btnModificar');
 const btnGuardar = document.getElementById('btnGuardar');
@@ -29,6 +29,16 @@ const modalC = document.getElementById('modalC');
 const modalM = document.getElementById('modalC');
 const checkboxCivil = document.getElementById('pareja_militar');
 const checkboxMilitar = document.getElementById('pareja_civil');
+const idEsposaMilitar = document.getElementById ('parejam_id');
+const idEsposaMilitarSol = document.getElementById ('pareja_militar');
+const catalogo3 = document.getElementById ('parejam_cat'); 
+const nombre3 = document.getElementById ('nombre3');
+const grado3 = document.getElementById('parejam_gra');
+const arma3 = document.getElementById('parejam_arm');
+const empleo3 = document.getElementById('parejam_emp');
+const comando3 = document.getElementById('parejam_comando');
+const idEsposaCivil = document.getElementById ('parejac_id')
+const idEsposaCivilSol = document.getElementById ('pareja_civil')
 
 
 
@@ -42,6 +52,7 @@ btnModificar.disabled = true;
 btnModificar.parentElement.style.display = 'none';
 btnCancelar.disabled = true;
 btnCancelar.parentElement.style.display = 'none';
+botonSlide2.disabled = true;
 
 
 
@@ -69,12 +80,6 @@ checkboxMilitar.addEventListener('change', () => {
         checkboxCivil.disabled = false;
     }
 });
-
-
-const bloqueo = async (evento) =>{
-
-}
-
 
 const guardar = async (evento) => {
     evento.preventDefault();
@@ -187,8 +192,14 @@ const guardar = async (evento) => {
 async function colocarCatalogo(datos) {
     // console.log(datos)
     const dato = datos[0]
+    if (dato.nombres === '') {
+        botonSlide2.disabled = true;
+    } else {
+        botonSlide2.disabled = false;
+    }
     arma.value = dato.per_arma; 
     nombre.value = dato.nombres; 
+    
     grado.value = dato.per_grado;
     empleo.value = dato.org_plaza_desc
     comando.value = dato.dep_llave

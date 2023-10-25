@@ -4,23 +4,23 @@ namespace Model;
 
 class ParejaCivil extends ActiveRecord {
     protected static $tabla = 'se_pareja_civil';
-    protected static $columnasDB = ['pareja_nombres', 'pareja_apellidos', 'pareja_direccion', 'pareja_dpi', 'pareja_situacion'];
-    protected static $idTabla = 'pareja_id';
+    protected static $columnasDB = ['parejac_nombres', 'parejac_apellidos', 'parejac_direccion', 'parejac_dpi', 'parejac_situacion'];
+    protected static $idTabla = 'parejac_id';
 
-    public $pareja_id;
-    public $pareja_nombres;
-    public $pareja_apellidos;
-    public $pareja_direccion;
-    public $pareja_dpi;
-    public $pareja_situacion;
+    public $parejac_id;
+    public $parejac_nombres;
+    public $parejac_apellidos;
+    public $parejac_direccion;
+    public $parejac_dpi;
+    public $parejac_situacion;
 
     public function __construct($args = []) {
-        $this->pareja_id = $args['pareja_id'] ?? null;
-        $this->pareja_nombres = $args['pareja_nombres'] ?? '';
-        $this->pareja_apellidos = $args['pareja_apellidos'] ?? '';
-        $this->pareja_direccion = $args['pareja_direccion'] ?? '';
-        $this->pareja_dpi = $args['pareja_dpi'] ?? '';
-        $this->pareja_situacion = $args['pareja_situacion'] ?? 1;
+        $this->parejac_id = $args['parejac_id'] ?? null;
+        $this->parejac_nombres = $args['parejac_nombres'] ?? '';
+        $this->parejac_apellidos = $args['parejac_apellidos'] ?? '';
+        $this->parejac_direccion = $args['parejac_direccion'] ?? '';
+        $this->parejac_dpi = $args['parejac_dpi'] ?? '';
+        $this->parejac_situacion = $args['parejac_situacion'] ?? 1;
     }
 }
 

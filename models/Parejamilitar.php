@@ -3,24 +3,24 @@ namespace Model;
 
 class ParejaMilitar extends ActiveRecord {
     protected static $tabla = 'se_pareja_militar';
-    protected static $columnasDB = ['pareja_cat', 'pareja_comando', 'pareja_gra', 'pareja_arm', 'pareja_emp', 'pareja_situacion'];
-    protected static $idTabla = 'pareja_id';
+    protected static $columnasDB = ['parejam_cat', 'parejam_comando', 'parejam_gra', 'parejam_arm', 'parejam_emp', 'parejam_situacion'];
+    protected static $idTabla = 'parejam_id';
 
-    public $pareja_id;
-    public $pareja_cat;
-    public $pareja_comando;
-    public $pareja_gra;
-    public $pareja_arm;
-    public $pareja_emp;
-    public $pareja_situacion;
+    public $parejam_id;
+    public $parejam_cat;
+    public $parejam_comando;
+    public $parejam_gra;
+    public $parejam_arm;
+    public $parejam_emp;
+    public $parejam_situacion;
 
     public function __construct($args = []) {
-        $this->pareja_id = $args['pareja_id'] ?? null;
-        $this->pareja_cat = $args['pareja_cat'] ?? null;
-        $this->pareja_comando = $args['pareja_comando'] ?? null;
-        $this->pareja_gra = $args['pareja_gra'] ?? null;
-        $this->pareja_arm = $args['pareja_arm'] ?? null;
-        $this->pareja_emp = $args['pareja_emp'] ?? '';
-        $this->pareja_situacion = $args['pareja_situacion'] ?? 1;
+        $this->parejam_id = $args['parejam_id'] ?? null;
+        $this->parejam_cat = $args['parejam_cat'] ?? null;
+        $this->parejam_comando = $args['parejam_comando'] ?? null;
+        $this->parejam_gra = $args['parejam_gra'] ?? null;
+        $this->parejam_arm = $args['parejam_arm'] ?? null;
+        $this->parejam_emp = $args['parejam_emp'] ?? '';
+        $this->parejam_situacion = $args['parejam_situacion'] ?? 1;
     }
 }

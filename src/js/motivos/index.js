@@ -22,14 +22,20 @@ const datatable = new Datatable('#tablaMotivos', {
     columns: [
         {
             title: 'NO',
+            className: 'text-center',
+            width: 'auto',
             render: () => contador++,
         },
         {
             title: 'DESCRIPCIÓN',
+            className: 'text-center',
+            width: 'auto',
             data: 'mot_descripcion',
         },
         {
             title: 'MODIFICAR',
+            className: 'text-center',
+            width: 'auto',
             data: 'mot_id',
             searchable: false,
             orderable: false,
@@ -38,6 +44,8 @@ const datatable = new Datatable('#tablaMotivos', {
         },
         {
             title: 'ELIMINAR',
+            className: 'text-center',
+            width: 'auto',
             data: 'mot_id',
             searchable: false,
             orderable: false,
