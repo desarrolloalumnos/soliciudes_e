@@ -16,37 +16,29 @@ btnModificar.parentElement.style.display = 'none';
 btnCancelar.disabled = true;
 btnCancelar.parentElement.style.display = 'none';
 
-const datatable = new Datatable('#tablaMotivos', {
+const datatable = new Datatable('#tablaArticulos', {
     language: lenguaje,
     data: null,
     columns: [
         {
             title: 'NO',
-            className: 'text-center',
-            width: 'auto',
             render: () => contador++,
         },
         {
             title: 'DESCRIPCIÓN',
-            className: 'text-center',
-            width: 'auto',
-            data: 'mot_descripcion',
+            data: 'art_descripcion',
         },
         {
             title: 'MODIFICAR',
-            className: 'text-center',
-            width: 'auto',
-            data: 'mot_id',
+            data: 'art_id',
             searchable: false,
             orderable: false,
             render: (data, type, row, meta) =>
-                `<button class="btn btn-warning" data-id='${data}' data-descripcion='${row['mot_descripcion']}'>Modificar</button>`,
+                `<button class="btn btn-warning" data-id='${data}' data-descripcion='${row['art_descripcion']}'>Modificar</button>`,
         },
         {
             title: 'ELIMINAR',
-            className: 'text-center',
-            width: 'auto',
-            data: 'mot_id',
+            data: 'art_id',
             searchable: false,
             orderable: false,
             render: (data, type, row, meta) =>
@@ -56,8 +48,8 @@ const datatable = new Datatable('#tablaMotivos', {
 });
 
 const buscar = async () => {
-    let mot_descripcion = formulario.mot_descripcion.value;
-    const url = `/soliciudes_e/API/motivos/buscar?mot_descripcion=${mot_descripcion}`;
+    let art_descripcion = formulario.art_descripcion.value;
+    const url = `/soliciudes_e/API/articulos/buscar?art_descripcion=${art_descripcion}`;
     const config = {
         method: 'GET',
     };
@@ -65,7 +57,6 @@ const buscar = async () => {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
 
-        // console.log(data);
         datatable.clear().draw();
         if (data) {
             contador = 1;
@@ -93,13 +84,13 @@ const traeDatos = (e) => {
     colocarDatos(dataset);
 
     const body = new FormData(formulario);
-    body.append('mot_id', id);
-    body.append('mot_descripcion', descripcion);
+    body.append('art_id', id);
+    body.append('art_descripcion', descripcion);
 };
 
 const colocarDatos = (dataset) => {
-    formulario.mot_descripcion.value = dataset.descripcion;
-    formulario.mot_id.value = dataset.id;
+    formulario.art_descripcion.value = dataset.descripcion;
+    formulario.art_id.value = dataset.id;
 
     btnGuardar.disabled = true;
     btnGuardar.parentElement.style.display = 'none';
@@ -128,8 +119,8 @@ const eliminar = async (e) => {
 
     if (await confirmacion('warning', '¿Desea eliminar este registro?')) {
         const body = new FormData();
-        body.append('mot_id', id);
-        const url = '/soliciudes_e/API/motivos/eliminar';
+        body.append('art_id', id);
+        const url = '/soliciudes_e/API/articulos/eliminar';
         const config = {
             method: 'POST',
             body,
@@ -138,7 +129,6 @@ const eliminar = async (e) => {
         try {
             const respuesta = await fetch(url, config);
             const data = await respuesta.json();
-            // console.log(data);
             const { codigo, mensaje, detalle } = data;
 
             let icon = 'info';
@@ -177,7 +167,7 @@ const modificar = async () => {
     }
 
     const body = new FormData(formulario);
-    const url = '/soliciudes_e/API/motivos/modificar';
+    const url = '/soliciudes_e/API/articulos/modificar';
     const config = {
         method: 'POST',
         body,
@@ -215,7 +205,7 @@ const modificar = async () => {
 
 const guardar = async (evento) => {
     evento.preventDefault();
-    if (!validarFormulario(formulario, ['mot_id'])) {
+    if (!validarFormulario(formulario, ['art_id'])) {
         Toast.fire({
             icon: 'info',
             text: 'Debe llenar todos los datos',
@@ -223,8 +213,8 @@ const guardar = async (evento) => {
         return;
     }
     const body = new FormData(formulario);
-    body.delete('mot_id');
-    const url = '/soliciudes_e/API/motivos/guardar';
+    body.delete('art_id');
+    const url = '/soliciudes_e/API/articulos/guardar';
     const config = {
         method: 'POST',
         body,
@@ -248,22 +238,19 @@ const guardar = async (evento) => {
             default:
                 break;
         }
-
         Toast.fire({
             icon,
             text: mensaje,
         });
-    } catch (error) {
+        } catch (error) {
         console.log(error);
-    }
-};
-
-buscar();
-
-datatable.on('click', '.btn-warning', traeDatos);
-datatable.on('click', '.btn-danger', eliminar);
-formulario.addEventListener('submit', guardar);
-btnBuscar.addEventListener('click', buscar);
-btnCancelar.addEventListener('click', cancelarAccion);
-btnModificar.addEventListener('click', modificar);
-
+        }
+    };
+        buscar();
+        
+        datatable.on('click', '.btn-warning', traeDatos);
+        datatable.on('click', '.btn-danger', eliminar);
+        formulario.addEventListener('submit', guardar);
+        btnBuscar.addEventListener('click', buscar);
+        btnCancelar.addEventListener('click', cancelarAccion);
+        btnModificar.addEventListener('click', modificar);

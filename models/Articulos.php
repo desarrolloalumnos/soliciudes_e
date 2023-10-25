@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Articulo extends ActiveRecord {
+class Articulos extends ActiveRecord {
     protected static $tabla = 'se_articulos';
     protected static $columnasDB = ['art_descripcion', 'art_situacion'];
     protected static $idTabla = 'art_id';
