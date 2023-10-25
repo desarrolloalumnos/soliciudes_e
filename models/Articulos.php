@@ -4,7 +4,7 @@ namespace Model;
 
 class Articulo extends ActiveRecord {
     protected static $tabla = 'se_articulos';
-    protected static $columnasDB = ['art_id', 'art_descripcion', 'art_situacion'];
+    protected static $columnasDB = ['art_descripcion', 'art_situacion'];
     protected static $idTabla = 'art_id';
     
     public $art_id;
