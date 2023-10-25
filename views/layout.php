@@ -55,6 +55,9 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/soliciudes_e/protocolos"><i class="bi bi-file-music-fill"></i>Combos/Marimbas/Vallas</a>
                     </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/soliciudes_e/motivos"><i class="bi bi-file-music-fill"></i>Motivos de las Solicitudes</a>
+                    </li> 
 
                 </ul> 
                 <div class="col-lg-1 d-grid mb-lg-0 mb-2">
