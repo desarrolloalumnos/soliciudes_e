@@ -1,3 +1,4 @@
+
 <div class="row justify-content-center mt-5">
 
     <div class="col-lg-10">
@@ -8,11 +9,10 @@
                 <button type="button" class="bg-dark" data-bs-target="#carouselMatrimonio" data-bs-slide-to="1" aria-label="Slide 2"></button>
 
             </div>
-            <form class="carousel-inner border bg-light p-4" id="formMatrimonio" style="min-height: 50vh;">
+            <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" style="min-height: 50vh;">
                 <div class="text-center">
                     <h1>Matrimonio</h1>
                 </div>
-                <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
                 <div class="carousel-item active">
                     <div class="row justify-content-around mb-4">
                         <div class="row">
@@ -26,21 +26,22 @@
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-4">
-                                    <label for="sol_cat">Catalogo</label>
-                                    <input value="" id="sol_cat" name="sol_cat" class="form-control" type="text">
-                                    <input value="" id="sol_gra" name="sol_gra" class="form-control" type="hidden">
-                                    <input value="" id="sol_arm" name="sol_arm" class="form-control" type="hidden">
-                                    <input value="" id="sol_emp" name="sol_emp" class="form-control" type="hidden">
-                                    <input value="" id="sol_comando" name="sol_comando" class="form-control" type="hidden">
+                                    <input value="" id="ste_id" name="ste_id" class="form-control" type="hidden">
+                                    <label for="ste_cat">Catalogo</label>
+                                    <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="numero de catalogo">
+                                    <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
+                                    <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
+                                    <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
+                                    <input value="" id="ste_comando" name="ste_comando" class="form-control" type="hidden">
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="sol_fecha">Fecha de solicitud</label>
-                                    <input value="" id="sol_fecha" name="sol_fecha" class="form-control" type="datetime-local">
+                                    <label for="ste_fecha">Fecha de Solicitud</label>
+                                    <input value="" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime-local">
 
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="sol_telefono">Telefono</label>
-                                    <input value="" id="sol_telefono" name="sol_telefono" class="form-control" type="tel">
+                                    <label for="ste_telefono">Telefono</label>
+                                    <input value="" id="ste_telefono" name="ste_telefono" class="form-control" type="number">
                                 </div>
 
                             </div>
@@ -52,12 +53,18 @@
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="sol_motivo">Motivo</label>
-                                    <input value="" type="text" name="sol_motivo" id="sol_motivo" class="form-control">
+                                    <select name="sol_motivo" id="sol_motivo" class="form-select">
+                                        <option value="" selected>SELECCIONE</option>
+                                        <?php foreach ($motivos as $motivo) { ?>
+                                            <option value="<?= $motivo['mot_id'] ?>"><?= $motivo['mot_descripcion'] ?></option>
+
+                                        <?php } ?>
+                                    </select>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <label for="sol_obs">Observaciones</label>
-                                    <input class="form-control" name="sol_obs" id="sol_obs" rows="10" cols="50">
+                                    <input class="form-control" placeholder="si su motivo fue 'OTROS' llene la observacion" name="sol_obs" id="sol_obs" rows="10" cols="50">
                                 </div>
 
 
@@ -70,6 +77,8 @@
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="aut_cat">Catalogo</label>
+                                    <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
+                                    <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
                                     <input value="" id="aut_cat" name="aut_cat" class="form-control" type="text">
                                     <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                                     <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
@@ -135,12 +144,14 @@
                             <label for="mat_fecha_lic_ini">Pareja Civil</label>
                             <input type="checkbox" id="pareja_civil" name="pareja_civil" class="form-check-input">
                         </div>
-                        
+
                     </div>
                     <div class="row justify-content-center mt-12 mb-4">
-                        
+
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodar">Documentos PDF</label>
+                            <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
+                            <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="hidden">
                             <input value="" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="text">
                         </div>
 
@@ -148,7 +159,16 @@
 
                     <div class="row justify-content-center mt-12 mb-4">
                         <div class="col-lg-2">
-                            <button type="button" data-bs-target="#carouselMatrimonio" class="btn btn-primary w-100">Guardar</button>
+                            <button type="button" id="btnGuardar" name="btnGuardar" data-bs-target="#carouselMatrimonio" class="btn btn-outline-primary w-100">Guardar</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" id="btnBuscar" name="btnBuscar" data-bs-target="#carouselMatrimonio" class="btn btn-outline-info w-100">Buscar</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" id="btnModificar" name="btnModificar" data-bs-target="#carouselMatrimonio" class="btn btn-outline-warning w-100">Modificar</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" id="btnCancelar" name="btnCancelar" data-bs-target="#carouselMatrimonio" class="btn btn-outline-danger w-100">Cancelar</button>
                         </div>
                     </div>
                 </div>

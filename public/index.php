@@ -18,7 +18,10 @@ $router->post('/API/protocolos/modificar', [ProtocoloController::class,'modifica
 $router->post('/API/protocolos/eliminar', [ProtocoloController::class,'eliminarApi']);
 
 
+
+
 $router->get('/casamientos', [CasamientoController::class,'index']);
+$router->get('/API/casamientos/buscarCatalogo', [CasamientoController::class,'buscarCatalogoApi']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

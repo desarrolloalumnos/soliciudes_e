@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Motivo extends ActiveRecord {
+class Motivos extends ActiveRecord {
     protected static $tabla = 'se_motivos';
     protected static $columnasDB = ['mot_id', 'mot_descripcion', 'mot_situacion'];
     protected static $idTabla = 'mot_id';

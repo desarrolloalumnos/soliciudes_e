@@ -67,7 +67,7 @@ class ProtocoloController {
     }
 
 
- public static function buscarAPI() {
+ public static function buscarApi() {
         $cmv_dependencia = $_GET['cmv_dependencia'];
         $cmv_tip = $_GET['cmv_tip'];
         

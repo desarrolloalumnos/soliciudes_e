@@ -115,22 +115,7 @@ const guardar = async (evento) => {
                 location.reload();
                
             };
-let cmv_dependencia;
 
-dependencias.addEventListener('change', () => {
-    buscar()
-
-    
-    
-});
-
-let cmv_tip;
-
-tipos.addEventListener('change', () => {
-    buscar()
-  
-   
-});
 const buscar = async () => {
 
     let dep_valor = dependencias.value 
