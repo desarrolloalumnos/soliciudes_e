@@ -7,6 +7,7 @@ use Controllers\AppController;
 use Controllers\ProtocoloController;
 use Controllers\CasamientoController;
 use Controllers\MotivoController;
+use Controllers\ArticuloController;
 
 
 $router = new Router();
@@ -26,7 +27,11 @@ $router->post('/API/motivos/guardar', [MotivoController::class,'guardarApi']);
 $router->post('/API/motivos/modificar', [MotivoController::class,'modificarApi']);
 $router->post('/API/motivos/eliminar', [MotivoController::class,'eliminarApi']);
 
-
+$router->get('/articulos', [ArticuloController::class,'index']);
+$router->get('/API/articulos/buscar', [ArticuloController::class,'buscarApi']);
+$router->post('/API/articulos/guardar', [ArticuloController::class,'guardarApi']);
+$router->post('/API/articulos/modificar', [ArticuloController::class,'modificarApi']);
+$router->post('/API/articulos/eliminar', [ArticuloController::class,'eliminarApi']);
 
 
 
