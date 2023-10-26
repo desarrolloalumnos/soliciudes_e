@@ -343,13 +343,14 @@ async function colocarCatalogo3(datos) {
 const agregarEsposaCivil = async (datos) => {
     modalM.classList.remove('show');
     const valores = datos[0]
+    modal.style.display = 'none';
     console.log(valores)
+    return
     arma4.value = arma3.valores
     nombre4.value = nombre3.
     grado4.value = grado3.value
     empleo4.value = empleo3.value
     comando4.value = comando3.value
-    modal.style.display = 'none';
 }
 
 const traeDatos = (e) => {
