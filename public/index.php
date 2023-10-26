@@ -8,6 +8,9 @@ use Controllers\ProtocoloController;
 use Controllers\CasamientoController;
 use Controllers\MotivoController;
 use Controllers\ArticuloController;
+use Controllers\TransporteController;
+use Controllers\TiposolController;
+
 
 
 $router = new Router();
@@ -33,6 +36,17 @@ $router->post('/API/articulos/guardar', [ArticuloController::class,'guardarApi']
 $router->post('/API/articulos/modificar', [ArticuloController::class,'modificarApi']);
 $router->post('/API/articulos/eliminar', [ArticuloController::class,'eliminarApi']);
 
+$router->get('/transportes', [TransporteController::class,'index']);
+$router->get('/API/transportes/buscar', [TransporteController::class,'buscarApi']);
+$router->post('/API/transportes/guardar', [TransporteController::class,'guardarApi']);
+$router->post('/API/transportes/modificar', [TransporteController::class,'modificarApi']);
+$router->post('/API/transportes/eliminar', [TransporteController::class,'eliminarApi']);
+
+$router->get('/tiposol', [TiposolController::class,'index']);
+$router->get('/API/tiposol/buscar', [TiposolController::class,'buscarApi']);
+$router->post('/API/tiposol/guardar', [TiposolController::class,'guardarApi']);
+$router->post('/API/tiposol/modificar', [TiposolController::class,'modificarApi']);
+$router->post('/API/tiposol/eliminar', [TiposolController::class,'eliminarApi']);
 
 
 $router->get('/casamientos', [CasamientoController::class,'index']);
