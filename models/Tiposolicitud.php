@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class TipoSolicitudes extends ActiveRecord {
+class Tiposolicitud extends ActiveRecord {
     protected static $tabla = 'se_tipo_solicitud';
     protected static $columnasDB = ['tse_descripcion', 'tse_situacion'];
     protected static $idTabla = 'tse_id';

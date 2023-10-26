@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Pais extends ActiveRecord {
+class Paises extends ActiveRecord {
     protected static $tabla = 'paises';
     protected static $columnasDB = ['pai_desc_lg'];
     protected static $idTabla = 'pai_codigo';

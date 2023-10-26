@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Salidapaises extends ActiveRecord {
+class Saldetpaises extends ActiveRecord {
     protected static $tabla = 'se_dsalpais';
     protected static $columnasDB = ['dsal_sol_salida', 'dsal_ciudad', 'dsal_pais', 'dsal_transporte', 'dsal_situacion'];
     protected static $idTabla = 'dsal_id';

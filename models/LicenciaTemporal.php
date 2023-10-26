@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class LicenciaTemporal extends ActiveRecord {
+class Licenciatemporal extends ActiveRecord {
     protected static $tabla = 'se_licencia_temporal';
     protected static $columnasDB = ['lit_autorizacion', 'lit_mes_consueldo', 'lit_mes_sinsueldo', 'lit_fecha1', 'lit_fecha2', 'lit_articulo', 'lit_situacion'];
     protected static $idTabla = 'lit_id';

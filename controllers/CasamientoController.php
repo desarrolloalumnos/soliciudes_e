@@ -3,10 +3,26 @@
 namespace Controllers;
 
 use Exception;
-use Model\Motivo;
-use Model\Protocolo;
-use Model\Personal;
+use Model\Articulos;
+use Model\Autorizacion;
+use Model\Dependencia;
+use Model\Licenciatemporal;
+use Model\Matrimonio;
 use Model\Motivos;
+use Model\Organizacion;
+use Model\Paises;
+use Model\ParejaCivil;
+use Model\ParejaMilitar;
+use Model\Pdf;
+use Model\Personal;
+use Model\Protocolo;
+use Model\Protocolosol;
+use Model\Saldetpaises;
+use Model\Salidapais;
+use Model\Solicitante;
+use Model\Solicitud;
+use Model\Tiposolicitud;
+use Model\Transportes;
 use MVC\Router;
 
 class CasamientoController {
@@ -16,6 +32,39 @@ class CasamientoController {
         $router->render('casamientos/index', [
             'motivos' => $motivos
         ]);
+    }
+
+
+    public static function guardarApi(){
+     
+        try {
+            $protocolo = new  Protocolo ($_POST);
+
+
+            // echo json_encode($protocolo);
+            // exit;
+            $resultado = $protocolo->crear();
+
+            if ($resultado['resultado'] == 1) {
+
+                echo json_encode([
+                    'mensaje' => 'Registro guardado correctamente',
+                    'codigo' => 1
+                ]);
+            } else {
+                echo json_encode([
+                    'mensaje' => 'Ocurrió un error',
+                    'codigo' => 0
+                ]);
+            }
+            // echo json_encode($resultado);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
     }
 
     public static function buscarCatalogoApi() {

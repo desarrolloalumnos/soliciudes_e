@@ -97,15 +97,13 @@ checkboxMilitar.addEventListener('change', () => {
 
 const guardar = async (evento) => {
     evento.preventDefault();
-
-
-    if (!validarFormulario(formulario, ['cmv_id'])) {
-        Toast.fire({
-            icon: 'info',
-            text: 'Debe llenar todos los campos'
-        });
-        return;
-    }
+    // if (!validarFormulario(formulario, ['cmv_id'])) {
+    //     Toast.fire({
+    //         icon: 'info',
+    //         text: 'Debe llenar todos los campos'
+    //     });
+    //     return;
+    // }
     let nombreesposa = nombreEsposaCivil.value
     const body = new FormData(formulario);
     body.append('nombreesposa', nombreesposa )
@@ -154,16 +152,6 @@ catalogo.addEventListener('change', async (e) => {
     colocarCatalogo(solicitante);
 
 });
-
-// motivos.addEventListener('change', () => {
-//     let motivo = motivos.value;
-
-//     if (motivo === "7") {
-//         observaciones.disabled = false;
-//     } else {
-//         observaciones.disabled = true;
-//     }
-// });
 
 
 const buscarCatalogo = async () => {

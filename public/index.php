@@ -56,5 +56,6 @@ $router->get('/API/casamientos/buscarCatalogo2', [CasamientoController::class,'b
 $router->get('/API/casamientos/buscarCatalogo3', [CasamientoController::class,'buscarCatalogo3Api']);
 
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);
+$router->get('/API/protocolosol/buscar', [ProtocolosolController::class,'buscarApi']);
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

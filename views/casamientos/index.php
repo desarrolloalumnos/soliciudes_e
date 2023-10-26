@@ -16,18 +16,20 @@
                 <div class="carousel-item active">
                     <div class="row justify-content-around mb-4">
                         <div class="row">
-
+                            
                             <div class="row">
                                 <div class="col-lg-4">
                                     <h2>Datos del solicitante</h2>
                                 </div>
                             </div>
-
-
+                            
+                            
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <input value="text" id="mat_autorizacion" name="mat_autorizacion" class="form-control" type="hidden">
                                     <input value="text" id="aut_id" name="aut_id" class="form-control" type="hidden">
+                                    <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
+                                    <label for="ste_id">Catalogo</label>
                                     <label for="ste_cat">Catalogo</label>
                                     <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="numero de catalogo">
                                     <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
@@ -55,7 +57,6 @@
                             <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
                             <input value="1" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
                             <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
-                            <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
@@ -177,8 +178,8 @@
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodar">Documentos PDF</label>
                             <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
-                            <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="hidden">
-                            <input value="" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="text">
+                            <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
+                            <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
                         </div>
 
                     </div>
