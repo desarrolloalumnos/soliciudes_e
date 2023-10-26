@@ -9,6 +9,7 @@ use Controllers\CasamientoController;
 use Controllers\MotivoController;
 use Controllers\ArticuloController;
 use Controllers\TransporteController;
+use Controllers\TiposolController;
 
 
 
@@ -40,6 +41,12 @@ $router->get('/API/transportes/buscar', [TransporteController::class,'buscarApi'
 $router->post('/API/transportes/guardar', [TransporteController::class,'guardarApi']);
 $router->post('/API/transportes/modificar', [TransporteController::class,'modificarApi']);
 $router->post('/API/transportes/eliminar', [TransporteController::class,'eliminarApi']);
+
+$router->get('/tiposol', [TiposolController::class,'index']);
+$router->get('/API/tiposol/buscar', [TiposolController::class,'buscarApi']);
+$router->post('/API/tiposol/guardar', [TiposolController::class,'guardarApi']);
+$router->post('/API/tiposol/modificar', [TiposolController::class,'modificarApi']);
+$router->post('/API/tiposol/eliminar', [TiposolController::class,'eliminarApi']);
 
 
 $router->get('/casamientos', [CasamientoController::class,'index']);

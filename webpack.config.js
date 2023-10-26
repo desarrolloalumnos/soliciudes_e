@@ -11,7 +11,7 @@ module.exports = {
     'js/motivos/index' : './src/js/motivos/index.js',
     'js/articulos/index' : './src/js/articulos/index.js',
     'js/transportes/index' : './src/js/transportes/index.js',
-  
+    'js/tiposol/index' : './src/js/tiposol/index.js',
   },
   output: {
     filename: '[name].js',
