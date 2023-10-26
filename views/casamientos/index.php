@@ -60,7 +60,7 @@
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
-                                    <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control" placeholde="Matrimonio">
+                                    <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control" placeholder="Matrimonio">
                                 </div>
 
                                 <div class="col-lg-6">

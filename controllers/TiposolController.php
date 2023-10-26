@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use Exception;
-use Model\TipoSolicitudes;
+use Model\Tiposolicitud;
 use MVC\Router;
 
 class TiposolController {
@@ -13,8 +13,8 @@ class TiposolController {
 
     public static function guardarAPI() {
         try {
-            $tipoSolicitud = new TipoSolicitudes($_POST);
-            $resultado = $tipoSolicitud->crear();
+            $tiposolicitud = new Tiposolicitud($_POST);
+            $resultado = $tiposolicitud->crear();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
@@ -38,8 +38,8 @@ class TiposolController {
 
     public static function modificarAPI() {
         try {
-            $tipoSolicitud = new TipoSolicitudes($_POST);
-            $resultado = $tipoSolicitud->actualizar();
+            $tiposolicitud = new Tiposolicitud($_POST);
+            $resultado = $tiposolicitud->actualizar();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
@@ -63,10 +63,10 @@ class TiposolController {
 
     public static function eliminarAPI() {
         try {
-            $tipoSolicitud_id = $_POST['tse_id'];
-            $tipoSolicitud = TipoSolicitudes::find($tipoSolicitud_id);
-            $tipoSolicitud->tse_situacion = 0;
-            $resultado = $tipoSolicitud->actualizar();
+            $tse_id = $_POST['tse_id'];
+            $tiposolicitud = Tiposolicitud::find($tse_id);
+            $tiposolicitud->tse_situacion = 0;
+            $resultado = $tiposolicitud->actualizar();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
@@ -89,17 +89,17 @@ class TiposolController {
     }
 
     public static function buscarAPI() {
-        $tipoSolicitud_descripcion = $_GET['tse_descripcion'] ?? '';
+        $tse_descripcion = $_GET['tse_descripcion'] ?? '';
 
         $sql = "SELECT * FROM se_tipo_solicitud WHERE tse_situacion = 1 ";
-        if ($tipoSolicitud_descripcion != '') {
-            $tipoSolicitud_descripcion = strtolower($tipoSolicitud_descripcion);
-            $sql .= " AND LOWER(tse_descripcion) LIKE '%$tipoSolicitud_descripcion%' ";
+        if ($tse_descripcion != '') {
+            $tse_descripcion = strtolower($tse_descripcion);
+            $sql .= " AND LOWER(tse_descripcion) LIKE '%$tse_descripcion%' ";
         }
 
         try {
-            $tipoSolicitudes = TipoSolicitudes::fetchArray($sql);
-            echo json_encode($tipoSolicitudes);
+            $tiposolicitudes = Tiposolicitud::fetchArray($sql);
+            echo json_encode($tiposolicitudes);
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
