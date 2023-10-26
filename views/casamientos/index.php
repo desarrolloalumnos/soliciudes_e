@@ -1,7 +1,7 @@
 <div class="row justify-content-center mt-5">
 
     <div class="col-lg-10">
-        <div id="carouselMatrimonio" class="carousel slide" data-bs-ride="true">
+        <div id="carouselMatrimonio" class="carousel slide">
 
             <div class="carousel-indicators">
                 <button type="button" class="bg-dark active" data-bs-target="#carouselMatrimonio" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></button>
@@ -59,7 +59,7 @@
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
-                                    <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control" placeholde="Matrimonio" >
+                                    <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control" placeholde="Matrimonio">
                                 </div>
 
                                 <div class="col-lg-6">
@@ -147,6 +147,32 @@
                         </div>
 
                     </div>
+                    <div class="row justify-content-around mb-4">
+                        <div class="col-lg-4">
+                            <input type="hidden" name="mat_per_civil" id="mat_per_civil" class="form-control">
+                            <input type="hidden" name="mat_per_army" id="mat_per_civil" class="form-control">
+                            <input type="hidden" name="parejac_id" id="parejac_id" class="form-control">
+                            <input type="hidden" name="parejam_id" id="parejac_id" class="form-control">
+                            <input type="hidden" name="parejac_nombres" id="parejac_nombres" class="form-control">
+                            <input type="hidden" name="parejam_cat" id="parejam_cat" class="form-control">
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="hidden" name="parejac_apellidos" id="parejac_apellidos" class="form-control">
+                            <input type="text" name="nombre4" id="nombre4" class="form-control">
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="hidden" name="parejac_direccion" id="parejac_direccion" class="form-control">
+                            <input type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
+                        </div>
+                        <div class="col-lg-4">
+                            <label for="parejac_dpi">DPI</label>
+                            <input type="hidden" name="parejac_dpi" id="parejac_dpi" class="form-control">
+                            <input type="hidden" name="parejam_gra" id="parejam_gra" class="form-control">
+                            <input type="hidden" name="parejam_arm" id="parejam_arm" class="form-control">
+                            <input type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
+                        </div>
+                    </div>
+
                     <div class="row justify-content-center mt-12 mb-4">
 
                         <div class="col-lg-4">
@@ -184,33 +210,32 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title" id="modalMLabel">Datos de la Pareja</h1>
-                <span aria-hidden="true">&times;</span>
             </div>
             <div class="modal-body">
                 <form class="modal-body container" id="formCasamiento" novalidate>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label for="parejac_nombres">Nombres</label>
-                            <input type="number" name="parejac_nombres" id="parejac_nombres" class="form-control">
+                            <label for="parejac1_nombres">Nombres</label>
+                            <input type="text" name="parejac1_nombres" id="parejac1_nombres" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="parejac_apellidos">Apellidos</label>
-                            <input type="number" name="parejac_apellidos" id="parejac_apellidos" class="form-control">
+                            <label for="parejac1_apellidos">Apellidos</label>
+                            <input type="text" name="parejac1_apellidos" id="parejac1_apellidos" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="parejac_direccion">Direccion</label>
-                            <input type="text" name="parejac_direccion" id="parejac_direccion" class="form-control">
+                            <label for="parejac1_direccion">Direccion</label>
+                            <input type="text" name="parejac1_direccion" id="parejac1_direccion" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="parejac_dpi">DPI</label>
-                            <input type="text" name="parejac_dpi" id="parejac_dpi" class="form-control">
+                            <label for="parejac1_dpi">DPI</label>
+                            <input type="text" name="parejac1_dpi" id="parejac1_dpi" class="form-control">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formPuntos" class="btn btn-success" id="buttonLimpiar"><i class="bi bi-plus-circle me-2"></i>Agregar</button>
-                <button type="button" class="btn btn-secondary" id="buttonAnterior" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" form="formPuntos" class="btn btn-outline-success" id="buttonGuardar1"><i class="bi bi-plus-circle me-2"></i>Agregar</button>
+                <button type="button" class="btn btn-outline-danger" id="buttonCancelar1" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -221,30 +246,28 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title" id="modalMLabel">Datos de la Pareja</h1>
-                <span aria-hidden="true">&times;</span>
             </div>
             <div class="modal-body">
                 <form class="modal-body container" id="formCasamiento" novalidate>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label for="pareja_cat">Catalogo</label>
-                            <input type="hidden" name="parejam_id" id="pareja_cat" class="form-control">
-                            <input type="number" name="parejam_cat" id="pareja_cat" class="form-control">
+                            <label for="pareja_cat1">Catalogo</label>
+                            <input type="number" name="parejam1_cat" id="parejam1_cat" class="form-control">
                         </div>
                         <div class="col-lg-12">
                             <label for="nombre3">Nombres y Apellidos</label>
                             <input type="text" name="nombre3" id="nombre3" class="form-control">
-                            <input type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
-                            <input type="hidden" name="parejam_gra" id="parejam_gra" class="form-control">
-                            <input type="hidden" name="parejam_arm" id="parejam_arm" class="form-control">
-                            <input type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
+                            <input type="hidden" name="parejam1_comando" id="parejam1_comando" class="form-control">
+                            <input type="hidden" name="parejam1_gra" id="parejam1_gra" class="form-control">
+                            <input type="hidden" name="parejam1_arm" id="parejam1_arm" class="form-control">
+                            <input type="hidden" name="parejam1_emp" id="parejam1_emp" class="form-control">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formPuntos" class="btn btn-success" id="buttonLimpiar"><i class="bi bi-plus-circle me-2"></i>Agregar</button>
-                <button type="button" class="btn btn-secondary" id="buttonAnterior" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" form="formPuntos" class="btn btn-outline-success" id="buttonGuardar2"><i class="bi bi-plus-circle me-2"></i>Agregar</button>
+                <button type="button" class="btn btn-outline-danger" id="buttonCancelar2" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
