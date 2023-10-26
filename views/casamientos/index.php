@@ -148,7 +148,7 @@
 
                     </div>
                     <div class="row justify-content-around mb-4">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <input type="hidden" name="mat_per_civil" id="mat_per_civil" class="form-control">
                             <input type="hidden" name="mat_per_army" id="mat_per_civil" class="form-control">
                             <input type="hidden" name="parejac_id" id="parejac_id" class="form-control">
@@ -156,20 +156,19 @@
                             <input type="hidden" name="parejac_nombres" id="parejac_nombres" class="form-control">
                             <input type="hidden" name="parejam_cat" id="parejam_cat" class="form-control">
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <input type="hidden" name="parejac_apellidos" id="parejac_apellidos" class="form-control">
-                            <input type="text" name="nombre4" id="nombre4" class="form-control">
+                            <input type="hidden" name="nombre4" id="nombre4" class="form-control">
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <input type="hidden" name="parejac_direccion" id="parejac_direccion" class="form-control">
-                            <input type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
+                            <input type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
                         </div>
-                        <div class="col-lg-4">
-                            <label for="parejac_dpi">DPI</label>
+                        <div class="col-lg-3">
+                            <input type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
                             <input type="hidden" name="parejac_dpi" id="parejac_dpi" class="form-control">
                             <input type="hidden" name="parejam_gra" id="parejam_gra" class="form-control">
                             <input type="hidden" name="parejam_arm" id="parejam_arm" class="form-control">
-                            <input type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
                         </div>
                     </div>
 

@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { Dropdown } from "bootstrap";
+import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
@@ -25,8 +25,8 @@ const grado2 = document.getElementById('aut_gra');
 const arma2 = document.getElementById('aut_arm');
 const empleo2 = document.getElementById('aut_emp');
 const comando2 = document.getElementById('aut_comando');
-const modalC = document.getElementById('modalC');
-const modalM = document.getElementById('modalM');
+const modalC = new Modal(document.getElementById('modalC'), {})
+const modalM = new Modal(document.getElementById('modalM'), {})
 const checkboxCivil = document.getElementById('pareja_civil');
 const checkboxMilitar = document.getElementById('pareja_militar');
 const catalogo3 = document.getElementById('parejam1_cat');
@@ -73,24 +73,24 @@ btnCancelar.parentElement.style.display = 'none';
 
 checkboxCivil.addEventListener('change', () => {
     if (checkboxCivil.checked) {
-        modalC.classList.add('show');
-        modalC.style.display = 'block';
+        modalC.show()
+        //modalC.style.display = 'block
         checkboxMilitar.disabled = true;
     } else {
-        modalC.classList.remove('show');
-        modalC.style.display = 'none';
+        modalC.hide()
+        //modalC.style.display = 'none';
         checkboxMilitar.disabled = false;
     }
 });
 
 checkboxMilitar.addEventListener('change', () => {
     if (checkboxMilitar.checked) {
-        modalM.classList.add('show');
-        modalM.style.display = 'block';
+        modalM.show()
+        //modalM.style.display = 'block';
         checkboxCivil.disabled = true;
     } else {
-        modalM.classList.remove('show');
-        modalM.style.display = 'none';
+        modalM.hide()
+        //modalM.style.display = 'none';
         checkboxCivil.disabled = false;
     }
 });
@@ -205,6 +205,7 @@ const buscarCatalogo = async () => {
 
 async function colocarCatalogo(datos) {
     const dato = datos[0]
+    catalogo.value = dato.per_catalogo
     arma.value = dato.per_arma;
     nombre.value = dato.nombres;
     grado.value = dato.per_grado;
@@ -269,6 +270,7 @@ const buscarCatalogo2 = async () => {
 async function colocarCatalogo2(datos) {
 
     const dato = datos[0]
+    catalogo2.value = dato.per_catalogo
     arma2.value = dato.per_arma;
     nombre2.value = dato.nombres;
     grado2.value = dato.per_grado;
@@ -331,26 +333,30 @@ const buscarCatalogo3 = async () => {
 
 async function colocarCatalogo3(datos) {
     const dato = datos[0]
+    catalogo3.value = dato.per_catalogo
     arma3.value = dato.per_arma;
     nombre3.value = dato.nombres;
     grado3.value = dato.per_grado;
     empleo3.value = dato.org_plaza_desc
     comando3.value = dato.dep_llave
     
-    agregarEsposaCivil(datos)
+    agregarEsposaCivil(datos, 1)
  }
 
-const agregarEsposaCivil = async (datos) => {
-    modalM.classList.remove('show');
+const agregarEsposaCivil = async (datos, valor= '') => {
+    if(valor ==''){
+
+        modalM.hide()
+        return
+    }
     const valores = datos[0]
-    modal.style.display = 'none';
-    console.log(valores)
-    return
-    arma4.value = arma3.valores
-    nombre4.value = nombre3.
-    grado4.value = grado3.value
-    empleo4.value = empleo3.value
-    comando4.value = comando3.value
+    catalogo4.value = valores.per_catalogo
+    arma4.value = valores.per_arma
+    nombre4.value = valores.nombres
+    grado4.value = valores.per_grado
+    empleo4.value = valores.org_plaza_desc
+    comando4.value = valores.dep_llave
+
 }
 
 const traeDatos = (e) => {
@@ -513,18 +519,18 @@ const eliminar = async (e) => {
 
 
 
-botonCancelar1.addEventListener('click', function() {
-    // Agregar código para reiniciar el modal aquí
+// botonCancelar1.addEventListener('click', function() {
+//     // Agregar código para reiniciar el modal aquí
     
-    // Cierra el modal
-    modal.style.display = 'none';
-});
+//     // Cierra el modal
+//     modal.style.display = 'none';
+// });
 
 botonGuardar2.addEventListener('click', agregarEsposaCivil );
 formulario.addEventListener('submit', guardar);
 // btnBuscar.addEventListener('click', buscar);
-datatable.on('click', '.btn-warning', traeDatos);
-datatable.on('click', '.btn-danger', eliminar);
+// datatable.on('click', '.btn-warning', traeDatos);
+// datatable.on('click', '.btn-danger', eliminar);
 btnModificar.addEventListener('click', modificar)
 btnCancelar.addEventListener('click', cancelarAccion)
 
