@@ -48,31 +48,17 @@
                             </li>
                         </ul>
                     </div> 
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/soliciudes_e/protocolos"><i class="bi bi-file-music-fill"></i>Combos/Marimbas/Vallas</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/soliciudes_e/motivos"><i class="bi bi-bookmark-star"></i>Motivos de las Solicitudes</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/soliciudes_e/articulos"><i class="bi bi-book"></i>Articulos Licencia Temporal</a>
+                    </li> 
 
-                    <div class="nav-item dropdown " >
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-gear me-2"></i>Mantenimientos
-                        </a>
-                        <ul class="dropdown-menu  dropdown-menu-dark "id="dropwdownRevision" style="margin: 0;">
-                            <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/protocolos"><i class="bi bi-file-music-fill me-2"></i>Combos musicales/Vallas</a>
-                            </li> 
-                            <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/motivos"><i class="bi bi-bookmark-star-fill me-2"></i>Motivos de las Solicitudes</a>
-                            </li> 
-                            <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/articulos"><i class="bi bi-book-fill me-2"></i>Articulos Licencia Temporal</a>
-                            </li> 
-                            <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/transportes"><i class="bi bi-airplane-fill me-2"></i>Tipos de transportes</a>
-                            </li> 
-                            <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/tiposol"><i class="bi bi-file-earmark-text-fill me-2"></i>Tipos de solicitudes</a>
-                            </li> 
-                        </ul> 
-                    </div> 
-                </div> 
-                
+                </ul> 
                 <div class="col-lg-1 d-grid mb-lg-0 mb-2">
                     <!-- Ruta relativa desde el archivo donde se incluye menu.php -->
                     <a href="/soliciudes_e/" class="btn btn-danger"><i class="bi bi-arrow-bar-left"></i>SALIR</a>

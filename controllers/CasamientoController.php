@@ -56,6 +56,26 @@ class CasamientoController {
             ]);
         }
     }
+
+    public static function buscarCatalogo3Api() {
+        $validarCatalogo3 = $_GET['per_catalogo'];          
+        
+               
+        $sql = "SELECT  dep_llave,org_plaza_desc,per_grado, per_arma, per_catalogo,trim(per_nom1) ||' '||trim(per_nom2)||' '||trim(per_ape1)||' '||trim(per_ape2) as nombres from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = $validarCatalogo3";
+        
+                     
+        try {
+            $resultado = Personal::fetchArray($sql);
+            echo json_encode($resultado);
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
     public static function motivos()
     {
         $sql = "SELECT * FROM se_motivos where mot_situacion = 1";

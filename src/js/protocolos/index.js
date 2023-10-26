@@ -27,22 +27,32 @@ const datatable = new Datatable('#tablaProtocolos', {
     columns: [
         {
             title: 'NO',
+            className: 'text-center',
+            width: 'auto',
             render: () => contador++
         },
         {
             title: 'Llave',
+            className: 'text-center',
+            width: 'auto',
             data: 'dep_llave'
         },
         {
             title: 'Dependencia',
+            className: 'text-center',
+            width: 'auto',
             data: 'cmv_dependencia'
         },
         {
             title: 'Tipo de evento',
+            className: 'text-center',
+            width: 'auto',
             data: 'cmv_tip'
         },
         {
             title: 'MODIFICAR',
+            className: 'text-center',
+            width: 'auto',
             data: 'cmv_id',
             searchable: false,
             orderable: false,
@@ -50,6 +60,8 @@ const datatable = new Datatable('#tablaProtocolos', {
         },
         {
             title: 'ELIMINAR',
+            className: 'text-center',
+            width: 'auto',
             data: 'cmv_id',
             searchable: false,
             orderable: false,
