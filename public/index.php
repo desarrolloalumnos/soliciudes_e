@@ -8,6 +8,8 @@ use Controllers\ProtocoloController;
 use Controllers\CasamientoController;
 use Controllers\MotivoController;
 use Controllers\ArticuloController;
+use Controllers\TransporteController;
+
 
 
 $router = new Router();
@@ -33,6 +35,11 @@ $router->post('/API/articulos/guardar', [ArticuloController::class,'guardarApi']
 $router->post('/API/articulos/modificar', [ArticuloController::class,'modificarApi']);
 $router->post('/API/articulos/eliminar', [ArticuloController::class,'eliminarApi']);
 
+$router->get('/transportes', [TransporteController::class,'index']);
+$router->get('/API/transportes/buscar', [TransporteController::class,'buscarApi']);
+$router->post('/API/transportes/guardar', [TransporteController::class,'guardarApi']);
+$router->post('/API/transportes/modificar', [TransporteController::class,'modificarApi']);
+$router->post('/API/transportes/eliminar', [TransporteController::class,'eliminarApi']);
 
 
 $router->get('/casamientos', [CasamientoController::class,'index']);

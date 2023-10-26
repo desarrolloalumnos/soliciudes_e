@@ -10,6 +10,8 @@ module.exports = {
     'js/casamientos/index' : './src/js/casamientos/index.js',
     'js/motivos/index' : './src/js/motivos/index.js',
     'js/articulos/index' : './src/js/articulos/index.js',
+    'js/transportes/index' : './src/js/transportes/index.js',
+  
   },
   output: {
     filename: '[name].js',
