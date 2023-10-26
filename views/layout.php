@@ -38,13 +38,13 @@
                                 <a class="dropdown-item nav-link text-white " href="/soliciudes_e/casamientos"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud de matrimonio</a>
                             </li>
                             <li>
-                                <a class="dropdown-item nav-link text-white " href="/aplicaciones/nueva"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud de salida del pais</a>
+                                <a class="dropdown-item nav-link text-white " href="/soliciudes_e/salidapais"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud de salida del pais</a>
                             </li>
                             <li>
-                                <a class="dropdown-item nav-link text-white " href="/aplicaciones/nueva"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud de licencia temporal</a>
+                                <a class="dropdown-item nav-link text-white " href="/soliciudes_e/licenciatem"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud de licencia temporal</a>
                             </li>
                             <li>
-                                <a class="dropdown-item nav-link text-white " href="/aplicaciones/nueva"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud para Combos/Vallas/Marimbas </a>
+                                <a class="dropdown-item nav-link text-white " href="/soliciudes_e/protocolosol"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud para Combos/Vallas/Marimbas </a>
                             </li>
                         </ul>
                     </div> 
