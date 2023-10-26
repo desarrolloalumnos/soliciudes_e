@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/app.php';
 use MVC\Router;
 use Controllers\AppController;
 use Controllers\ProtocoloController;
+use Controllers\ProtocolosolController;
 use Controllers\CasamientoController;
 use Controllers\MotivoController;
 use Controllers\ArticuloController;
@@ -53,5 +54,7 @@ $router->get('/casamientos', [CasamientoController::class,'index']);
 $router->get('/API/casamientos/buscarCatalogo', [CasamientoController::class,'buscarCatalogoApi']);
 $router->get('/API/casamientos/buscarCatalogo2', [CasamientoController::class,'buscarCatalogo2Api']);
 $router->get('/API/casamientos/buscarCatalogo3', [CasamientoController::class,'buscarCatalogo3Api']);
+
+$router->get('/protocolosol', [ProtocolosolController::class,'index']);
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

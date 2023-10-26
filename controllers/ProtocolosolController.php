@@ -11,10 +11,10 @@ use MVC\Router;
 
 class ProtocolosolController {
     public static function index(Router $router){
-        $motivos = static::motivos();
+        //$motivos = static::motivos();
 
         $router->render('protocolosol/index', [
-            'motivos' => $motivos
+            //'motivos' => $motivos
         ]);
     }
 

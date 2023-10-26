@@ -116,16 +116,17 @@
                         </div>
                     </div>
         
-
-    <!-- pendiente -->
     
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-4">
 
-                        <label for="pco_cmbv">Seleccione el Combo, Marimba o Conjunto Musical</label>
-                        <select type="text" name="pco_cmbv" id="pco_cmbv" class="form-control">
-                            <option value="1">Marimba Alas de Seda</option>
-                            <option value="0">Valla de cadetes navales</option>
+                        <label for="pco_cmbv">Seleccione el Combo o banda musical, Marimba o valla</label>
+                        <select name="pco_cmbv" id="pco_cmbv" class="form-control">
+                            <option value="">SELECCIONE...</option>
+                                <?php foreach ($combos as $combo) : ?>
+                            <option value="<?= $combo['cmv_id'] ?>">
+                                <?= $combo['cmv_tip'] ?></option>
+                                <?php endforeach ?>
                         </select>
                             
                     </div>
