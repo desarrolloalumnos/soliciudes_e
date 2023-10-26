@@ -8,7 +8,7 @@ use MVC\Router;
 
 class TransporteController {
     public static function index(Router $router) {
-        $router->render('transporte/index', []);
+        $router->render('transportes/index', []);
     }
 
     public static function guardarAPI() {
