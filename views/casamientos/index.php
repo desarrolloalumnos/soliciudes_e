@@ -61,7 +61,7 @@
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
-                                    <!-- <input value="1" type="text" style="display: block;" name="sol_motivo" id="sol_motivo" class="form-control" > -->
+                                    <!-- <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control"> -->
                                 </div>
 
                                 <div class="col-lg-6">

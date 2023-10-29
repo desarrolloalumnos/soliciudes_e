@@ -1,18 +1,16 @@
 <div class="row justify-content-center mt-5">
-
     <div class="col-lg-10">
-        <div id="carouselSolicitudSalida" class="carousel slide" data-bs-ride="true">
-            
-        <div class="carousel-indicators">
-                <button type="button" class="bg-dark active" data-bs-target="#carouselSolicitudSalida" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" class="bg-dark" data-bs-target="#carouselSolicitudSalida" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        </div>
+        <div id="carouselSalidasPais" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" class="bg-dark active" data-bs-target="#carouselSalidasPais" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" class="bg-dark" id="botonSlide2" data-bs-target="#carouselSalidasPais" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            </div>
 
-            <form class="carousel-inner border bg-light p-4" id="formSolicitudSalida" style="min-height: 50vh;">
+            <form class="carousel-inner border bg-light p-4" id="formularioSalidasPais" style="min-height: 50vh;">
                 <div class="text-center">
-                    <h1>Solicitud de Salida de País</h1>
+                    <h1>Solicitud de Salida del País</h1>
+                    <input value="" id="sal_id" name="sal_id" class="form-control" type="hidden">
                 </div>
-                <input value="" id="sal_id" name="sal_id" class="form-control" type="hidden">
                 <div class="carousel-item active">
                     <div class="row justify-content-around mb-4">
                         <div class="row">
