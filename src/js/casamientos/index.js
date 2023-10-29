@@ -17,8 +17,6 @@ const grado = document.getElementById('ste_gra');
 const arma = document.getElementById('ste_arm');
 const empleo = document.getElementById('ste_emp');
 const comando = document.getElementById('ste_comando');
-const observaciones = document.getElementById('sol_obs');
-const motivos = document.getElementById('sol_motivo');
 const nombre2 = document.getElementById('nombre2');
 const catalogo2 = document.getElementById('aut_cat');
 const grado2 = document.getElementById('aut_gra');
@@ -50,16 +48,18 @@ const apellidoEsposaCivil2 = document.getElementById('parejac_apellidos');
 const direccionEsposaCivil2 = document.getElementById('parejac_direccion');
 const dpiEsposaCivil2 = document.getElementById('parejac_dpi');
 const idEsposaCivilSol = document.getElementById('pareja_civil')
-const botonGuardar2 = document.getElementById('buttonGuardar2');
-const botonCancelar2 = document.getElementById('buttonCancelar2');
+const btnAddEspMilitar = document.getElementById('buttonGuardar2');
+const btnCancelModalM = document.getElementById('buttonCancelar2');
+const btnAddEspCivil = document.getElementById('buttonGuardar1');
+const btnCancelModalC = document.getElementById('buttonCancelar1');
 
 
 
-motivos.disabled = true;
+
+
 nombre.disabled = true;
 nombre2.disabled = true;
 nombre3.disabled = true
-observaciones.disabled = true;
 btnGuardar.parentElement.style.display = 'block';
 btnBuscar.parentElement.style.display = 'block';
 btnModificar.disabled = true;
@@ -97,17 +97,9 @@ checkboxMilitar.addEventListener('change', () => {
 
 const guardar = async (evento) => {
     evento.preventDefault();
-    // if (!validarFormulario(formulario, ['cmv_id'])) {
-    //     Toast.fire({
-    //         icon: 'info',
-    //         text: 'Debe llenar todos los campos'
-    //     });
-    //     return;
-    // }
-    let nombreesposa = nombreEsposaCivil.value
+
     const body = new FormData(formulario);
-    body.append('nombreesposa', nombreesposa )
-    const url = '/soliciudes_e/API/protocolos/guardar';
+    const url = '/soliciudes_e/API/casamientos/guardar';
     const config = {
         method: 'POST',
         body
@@ -116,8 +108,10 @@ const guardar = async (evento) => {
     try {
         evento.preventDefault();
         const respuesta = await fetch(url, config);
-        const data = await respuesta.json();
-
+        const data = await respuesta.text();
+        console.log(data)
+        return
+               
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         switch (codigo) {
@@ -264,20 +258,22 @@ async function colocarCatalogo2(datos) {
     grado2.value = dato.per_grado;
     empleo2.value = dato.org_plaza_desc
     comando2.value = dato.dep_llave
-    const nombres1 = nombre.value;
-    const nombres2 = nombre2.value;
-    if (nombres1 === '' && nombres2 === '') {
-        botonSlide2.disabled = true;
-    } else {
-        botonSlide2.disabled = false;
-    }
+
+    // if (nombres1 === '' && nombres2 === '') {
+    //     botonSlide2.disabled = true;
+    // } else {
+    //     botonSlide2.disabled = false;
+    // }
 
 
 }
 
+
+
 catalogo3.addEventListener('change', async (e) => {
     const pareja = await buscarCatalogo3();
     colocarCatalogo3(pareja);
+    agregarEsposaMilitar(pareja)
 
 });
 
@@ -320,6 +316,7 @@ const buscarCatalogo3 = async () => {
 
 
 async function colocarCatalogo3(datos) {
+    
     const dato = datos[0]
     catalogo3.value = dato.per_catalogo
     arma3.value = dato.per_arma;
@@ -328,15 +325,12 @@ async function colocarCatalogo3(datos) {
     empleo3.value = dato.org_plaza_desc
     comando3.value = dato.dep_llave
     
-    agregarEsposaCivil(datos, 1)
+    
  }
 
-const agregarEsposaCivil = async (datos, valor= '') => {
-    if(valor ==''){
-
-        modalM.hide()
-        return
-    }
+ async function agregarEsposaMilitar(datos) {
+     if (datos && datos.length > 0) {
+    console.log(datos)
     const valores = datos[0]
     catalogo4.value = valores.per_catalogo
     arma4.value = valores.per_arma
@@ -345,6 +339,62 @@ const agregarEsposaCivil = async (datos, valor= '') => {
     empleo4.value = valores.org_plaza_desc
     comando4.value = valores.dep_llave
 
+} else {
+    
+    console.log("No hay datos para agregar esposa militar.");
+}
+
+}
+
+
+const guardarEsposa = async () =>{
+    modalM.hide();
+}
+
+
+
+const limpiarModelM = async() =>{
+    catalogo3.value = ''
+    arma3.value = ''
+    nombre3.value = ''
+    grado3.value = ''
+    empleo3.value = ''
+    comando3.value = ''
+    checkboxCivil.disabled = false;
+    checkboxMilitar.checked = false;
+    modalM.hide()
+}
+
+const limpiarModelC = async() =>{
+    catalogo3.value = ''
+    arma3.value = ''
+    nombre3.value = ''
+    grado3.value = ''
+    empleo3.value = ''
+    comando3.value = ''
+    checkboxCivil.disabled = false;
+    checkboxMilitar.checked = false;
+    modalM.hide()
+}
+const agregarEsposaCivil = async (value) => {
+    if(value ===''){
+
+        modalC.hide()
+        return
+    }
+    let nombre = nombreEsposaCivil.value;
+    let apellido = apellidoEsposaCivil.value;
+    let direccion =direccionEsposaCivil.value;
+    let dpi = dpiEsposaCivil.value;
+    if (nombre === '' && apellido === '' && direccion === '' && dpi === '') {
+        modalC.hide();
+    } else {
+        nombreEsposaCivil2.value = nombre;
+        apellidoEsposaCivil2.value = apellido;
+        direccionEsposaCivil2.value = direccion;
+        dpiEsposaCivil2.value = dpi;
+        modalC.hide();
+    }
 }
 
 const traeDatos = (e) => {
@@ -507,15 +557,13 @@ const eliminar = async (e) => {
 
 
 
-// botonCancelar1.addEventListener('click', function() {
-//     // Agregar código para reiniciar el modal aquí
-    
-//     // Cierra el modal
-//     modal.style.display = 'none';
-// });
 
-botonGuardar2.addEventListener('click', agregarEsposaCivil );
-formulario.addEventListener('submit', guardar);
+
+btnAddEspCivil.addEventListener('click',agregarEsposaCivil)
+btnCancelModalC.addEventListener('click',limpiarModelC)
+btnCancelModalM.addEventListener('click', limpiarModelM );
+btnAddEspMilitar.addEventListener('click', guardarEsposa );
+btnGuardar.addEventListener('click', guardar);
 // btnBuscar.addEventListener('click', buscar);
 // datatable.on('click', '.btn-warning', traeDatos);
 // datatable.on('click', '.btn-danger', eliminar);

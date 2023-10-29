@@ -8,7 +8,7 @@
                 <button type="button" class="bg-dark" id="botonSlide2" data-bs-target="#carouselMatrimonio" data-bs-slide-to="1" aria-label="Slide 2"></button>
 
             </div>
-            <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" style="min-height: 50vh;">
+            <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name= "formularioMatrimonio" style="min-height: 50vh;">
                 <div class="text-center">
                     <h1>Matrimonio</h1>
                     <input value="" id="mat_id" name="mat_id" class="form-control" type="hidden">
@@ -16,20 +16,19 @@
                 <div class="carousel-item active">
                     <div class="row justify-content-around mb-4">
                         <div class="row">
-                            
+
                             <div class="row">
                                 <div class="col-lg-4">
                                     <h2>Datos del solicitante</h2>
                                 </div>
                             </div>
-                            
-                            
+
+
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
-                                    <input value="text" id="mat_autorizacion" name="mat_autorizacion" class="form-control" type="hidden">
-                                    <input value="text" id="aut_id" name="aut_id" class="form-control" type="hidden">
+                                    <input value="" id="mat_autorizacion" name="mat_autorizacion" class="form-control" type="hidden">
+                                    <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                                     <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
-                                    <label for="ste_id">Catalogo</label>
                                     <label for="ste_cat">Catalogo</label>
                                     <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="numero de catalogo">
                                     <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
@@ -45,26 +44,28 @@
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="ste_fecha">Fecha de Solicitud</label>
-                                    <input value="" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime-local">
+                                    <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
 
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="ste_telefono">Telefono</label>
-                                    <input value="" id="ste_telefono" name="ste_telefono" class="form-control" type="number">
+                                    <input id="ste_telefono" name="ste_telefono" class="form-control" type="number">
                                 </div>
 
                             </div>
                             <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
                             <input value="1" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
                             <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
+                            <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
+                            <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
-                                    <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control" placeholde="Matrimonio">
+                                    <!-- <input value="1" type="text" style="display: block;" name="sol_motivo" id="sol_motivo" class="form-control" > -->
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <input class="form-control" placeholder="si su motivo fue 'OTROS' llene la observacion" type="hidden" name="sol_obs" id="sol_obs" rows="10" cols="50">
+                                    <!-- <input value=" " class="form-control"  type="hidden" name="sol_obs" id="sol_obs" rows="10" cols="50"> -->
                                 </div>
 
 
@@ -90,7 +91,8 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="aut_fecha">Fecha</label>
-                                    <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime-local">
+                                    <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date">
+
                                 </div>
                             </div>
 
@@ -116,7 +118,7 @@
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodac">Fecha de la boda Civil</label>
-                            <input value="" id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="datetime-local">
+                            <input id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_lugar_religioso">Lugar de la boda Religiosa</label>
@@ -126,15 +128,15 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodar">Fecha de la boda Religiosa</label>
-                            <input value="" id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="datetime-local">
+                            <input id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_ini">Fecha de inicio de licencia</label>
-                            <input value="" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="datetime-local">
+                            <input id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_fin">Fecha de finalizacion de licencia</label>
-                            <input value="" id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="datetime-local">
+                            <input id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
                         </div>
                     </div>
                     <div class="row justify-content-center mt-12 mb-4">
@@ -166,8 +168,8 @@
                             <input type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
                         </div>
                         <div class="col-lg-3">
-                            <input type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
-                            <input type="hidden" name="parejac_dpi" id="parejac_dpi" class="form-control">
+                            <input type="text" name="parejam_comando" id="parejam_comando" class="form-control">
+                            <input type="text" name="parejac_dpi" id="parejac_dpi" class="form-control">
                             <input type="hidden" name="parejam_gra" id="parejam_gra" class="form-control">
                             <input type="hidden" name="parejam_arm" id="parejam_arm" class="form-control">
                         </div>
@@ -186,7 +188,7 @@
 
                     <div class="row justify-content-center mt-12 mb-4">
                         <div class="col-lg-2">
-                            <button type="button" id="btnGuardar" name="btnGuardar" data-bs-target="#carouselMatrimonio" class="btn btn-outline-primary w-100">Guardar</button>
+                            <button type="button" id="btnGuardar" name="btnGuardar"  class="btn btn-outline-primary w-100">Guardar</button>
                         </div>
                         <div class="col-lg-2">
                             <button type="button" id="btnBuscar" name="btnBuscar" data-bs-target="#carouselMatrimonio" class="btn btn-outline-info w-100">Buscar</button>
@@ -199,7 +201,7 @@
                         </div>
                     </div>
                 </div>
-        </div>
+        
 
         </form>
     </div>
@@ -251,7 +253,7 @@
                 <form class="modal-body container" id="formCasamiento" novalidate>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label for="pareja_cat1">Catalogo</label>
+                            <label for="parejam1_cat">Catalogo</label>
                             <input type="number" name="parejam1_cat" id="parejam1_cat" class="form-control">
                         </div>
                         <div class="col-lg-12">
