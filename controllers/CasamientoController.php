@@ -100,11 +100,15 @@ class CasamientoController
                                 if (!empty($_POST['parejac_nombres']) && !empty($_POST['parejac_apellidos']) && !empty($_POST['parejac_dpi'])) {
                                     $parejaCivil = new ParejaCivil($_POST);
                                     $parejaCivilResultado = $parejaCivil->crear();
+                                } else {
+                                    $parejaCivilResultado = ['resultado' => 0];
                                 }
 
                                 if (!empty($_POST['nombre4']) && !empty($_POST['parejam_cat'])) {
                                     $parejaMilitar = new ParejaMilitar($_POST);
                                     $parejaMilitarResultado = $parejaMilitar->crear();
+                                  } else {
+                                    $parejaMilitarResultado = ['resultado' => 0];
                                 }
 
                                 if ($parejaCivilResultado['resultado'] == 1) {
