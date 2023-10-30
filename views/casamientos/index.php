@@ -1,4 +1,4 @@
-<div class="row justify-content-center mt-5">
+<div class="row justify-content-center mt-5 mx-auto w-50">
 
     <div class="col-lg-10">
         <div id="carouselMatrimonio" class="carousel slide">
@@ -8,7 +8,7 @@
                 <button type="button" class="bg-dark" id="botonSlide2" data-bs-target="#carouselMatrimonio" data-bs-slide-to="1" aria-label="Slide 2"></button>
 
             </div>
-            <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name= "formularioMatrimonio" style="min-height: 50vh;">
+            <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio" style="min-height: 50vh;">
                 <div class="text-center">
                     <h1>Matrimonio</h1>
                     <input value="" id="mat_id" name="mat_id" class="form-control" type="hidden">
@@ -79,7 +79,7 @@
                                 <div class="col-lg-4">
                                     <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
                                     <label for="aut_cat">Catalogo</label>
-                                    <input value="" id="aut_cat" name="aut_cat" class="form-control" type="text">
+                                    <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number">
                                     <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                                     <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
                                     <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
@@ -131,16 +131,16 @@
                             <input id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_fecha_lic_ini">Fecha de inicio de licencia</label>
+                            <label for="mat_fecha_lic_ini">Inicio de la licencia</label>
                             <input id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_fecha_lic_fin">Fecha de finalizacion de licencia</label>
+                            <label for="mat_fecha_lic_fin">Finalizacion de la licencia</label>
                             <input id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
                         </div>
                     </div>
-                    <div class="row justify-content-center mt-12 mb-4">
-                        <div class="col-lg-2">
+                    <div class="row justify-content-center  mb-4">
+                        <div class="col-lg-3">
                             <label for="mat_fecha_bodar">Pareja Militar</label>
                             <input type="checkbox" id="pareja_militar" name="pareja_militar" class="form-check-input">
                         </div>
@@ -168,8 +168,8 @@
                             <input type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
                         </div>
                         <div class="col-lg-3">
-                            <input type="text" name="parejam_comando" id="parejam_comando" class="form-control">
-                            <input type="text" name="parejac_dpi" id="parejac_dpi" class="form-control">
+                            <input type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
+                            <input type="hidden" name="parejac_dpi" id="parejac_dpi" class="form-control">
                             <input type="hidden" name="parejam_gra" id="parejam_gra" class="form-control">
                             <input type="hidden" name="parejam_arm" id="parejam_arm" class="form-control">
                         </div>
@@ -177,7 +177,7 @@
 
                     <div class="row justify-content-center mt-12 mb-4">
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <label for="mat_fecha_bodar">Documentos PDF</label>
                             <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
                             <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
@@ -188,24 +188,13 @@
 
                     <div class="row justify-content-center mt-12 mb-4">
                         <div class="col-lg-2">
-                            <button type="button" id="btnGuardar" name="btnGuardar"  class="btn btn-outline-primary w-100">Guardar</button>
-                        </div>
-                        <div class="col-lg-2">
-                            <button type="button" id="btnBuscar" name="btnBuscar" data-bs-target="#carouselMatrimonio" class="btn btn-outline-info w-100">Buscar</button>
-                        </div>
-                        <div class="col-lg-2">
-                            <button type="button" id="btnModificar" name="btnModificar" data-bs-target="#carouselMatrimonio" class="btn btn-outline-warning w-100">Modificar</button>
-                        </div>
-                        <div class="col-lg-2">
-                            <button type="button" id="btnCancelar" name="btnCancelar" data-bs-target="#carouselMatrimonio" class="btn btn-outline-danger w-100">Cancelar</button>
+                            <button type="button" id="btnGuardar" name="btnGuardar" class="btn btn-outline-primary w-100">Guardar</button>
                         </div>
                     </div>
                 </div>
-        
-
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 </div>
 <div class="modal fade" id="modalC" tabindex="-1" role="dialog" aria-labelledby="modalCLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -11,6 +11,7 @@ use Controllers\MotivoController;
 use Controllers\ArticuloController;
 use Controllers\TransporteController;
 use Controllers\TiposolController;
+use Controllers\BuscasController;
 
 
 
@@ -55,6 +56,9 @@ $router->get('/API/casamientos/buscarCatalogo', [CasamientoController::class,'bu
 $router->get('/API/casamientos/buscarCatalogo2', [CasamientoController::class,'buscarCatalogo2Api']);
 $router->get('/API/casamientos/buscarCatalogo3', [CasamientoController::class,'buscarCatalogo3Api']);
 $router->post('/API/casamientos/guardar', [CasamientoController::class,'guardarApi']);
+
+$router->get('/busquedasc', [BuscasController::class,'index']);
+$router->get('/API/busquedasc/buscar', [BuscasController::class,'buscarApi']);
 
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);
 $router->get('/API/protocolosol/buscar', [ProtocolosolController::class,'buscarApi']);

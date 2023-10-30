@@ -38,12 +38,12 @@
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/casamientos"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud de matrimonio</a>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/casamientos">
+                                <a class="dropdown-item" href="/soliciudes_e/busquedasc">
                                     <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/ruta_a_llenar_documento">
+                                <a class="dropdown-item" href="/soliciudes_e/casamientos">
                                     <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
                                 </a>
                             </li>

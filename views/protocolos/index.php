@@ -48,16 +48,7 @@
                 </div>
             </div>
         </form>
-
-
     </div>
-
-
-
-
-
-
-
     <div class="row justify-content-center">
         <div class="col table-responsive" style="max-width: 80%; padding: 10px;">
             <table id="tablaProtocolos" class="table table-bordered table-hover">

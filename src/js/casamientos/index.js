@@ -6,10 +6,7 @@ import { validarFormulario, Toast, confirmacion } from "../funciones";
 
 const formulario = document.getElementById('formularioMatrimonio');
 const botonSlide2 = document.getElementById('botonSlide2');
-const btnBuscar = document.getElementById('btnBuscar');
-const btnModificar = document.getElementById('btnModificar');
 const btnGuardar = document.getElementById('btnGuardar');
-const btnCancelar = document.getElementById('btnCancelar');
 const divTabla = document.getElementById('tablaProtocolos');
 const catalogo = document.getElementById('ste_cat');
 const nombre = document.getElementById('nombre');
@@ -53,22 +50,11 @@ const btnCancelModalM = document.getElementById('buttonCancelar2');
 const btnAddEspCivil = document.getElementById('buttonGuardar1');
 const btnCancelModalC = document.getElementById('buttonCancelar1');
 
-
-
-
-
 nombre.disabled = true;
 nombre2.disabled = true;
 nombre3.disabled = true
 btnGuardar.parentElement.style.display = 'block';
-btnBuscar.parentElement.style.display = 'block';
-btnModificar.disabled = true;
-btnModificar.parentElement.style.display = 'none';
-btnCancelar.disabled = true;
-btnCancelar.parentElement.style.display = 'none';
 // botonSlide2.disabled = true;
-
-
 
 
 checkboxCivil.addEventListener('change', () => {
@@ -139,7 +125,6 @@ const guardar = async (evento) => {
     location.reload();
 
 };
-
 
 catalogo.addEventListener('change', async (e) => {
     const solicitante = await buscarCatalogo();
@@ -314,7 +299,6 @@ const buscarCatalogo3 = async () => {
 
 }
 
-
 async function colocarCatalogo3(datos) {
     
     const dato = datos[0]
@@ -346,11 +330,9 @@ async function colocarCatalogo3(datos) {
 
 }
 
-
 const guardarEsposa = async () =>{
     modalM.hide();
 }
-
 
 
 const limpiarModelM = async() =>{

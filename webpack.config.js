@@ -12,6 +12,7 @@ module.exports = {
     'js/articulos/index' : './src/js/articulos/index.js',
     'js/transportes/index' : './src/js/transportes/index.js',
     'js/tiposol/index' : './src/js/tiposol/index.js',
+    'js/busquedasc/index' : './src/js/busquedasc/index.js',
   },
   output: {
     filename: '[name].js',
