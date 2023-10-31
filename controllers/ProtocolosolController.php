@@ -25,7 +25,7 @@ class ProtocolosolController {
     public static function buscarCatalogoApi() {
         $validarCatalogo = $_GET['per_catalogo'];
         
-        $sql = " select  dep_llave,org_plaza_desc,per_grado, per_arma, per_catalogo from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = $validarCatalogo";
+        $sql = "select  dep_llave,org_plaza_desc,per_grado, per_arma, per_catalogo, RTRIM(per_nom1) || ' ' || RTRIM(per_nom2) || ' ' || RTRIM( per_ape1)  ||  ' ' || RTRIM(per_ape2) nombre from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = $validarCatalogo";
              
         try {
             $motivos = Personal::fetchArray($sql);

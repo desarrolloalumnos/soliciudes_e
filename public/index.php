@@ -65,5 +65,6 @@ $router->get('/licencias', [LictempController::class,'index']);
 
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);
 $router->get('/API/protocolosol/buscar', [ProtocolosolController::class,'buscarApi']);
+$router->get('/API/protocolosol/buscarCatalogo', [ProtocolosolController::class,'buscarCatalogoApi']);
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

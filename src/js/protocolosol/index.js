@@ -32,7 +32,6 @@ const botonCancelar2 = document.getElementById('buttonCancelar2');
 motivos.disabled = true;
 nombre.disabled = true;
 nombre2.disabled = true;
-nombre3.disabled = true
 observaciones.disabled = true;
 btnGuardar.parentElement.style.display = 'block';
 btnBuscar.parentElement.style.display = 'block';
@@ -109,6 +108,7 @@ try {
     const respuesta = await fetch(url, config)
     const data = await respuesta.json();
 
+    console.log(data);
 
     if (data.length > 0) {
         Toast.fire({
@@ -133,9 +133,10 @@ try {
 
 async function colocarCatalogo(datos) {
 const dato = datos[0]
+console.log(dato);
 catalogo.value = dato.per_catalogo
 arma.value = dato.per_arma;
-nombre.value = dato.nombres;
+nombre.value = dato.nombre;
 grado.value = dato.per_grado;
 empleo.value = dato.org_plaza_desc
 comando.value = dato.dep_llave
@@ -161,7 +162,7 @@ if (validarCatalogo === validarCatalogo2) {
     return;
 }
 
-const url = `/soliciudes_e/API/protocolosol/buscarCatalogo2?per_catalogo=${validarCatalogo2}`;
+const url = `/soliciudes_e/API/protocolosol/buscarCatalogo?per_catalogo=${validarCatalogo2}`;
 
 
 const config = {
@@ -200,7 +201,7 @@ async function colocarCatalogo2(datos) {
 const dato = datos[0]
 catalogo2.value = dato.per_catalogo
 arma2.value = dato.per_arma;
-nombre2.value = dato.nombres;
+nombre2.value = dato.nombre;
 grado2.value = dato.per_grado;
 empleo2.value = dato.org_plaza_desc
 comando2.value = dato.dep_llave
@@ -244,7 +245,7 @@ comando2.value = dato.dep_llave
             btnCancelar.disabled = true
             btnCancelar.parentElement.style.display = 'none'
             divTabla.style.display = ''
-            formulario.reset(); f
+            formulario.reset();
         }
         
         const modificar = async (evento) => {
