@@ -52,9 +52,6 @@ const btnCancelModalC = document.getElementById('buttonCancelar1');
 nombre.disabled = true;
 nombre2.disabled = true;
 nombre3.disabled = true
-btnGuardar.parentElement.style.display = 'block';
-botonSlide2.disabled = true;
-
 
 checkboxCivil.addEventListener('change', () => {
     if (checkboxCivil.checked) {
@@ -240,12 +237,6 @@ async function colocarCatalogo2(datos) {
     grado2.value = dato.per_grado;
     empleo2.value = dato.org_plaza_desc
     comando2.value = dato.dep_llave
-
-    if (nombres1 === '' && nombres2 === '') {
-        botonSlide2.disabled = true;
-    } else {
-        botonSlide2.disabled = false;
-    }
 
 }
 
