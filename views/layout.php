@@ -53,7 +53,7 @@
                         </ul>
                     </div>
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/salidapaises" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-file-earmark-text me-2"></i>Salida del Pais
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
@@ -62,7 +62,7 @@
                             </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/casamientos">
+                                <a class="dropdown-item" href="/soliciudes_e/salidapaises">
                                     <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
                                 </a>
                             </li>
@@ -97,8 +97,8 @@
                         </ul>
                     </div>
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-file-earmark-text me-2"></i>Combos/Vallas/Marimbas
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-file-earmark-text me-2"></i>Combos, bandas, marimbas y vallas
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <a class="dropdown-item" href="/soliciudes_e/busquedasc">
@@ -106,7 +106,7 @@
                             </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/casamientos">
+                                <a class="dropdown-item" href="/soliciudes_e/protocolosol">
                                     <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
                                 </a>
                             </li>

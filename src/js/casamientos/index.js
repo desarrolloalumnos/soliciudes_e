@@ -238,15 +238,6 @@ async function colocarCatalogo2(datos) {
     empleo2.value = dato.org_plaza_desc
     comando2.value = dato.dep_llave
 
-<<<<<<< HEAD
-    if (nombre === '' && nombre2 === '') {
-        botonSlide2.disabled = true;
-    } else {
-        botonSlide2.disabled = false;
-    }
-
-=======
->>>>>>> 7a5fb476e7d754bffebc35926302d6603d67137e
 }
 
 
