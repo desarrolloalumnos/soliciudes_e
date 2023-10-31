@@ -4,17 +4,21 @@ namespace Controllers;
 
 use Exception;
 use Model\Motivo;
+use Model\Autorizacion;
 use Model\Protocolo;
+use Model\Pdf;
 use Model\Personal;
 use Model\Motivos;
+use Model\Solicitante;
+use Model\Solicitud;
 use MVC\Router;
 
 class ProtocolosolController {
     public static function index(Router $router){
-        //$motivos = static::motivos();
+        $motivos = static::motivos();
 
         $router->render('protocolosol/index', [
-            //'motivos' => $motivos
+            'motivos' => $motivos
         ]);
     }
 
