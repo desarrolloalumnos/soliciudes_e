@@ -10,7 +10,7 @@
             </div>
             <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio" style="min-height: 50vh;">
                 <div class="text-center">
-                    <h1>Licencias Temporal</h1>
+                    <h1>Licencia Temporal</h1>
                 </div>
                 <div class="carousel-item active">
                     <div class="row justify-content-around mb-4">
@@ -53,18 +53,23 @@
 
                             </div>
                             <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
-                            <input value="1" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
+                            <input value="2" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
                             <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
-                            <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
                             <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
-                                    <!-- <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control"> -->
+                                    <select name="sol_motivo" id="sol_motivo" class="form-select" style="display: none">
+                                        <option value="1" selected>Matrimonio</option>
+                                        <?php foreach ($motivos as $motivo) { ?>
+                                            <option value="<?= $motivo['mot_id'] ?>"><?= $motivo['mot_descripcion'] ?></option>
+
+                                        <?php } ?>
+                                    </select>
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <!-- <input value=" " class="form-control"  type="hidden" name="sol_obs" id="sol_obs" rows="10" cols="50"> -->
+                                    <input value=" " class="form-control" type="hidden" name="sol_obs" id="sol_obs" rows="10" cols="50">
                                 </div>
 
 
@@ -120,148 +125,44 @@
                             <input id="lit_mes_sinsueldo" name="lit_mes_sinsueldo" class="form-control" type="number">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_lugar_religioso">Lugar de la boda Religiosa</label>
-                            <input value="" id="mat_lugar_religioso" name="mat_lugar_religioso" class="form-control" type="text">
+                            <label for="lit_fecha1">Fecha de inicio de licencia Temporal</label>
+                            <input value="" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
                         </div>
                     </div>
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-4">
-                            <label for="mat_fecha_bodar">Fecha de la boda Religiosa</label>
-                            <input id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="date">
+                            <label for="lit_fecha2">Fecha de fin de licencia Temporal</label>
+                            <input id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_fecha_lic_ini">Inicio de la licencia</label>
-                            <input id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
-                        </div>
-                        <div class="col-lg-4">
-                            <label for="mat_fecha_lic_fin">Finalizacion de la licencia</label>
-                            <input id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
-                        </div>
-                    </div>
-                    <div class="row justify-content-center  mb-4">
-                        <div class="col-lg-3">
-                            <label for="mat_fecha_bodar">Pareja Militar</label>
-                            <input type="checkbox" id="pareja_militar" name="pareja_militar" class="form-check-input">
-                        </div>
-                        <div class="col-lg-2">
-                            <label for="mat_fecha_lic_ini">Pareja Civil</label>
-                            <input type="checkbox" id="pareja_civil" name="pareja_civil" class="form-check-input">
+                            <select name="lit_articulo" id="lit_articulo" class="form-select" style="display: none">
+                                <option value=" " selected></option>
+                                <?php foreach ($tipos as $tipo) { ?>
+                                    <option value="<?= $tipo['art_id'] ?>"><?= $tipo['art_descripcion'] ?></option>
+
+                                <?php } ?>
+                            </select>
                         </div>
 
-                    </div>
-                    <div class="row justify-content-around mb-4">
-                        <div class="col-lg-3">
-                            <input type="hidden" name="mat_per_civil" id="mat_per_civil" class="form-control">
-                            <input type="hidden" name="mat_per_army" id="mat_per_civil" class="form-control">
-                            <input type="hidden" name="parejac_id" id="parejac_id" class="form-control">
-                            <input type="hidden" name="parejam_id" id="parejac_id" class="form-control">
-                            <input type="hidden" name="parejac_nombres" id="parejac_nombres" class="form-control">
-                            <input type="text" name="parejam_cat" id="parejam_cat" class="form-control">
-                        </div>
-                        <div class="col-lg-3">
-                            <input type="hidden" name="parejac_apellidos" id="parejac_apellidos" class="form-control">
-                            <input type="hidden" name="nombre4" id="nombre4" class="form-control">
-                        </div>
-                        <div class="col-lg-3">
-                            <input type="hidden" name="parejac_direccion" id="parejac_direccion" class="form-control">
-                            <input type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
-                        </div>
-                        <div class="col-lg-3">
-                            <input type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
-                            <input type="hidden" name="parejac_dpi" id="parejac_dpi" class="form-control">
-                            <input type="hidden" name="parejam_gra" id="parejam_gra" class="form-control">
-                            <input type="hidden" name="parejam_arm" id="parejam_arm" class="form-control">
-                        </div>
-                    </div>
+                        <div class="row justify-content-center mt-12 mb-4">
+                            <div class="col-lg-6">
+                                <label for="mat_fecha_bodar">Documentos PDF</label>
+                                <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
+                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
+                                <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
+                            </div>
 
-                    <div class="row justify-content-center mt-12 mb-4">
-
-                        <div class="col-lg-6">
-                            <label for="mat_fecha_bodar">Documentos PDF</label>
-                            <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
-                            <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
-                            <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
                         </div>
 
-                    </div>
-
-                    <div class="row justify-content-center mt-12 mb-4">
-                        <div class="col-lg-2">
-                            <button type="button" id="btnGuardar" name="btnGuardar" class="btn btn-outline-primary w-100">Guardar</button>
+                        <div class="row justify-content-center mt-12 mb-4">
+                            <div class="col-lg-2">
+                                <button type="button" id="btnGuardar" name="btnGuardar" class="btn btn-outline-primary w-100">Guardar</button>
+                            </div>
                         </div>
                     </div>
-                </div>
             </form>
         </div>
     </div>
 </div>
-<div class="modal fade" id="modalC" tabindex="-1" role="dialog" aria-labelledby="modalCLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title" id="modalMLabel">Datos de la Pareja</h1>
-            </div>
-            <div class="modal-body">
-                <form class="modal-body container" id="formCasamiento" novalidate>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <label for="parejac1_nombres">Nombres</label>
-                            <input type="text" name="parejac1_nombres" id="parejac1_nombres" class="form-control">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="parejac1_apellidos">Apellidos</label>
-                            <input type="text" name="parejac1_apellidos" id="parejac1_apellidos" class="form-control">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="parejac1_direccion">Direccion</label>
-                            <input type="text" name="parejac1_direccion" id="parejac1_direccion" class="form-control">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="parejac1_dpi">DPI</label>
-                            <input type="text" name="parejac1_dpi" id="parejac1_dpi" class="form-control">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" form="formPuntos" class="btn btn-outline-success" id="buttonGuardar1"><i class="bi bi-plus-circle me-2"></i>Agregar</button>
-                <button type="button" class="btn btn-outline-danger" id="buttonCancelar1" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalM" tabindex="-1" role="dialog" aria-labelledby="modalMLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title" id="modalMLabel">Datos de la Pareja</h1>
-            </div>
-            <div class="modal-body">
-                <form class="modal-body container" id="formCasamiento" novalidate>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <label for="parejam1_cat">Catalogo</label>
-                            <input type="number" name="parejam1_cat" id="parejam1_cat" class="form-control">
-                        </div>
-                        <div class="col-lg-12">
-                            <label for="nombre3">Nombres y Apellidos</label>
-                            <input type="text" name="nombre3" id="nombre3" class="form-control">
-                            <input type="hidden" name="parejam1_comando" id="parejam1_comando" class="form-control">
-                            <input type="hidden" name="parejam1_gra" id="parejam1_gra" class="form-control">
-                            <input type="hidden" name="parejam1_arm" id="parejam1_arm" class="form-control">
-                            <input type="hidden" name="parejam1_emp" id="parejam1_emp" class="form-control">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" form="formPuntos" class="btn btn-outline-success" id="buttonGuardar2"><i class="bi bi-plus-circle me-2"></i>Agregar</button>
-                <button type="button" class="btn btn-outline-danger" id="buttonCancelar2" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <script src="./build/js/licencias/index.js"></script>
