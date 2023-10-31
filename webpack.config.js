@@ -16,6 +16,7 @@ module.exports = {
     'js/busquedasc/index' : './src/js/busquedasc/index.js',
     'js/licencias/index' : './src/js/licencias/index.js',
     'js/protocolosol/index' : './src/js/protocolosol/index.js',
+    
   },
   output: {
     filename: '[name].js',

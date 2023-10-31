@@ -17,3 +17,4 @@ class Tiposolicitudes extends ActiveRecord {
         $this->tse_situacion = $args['tse_situacion'] ?? 1;
     }
 }
+

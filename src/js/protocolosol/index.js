@@ -349,5 +349,3 @@ comando2.value = dato.dep_llave
     buscar();
 
 }    
-
-
