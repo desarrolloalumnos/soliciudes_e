@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@iconify/vue": "^4.1.1",
     "autoprefixer": "^7.2.5",
     "css-loader": "^6.7.1",
     "exports-loader": "^4.0.0",

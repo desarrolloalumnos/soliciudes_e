@@ -10,7 +10,7 @@
             </div>
             <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio" style="min-height: 50vh;">
                 <div class="text-center">
-                    <h1>Matrimonio</h1>
+                    <h1>Licencias Temporal</h1>
                 </div>
                 <div class="carousel-item active">
                     <div class="row justify-content-around mb-4">
@@ -103,8 +103,8 @@
                 <div class="carousel-item ">
                     <div class="row">
                         <div class="col flex-1">
-                            <input value="" id="mat_id" name="mat_id" class="form-control" type="hidden">
-                            <input value="" id="mat_autorizacion" name="mat_autorizacion" class="form-control" type="hidden">
+                            <input value="" id="lit_id" name="lit_id" class="form-control" type="hidden">
+                            <input value="" id="lit_autorizacion" name="lit_autorizacion" class="form-control" type="hidden">
                             <h2>Solicitud</h2>
                         </div>
                     </div>
@@ -112,12 +112,12 @@
 
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-4">
-                            <label for="mat_lugar_civil">Lugar de la boda Civil</label>
-                            <input value="" id="mat_lugar_civil" name="mat_lugar_civil" class="form-control" type="text">
+                            <label for="lit_mes_consueldo">Meses con Sueldo </label>
+                            <input value="" id="lit_mes_consueldo" name="lit_mes_consueldo" class="form-control" type="number">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_fecha_bodac">Fecha de la boda Civil</label>
-                            <input id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
+                            <label for="lit_mes_sinsueldo">Meses sin Sueldo</label>
+                            <input id="lit_mes_sinsueldo" name="lit_mes_sinsueldo" class="form-control" type="number">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_lugar_religioso">Lugar de la boda Religiosa</label>
@@ -264,4 +264,4 @@
 </div>
 
 
-<script src="./build/js/casamientos/index.js"></script>
+<script src="./build/js/licencias/index.js"></script>

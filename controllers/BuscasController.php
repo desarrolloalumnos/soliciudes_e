@@ -44,30 +44,42 @@ class BuscasController
 
 
         $sql = "SELECT
-                se_matrimonio.mat_id,
-                se_matrimonio.mat_autorizacion,
-                se_matrimonio.mat_lugar_civil,
-                se_matrimonio.mat_fecha_bodac,
-                se_matrimonio.mat_lugar_religioso,
-                se_matrimonio.mat_fecha_bodar,
-                se_matrimonio.mat_per_civil,
-                TRIM(parejac_nombres) || ' ' || TRIM(parejac_apellidos) AS nombres,
-                se_matrimonio.mat_per_army,    
-                parejam_cat,
-                (SELECT TRIM(per_nom1) || ' ' ||TRIM(per_nom2) || ' ' ||TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper WHERE per_catalogo = se_pareja_militar.parejam_cat) AS nombres_pareja,
-                se_matrimonio.mat_fecha_lic_ini,
-                se_matrimonio.mat_fecha_lic_fin,
-                se_matrimonio.mat_situacion,    
-                (SELECT TRIM(per_nom1) || ' ' ||TRIM(per_nom2) || ' ' ||TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper WHERE per_catalogo = se_solicitante.ste_cat) AS nombres_solicitante,
-                se_solicitante.ste_cat,  
-                (SELECT TRIM(per_nom1) || ' ' ||TRIM(per_nom2) || ' ' ||TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper WHERE per_catalogo = se_autorizacion.aut_cat) AS nombres_autorizacion,
-                se_autorizacion.aut_cat
-                FROM se_matrimonio
-                LEFT JOIN se_pareja_civil ON se_matrimonio.mat_per_civil = se_pareja_civil.parejac_id
-                LEFT JOIN se_pareja_militar ON se_matrimonio.mat_per_army = se_pareja_militar.parejam_id
-                LEFT JOIN se_autorizacion ON se_matrimonio.mat_autorizacion = se_autorizacion.aut_id
-                LEFT JOIN se_solicitudes ON se_autorizacion.aut_solicitud = se_solicitudes.sol_id
-                LEFT JOIN se_solicitante ON se_solicitudes.sol_solicitante = se_solicitante.ste_id
+                    se_matrimonio.mat_id,
+                    se_matrimonio.mat_autorizacion,
+                    se_matrimonio.mat_lugar_civil,
+                    DATE(se_matrimonio.mat_fecha_bodac) AS mat_fecha_bodac,
+                    se_matrimonio.mat_lugar_religioso,
+                    DATE(se_matrimonio.mat_fecha_bodar) AS mat_fecha_bodar,
+                    se_matrimonio.mat_per_civil,
+                    TRIM(parejac_nombres) || ' ' || TRIM(parejac_apellidos) AS nombres,
+                    se_matrimonio.mat_per_army,    
+                    parejam_cat,
+                    (SELECT TRIM(per_nom1) || ' ' ||TRIM(per_nom2) || ' ' ||TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper WHERE per_catalogo = se_pareja_militar.parejam_cat) AS nombres_pareja,
+                    (SELECT trim(grados.gra_desc_md)||' de '||(armas.arm_desc_md) FROM mper INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
+                    WHERE per_catalogo = se_pareja_militar.parejam_cat) AS grado_pareja,
+                    DATE(se_matrimonio.mat_fecha_lic_ini) AS mat_fecha_lic_ini,
+                    DATE(se_matrimonio.mat_fecha_lic_fin) AS mat_fecha_lic_fin,
+                    se_matrimonio.mat_situacion,    
+                    (SELECT TRIM(per_nom1) || ' ' ||TRIM(per_nom2) || ' ' ||TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper WHERE per_catalogo = se_solicitante.ste_cat) AS nombres_solicitante,
+                    (SELECT trim(grados.gra_desc_md)||' de '||(armas.arm_desc_md) FROM mper INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
+                    WHERE per_catalogo = se_solicitante.ste_cat) AS grado_solicitante,
+                    se_solicitante.ste_cat,  
+                    (SELECT TRIM(per_nom1) || ' ' ||TRIM(per_nom2) || ' ' ||TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper WHERE per_catalogo = se_autorizacion.aut_cat) AS nombres_autorizacion,
+                    (SELECT trim(grados.gra_desc_md)||' de '||(armas.arm_desc_md) FROM mper INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
+                    WHERE per_catalogo = se_autorizacion.aut_cat) AS grado_autorizacion,
+                    se_autorizacion.aut_cat
+                FROM
+                    se_matrimonio
+                LEFT JOIN
+                    se_pareja_civil ON se_matrimonio.mat_per_civil = se_pareja_civil.parejac_id
+                LEFT JOIN
+                    se_pareja_militar ON se_matrimonio.mat_per_army = se_pareja_militar.parejam_id
+                LEFT JOIN
+                    se_autorizacion ON se_matrimonio.mat_autorizacion = se_autorizacion.aut_id
+                LEFT JOIN
+                    se_solicitudes ON se_autorizacion.aut_solicitud = se_solicitudes.sol_id
+                LEFT JOIN
+                    se_solicitante ON se_solicitudes.sol_solicitante = se_solicitante.ste_id
                 WHERE mat_situacion = 1";
 
         // if ($cmv_dependencia != 0) {
@@ -89,4 +101,6 @@ class BuscasController
             ]);
         }
     }
+
+
 }

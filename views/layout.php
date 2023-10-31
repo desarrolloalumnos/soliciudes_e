@@ -32,15 +32,12 @@
 
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-file-earmark-text me-2"></i>Solicitud a Gestionar
+                            <i class="bi bi-file-earmark-text me-2"></i>Matrimonio
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
-                            <li>
-                                <a class="dropdown-item" href="/soliciudes_e/casamientos"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud de matrimonio</a>
-                            <li>
-                                <a class="dropdown-item" href="/soliciudes_e/busquedasc">
-                                    <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
-                                </a>
+                            <a class="dropdown-item" href="/soliciudes_e/busquedasc">
+                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
+                            </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/casamientos">
@@ -53,19 +50,74 @@
                                 </a>
                             </li>
                             </li>
-                            <li>
-                                <a class="dropdown-item" href="/soliciudes_e/salidapais"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud de salida del país</a>
+                        </ul>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-file-earmark-text me-2"></i>Salida del Pais
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
+                            <a class="dropdown-item" href="/soliciudes_e/busquedasc">
+                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
+                            </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/licenciatem"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud de licencia temporal</a>
+                                <a class="dropdown-item" href="/soliciudes_e/casamientos">
+                                    <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
+                                </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/protocolosol"><i class="ms-lg-0 ms-2 bi bi-plus-circle me-2"></i>Solicitud para Combos/Vallas/Marimbas</a>
+                                <a class="dropdown-item" href="/ruta_de_estadisticas">
+                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadística
+                                </a>
+                            </li>
                             </li>
                         </ul>
                     </div>
-
-
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-file-earmark-text me-2"></i>Licencia Temporal
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
+                            <a class="dropdown-item" href="/soliciudes_e/busquedasc">
+                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
+                            </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/casamientos">
+                                    <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/ruta_de_estadisticas">
+                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadística
+                                </a>
+                            </li>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-file-earmark-text me-2"></i>Combos/Vallas/Marimbas
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
+                            <a class="dropdown-item" href="/soliciudes_e/busquedasc">
+                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
+                            </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/casamientos">
+                                    <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/ruta_de_estadisticas">
+                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadística
+                                </a>
+                            </li>
+                            </li>
+                        </ul>
+                    </div>
 
 
                     <div class="nav-item dropdown ">

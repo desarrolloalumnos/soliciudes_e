@@ -12,8 +12,7 @@ use Controllers\ArticuloController;
 use Controllers\TransporteController;
 use Controllers\TiposolController;
 use Controllers\BuscasController;
-
-
+use Controllers\LictempController;
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
@@ -59,6 +58,10 @@ $router->post('/API/casamientos/guardar', [CasamientoController::class,'guardarA
 
 $router->get('/busquedasc', [BuscasController::class,'index']);
 $router->get('/API/busquedasc/buscar', [BuscasController::class,'buscarApi']);
+$router->post('/API/busquedasc/enviar', [BuscasController::class,'enviarApi']);
+
+$router->get('/licencias', [LictempController::class,'index']);
+
 
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);
 $router->get('/API/protocolosol/buscar', [ProtocolosolController::class,'buscarApi']);
