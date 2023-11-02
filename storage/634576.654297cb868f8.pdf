@@ -1,0 +1,70 @@
+
+SELECT 
+            p.producto_nombre AS nombre_producto,
+            p.producto_precio,
+            dv.detalle_cantidad AS cantidad,
+            c.cliente_nombre AS nombre_cliente,
+            v.venta_fecha
+        FROM detalle_ventas dv
+        INNER JOIN ventas v ON dv.detalle_venta = v.venta_id AND dv.detalle_situacion = '1'
+        INNER JOIN productos p ON dv.detalle_producto = p.producto_id
+        INNER JOIN clientes c ON v.venta_cliente = c.cliente_id
+        WHERE 
+            (v.venta_fecha BETWEEN '2023-08-25'::DATE AND '2023-09-10'::DATE)
+            OR
+            (v.venta_fecha >= '2023-08-25'::DATE AND '2023-09-10'::DATE IS NULL)
+            OR
+            (v.venta_fecha <= '2023-08-25'::DATE AND '2023-09-10'::DATE IS NULL)
+            OR
+            ('2023-08-25'::DATE IS NULL AND '2023-09-10'::DATE IS NULL)
+
+
+
+CREATE TABLE productos (
+producto_id SERIAL NOT NULL,
+producto_nombre VARCHAR(50) NOT NULL,
+producto_precio DECIMAL(10,2) NOT NULL,
+producto_situacion CHAR(1) DEFAULT '1',
+PRIMARY KEY(producto_id)
+
+)
+
+CREATE TABLE clientes (
+cliente_id SERIAL NOT NULL,
+cliente_nombre VARCHAR(60) NOT NULL,
+cliente_nit VARCHAR(10),
+cliente_situacion CHAR(1) DEFAULT '1',
+PRIMARY KEY(cliente_id)
+
+)
+
+
+CREATE TABLE ventas (
+  venta_id SERIAL NOT NULL,
+  venta_cliente INTEGER NOT NULL,
+  venta_fecha DATE NOT NULL,
+  venta_situacion CHAR(1) DEFAULT '1' NOT NULL,
+  PRIMARY KEY(venta_id)
+)
+
+
+
+CREATE TABLE detalle_ventas (
+detalle_id SERIAL PRIMARY KEY NOT NULL,
+detalle_venta INTEGER NOT NULL,
+detalle_producto INTEGER NOT NULL,
+detalle_cantidad SMALLINT NOT NULL,
+detalle_situacion CHAR(1) DEFAULT '1',
+FOREIGN KEY(detalle_producto) REFERENCES productos(producto_id),
+FOREIGN KEY(detalle_venta)
+REFERENCES ventas(venta_id)
+
+)
+
+
+INSERT INTO ventas (venta_cliente, venta_fecha)
+VALUES (3, '2023-09-10'::DATE);
+
+-- Insertar otra venta con fecha 2023-08-25 y cliente con ID 2
+INSERT INTO ventas (venta_cliente, venta_fecha)
+VALUES (2, '2023-08-25'::DATE);

@@ -44,12 +44,6 @@
                                     <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item" href="/ruta_de_estadisticas">
-                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadística
-                                </a>
-                            </li>
-                            </li>
                         </ul>
                     </div>
                     <div class="nav-item dropdown">
@@ -65,12 +59,6 @@
                                 <a class="dropdown-item" href="/soliciudes_e/salidapaises">
                                     <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
                                 </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="/ruta_de_estadisticas">
-                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadística
-                                </a>
-                            </li>
                             </li>
                         </ul>
                     </div>
@@ -88,17 +76,11 @@
                                     <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item" href="/ruta_de_estadisticas">
-                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadística
-                                </a>
-                            </li>
-                            </li>
                         </ul>
                     </div>
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-music-note me-2"></i>Combos, bandas, marimbas y vallas
+                            <i class="bi bi-music-note me-2"></i>Combos y vallas
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <a class="dropdown-item" href="/soliciudes_e/busquedasc">
@@ -110,11 +92,27 @@
                                     <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
                                 </a>
                             </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-check2-square"></i>Administracion
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
+                            <a class="dropdown-item" href="/soliciudes_e/busquedasc">
+                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
+                            </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/protocolosol">
+                                    <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>PDF
+                                </a>
+                            </li>
                             <li>
                                 <a class="dropdown-item" href="/ruta_de_estadisticas">
                                     <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadística
                                 </a>
-                            </li>
                             </li>
                         </ul>
                     </div>

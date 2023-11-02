@@ -184,8 +184,8 @@ const datatable = new Datatable('#tablaLicencias', {
         },
         {
             title: 'PDF',
-            className: 'text-center',
-            data: 'pdf_ruta'
+            data: 'pdf_ruta',
+            render: (data, type, row, meta) => `<a class="btn btn-warning" href='${data}'>VER DOCUMENTACION</a>`
         },
         {
             title: 'MODIFICAR',
@@ -206,10 +206,11 @@ const datatable = new Datatable('#tablaLicencias', {
     ],
     columnDefs: [
         {
-            targets: [1,,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26],
+            targets: [1, , 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
             visible: false,
             searchable: false,
-        }
+        },
+
     ]
 });
 
@@ -401,7 +402,7 @@ const eliminar = async (e) => {
         }
     }
 
-    // buscar();
+    buscar();
 }
 
 buscar();

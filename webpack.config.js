@@ -14,6 +14,7 @@ module.exports = {
     'js/transportes/index' : './src/js/transportes/index.js',
     'js/tiposol/index' : './src/js/tiposol/index.js',
     'js/busquedasc/index' : './src/js/busquedasc/index.js',
+    'js/busquedaslict/index' : './src/js/busquedaslict/index.js',
     'js/licencias/index' : './src/js/licencias/index.js',
   },
   output: {

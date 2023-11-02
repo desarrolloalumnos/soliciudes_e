@@ -82,7 +82,7 @@ class CasamientoController
                     $solicitudId = $solicitudResultado['id'];
 
                     $archivo = $_FILES['pdf_ruta'];
-                    $ruta = "../storage/$catalogo_doc" . "." . uniqid() . ".pdf";
+                    $ruta = "../storage/matrimonio/$catalogo_doc". uniqid() . ".pdf";
                     $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
 
                     if ($subido) {

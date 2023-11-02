@@ -266,7 +266,8 @@ const datatable = new Datatable('#tablaMatrimonios', {
         {
             title: 'PDF',
             className: 'text-center',
-            data: 'pdf_ruta'
+            data: './',
+            render: (data, type, row, meta) => `<a class="btn btn-warning" href='${data}'>VER DOCUMENTACION</a>`
         },
         {
             title: 'MODIFICAR',
@@ -287,7 +288,7 @@ const datatable = new Datatable('#tablaMatrimonios', {
     ],
     columnDefs: [
         {
-            targets: [1,,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41],
+            targets: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41],
             visible: false,
             searchable: false,
         }

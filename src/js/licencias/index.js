@@ -226,9 +226,7 @@ async function colocarTiempo(datos) {
             evento.preventDefault();
             const respuesta = await fetch(url, config);
             const data = await respuesta.json();
-            console.log(data);
-            return
-    
+   
             const { codigo, mensaje, detalle } = data;
             let icon = 'info';
             switch (codigo) {
