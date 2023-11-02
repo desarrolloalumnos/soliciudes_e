@@ -74,6 +74,8 @@ $router->get('/API/busquedaslict/buscar', [BuscalictController::class,'buscarApi
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);
 $router->get('/API/protocolosol/buscar', [ProtocolosolController::class,'buscarApi']);
 $router->get('/API/protocolosol/buscarCatalogo', [ProtocolosolController::class,'buscarCatalogoApi']);
+$router->get('/API/protocolosol/buscarCatalogo', [ProtocolosolController::class,'buscarCatalogo2Api']);
+$router->post('/API/protocolosol/guardar', [ProtocolosolController::class,'guardarApi']);
 
 $router->get('/salidapaises', [SalidapaisController::class,'index']);
 $router->get('/salidapaises/buscar', [SalidapaisController::class,'buscarApi']);

@@ -5,13 +5,8 @@ import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
 const formulario = document.getElementById('formularioProtocolo');
-const botonSlide2 = document.getElementById('botonSlide2');
 const btnGuardar = document.getElementById('btnGuardar');
-const divTabla = document.getElementById('tablaProtocolos');
-const btnBuscar = document.getElementById('btnBuscar');
-const btnModificar = document.getElementById('btnModificar');
-const btnCancelar = document.getElementById('btnCancelar');
-const catalogo = document.getElementById('ste_cat');
+const catalogo = document.getElementById('ste_cat')
 const nombre = document.getElementById('nombre');
 const grado = document.getElementById('ste_gra');
 const arma = document.getElementById('ste_arm');
@@ -25,8 +20,7 @@ const grado2 = document.getElementById('aut_gra');
 const arma2 = document.getElementById('aut_arm');
 const empleo2 = document.getElementById('aut_emp');
 const comando2 = document.getElementById('aut_comando');
-const botonGuardar2 = document.getElementById('buttonGuardar2');
-const botonCancelar2 = document.getElementById('buttonCancelar2');
+
 
 
 motivos.disabled = true;
@@ -34,18 +28,16 @@ nombre.disabled = true;
 nombre2.disabled = true;
 observaciones.disabled = true;
 btnGuardar.parentElement.style.display = 'block';
-btnBuscar.parentElement.style.display = 'block';
-btnModificar.disabled = true;
-btnModificar.parentElement.style.display = 'none';
-btnCancelar.disabled = true;
-btnCancelar.parentElement.style.display = 'none';
-// botonSlide2.disabled = true;
+
 
 const guardar = async (evento) => {
     evento.preventDefault();
 
     const body = new FormData(formulario);
-    const url = `/soliciudes_e/API/protocolosol/guardar`;
+    // for (var pair of body.entries()) {
+    //     console.log(pair[0]+ ', *' + pair[1]+'*'); 
+    // }
+    const url = '/soliciudes_e/API/protocolosol/guardar';
     const config = {
         method: 'POST',
         body
@@ -54,9 +46,9 @@ const guardar = async (evento) => {
     try {
         evento.preventDefault();
         const respuesta = await fetch(url, config);
-        const data = await respuesta.text();
-                     
+        const data = await respuesta.json();
         const { codigo, mensaje, detalle } = data;
+        console.log(data);
         let icon = 'info';
         switch (codigo) {
             case 1:
@@ -80,7 +72,7 @@ const guardar = async (evento) => {
         console.log(error);
     }
 
-    location.reload();
+    // location.reload();
 
 };
 
@@ -134,12 +126,10 @@ const dato = datos[0]
 console.log(dato);
 catalogo.value = dato.per_catalogo
 arma.value = dato.per_arma;
-nombre.value = dato.nombre;
+nombre.value = dato.nombres;
 grado.value = dato.per_grado;
 empleo.value = dato.org_plaza_desc
 comando.value = dato.dep_llave
-
-
 }
 
 catalogo2.addEventListener('change', async (e) => {
@@ -199,151 +189,17 @@ async function colocarCatalogo2(datos) {
 const dato = datos[0]
 catalogo2.value = dato.per_catalogo
 arma2.value = dato.per_arma;
-nombre2.value = dato.nombre;
+nombre2.value = dato.nombres;
 grado2.value = dato.per_grado;
 empleo2.value = dato.org_plaza_desc
 comando2.value = dato.dep_llave
 
-// if (nombres1 === '' && nombres2 === '') {
-//     botonSlide2.disabled = true;
-// } else {
-//     botonSlide2.disabled = false;
-// }
 
 
 }
 
-        const colocarDatos = (dataset) => {
 
+btnGuardar.addEventListener('click', guardar)
 
-            dependencias.value = dataset.llave;
-            tipos.value = dataset.tipo;
-            id.value = dataset.numero;
         
-            btnGuardar.disabled = true
-            btnGuardar.parentElement.style.display = 'none'
-            btnBuscar.disabled = true
-            btnBuscar.parentElement.style.display = 'none'
-            btnModificar.disabled = false
-            btnModificar.parentElement.style.display = ''
-            btnCancelar.disabled = false
-            btnCancelar.parentElement.style.display = ''
-        
-        
-        
-        }
-        
-        const cancelarAccion = () => {
-            btnGuardar.disabled = false
-            btnGuardar.parentElement.style.display = ''
-            btnBuscar.disabled = false
-            btnBuscar.parentElement.style.display = ''
-            btnModificar.disabled = true
-            btnModificar.parentElement.style.display = 'none'
-            btnCancelar.disabled = true
-            btnCancelar.parentElement.style.display = 'none'
-            divTabla.style.display = ''
-            formulario.reset();
-        }
-        
-        const modificar = async (evento) => {
-
-            evento.preventDefault();
-        
-        
-            const body = new FormData(formulario)
-            const url = '/soliciudes_e/API/protocolosol/modificar';
-            const headers = new Headers();
-            headers.append("X-Requested-With", "fetch");
-            const config = {
-                method: 'POST',
-                body
-            }
-        
-            try {
-                const respuesta = await fetch(url, config)
-                const data = await respuesta.json();
-        
-        
-                const { codigo, mensaje, detalle } = data;
-                let icon = 'info'
-                switch (codigo) {
-                    case 1:
-                        formulario.reset();
-                        icon = 'success'
-                        buscar();
-                        cancelarAccion();
-                        break;
-        
-                    case 0:
-                        icon = 'error'
-                        console.log(detalle)
-                        break;
-        
-                    default:
-                        break;
-                }
-        
-                Toast.fire({
-                    icon,
-                    text: mensaje
-                })
-        
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        
-        const eliminar = async (e) => {
-            const button = e.target;
-            const id = button.dataset.id;
-        
-            if (await confirmacion('warning', 'Desea elminar este registro?')) {
-                const body = new FormData()
-                body.append('cmv_id', id)
-                const url = '/soliciudes_e/API/protocolosol/eliminar';
-                const headers = new Headers();
-                headers.append("X-Requested-With", "fetch");
-                const config = {
-                    method: 'POST',
-                    body
-                }
-                try {
-                    const respuesta = await fetch(url, config)
-                    const data = await respuesta.json();
-        
-                    const { codigo, mensaje, detalle } = data;
-                    let icon = 'info'
-                    switch (codigo) {
-                        case 1:
-        
-                            icon = 'success'
-        
-                            break;
-        
-                        case 0:
-                            icon = 'error'
-                            console.log(detalle)
-                            break;
-        
-                        default:
-                            break;
-                    }
-        
-                    Toast.fire({
-                        icon,
-                        text: mensaje
-                    })
-        
-        
-        
-        
-                } catch (error) {
-                    console.log(error);
-                }
-    
-    }
-
-    buscar();
-
-}    
+       

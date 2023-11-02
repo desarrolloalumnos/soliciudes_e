@@ -4,7 +4,7 @@ namespace Model;
 
 class Protocolosol extends ActiveRecord {
     protected static $tabla = 'se_protocolo';
-    protected static $columnasDB = ['pco_autorizacion', 'pco_cmbv', 'pco_civil', 'pco_fechainicio', 'pco_fechafin', 'pco_dir', 'pco_just', 'pco_situacion'];
+    public static $columnasDB = ['pco_autorizacion', 'pco_cmbv', 'pco_fechainicio', 'pco_fechafin', 'pco_dir', 'pco_just', 'pco_situacion'];
     protected static $idTabla = 'pco_id';
     
     public $pco_id;
