@@ -14,6 +14,7 @@ use Controllers\TransporteController;
 use Controllers\TiposolController;
 use Controllers\BuscasController;
 use Controllers\LictempController;
+use Controllers\SalidapaisController;
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
@@ -72,5 +73,11 @@ $router->get('/API/busquedaslict/buscar', [BuscalictController::class,'buscarApi
 
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);
 $router->get('/API/protocolosol/buscar', [ProtocolosolController::class,'buscarApi']);
+$router->get('/API/protocolosol/buscarCatalogo', [ProtocolosolController::class,'buscarCatalogoApi']);
+
+$router->get('/salidapaises', [SalidapaisController::class,'index']);
+$router->get('/salidapaises/buscar', [SalidapaisController::class,'buscarApi']);
+
+
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

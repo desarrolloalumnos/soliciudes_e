@@ -3,20 +3,18 @@
 namespace Controllers;
 
 use Exception;
-use Model\Tiposolicitud;
+use Model\Tiposolicitudes;
 use MVC\Router;
 
-class TiposolController
-{
-    public static function index(Router $router)
-    {
+class TiposolController {
+    public static function index(Router $router) {
         $router->render('tiposol/index', []);
     }
 
     public static function guardarAPI()
     {
         try {
-            $tiposolicitud = new Tiposolicitud($_POST);
+            $tiposolicitud = new Tiposolicitudes($_POST);
             $resultado = $tiposolicitud->crear();
 
             if ($resultado['resultado'] == 1) {
@@ -37,7 +35,7 @@ class TiposolController
     public static function modificarAPI()
     {
         try {
-            $tiposolicitud = new Tiposolicitud($_POST);
+            $tiposolicitud = new Tiposolicitudes($_POST);
             $resultado = $tiposolicitud->actualizar();
 
             if ($resultado['resultado'] == 1) {
@@ -64,7 +62,7 @@ class TiposolController
     {
         try {
             $tse_id = $_POST['tse_id'];
-            $tiposolicitud = Tiposolicitud::find($tse_id);
+            $tiposolicitud = Tiposolicitudes::find($tse_id);
             $tiposolicitud->tse_situacion = 0;
             $resultado = $tiposolicitud->actualizar();
 
@@ -99,7 +97,7 @@ class TiposolController
         }
 
         try {
-            $tiposolicitudes = Tiposolicitud::fetchArray($sql);
+            $tiposolicitudes = Tiposolicitudes::fetchArray($sql);
             echo json_encode($tiposolicitudes);
         } catch (Exception $e) {
             echo json_encode([

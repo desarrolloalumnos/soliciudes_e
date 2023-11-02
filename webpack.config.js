@@ -15,7 +15,6 @@ module.exports = {
     'js/tiposol/index' : './src/js/tiposol/index.js',
     'js/busquedasc/index' : './src/js/busquedasc/index.js',
     'js/licencias/index' : './src/js/licencias/index.js',
-    'js/busquedaslict/index' : './src/js/busquedaslict/index.js',
   },
   output: {
     filename: '[name].js',
