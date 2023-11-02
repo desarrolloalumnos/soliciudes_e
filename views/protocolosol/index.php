@@ -1,5 +1,4 @@
 <div class="row justify-content-center mt-5">
-
     <div class="col-lg-10">
         <div class="row justify-content-center mt-5">
             <div class="col-lg-10">
@@ -19,19 +18,16 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <input value="text" id="mat_autorizacion" name="mat_autorizacion" class="form-control"
-                                    type="hidden">
-                                <input value="text" id="aut_id" name="aut_id" class="form-control" type="hidden">
-                                <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
-                                <label for="ste_id">Catalogo</label>
-                                <label for="ste_cat">Catalogo</label>
-                                <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number"
-                                    placeholder="Número de catalogo">
-                                <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
-                                <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
-                                <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
-                                <input value="" id="ste_comando" name="ste_comando" class="form-control" type="hidden">
-                            </div>
+                                    <input value="" id="mat_autorizacion" name="mat_autorizacion" class="form-control" type="hidden">
+                                    <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
+                                    <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
+                                    <label for="ste_cat">Catálogo</label>
+                                    <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="Número de catálogo">
+                                    <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
+                                    <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
+                                    <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
+                                    <input value="" id="ste_comando" name="ste_comando" class="form-control" type="hidden">
+                                </div>
                             <div class="col-lg-6">
                                 <label for="ste_cat">Nombres y Apellidos</label>
                                 <input value="" id="nombre" name="nombre" class="form-control" type="text">
@@ -40,16 +36,12 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="ste_fecha">Fecha de Solicitud</label>
-                                <input value="" id="ste_fecha" name="ste_fecha" class="form-control"
-                                    type="datetime-local">
-
+                                <input value="" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime-local">
                             </div>
                             <div class="col-lg-6">
                                 <label for="ste_telefono">Teléfono</label>
-                                <input value="" id="ste_telefono" name="ste_telefono" class="form-control"
-                                    type="number">
+                                <input value="" id="ste_telefono" name="ste_telefono" class="form-control" type="number">
                             </div>
-
                         </div>
 
                         <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
@@ -58,7 +50,7 @@
 
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
-                                <select name="sol_motivo" id="sol_motivo" class="form-select" style="display: none">
+                                <select name="sol_motivo" id="sol_motivo" class="form-select">
                                     <option value="1" selected>Matrimonio</option>
                                     <option value="2" selected>Eventos festivos</option>
                                     <?php foreach ($motivos as $motivo) { ?>
@@ -120,7 +112,7 @@
                                 <input value="" id="pco_id" name="pco_id" class="form-control" type="hidden">
                                 <input value="" id="pco_autorizacion" name="pco_autorizacion" class="form-control"
                                     type="hidden">
-                                <h2>Solicitud</h2>
+                                <h2>Detalle de la Solicitud</h2>
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">
@@ -137,57 +129,50 @@
 
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-lg-6">
                             <label for="pco_fechainicio">Fecha y hora de inicio de la actividad:</label>
                             <input type="datetime-local" name="pco_fechainicio" id="pco_fechainicio"
                                 class="form-control">
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <label for="pco_fechafin">Fecha y hora de finalización de la actividad:</label>
                             <input type="datetime-local" name="pco_fechafin" id="pco_fechafin" class="form-control">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <label for="pco_dir">Dirección donde se realizará la actividad:</label>
                             <input type="text" name="pco_dir" id="pco_dir" class="form-control">
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
+                    
+                        <div class="col-lg-6">
                             <label for="pco_just">Escriba la justificación de la actividad:</label>
                             <input type="text" name="pco_just" id="pco_just" class="form-control">
                         </div>
-                    </div>
+                    </div>                   
 
-                    <div class="row justify-content-center mt-12 mb-4">
+             
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <label for="mat_fecha_bodar">Documentos PDF</label>
                             <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
                             <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
                             <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
                         </div>
-
                     </div>
-
+                
 
                     <div class="row justify-content-center mt-12 mb-4">
                         <div class="col-lg-2">
-                            <button type="button" id="btnGuardar" name="btnGuardar"
-                                class="btn btn-outline-primary w-100">Guardar</button>
+                            <button type="button" id="btnGuardar" name="btnGuardar" class="btn btn-outline-primary w-100">Guardar</button>
                         </div>
                         <div class="col-lg-2">
-                            <button type="button" id="btnBuscar" name="btnBuscar"
-                                class="btn btn-outline-info w-100">Buscar</button>
+                            <button type="button" id="btnBuscar" name="btnBuscar" class="btn btn-outline-info w-100">Buscar</button>
                         </div>
                         <div class="col-lg-2">
-                            <button type="button" id="btnModificar" name="btnModificar"
-                                class="btn btn-outline-warning w-100">Modificar</button>
+                            <button type="button" id="btnModificar" name="btnModificar" class="btn btn-outline-warning w-100">Modificar</button>
                         </div>
                         <div class="col-lg-2">
-                            <button type="button" id="btnCancelar" name="btnCancelar"
-                                class="btn btn-outline-danger w-100">Cancelar</button>
+                            <button type="button" id="btnCancelar" name="btnCancelar" class="btn btn-outline-danger w-100">Cancelar</button>
                         </div>
                     </div>
                 </div>

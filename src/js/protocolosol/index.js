@@ -47,42 +47,40 @@ const guardar = async (evento) => {
     const body = new FormData(formulario);
     const url = `/soliciudes_e/API/protocolosol/guardar`;
     const config = {
-    method: 'POST',
-    body
-};
+        method: 'POST',
+        body
+    };
 
-try {
-    evento.preventDefault();
-    const respuesta = await fetch(url, config);
-    const data = await respuesta.text();
-    console.log(data)
-    return
-           
-    const { codigo, mensaje, detalle } = data;
-    let icon = 'info';
-    switch (codigo) {
-        case 1:
-            formulario.reset();
-            icon = 'success';
-            break;
+    try {
+        evento.preventDefault();
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.text();
+                     
+        const { codigo, mensaje, detalle } = data;
+        let icon = 'info';
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                icon = 'success';
+                break;
 
-        case 0:
-            icon = 'error';
-            console.log(detalle);
-            break;
+            case 0:
+                icon = 'error';
+                console.log(detalle);
+                break;
 
-        default:
-            break;
+            default:
+                break;
+        }
+        Toast.fire({
+            icon,
+            text: mensaje
+        });
+    } catch (error) {
+        console.log(error);
     }
-    Toast.fire({
-        icon,
-        text: mensaje
-    });
-} catch (error) {
-    console.log(error);
-}
 
-location.reload();
+    location.reload();
 
 };
 
