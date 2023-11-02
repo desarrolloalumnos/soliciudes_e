@@ -209,7 +209,6 @@ const guardar = async (evento) => {
         return;
     }
     const body = new FormData(formulario);
-    body.delete('tse_id');
     const url = '/soliciudes_e/API/tiposol/guardar';
     const config = {
         method: 'POST',
@@ -218,7 +217,7 @@ const guardar = async (evento) => {
 
     try {
         const respuesta = await fetch(url, config);
-        const data = await respuesta.json();
+        const data = await respuesta.text();
 
         let icon = 'info';
         switch (data.codigo) {
@@ -244,7 +243,7 @@ const guardar = async (evento) => {
     }
 };
 
-buscar();
+// buscar();
 
 datatable.on('click', '.btn-warning', traeDatos);
 datatable.on('click', '.btn-danger', eliminar);

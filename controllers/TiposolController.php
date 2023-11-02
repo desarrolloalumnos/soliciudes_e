@@ -6,12 +6,15 @@ use Exception;
 use Model\Tiposolicitud;
 use MVC\Router;
 
-class TiposolController {
-    public static function index(Router $router) {
+class TiposolController
+{
+    public static function index(Router $router)
+    {
         $router->render('tiposol/index', []);
     }
 
-    public static function guardarAPI() {
+    public static function guardarAPI()
+    {
         try {
             $tiposolicitud = new Tiposolicitud($_POST);
             $resultado = $tiposolicitud->crear();
@@ -20,11 +23,6 @@ class TiposolController {
                 echo json_encode([
                     'mensaje' => 'Registro guardado correctamente',
                     'codigo' => 1
-                ]);
-            } else {
-                echo json_encode([
-                    'mensaje' => 'Ocurrió un error',
-                    'codigo' => 0
                 ]);
             }
         } catch (Exception $e) {
@@ -36,7 +34,8 @@ class TiposolController {
         }
     }
 
-    public static function modificarAPI() {
+    public static function modificarAPI()
+    {
         try {
             $tiposolicitud = new Tiposolicitud($_POST);
             $resultado = $tiposolicitud->actualizar();
@@ -61,7 +60,8 @@ class TiposolController {
         }
     }
 
-    public static function eliminarAPI() {
+    public static function eliminarAPI()
+    {
         try {
             $tse_id = $_POST['tse_id'];
             $tiposolicitud = Tiposolicitud::find($tse_id);
@@ -88,7 +88,8 @@ class TiposolController {
         }
     }
 
-    public static function buscarAPI() {
+    public static function buscarAPI()
+    {
         $tse_descripcion = $_GET['tse_descripcion'] ?? '';
 
         $sql = "SELECT * FROM se_tipo_solicitud WHERE tse_situacion = 1 ";

@@ -90,7 +90,7 @@ const guardar = async (evento) => {
     try {
         evento.preventDefault();
         const respuesta = await fetch(url, config);
-        const data = await respuesta.text();
+        const data = await respuesta.json();
                      
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';

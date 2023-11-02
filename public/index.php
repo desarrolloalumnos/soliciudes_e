@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/app.php';
 
 
+use Controllers\BuscalictController;
 use MVC\Router;
 use Controllers\AppController;
 use Controllers\ProtocoloController;
@@ -61,7 +62,13 @@ $router->get('/API/busquedasc/buscar', [BuscasController::class,'buscarApi']);
 $router->post('/API/busquedasc/enviar', [BuscasController::class,'enviarApi']);
 
 $router->get('/licencias', [LictempController::class,'index']);
+$router->get('/API/licencias/buscarCatalogo', [LictempController::class,'buscarCatalogoApi']);
+$router->get('/API/licencias/buscarTiempo', [LictempController::class,'buscarTiempoApi']);
+$router->get('/API/licencias/buscarCatalogo2', [LictempController::class,'buscarCatalogo2Api']);
+$router->post('/API/licencias/guardar', [LictempController::class,'guardarApi']);
 
+$router->get('/busquedaslict', [BuscalictController::class,'index']);
+$router->get('/API/busquedaslict/buscar', [BuscalictController::class,'buscarApi']);
 
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);
 $router->get('/API/protocolosol/buscar', [ProtocolosolController::class,'buscarApi']);

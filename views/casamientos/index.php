@@ -10,6 +10,7 @@
             </div>
             <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio" style="min-height: 50vh;">
                 <div class="text-center">
+                    <input value="1"type="hidden" id="tse_id" name="tse_id">
                     <h1>Matrimonio</h1>
                 </div>
                 <div class="carousel-item active">
@@ -55,7 +56,7 @@
                             <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
                             <input value="1" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
                             <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
-                            <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
+                            <input value="7" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
                             <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
 
                             <div class="row justify-content-around mb-4">
@@ -177,7 +178,7 @@
                     <div class="row justify-content-center mt-12 mb-4">
 
                         <div class="col-lg-6">
-                            <label for="mat_fecha_bodar">Documentos PDF</label>
+                            <label for="mat_fecha_bodar"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>
                             <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
                             <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
                             <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">

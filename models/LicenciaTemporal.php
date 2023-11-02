@@ -23,7 +23,7 @@ class Licenciatemporal extends ActiveRecord {
         $this->lit_mes_sinsueldo = $args['lit_mes_sinsueldo'] ?? '';
         $this->lit_fecha1 = $args['lit_fecha1'] ?? '';
         $this->lit_fecha2 = $args['lit_fecha2'] ?? '';
-        $this->lit_articulo = $args['lit_articulo'] ?? '';
+        $this->lit_articulo = $args['lit_articulo'] ?? null;
         $this->lit_situacion = $args['lit_situacion'] ?? 1;
     }
 }

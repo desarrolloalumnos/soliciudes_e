@@ -79,12 +79,12 @@
                             <i class="bi bi-file-earmark-text me-2"></i>Licencia Temporal
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
-                            <a class="dropdown-item" href="/soliciudes_e/busquedasc">
+                            <a class="dropdown-item" href="/soliciudes_e/busquedaslict">
                                 <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
                             </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/casamientos">
+                                <a class="dropdown-item" href="/soliciudes_e/licencias">
                                     <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
                                 </a>
                             </li>

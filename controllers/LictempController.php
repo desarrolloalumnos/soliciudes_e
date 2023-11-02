@@ -30,9 +30,11 @@ class LictempController
     public static function index(Router $router)
     {
         $motivos = static::motivos();
+        $articulos = static::articulos();
 
         $router->render('licencias/index', [
-            'motivos' => $motivos
+            'motivos' => $motivos,
+            'articulos' => $articulos
         ]);
     }
 
@@ -41,8 +43,9 @@ class LictempController
     {
 
         try {
+       
             $catalogo_doc = $_POST['ste_cat'];
-
+            
 
             $fechaAutorizacion = $_POST['aut_fecha'];
             $fechaFormateadaAutorizacion = date('Y-m-d H:i', strtotime($fechaAutorizacion));
@@ -52,21 +55,13 @@ class LictempController
             $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
             $_POST['ste_fecha'] = $fechaFormateadaSolicito;
 
-            $fechaIncioLicencia = $_POST['mat_fecha_lic_ini'];
+            $fechaIncioLicencia = $_POST['lit_fecha1'];
             $fechaFormateadaIniLic = date('Y-m-d H:i', strtotime($fechaIncioLicencia));
-            $_POST['mat_fecha_lic_ini'] = $fechaFormateadaIniLic;
+            $_POST['lit_fecha1'] = $fechaFormateadaIniLic;
 
-            $fechaFinLicencia = $_POST['mat_fecha_lic_fin'];
+            $fechaFinLicencia = $_POST['lit_fecha2'];
             $fechaFormateadaFinLic = date('Y-m-d H:i', strtotime($fechaFinLicencia));
-            $_POST['mat_fecha_lic_fin'] = $fechaFormateadaFinLic;
-
-            $fechaBodaC = $_POST['mat_fecha_bodac'];
-            $fechaFormateadaBodaC = date('Y-m-d H:i', strtotime($fechaBodaC));
-            $_POST['mat_fecha_bodac'] =  $fechaFormateadaBodaC;
-
-            $fechaBodaR = $_POST['mat_fecha_bodar'];
-            $fechaFormateadaBodaR = date('Y-m-d H:i', strtotime($fechaBodaR));
-            $_POST['mat_fecha_bodar'] =  $fechaFormateadaBodaR;
+            $_POST['lit_fecha2'] = $fechaFormateadaFinLic;
 
             $solicitante = new Solicitante($_POST);
             $solicitanteResultado = $solicitante->crear();
@@ -96,35 +91,13 @@ class LictempController
                             $autorizacion = new Autorizacion($_POST);
                             $autorizacion->aut_solicitud = $solicitudId;
                             $autorizacionResultado = $autorizacion->crear();
+
                             if ($autorizacionResultado['resultado'] == 1) {
-                                if (!empty($_POST['parejac_nombres']) && !empty($_POST['parejac_apellidos']) && !empty($_POST['parejac_dpi'])) {
-                                    $parejaCivil = new ParejaCivil($_POST);
-                                    $parejaCivilResultado = $parejaCivil->crear();
-                                } else {
-                                    $parejaCivilResultado = ['resultado' => 0];
-                                }
+                               $autorizacionId = $autorizacionResultado['id'];
+                                $licencia = new Licenciatemporal($_POST);
+                                $licencia->lit_autorizacion = $autorizacionId;                                                            
+                                $licenciaResultado = $licencia->crear();
 
-                                if (!empty($_POST['nombre4']) && !empty($_POST['parejam_cat'])) {
-                                    $parejaMilitar = new ParejaMilitar($_POST);
-                                    $parejaMilitarResultado = $parejaMilitar->crear();
-                                  } else {
-                                    $parejaMilitarResultado = ['resultado' => 0];
-                                }
-
-                                if ($parejaCivilResultado['resultado'] == 1) {
-                                    $matrimonio = new Matrimonio($_POST);
-                                    $matrimonio->mat_autorizacion = $autorizacionResultado['id'];
-                                    $matrimonio->mat_per_civil = $parejaCivilResultado['id'];
-                                    $matrimonioResultado = $matrimonio->crear();
-                                } elseif ($parejaMilitarResultado['resultado'] == 1) {
-                                    $matrimonio = new Matrimonio($_POST);
-                                    $matrimonio->mat_autorizacion = $autorizacionResultado['id'];
-                                    $matrimonio->mat_per_army = $parejaMilitarResultado['id'];
-                                    $matrimonioResultado = $matrimonio->crear();
-                                } else {
-                                    echo "No se ingresó la pareja";
-                                    exit;
-                                }
                             } else {
                                 echo "No se pudo crear la autorización";
                                 exit;
@@ -146,7 +119,7 @@ class LictempController
                 exit;
             }
 
-            if ($matrimonioResultado['resultado'] == 1) {
+            if ($licenciaResultado['resultado'] == 1) {
 
                 echo json_encode([
                     'mensaje' => 'Registro guardado correctamente',
@@ -202,6 +175,25 @@ class LictempController
         }
     }
 
+    public static function buscarTiempoApi()
+    {
+        $validarCatalogo = $_GET['t_catalogo'];
+
+
+        $sql = "SELECT t_oficial FROM tiempos WHERE t_catalogo = $validarCatalogo ";
+
+
+        try {
+            $resultado = Personal::fetchArray($sql);
+            echo json_encode($resultado);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
     public static function buscarCatalogo3Api()
     {
         $validarCatalogo3 = $_GET['per_catalogo'];
@@ -234,6 +226,24 @@ class LictempController
             if ($motivos) {
 
                 return $motivos;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+        }
+    }
+
+    public static function articulos()
+    {
+        $sql = "SELECT * FROM se_articulos WHERE art_situacion = 1";
+
+        try {
+
+            $articulos = Articulos::fetchArray($sql);
+
+            if ($articulos) {
+
+                return $articulos;
             } else {
                 return 0;
             }

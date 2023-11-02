@@ -3,16 +3,16 @@
 namespace Controllers;
 
 use Exception;
-use Model\Matrimonio;
+use Model\Licenciatemporal;
 use MVC\Router;
 
-class BuscasController
+class BuscalictController
 {
     public static function index(Router $router)
     {
         // $motivos = static::motivos();
 
-        $router->render('busquedasc/index', [
+        $router->render('busquedaslict/index', [
             // 'motivos' => $motivos
         ]);
     }
@@ -25,15 +25,7 @@ class BuscasController
 
 
         $sql = "SELECT 
-                    mat.mat_id,
-                    (SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) 
-                    FROM mper 
-                    WHERE per_catalogo = parm.parejam_cat) AS nombres_pareja,
-                    (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) 
-                    FROM mper 
-                    INNER JOIN grados ON mper.per_grado = grados.gra_codigo 
-                    INNER JOIN armas ON mper.per_arma = armas.arm_codigo
-                    WHERE per_catalogo = parm.parejam_cat) AS grado_pareja,     
+                    lit.lit_id,    
                     (SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) 
                     FROM mper 
                     WHERE per_catalogo = ste.ste_cat) AS nombres_solicitante,
@@ -42,7 +34,7 @@ class BuscasController
                     INNER JOIN grados ON mper.per_grado = grados.gra_codigo 
                     INNER JOIN armas ON mper.per_arma = armas.arm_codigo
                     WHERE per_catalogo = ste.ste_cat) AS grado_solicitante,
-                    mat.mat_autorizacion,
+                    lit.lit_autorizacion,
                     auth.aut_id,
                     auth.aut_solicitud,
                     sol.sol_id,			
@@ -67,35 +59,22 @@ class BuscasController
                     auth.aut_arm,
                     auth.aut_emp,
                     auth.aut_fecha,    
-                    mat.mat_lugar_civil,
-                    mat.mat_fecha_bodac,
-                    mat.mat_lugar_religioso,
-                    mat.mat_fecha_bodar,
-                    mat.mat_per_civil,
-                    parc.parejac_id, 			
-                    TRIM(parc.parejac_nombres)||' '||TRIM(parc.parejac_apellidos) AS nombres,
-                    parc.parejac_direccion,    
-                    parc.parejac_dpi, 
-                    mat.mat_per_army,
-                    parm.parejam_id,			
-                    parm.parejam_cat,           	
-                    parm.parejam_comando,       
-                    parm.parejam_gra,           	
-                    parm.parejam_arm,           	
-                    parm.parejam_emp,           	
-                    parm.parejam_situacion,
                     pdf.pdf_id, 			
                     pdf.pdf_ruta,		
                     pdf.pdf_solicitud, 
-                    mat.mat_fecha_lic_ini,
-                    mat.mat_fecha_lic_fin,
-                    mat.mat_situacion
+                    lit.lit_mes_consueldo,
+                    lit.lit_mes_sinsueldo,
+                    lit.lit_fecha1,
+                    lit.lit_fecha2,
+                    lit.lit_articulo,
+                    art.art_id,
+                    lit.lit_situacion
                 FROM 
-                    se_matrimonio mat
+                    se_licencia_temporal lit
                 LEFT JOIN
                     se_autorizacion auth
                 ON
-                    mat.mat_autorizacion = auth.aut_id
+                    lit.lit_autorizacion = auth.aut_id
                 LEFT JOIN 
                     se_solicitudes sol
                 ON 
@@ -116,15 +95,12 @@ class BuscasController
                     se_solicitante  ste
                 ON 
                     sol.sol_solicitante = ste.ste_id
+             
                 LEFT JOIN
-                    se_pareja_civil parc
+                    se_articulos art
                 ON 
-                    mat.mat_per_civil = parc.parejac_id
-                LEFT JOIN
-                    se_pareja_militar parm
-                ON 
-                    mat.mat_per_army = parm.parejam_id
-                WHERE mat.mat_situacion = 2";
+                    lit.lit_articulo = art.art_id
+                WHERE lit.lit_situacion = 1";
 
         // if ($cmv_dependencia != 0) {
         //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";
@@ -135,7 +111,7 @@ class BuscasController
         // }
 
         try {
-            $resultado = Matrimonio::fetchArray($sql);
+            $resultado = Licenciatemporal::fetchArray($sql);
             echo json_encode($resultado);
         } catch (Exception $e) {
             echo json_encode([
@@ -145,6 +121,4 @@ class BuscasController
             ]);
         }
     }
-
-
 }
