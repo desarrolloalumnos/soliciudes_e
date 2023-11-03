@@ -96,6 +96,11 @@ class ActiveRecord {
         
 
         //debuguear($query);
+
+        // if(static::$tabla == 'se_protocolo'){
+        //     echo json_encode($query);
+        //     exit;
+        // }
       
  
 

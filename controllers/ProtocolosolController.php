@@ -10,56 +10,64 @@ use Model\Personal;
 use Model\Motivos;
 use Model\Solicitante;
 use Model\Solicitud;
+use Model\Protocolosol;
 use MVC\Router;
 
 class ProtocolosolController{
     public static function index(Router $router)
     {
         $motivos = static::motivos();
+        $protocolos = static::Protocolo();
 
         $router->render('protocolosol/index', [
-            'motivos' => $motivos
+            'motivos' => $motivos,
+            'combos' => $protocolos
         ]);
     }
 
     public static function guardarApi(){
         try {
-            $catalogo_doc = $_POST['ste_cat'];
 
+            $catalogo_doc = $_POST['ste_cat'];
+            
             // Formatear fechas
             $fechaAutorizacion = $_POST['aut_fecha'];
-            $fechaFormateadaAutorizacion = date('Y-m-d H:i', strtotime($fechaAutorizacion));
+            $fechaFormateadaAutorizacion = date('Y-m-d 00:00', strtotime($fechaAutorizacion));
             $_POST['aut_fecha'] = $fechaFormateadaAutorizacion;
-
+            
             $fechaSolicito = $_POST['ste_fecha'];
-            $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
+            $fechaFormateadaSolicito = date('Y-m-d 00:00', strtotime($fechaSolicito));
             $_POST['ste_fecha'] = $fechaFormateadaSolicito;
-
+            
             $fechaInicioActividad = $_POST['pco_fechainicio'];
-            $fechaFormateadaIni = date('Y-m-d H:i', strtotime($fechaInicioActividad));
+            $fechaFormateadaIni = date('Y-m-d 00:00', strtotime($fechaInicioActividad));
             $_POST['pco_fechainicio'] = $fechaFormateadaIni;
-
+            // $_POST['pco_fechainicio'] = null;
+            
             $fechaFinActividad = $_POST['pco_fechafin'];
-            $fechaFormateadaFin = date('Y-m-d H:i', strtotime($fechaFinActividad));
+            $fechaFormateadaFin = date('Y-m-d 00:00', strtotime($fechaFinActividad));
             $_POST['pco_fechafin'] = $fechaFormateadaFin;
+            // $_POST['pco_fechafin'] = null;
 
+            
             $solicitante = new Solicitante($_POST);
             $solicitanteResultado = $solicitante->crear();
-
+ 
+            
             if ($solicitanteResultado['resultado'] == 1) {
                 $solicitanteId = $solicitanteResultado['id'];
-
+                
                 $solicitud = new Solicitud($_POST);
                 $solicitud->sol_solicitante = $solicitanteId;
                 $solicitudResultado = $solicitud->crear();
-
+             
                 if ($solicitudResultado['resultado'] == 1) {
                     $solicitudId = $solicitudResultado['id'];
 
                     $archivo = $_FILES['pdf_ruta'];
-                    $ruta = "../storage/$catalogo_doc" . "." . uniqid() . ".pdf";
+                    $ruta = "../storage/protocolos/$catalogo_doc". uniqid() . ".pdf";
                     $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
-
+                    
                     if ($subido) {
                         $pdf = new Pdf([
                             'pdf_solicitud' => $solicitudId,
@@ -71,50 +79,54 @@ class ProtocolosolController{
                             $autorizacion = new Autorizacion($_POST);
                             $autorizacion->aut_solicitud = $solicitudId;
                             $autorizacionResultado = $autorizacion->crear();
-
+                          
                             if ($autorizacionResultado['resultado'] == 1) {
-                                echo json_encode([
-                                    'mensaje' => 'Registro guardado correctamente',
-                                    'codigo' => 1
-                                ]);
+                                $autorizacionId = $autorizacionResultado['id'];
+                                
+                                $protocolosol = new Protocolosol($_POST);
+                                $protocolosol->pco_autorizacion = $autorizacionId;                                                
+                                $protocolosolResultado = $protocolosol->crear();
                             } else {
-                                echo json_encode([
-                                    'mensaje' => 'No se pudo crear la autorización',
-                                    'codigo' => 0
-                                ]);
+                                    echo "No se pudo crear la autorización";
+                                exit;
                             }
                         } else {
-                            echo json_encode([
-                                'mensaje' => 'No se pudo crear el PDF',
-                                'codigo' => 0
-                            ]);
+                            echo "No se pudo crear el PDF";
+                            exit;
                         }
                     } else {
-                        echo json_encode([
-                            'mensaje' => 'No se pudo subir el archivo',
-                            'codigo' => 0
-                        ]);
+                        echo "No se pudo subir el archivo PDF";
+                        exit;
                     }
                 } else {
-                    echo json_encode([
-                        'mensaje' => 'No se pudo crear la solicitud',
-                        'codigo' => 0
-                    ]);
+                    echo "No se pudo crear la solicitud";
+                    exit;
                 }
             } else {
-                echo json_encode([
-                    'mensaje' => 'No se pudo crear el solicitante',
-                    'codigo' => 0
-                ]);
+                echo "No se pudo crear el solicitante";
+                exit;
             }
-        } catch (Exception $e) {
-            echo json_encode([
-                'detalle' => $e->getMessage(),
-                'mensaje' => 'Ocurrió un error',
-                'codigo' => 0
-            ]);
+
+
+            if ($protocolosolResultado['resultado'] == 1) {
+
+                echo json_encode([
+                    'mensaje' => 'Registro guardado correctamente',
+                    'codigo' => 1
+                ]);
         }
+    
+    } catch (Exception $e) {
+        echo json_encode([
+            'detalle' => $e->getMessage(),
+            'mensaje' => 'Ocurrió un error',
+            'codigo' => 0
+        ]);
+
     }
+}
+
+
 
     public static function buscarCatalogoApi() {
         $validarCatalogo = $_GET['per_catalogo'];
