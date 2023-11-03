@@ -100,13 +100,13 @@
                             <i class="bi bi-check2-square"></i>Administracion
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
-                            <a class="dropdown-item" href="/soliciudes_e/busquedasc">
-                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
+                            <a class="dropdown-item" href="/soliciudes_e/administraciones">
+                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Enviar
                             </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/protocolosol">
-                                    <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>PDF
+                                    <i class="ms-lg-0 ms-2 bi bi-clock-history"></i>Historial
                                 </a>
                             </li>
                             <li>

@@ -10,8 +10,6 @@ class BuscasController
 {
     public static function index(Router $router)
     {
-        // $motivos = static::motivos();
-
         $router->render('busquedasc/index', [
             // 'motivos' => $motivos
         ]);
@@ -87,6 +85,7 @@ class BuscasController
                     pdf.pdf_id, 			
                     pdf.pdf_ruta,		
                     pdf.pdf_solicitud, 
+                    pdf_ruta, 
                     mat.mat_fecha_lic_ini,
                     mat.mat_fecha_lic_fin,
                     mat.mat_situacion
@@ -124,7 +123,7 @@ class BuscasController
                     se_pareja_militar parm
                 ON 
                     mat.mat_per_army = parm.parejam_id
-                WHERE mat.mat_situacion = 2";
+                WHERE mat.mat_situacion = 1";
 
         // if ($cmv_dependencia != 0) {
         //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";

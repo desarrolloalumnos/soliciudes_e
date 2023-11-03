@@ -266,8 +266,8 @@ const datatable = new Datatable('#tablaMatrimonios', {
         {
             title: 'PDF',
             className: 'text-center',
-            data: './',
-            render: (data, type, row, meta) => `<a class="btn btn-warning" href='${data}'>VER DOCUMENTACION</a>`
+            data: 'pdf_ruta',
+                 
         },
         {
             title: 'MODIFICAR',
