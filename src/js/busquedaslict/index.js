@@ -185,7 +185,7 @@ const datatable = new Datatable('#tablaLicencias', {
         {
             title: 'PDF',
             data: 'pdf_ruta',
-            render: (data, type, row, meta) => `<a class="btn btn-warning" href='${data}'>VER DOCUMENTACION</a>`
+            render: (data, type, row, meta) => `<a class="btn btn-warning" href='C:/docker/${data}'>VER DOCUMENTACION</a>`
         },
         {
             title: 'MODIFICAR',

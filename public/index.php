@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/app.php';
 
 
+use Controllers\AdministracionController;
 use Controllers\BuscalictController;
 use MVC\Router;
 use Controllers\AppController;
@@ -13,6 +14,7 @@ use Controllers\ArticuloController;
 use Controllers\TransporteController;
 use Controllers\TiposolController;
 use Controllers\BuscasController;
+use Controllers\HistorialcomandoController;
 use Controllers\LictempController;
 use Controllers\SalidapaisController;
 
@@ -77,6 +79,14 @@ $router->get('/API/protocolosol/buscarCatalogo', [ProtocolosolController::class,
 
 $router->get('/salidapaises', [SalidapaisController::class,'index']);
 $router->get('/salidapaises/buscar', [SalidapaisController::class,'buscarApi']);
+
+
+$router->get('/administraciones', [AdministracionController::class,'index']);
+$router->get('/API/administraciones/buscar', [AdministracionController::class,'buscarApi']);
+$router->post('/API/administraciones/enviar', [AdministracionController::class,'enviarEmdnApi']);
+
+$router->get('/historiales', [HistorialcomandoController::class,'index']);
+
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
