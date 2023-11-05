@@ -14,7 +14,7 @@ use Controllers\ArticuloController;
 use Controllers\TransporteController;
 use Controllers\TiposolController;
 use Controllers\BuscasController;
-use Controllers\HistorialcomandoController;
+use Controllers\HistorialController;
 use Controllers\LictempController;
 use Controllers\SalidapaisController;
 
@@ -87,7 +87,8 @@ $router->get('/administraciones', [AdministracionController::class,'index']);
 $router->get('/API/administraciones/buscar', [AdministracionController::class,'buscarApi']);
 $router->post('/API/administraciones/enviar', [AdministracionController::class,'enviarEmdnApi']);
 
-$router->get('/historiales', [HistorialcomandoController::class,'index']);
+$router->get('/historiales', [HistorialController::class,'index']);
+$router->get('/API/historiales/buscar', [HistorialController::class,'buscarApi']);
 
 
 

@@ -74,12 +74,12 @@ class AdministracionController
         try {
             $solicitud_id = $_POST['sol_id'];
             $solicitud = Solicitud::find($solicitud_id);
-            $solicitud->sol_situacion = 1;
+            $solicitud->sol_situacion = 6;
             $resultado = $solicitud->actualizar();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
-                    'mensaje' => 'Solicitud enviado correctamente',
+                    'mensaje' => 'Solicitud enviada correctamente',
                     'codigo' => 1
                 ]);
             } 

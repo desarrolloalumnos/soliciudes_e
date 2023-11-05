@@ -105,7 +105,7 @@
                             </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/protocolosol">
+                                <a class="dropdown-item" href="/soliciudes_e/historiales">
                                     <i class="ms-lg-0 ms-2 bi bi-clock-history"></i>Historial
                                 </a>
                             </li>

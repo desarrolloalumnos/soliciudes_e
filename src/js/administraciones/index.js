@@ -41,28 +41,28 @@ const datatable = new Datatable('#tablaAdministracion', {
             title: 'Estado',
             className: 'text-center',
             data: 'sol_situacion',
-            render: function(data, type, row) {
+            render: function (data, type, row) {
                 if (type === 'display') {
                     if (data === '1') {
-                        return `<button class="btn btn-danger">COMANDO</button>`;
+                        return `<span style="color: red;">COMANDO</span>`;
                     } else if (data === '2') {
-                        return `<button class="btn btn-info">DGAEMDN</button>`;
+                        return `<span >DGAEMDN</span>`;
                     } else if (data === '3') {
-                        return `<button class="btn btn-warning">DPEMDN</button>`;
-                    }else if (data === '4') {
-                        return `<button class="btn btn-secundary">MDN</button>`;
-                    }else if (data === '5') {
-                        return `<button class="btn btn-success">AUTORIZADO</button>`;
-                    }else if (data === '6') {
-                        return `<button class="btn btn-dark">RECHAZADA</button>`;
-                    }else {
-                        return ''; 
+                        return `<span >DPEMDN</span>`;
+                    } else if (data === '4') {
+                        return `<span >MDN</span>`;
+                    } else if (data === '5') {
+                        return `<span>AUTORIZADO</span>`;
+                    } else if (data === '6') {
+                        return `<span>RECHAZADA</span>`;
+                    } else {
+                        return '';
                     }
                 }
-                return data; 
+                return data;
             }
         },
-        
+
         {
             title: 'Telefono',
             data: 'ste_telefono',
@@ -73,7 +73,16 @@ const datatable = new Datatable('#tablaAdministracion', {
             data: 'sol_id',
             searchable: false,
             orderable: false,
-            render: (data) => `<button class="btn btn-primary" data-id='${data}'>Enviar</button>`
+            render: function(data, type, row) {
+                if (type === 'display') {
+                    if (row.sol_situacion !== '1') {
+                        return `<button class="btn btn-secondary">Enviado</button>`;
+                    } else {
+                        return `<button class="btn btn-primary" data-id='${data}'>Enviar</button>`;
+                    }
+                }
+                return data;
+            }
         },
     ],
 });
@@ -240,7 +249,7 @@ const enviar = async (e) => {
             switch (codigo) {
                 case 1:
                     icon = 'success';
-                    location.reload();
+                    buscar();
                     break;
 
                 case 0:
@@ -262,12 +271,8 @@ const enviar = async (e) => {
     }
 
 }
-
 buscar();
 
-btnBuscar.addEventListener('click', buscar);
 
-// datatable.on('click', '.btn-warning', traeDatos);
+btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-primary', enviar);
-// btnModificar.addEventListener('click', modificar)
-// btnCancelar.addEventListener('click', cancelarAccion)
