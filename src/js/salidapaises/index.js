@@ -4,104 +4,24 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
-const formulario = document.getElementById('formularioSalidasPais');
-const btnBuscar = document.getElementById('btnBuscar');
-const btnModificar = document.getElementById('btnModificar');
+const formulario = document.getElementById('formularioSalidapaises');
 const btnGuardar = document.getElementById('btnGuardar');
-const btnCancelar = document.getElementById('btnCancelar');
-const divTabla = document.getElementById('tablaTransportes'); 
-const catalogo = document.getElementById ('ste_cat'); 
-const grado = document.getElementById('ste_gra');
-const arma = document.getElementById('ste_arm');
-const empleo = document.getElementById('ste_emp');
-const comando = document.getElementById('ste_comando');
-const observaciones = document.getElementById('sol_obs');
-const motivos = document.getElementById('sol_motivo');
 
 
-observaciones.disabled = true;
+formulario.nombre.disabled = true;
+formulario.nombre2.disabled = true;
 btnGuardar.parentElement.style.display = 'block';
-btnBuscar.parentElement.style.display = 'block';
-btnModificar.disabled = true;
-btnModificar.parentElement.style.display = 'none';
-btnCancelar.disabled = true;
-btnCancelar.parentElement.style.display = 'none';
+
+formulario.ste_cat.addEventListener('change', async (e) => {
+    const solicitante = await buscarCatalogo();
+    colocarCatalogo(solicitante);
+
+});
 
 
-
-
-const guardar = async (evento) => {
-    evento.preventDefault();
-    
-    
-    if (!validarFormulario(formulario,['cmv_id']) ) {
-        Toast.fire({
-            icon: 'info',
-            text: 'Debe llenar todos los campos'
-        });
-        return;
-    }
-    const body = new FormData(formulario);
-    const url = '/soliciudes_e/API/salidapaises/guardar';
-    const config = {
-        method: 'POST',
-        body
-    };
-
-    try {
-        evento.preventDefault();
-        const respuesta = await fetch(url, config);
-        const data = await respuesta.json();
-        
-        const { codigo, mensaje, detalle } = data;
-        let icon = 'info';
-        switch (codigo) {
-            case 1:
-                formulario.reset();
-                icon = 'success';
-                break;
-                
-                case 0:
-                    icon = 'error';
-                    console.log(detalle);
-                    break;
-                    
-                    default:
-                        break;
-                    }
-                    Toast.fire({
-                        icon,
-                        text: mensaje
-                    });
-                } catch (error) {
-                    console.log(error);
-                }
-                
-                location.reload();
-                
-            };
-            
-            
-    catalogo.addEventListener('change', async (e) => {
-        const solicitante = await buscarCatalogo();
-        colocarCatalogo(solicitante);       
-        
-    });
-    
-    motivos.addEventListener('change', () => {
-        let motivo = motivos.value;
-    
-        if (motivo === "7") {
-            observaciones.disabled = false;
-        } else {
-            observaciones.disabled = true;
-        }
-    });
-             
-    
     const buscarCatalogo = async () => {  
         
-    let validarCatalogo = catalogo.value;
+        let validarCatalogo = formulario.ste_cat.value;
     
     const url = `/soliciudes_e/API/salidapaises/buscarCatalogo?per_catalogo=${validarCatalogo}`;
     
@@ -138,179 +58,137 @@ const guardar = async (evento) => {
 
 
 async function colocarCatalogo(datos) {
-    console.log(datos)
-    const dato = datos[0]
-    arma.value = dato.per_arma;  
-    catalogo.disabled = true;
-    grado.value = dato.per_grado;
-    empleo.value = dato.org_plaza_desc
-    comando.value = dato.dep_llave
-  
-    
-}
-
-
-const traeDatos = (e) => {
-    const button = e.target;
-    const numero = button.dataset.id
-    const dependencia = button.dataset.dependencia
-    const llave = button.dataset.llave
-    const tipo = button.dataset.tipo
-    
-    
-    const dataset = {
-        numero, 
-        llave,
-        dependencia,
-        tipo
-        
-    };
-    
-    colocarDatos(dataset);
-    
-    
-};
-
-const colocarDatos = (dataset) => {
-    
-    
-    dependencias.value = dataset.llave;
-    tipos.value = dataset.tipo;
-    id.value = dataset.numero;
-    
-    btnGuardar.disabled = true
-    btnGuardar.parentElement.style.display = 'none'
-    btnBuscar.disabled = true
-    btnBuscar.parentElement.style.display = 'none'
-    btnModificar.disabled = false
-    btnModificar.parentElement.style.display = ''
-    btnCancelar.disabled = false
-    btnCancelar.parentElement.style.display = ''
-    
-}
-
-const cancelarAccion = () => {
-    btnGuardar.disabled = false
-    btnGuardar.parentElement.style.display = ''
-    btnBuscar.disabled = false
-    btnBuscar.parentElement.style.display = ''
-    btnModificar.disabled = true
-    btnModificar.parentElement.style.display = 'none'
-    btnCancelar.disabled = true
-    btnCancelar.parentElement.style.display = 'none'
-    divTabla.style.display = ''
-    formulario.reset(); f
-}
-
-const modificar = async (evento) => {
    
-    evento.preventDefault();
+    const dato = datos[0]
+    formulario.ste_cat.value = dato.per_catalogo
+    formulario.ste_arm.value = dato.per_arma;
+    formulario.nombre.value = dato.nombre;
+    formulario.ste_gra.value = dato.per_grado;
+    formulario.ste_emp.value = dato.org_plaza_desc
+    formulario.ste_comando.value = dato.dep_llave
+}
+
+
+
+formulario.aut_cat.addEventListener('change', async (e) => {
+    const autorizador = await buscarCatalogo2();
+    colocarCatalogo2(autorizador)
     
-    
-    const body = new FormData(formulario)
-    const url = '/soliciudes_e/API/salidapaises/modificar';
-    const headers = new Headers();
-    headers.append("X-Requested-With","fetch");
-    const config = {
-        method: 'POST',
-        body
+});
+
+
+const buscarCatalogo2 = async () => {
+    let validarCatalogo = formulario.ste_cat.value
+    let validarCatalogo2 = formulario.aut_cat.value;
+    if (validarCatalogo === validarCatalogo2) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Los catalogos deben de ser distintos'
+        });
+        return;
     }
-    
+
+    const url = `/soliciudes_e/API/salidapaises/buscarCatalogo2?per_catalogo=${validarCatalogo2}`;
+
+
+    const config = {
+        method: 'GET',
+    }
+
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        
-        
+
+
+        if (data.length > 0) {
+            Toast.fire({
+                title: 'Catálogo válido',
+                icon: 'success'
+            });
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+            });
+            return;
+        }
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+
+
+}
+
+
+async function colocarCatalogo2(datos) {
+
+    const dato = datos[0]
+    formulario.aut_cat.value = dato.per_catalogo;
+    formulario.aut_arm.value = dato.per_arma;
+    formulario.nombre2.value = dato.nombres;
+    formulario.aut_gra.value = dato.per_grado;
+    formulario.aut_emp.value = dato.org_plaza_desc;
+    formulario.aut_comando.value = dato.dep_llave
+
+}
+
+
+
+const guardar = async (evento) => {
+    evento.preventDefault();
+    let paisSeleccionado = formulario.dsal_pais.value;
+
+    if (paisSeleccionado === 596 || paisSeleccionado === 504 || paisSeleccionado === 55 || paisSeleccionado === 506 || paisSeleccionado === 507) {
+        formulario.sol_situacion.value = 6;
+    } else {
+        formulario.sol_situacion.value = 1;
+    }
+    
+    const body = new FormData(formulario);
+    const url = '/soliciudes_e/API/salidapaises/guardar';
+    const config = {
+        method: 'POST',
+        body
+    };
+
+    try {
+        evento.preventDefault();
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.json();
+        console.log(data)
+        return
+
         const { codigo, mensaje, detalle } = data;
-        let icon = 'info'
+        let icon = 'info';
         switch (codigo) {
             case 1:
                 formulario.reset();
-                icon = 'success'
-                buscar();
-                cancelarAccion();
+                icon = 'success';
                 break;
-                
-                case 0:
-                    icon = 'error'
-                    console.log(detalle)
-                    break;
-                    
-                    default:
-                        break;
-                    }
-                    
-                    Toast.fire({
-                        icon,
-                        text: mensaje
-                    })
-                    
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-            const eliminar = async (e) => {
-                const button = e.target;
-                const id = button.dataset.id;
-                
-                if (await confirmacion('warning', 'Desea elminar este registro?')) {
-                    const body = new FormData()
-                    body.append('cmv_id', id)
-                    const url = '/soliciudes_e/API/protocolos/eliminar';
-                    const headers = new Headers();
-                    headers.append("X-Requested-With","fetch");
-                    const config = {
-                        method: 'POST',
-                        body
+
+            case 0:
+                icon = 'error';
+                console.log(detalle);
+                break;
+
+            default:
+                break;
         }
-        try {
-            const respuesta = await fetch(url, config)
-            const data = await respuesta.json();
-            
-            const { codigo, mensaje, detalle } = data;
-            let icon = 'info'
-            switch (codigo) {
-                case 1:
-                    
-                    icon = 'success'
-                    
-                    break;
-                    
-                    case 0:
-                        icon = 'error'
-                        console.log(detalle)
-                        break;
-                        
-                        default:
-                            break;
-                        }
-                        
-                        Toast.fire({
-                            icon,
-                            text: mensaje
-            })
-            
-            
-            
-            
-        } catch (error) {
-            console.log(error);
-        }
+        Toast.fire({
+            icon,
+            text: mensaje
+        });
+    } catch (error) {
+        console.log(error);
     }
-    
-    // buscar();
-}
-// buscar();
 
+    location.reload();
 
-  
-formulario.addEventListener('submit', guardar);
-// btnBuscar.addEventListener('click', buscar);
-datatable.on('click', '.btn-warning', traeDatos);
-datatable.on('click', '.btn-danger', eliminar);
-btnModificar.addEventListener('click', modificar)
-btnCancelar.addEventListener('click', cancelarAccion)
+};
 
 
 
-    
+btnGuardar.addEventListener('click', guardar);
+

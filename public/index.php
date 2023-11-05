@@ -80,7 +80,10 @@ $router->get('/API/protocolosol/buscarCatalogo', [ProtocolosolController::class,
 $router->post('/API/protocolosol/guardar', [ProtocolosolController::class,'guardarApi']);
 
 $router->get('/salidapaises', [SalidapaisController::class,'index']);
-$router->get('/salidapaises/buscar', [SalidapaisController::class,'buscarApi']);
+$router->get('/API/salidapaises/buscar', [SalidapaisController::class,'buscarApi']);
+$router->get('/API/salidapaises/buscarCatalogo', [SalidapaisController::class,'buscarCatalogoApi']);
+$router->get('/API/salidapaises/buscarCatalogo2', [SalidapaisController::class,'buscarCatalogo2Api']);
+$router->get('/API/salidapaises/guardar', [SalidapaisController::class,'guardarApi']);
 
 
 $router->get('/administraciones', [AdministracionController::class,'index']);
