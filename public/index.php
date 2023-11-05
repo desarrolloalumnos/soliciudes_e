@@ -18,6 +18,7 @@ use Controllers\HistorialController;
 use Controllers\LictempController;
 use Controllers\SalidapaisController;
 use Controllers\DetalleController;
+use Controllers\ReportesolController;
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
@@ -97,6 +98,10 @@ $router->get('/API/historiales/buscar', [HistorialController::class,'buscarApi']
 $router->get('/administraciones/estadistica', [DetalleController::class,'estadistica']);
 $router->get('/API/administraciones/estadistica', [DetalleController::class,'detalleApi']);
 $router->get('/API/administraciones/estadistica2', [DetalleController::class,'detalle2Api']);
+
+$router->get('/API/reportesolicitudes', [ReportesolController::class,'reporteSolicitudesAPI']);
+$router->get('/API/aprobadas', [ReportesolController::class,'AprobadasAPI']);
+$router->get('/API/rechazadas', [ReportesolController::class,'RechazadasAPI']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();
