@@ -17,6 +17,7 @@ module.exports = {
     'js/busquedaslict/index' : './src/js/busquedaslict/index.js',
     'js/licencias/index' : './src/js/licencias/index.js',
     'js/administraciones/index' : './src/js/administraciones/index.js',
+    'js/administraciones/estadistica' : './src/js/administraciones/estadistica.js',
     'js/historiales/index' : './src/js/historiales/index.js',
     'js/protocolosol/index' : './src/js/protocolosol/index.js',
   },

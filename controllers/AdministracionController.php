@@ -74,7 +74,7 @@ class AdministracionController
         try {
             $solicitud_id = $_POST['sol_id'];
             $solicitud = Solicitud::find($solicitud_id);
-            $solicitud->sol_situacion = 6;
+            $solicitud->sol_situacion = 5;
             $resultado = $solicitud->actualizar();
 
             if ($resultado['resultado'] == 1) {
