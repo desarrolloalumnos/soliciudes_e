@@ -15,7 +15,7 @@ module.exports = {
     'js/tiposol/index' : './src/js/tiposol/index.js',
     'js/busquedasc/index' : './src/js/busquedasc/index.js',
     'js/busquedaslict/index' : './src/js/busquedaslict/index.js',
-    'js/busquedasalidapai/index' : './src/js/busquedasalidapai/index.js',
+    'js/busquedasalpais/index' : './src/js/busquedasalpais/index.js',
     'js/busquedasproto/index' : './src/js/busquedasproto/index.js',
     'js/licencias/index' : './src/js/licencias/index.js',
     'js/administraciones/index' : './src/js/administraciones/index.js',

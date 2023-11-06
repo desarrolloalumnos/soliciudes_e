@@ -19,6 +19,9 @@ use Controllers\LictempController;
 use Controllers\SalidapaisController;
 use Controllers\DetalleController;
 use Controllers\ReportesolController;
+use Controllers\BuscasalpaisController;
+use Controllers\BuscaprotoController;
+
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
@@ -74,6 +77,13 @@ $router->post('/API/licencias/guardar', [LictempController::class,'guardarApi'])
 
 $router->get('/busquedaslict', [BuscalictController::class,'index']);
 $router->get('/API/busquedaslict/buscar', [BuscalictController::class,'buscarApi']);
+
+$router->get('/busquedasalpais', [BuscasalpaisController::class,'index']);
+$router->get('/API/busquedasalpais/buscar', [BuscasalpaisController::class,'buscarApi']);
+
+$router->get('/busquedasproto', [BuscaprotoController::class,'index']);
+$router->get('/API/busquedasproto/buscar', [BuscaprotoController::class,'buscarApi']);
+
 
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);
 $router->get('/API/protocolosol/buscar', [ProtocolosolController::class,'buscarApi']);
