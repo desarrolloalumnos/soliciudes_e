@@ -110,7 +110,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/ruta_de_estadisticas">
+                                <a class="dropdown-item" href="/soliciudes_e/administraciones/estadistica">
                                     <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas
                                 </a>
                             </li>
