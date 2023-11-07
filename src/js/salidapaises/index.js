@@ -139,7 +139,7 @@ async function colocarCatalogo2(datos) {
 const guardar = async (evento) => {
     evento.preventDefault();
     let paisSeleccionado = formulario.dsal_pais.value;
-
+    
     if (paisSeleccionado === 596 || paisSeleccionado === 504 || paisSeleccionado === 55 || paisSeleccionado === 506 || paisSeleccionado === 507) {
         formulario.sol_situacion.value = 6;
     } else {
@@ -152,14 +152,12 @@ const guardar = async (evento) => {
         method: 'POST',
         body
     };
+   
 
     try {
-        evento.preventDefault();
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-        console.log(data)
-        return
-
+ 
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         switch (codigo) {
@@ -185,9 +183,7 @@ const guardar = async (evento) => {
     }
 
     location.reload();
-
 };
-
 
 
 btnGuardar.addEventListener('click', guardar);

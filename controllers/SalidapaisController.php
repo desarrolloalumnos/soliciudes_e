@@ -19,23 +19,23 @@ use Model\Transportes;
 use MVC\Router;
 
 class SalidapaisController {
-    public static function index(Router $router){
-
+    public static function index(Router $router) {
         $motivos = static::motivos();
         $paises = static::paises();
         $transporte = static::transportes();
-   
+
         $router->render('salidapaises/index', [
             'motivos' => $motivos,
-            'paises'  => $paises,
-            'transportes'  => $transporte
-        ]);   
+            'paises' => $paises,
+            'transportes' => $transporte
+        ]);
     }
+
 
     public static function guardarApi(){
         
         try {
-        
+          
             $catalogo_doc = $_POST['ste_cat'];
 
             $fechaAutorizacion = $_POST['aut_fecha'];
@@ -95,7 +95,7 @@ class SalidapaisController {
                                     $salidapaisId = $salidapaisResultado['id'];
                                     $salidadetpais = new Saldetpaises($_POST);
                                     $salidadetpais->dsal_sol_salida =  $salidapaisId;                                                
-                                    $salidadetpaisResultado = $salidapais->crear();
+                                    $salidadetpaisResultado = $salidadetpais->crear();
     
                                 } else {
                                     echo "No se pudo crear la solicitud de salida ";
