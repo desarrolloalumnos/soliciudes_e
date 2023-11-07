@@ -19,10 +19,11 @@
                     <button type="button" id="btnBuscar" name="btnBuscar" class="btn btn-outline-info w-100">Buscar</button>
                 </div>
             </div>
-        </div>
+        </form>
 
-        <div class="row justify-content-center mt-5 mx-auto w-80">
-            <div class="col table-responsive">
+
+        <div class="row justify-content-center">
+            <div class="col table-responsive" style="max-width: 80%; padding: 10px;">
                 <table id="tablaProtocolo" class="table table-bordered table-hover">
                 </table>
             </div>

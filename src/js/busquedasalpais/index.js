@@ -50,7 +50,7 @@ const datatable = new Datatable('#tablaSalidapaises', {
         {
             title: 'PDF',
             data: 'pdf_ruta',
-            render: (data, type, row, meta) => `<a href="file:///C:\\docker\\soliciudes_e\\${data.substr(3)}">VER DOCUMENTACION</a>`
+            render: (data, type, row, meta) => `<a class="btn btn-info" href="file:///C:\\docker\\soliciudes_e\\${data.substr(3)}">VER DOCUMENTACION</a>`
         },
         {
             title: 'MODIFICAR',
