@@ -3,26 +3,16 @@
 namespace Controllers;
 
 use Exception;
-use Model\Articulos;
 use Model\Autorizacion;
-use Model\Dependencia;
-use Model\Licenciatemporal;
 use Model\Matrimonio;
 use Model\Motivos;
-use Model\Organizacion;
-use Model\Paises;
 use Model\ParejaCivil;
 use Model\ParejaMilitar;
 use Model\Pdf;
 use Model\Personal;
-use Model\Protocolo;
-use Model\Protocolosol;
-use Model\Saldetpaises;
-use Model\Salidapais;
 use Model\Solicitante;
 use Model\Solicitud;
-use Model\Tiposolicitud;
-use Model\Transportes;
+
 use MVC\Router;
 
 class CasamientoController
@@ -41,6 +31,7 @@ class CasamientoController
     {
 
         try {
+
             $catalogo_doc = $_POST['ste_cat'];
 
 
@@ -82,7 +73,7 @@ class CasamientoController
                     $solicitudId = $solicitudResultado['id'];
 
                     $archivo = $_FILES['pdf_ruta'];
-                    $ruta = "../storage/matrimonio/$catalogo_doc". uniqid() . ".pdf";
+                    $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
                     $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
 
                     if ($subido) {
@@ -107,7 +98,7 @@ class CasamientoController
                                 if (!empty($_POST['nombre4']) && !empty($_POST['parejam_cat'])) {
                                     $parejaMilitar = new ParejaMilitar($_POST);
                                     $parejaMilitarResultado = $parejaMilitar->crear();
-                                  } else {
+                                } else {
                                     $parejaMilitarResultado = ['resultado' => 0];
                                 }
 
@@ -122,27 +113,27 @@ class CasamientoController
                                     $matrimonio->mat_per_army = $parejaMilitarResultado['id'];
                                     $matrimonioResultado = $matrimonio->crear();
                                 } else {
-                                    echo "No se ingresó la pareja";
+                               
                                     exit;
                                 }
                             } else {
-                                echo "No se pudo crear la autorización";
+                               
                                 exit;
                             }
                         } else {
-                            echo "No se pudo crear el PDF";
+                           
                             exit;
                         }
                     } else {
-                        echo "No se pudo subir el archivo PDF";
+                      
                         exit;
                     }
                 } else {
-                    echo "No se pudo crear la solicitud";
+                 
                     exit;
                 }
             } else {
-                echo "No se pudo crear el solicitante";
+             
                 exit;
             }
 

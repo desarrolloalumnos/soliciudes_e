@@ -10,8 +10,7 @@
                     data-bs-slide-to="1" aria-label="Slide 2"></button>
 
             </div>
-            <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio"
-                style="min-height: 50vh;">
+            <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio"   style="min-height: 50vh;">
                 <div class="text-center">
                     <input value="1"type="hidden" id="tse_id" name="tse_id">
                     <h1>Matrimonio</h1>
@@ -167,7 +166,7 @@
                             <input type="hidden" name="mat_per_army" id="mat_per_civil" class="form-control">
                             <input type="hidden" name="parejac_id" id="parejac_id" class="form-control">
                             <input type="hidden" name="parejam_id" id="parejac_id" class="form-control">
-                            <input type="hidden" name="parejac_nombres" id="parejac_nombres" class="form-control">
+                            <input type="text" name="parejac_nombres" id="parejac_nombres" class="form-control">
                             <input type="text" name="parejam_cat" id="parejam_cat" class="form-control">
                         </div>
                         <div class="col-lg-3">
@@ -237,7 +236,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formPuntos" class="btn btn-outline-success" id="buttonGuardar1"><i
+                <button type="button" form="formMatrimonio" class="btn btn-outline-success" id="buttonGuardar1"><i
                         class="bi bi-plus-circle me-2"></i>Agregar</button>
                 <button type="button" class="btn btn-outline-danger" id="buttonCancelar1"
                     data-bs-dismiss="modal">Cerrar</button>
@@ -253,7 +252,7 @@
                 <h1 class="modal-title" id="modalMLabel">Datos de la Pareja</h1>
             </div>
             <div class="modal-body">
-                <form class="modal-body container" id="formCasamiento" novalidate>
+                <form class="modal-body container" id="formMatrimonio" novalidate>
                     <div class="row">
                         <div class="col-lg-12">
                             <label for="parejam1_cat">Catalogo</label>
@@ -271,7 +270,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" form="formPuntos" class="btn btn-outline-success" id="buttonGuardar2"><i
+                <button type="button" form="formMatrimonio" class="btn btn-outline-success" id="buttonGuardar2"><i
                         class="bi bi-plus-circle me-2"></i>Agregar</button>
                 <button type="button" class="btn btn-outline-danger" id="buttonCancelar2"
                     data-bs-dismiss="modal">Cerrar</button>

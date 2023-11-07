@@ -47,4 +47,13 @@ export const confirmacion = async (icon = 'warning', text = '¿Esta seguro que d
 }
 
 
+export const formatearFecha = (fechaConCeros) => {
+    var componentes = fechaConCeros.split(" ")[0].split("-");
+    var dia = componentes[2];
+    var mes = componentes[1];
+    var anio = componentes[0];
+    var fechaFormateada = anio + "-" + mes + "-" + dia;
+    return fechaFormateada;
+}
+
   

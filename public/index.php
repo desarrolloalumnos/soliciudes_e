@@ -67,7 +67,7 @@ $router->post('/API/casamientos/guardar', [CasamientoController::class,'guardarA
 
 $router->get('/busquedasc', [BuscasController::class,'index']);
 $router->get('/API/busquedasc/buscar', [BuscasController::class,'buscarApi']);
-$router->post('/API/busquedasc/enviar', [BuscasController::class,'enviarApi']);
+$router->post('/API/busquedasc/modificar', [BuscasController::class,'modificarApi']);
 
 $router->get('/licencias', [LictempController::class,'index']);
 $router->get('/API/licencias/buscarCatalogo', [LictempController::class,'buscarCatalogoApi']);

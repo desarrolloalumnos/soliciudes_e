@@ -3,6 +3,8 @@ import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
+
+
 const formulario = document.getElementById('formularioLicencia');
 const btnBuscar = document.getElementById('btnBuscar');
 

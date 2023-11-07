@@ -91,7 +91,7 @@ const guardar = async (evento) => {
         evento.preventDefault();
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-                     
+
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         switch (codigo) {
@@ -130,7 +130,7 @@ catalogo.addEventListener('change', async (e) => {
 const buscarCatalogo = async () => {
 
     let validarCatalogo = catalogo.value;
-    
+
     const url = `/soliciudes_e/API/casamientos/buscarCatalogo?per_catalogo=${validarCatalogo}`;
 
 
@@ -245,18 +245,18 @@ async function colocarCatalogo2(datos) {
 catalogo3.addEventListener('change', async (e) => {
     const pareja = await buscarCatalogo3();
     colocarCatalogo3(pareja);
-    
+
 });
 async function agregarEsposaMilitar(datos) {
 
-      const valores = datos[0]
-   catalogo4.value = valores.per_catalogo
-   arma4.value = valores.per_arma
-   nombre4.value = valores.nombres
-   grado4.value = valores.per_grado
-   empleo4.value = valores.org_plaza_desc
-   comando4.value = valores.dep_llave
-   modalM.hide()
+    const valores = datos[0]
+    catalogo4.value = valores.per_catalogo
+    arma4.value = valores.per_arma
+    nombre4.value = valores.nombres
+    grado4.value = valores.per_grado
+    empleo4.value = valores.org_plaza_desc
+    comando4.value = valores.dep_llave
+    modalM.hide()
 
 }
 
@@ -275,7 +275,7 @@ const buscarCatalogo3 = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-      
+
         if (data.length > 0) {
             Toast.fire({
                 title: 'Catálogo válido',
@@ -298,19 +298,19 @@ const buscarCatalogo3 = async () => {
 }
 
 async function colocarCatalogo3(datos) {
-    
+
     const dato = datos[0]
     catalogo3.value = dato.per_catalogo
     arma3.value = dato.per_arma;
     nombre3.value = dato.nombres;
     grado3.value = dato.per_grado;
     empleo3.value = dato.org_plaza_desc
-    comando3.value = dato.dep_llave  
-    
- }
+    comando3.value = dato.dep_llave
+
+}
 
 
-const limpiarModelM = async() =>{
+const limpiarModelM = async () => {
     catalogo3.value = ''
     arma3.value = ''
     nombre3.value = ''
@@ -322,46 +322,40 @@ const limpiarModelM = async() =>{
     modalM.hide()
 }
 
-const limpiarModelC = async() =>{
-    catalogo3.value = ''
-    arma3.value = ''
-    nombre3.value = ''
-    grado3.value = ''
-    empleo3.value = ''
-    comando3.value = ''
+const limpiarModelC = async () => {
+    nombreEsposaCivil.value = '';
+    apellidoEsposaCivil.value = '';
+    direccionEsposaCivil.value ='';
+    dpiEsposaCivil.value = '';
     checkboxCivil.disabled = false;
     checkboxMilitar.checked = false;
-    modalM.hide()
+    modalC.hide()
 }
 const agregarEsposaCivil = async (value) => {
-    if(value ===''){
 
-        modalC.hide()
-        return
-    }
     let nombre = nombreEsposaCivil.value;
     let apellido = apellidoEsposaCivil.value;
-    let direccion =direccionEsposaCivil.value;
+    let direccion = direccionEsposaCivil.value;
     let dpi = dpiEsposaCivil.value;
-    if (nombre === '' && apellido === '' && direccion === '' && dpi === '') {
-        modalC.hide();
-    } else {
-        nombreEsposaCivil2.value = nombre;
-        apellidoEsposaCivil2.value = apellido;
-        direccionEsposaCivil2.value = direccion;
-        dpiEsposaCivil2.value = dpi;
-        modalC.hide();
-    }
+
+    nombreEsposaCivil2.value = nombre;
+    apellidoEsposaCivil2.value = apellido;
+    direccionEsposaCivil2.value = direccion;
+    dpiEsposaCivil2.value = dpi;
+
+    modalC.hide()
+
 }
 
 
 btnAddEspMilitar.addEventListener('click', async (e) => {
     const pareja = await buscarCatalogo3();
-    agregarEsposaMilitar(pareja);});
+    agregarEsposaMilitar(pareja);
+});
 
 
-btnAddEspCivil.addEventListener('click',agregarEsposaCivil)
-btnCancelModalC.addEventListener('click',limpiarModelC)
-btnCancelModalM.addEventListener('click', limpiarModelM );
+btnAddEspCivil.addEventListener('click', agregarEsposaCivil)
+btnCancelModalC.addEventListener('click', limpiarModelC)
+btnCancelModalM.addEventListener('click', limpiarModelM);
 btnGuardar.addEventListener('click', guardar);
 

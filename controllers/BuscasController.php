@@ -3,7 +3,14 @@
 namespace Controllers;
 
 use Exception;
+use Model\Autorizacion;
 use Model\Matrimonio;
+use Model\Motivos;
+use Model\ParejaCivil;
+use Model\ParejaMilitar;
+use Model\Pdf;
+use Model\Solicitante;
+use Model\Solicitud;
 use MVC\Router;
 
 class BuscasController
@@ -123,7 +130,7 @@ class BuscasController
                     se_pareja_militar parm
                 ON 
                     mat.mat_per_army = parm.parejam_id
-                WHERE mat.mat_situacion = 1";
+                WHERE mat.mat_situacion = 1 AND sol.sol_situacion = 1";
 
         // if ($cmv_dependencia != 0) {
         //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";
@@ -133,8 +140,11 @@ class BuscasController
         //     $sql .= " AND cmv_tip = '$cmv_tip' ";
         // }
 
+
+
         try {
             $resultado = Matrimonio::fetchArray($sql);
+
             echo json_encode($resultado);
         } catch (Exception $e) {
             echo json_encode([
@@ -146,4 +156,85 @@ class BuscasController
     }
 
 
+
+    public static function modificarApi()
+    {
+
+        try {
+
+
+
+            $catalogo_doc = $_POST['ste_cat'];
+
+
+            $fechaIncioLicencia = $_POST['mat_fecha_lic_ini'];
+            $fechaFormateadaIniLic = date('Y-m-d H:i', strtotime($fechaIncioLicencia));
+            $_POST['mat_fecha_lic_ini'] = $fechaFormateadaIniLic;
+
+            $fechaFinLicencia = $_POST['mat_fecha_lic_fin'];
+            $fechaFormateadaFinLic = date('Y-m-d H:i', strtotime($fechaFinLicencia));
+            $_POST['mat_fecha_lic_fin'] = $fechaFormateadaFinLic;
+
+            $fechaBodaC = $_POST['mat_fecha_bodac'];
+            $fechaFormateadaBodaC = date('Y-m-d H:i', strtotime($fechaBodaC));
+            $_POST['mat_fecha_bodac'] =  $fechaFormateadaBodaC;
+
+            $fechaBodaR = $_POST['mat_fecha_bodar'];
+            $fechaFormateadaBodaR = date('Y-m-d H:i', strtotime($fechaBodaR));
+            $_POST['mat_fecha_bodar'] =  $fechaFormateadaBodaR;
+
+
+            $solicitudId = $_POST['sol_id'];
+
+            if (!empty($_FILES['pdf_ruta']['name'])) {
+                $archivo = $_FILES['pdf_ruta'];
+                $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+                $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
+            
+                if ($subido) {
+                    $pdf = new Pdf([
+                        'pdf_solicitud' => $solicitudId,
+                        'pdf_ruta' => $ruta
+                    ]);
+                    $pdfResultado = $pdf->crear();
+                }
+            }
+               
+
+            $parejaCivilResultado = null;
+            $parejaMilitarResultado = null;
+
+            if (!empty($_POST['parejac_nombres']) && !empty($_POST['parejac_apellidos']) && !empty($_POST['parejac_dpi'])) {
+                $parejaCivil = new ParejaCivil($_POST);
+                $parejaCivilResultado = $parejaCivil->actualizar();
+            } 
+            elseif (!empty($_POST['parejam_cat'])) {
+                $parejaMilitar = new ParejaMilitar($_POST);
+                $parejaMilitarResultado = $parejaMilitar->actualizar();
+            }
+
+                $matrimonio = new Matrimonio($_POST);
+                $matrimonioResultado = $matrimonio->actualizar();
+     
+
+            if ($matrimonioResultado !== null && $parejaCivilResultado['resultado'] == 1) {
+                echo json_encode([
+                    'mensaje' => 'Registro modificado correctamente',
+                    'codigo' => 1
+                ]);
+            } else {
+                echo json_encode([
+                    'mensaje' => 'No se pudo modificar el registro',
+                    'codigo' => 0
+                ]);
+            }
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
 }
