@@ -23,7 +23,7 @@ const comando2 = document.getElementById('aut_comando');
 
 
 
-motivos.disabled = true;
+// motivos.disabled = true;
 nombre.disabled = true;
 nombre2.disabled = true;
 observaciones.disabled = true;
@@ -34,6 +34,7 @@ const guardar = async (evento) => {
     evento.preventDefault();
 
     const body = new FormData(formulario);
+    // body.append = ('sol_motivo',motivos)
     // for (var pair of body.entries()) {
     //     console.log(pair[0]+ ', *' + pair[1]+'*'); 
     // }
