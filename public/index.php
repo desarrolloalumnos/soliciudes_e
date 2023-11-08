@@ -80,6 +80,7 @@ $router->get('/API/busquedaslict/buscar', [BuscalictController::class,'buscarApi
 
 $router->get('/busquedasalpais', [BuscasalpaisController::class,'index']);
 $router->get('/API/busquedasalpais/buscar', [BuscasalpaisController::class,'buscarApi']);
+$router->post('/API/busquedasalpais/modificar', [BuscasController::class,'modificarApi']);
 
 $router->get('/busquedasproto', [BuscaprotoController::class,'index']);
 $router->get('/API/busquedasproto/buscar', [BuscaprotoController::class,'buscarApi']);

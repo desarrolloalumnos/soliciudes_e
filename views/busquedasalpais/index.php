@@ -38,14 +38,14 @@
 </div>
 
 <!-- Modal para modificar la solicitud -->
-<div class="modal fade" id="modalSalidapaises" tabindex="-1" role="dialog"
+<div class="modal fade" id="modalSalidapaises" tabindroleex="-1" ="dialog"
     aria-labelledby="modalModificarSalidaPaisLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
             </div>
             <div class="modal-body">
-                <form class="border bg-light p-4" id="formularioSalidapaises" name="formularioSalidapaises"
+                <form class="border bg-light p-4" id="formularioSalidapais" name="formularioSalidapais"
                     style="min-height: 50vh;">
 
                     <div class="text-center">

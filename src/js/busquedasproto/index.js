@@ -96,36 +96,123 @@ const buscar = async () => {
     formulario.reset();
 }
 
-const traeDatos = (e) => {
-    const button = e.target;
-    const numero = button.dataset.id
-    const dependencia = button.dataset.dependencia
-    const llave = button.dataset.llave
-    const tipo = button.dataset.tipo
+modalM.show()
+const button = e.target;
+const pco_id = button.dataset.id
+const pco_autorizacion = button.dataset.pco_autorizacion
+const aut_id = button.dataset.aut_id
+const aut_solicitud = button.dataset.aut_solicitud
+const sol_id = button.dataset.sol_id
+const sol_tipo = button.dataset.sol_tipo
+const tse_id = button.dataset.tse_id
+const sol_solicitante = button.dataset.sol_solicitante
+const ste_id = button.dataset.ste_id
+const ste_comando = button.dataset.ste_comando
+const ste_cat = button.dataset.ste_cat
+const ste_gra = button.dataset.ste_gra
+const ste_arm = button.dataset.ste_arm
+const ste_emp = button.dataset.ste_emp
+const ste_fecha = button.dataset.ste_fecha
+const sol_obs = button.dataset.sol_obs
+const sol_motivo = button.dataset.sol_motivo
+const mot_id = button.dataset.mot_id
+const sol_situacion = button.dataset.sol_situacion
+const aut_comando = button.dataset.aut_comando
+const aut_cat = button.dataset.aut_cat
+const aut_gra = button.dataset.aut_gra
+const aut_arm = button.dataset.aut_arm
+const aut_emp = button.dataset.aut_emp
+const aut_fecha = button.dataset.aut_fecha
+const pco_fechainicio = button.dataset.pco_fechainicio
+const pco_fechafin = button.dataset.pco_fechafin
+const pco_dir = button.dataset.pco_dir
+const pco_just = button.dataset.pco_just
+const mat_per_civil = button.dataset.mat_per_civil
+const parejac_id = button.dataset.parejac_id
+const parejac_direccion = button.dataset.parejac_direccion
+const parejac_dpi = button.dataset.parejac_dpi
+const mat_per_army = button.dataset.mat_per_army
+const parejam_id = button.dataset.parejam_id
+const parejam_cat = button.dataset.parejam_cat
+const parejam_comando = button.dataset.parejam_comando
+const parejam_gra = button.dataset.parejam_gra
+const parejam_arm = button.dataset.parejam_arm
+const pdf_id = button.dataset.pdf_id
+const pdf_solicitud = button.dataset.pdf_solicitud
+const mat_situacion = button.dataset.mat_situacion
+const grado_solicitante = button.dataset.grado_solicitante
+const nombres_solicitante = button.dataset.nombres_solicitante
+const nombres = button.dataset.nombres
+const grado_pareja = button.dataset.grado_pareja
+const nombres_pareja = button.dataset.nombres_pareja
+const mat_fecha_lic_ini = button.dataset.mat_fecha_lic_ini
+const mat_fecha_lic_fin = button.dataset.mat_fecha_lic_fin
+const ste_telefono = button.dataset.ste_telefono
+const pdf_ruta = button.dataset.pdf_ruta
 
-    const dataset = {
-        numero,
-        llave,
-        dependencia,
-        tipo
-    };
+const dataset = {
 
-    colocarDatos(dataset);
+    pco_id,
+    pco_autorizacion,
+    aut_id,
+    aut_solicitud,
+    sol_id,
+    sol_tipo,
+    tse_id,
+    sol_solicitante,
+    ste_id,
+    ste_comando,
+    ste_cat,
+    ste_gra,
+    ste_arm,
+    ste_emp,
+    ste_fecha,
+    sol_obs,
+    sol_motivo,
+    mot_id,
+    sol_situacion,
+    aut_comando,
+    aut_cat,
+    aut_gra,
+    aut_arm,
+    aut_emp,
+    aut_fecha,
+    pco_fechainicio,
+    pco_fechafin,
+    pco_dir,
+    pco_just,
+    mat_per_civil,
+    parejac_id,
+    parejac_direccion,
+    parejac_dpi,
+    mat_per_army,
+    parejam_id,
+    parejam_cat,
+    parejam_comando,
+    parejam_gra,
+    parejam_arm,
+    pdf_id,
+    pdf_solicitud,
+    mat_situacion,
+    grado_solicitante,
+    nombres_solicitante,
+    nombres,
+    grado_pareja,
+    nombres_pareja,
+    mat_fecha_lic_ini,
+    mat_fecha_lic_fin,
+    ste_telefono,
+    pdf_ruta
+
 };
+console.log(parejac_id)
+colocarDatos(dataset);
 
-const colocarDatos = (dataset) => {
-    dependencias.value = dataset.llave;
-    tipos.value = dataset.tipo;
-    id.value = dataset.numero;
-    btnGuardar.disabled = true;
-    btnGuardar.parentElement.style.display = 'none';
-    btnBuscar.disabled = true;
-    btnBuscar.parentElement.style.display = 'none';
-    btnModificar.disabled = false;
-    btnModificar.parentElement.style.display = '';
-    btnCancelar.disabled = false;
-    btnCancelar.parentElement.style.display = '';
-}
+
+
+
+
+
 
 const cancelarAccion = () => {
     btnGuardar.disabled = false;
