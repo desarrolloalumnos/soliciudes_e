@@ -3,6 +3,8 @@ import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
+
+const modalDep = new Modal(document.getElementById('modalDep'), {})
 const formulario = document.getElementById('formularioDireccionpersonal');
 const btnBuscar = document.getElementById('btnBuscar');
 
@@ -123,12 +125,16 @@ const buscar = async () => {
     formulario.reset();
 }
 
+const abrirModal = async (e) => {
+modalDep.show()
+
+}
 
 const enviar = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
 
-    if (await confirmacion('warning', 'Desea enviar esta solicitud?')) {
+       
         const body = new FormData()
         body.append('sol_id', id)
         const url = '/soliciudes_e/API/direccionpersonal/enviarMdn';
@@ -166,11 +172,11 @@ const enviar = async (e) => {
         } catch (error) {
             console.log(error);
         }
-    }
+    
 
 }
 buscar();
 
 
 btnBuscar.addEventListener('click', buscar);
-datatable.on('click', '.btn-primary', enviar);
+datatable.on('click', '.btn-primary', abrirModal );
