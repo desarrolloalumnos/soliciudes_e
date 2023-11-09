@@ -56,4 +56,21 @@ export const formatearFecha = (fechaConCeros) => {
     return fechaFormateada;
 }
 
+
+export const formatoTiempo = (numero) =>{
+    return new Promise((resolve) => {
+        const numeroStr = String(numero);
+        const anios = numeroStr.slice(0, -4);
+        const meses = numeroStr.slice(-4, -2);
+        const dias = numeroStr.slice(-2);
+
+        const aniosTexto = anios + (anios === '1' ? ' año' : ' años');
+        const mesesTexto = meses + ' meses';
+        const diasTexto = dias + ' días';
+
+        const resultado = `${aniosTexto} ${mesesTexto} ${diasTexto}`;
+
+        resolve(resultado);
+    });
+}
   

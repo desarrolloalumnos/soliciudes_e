@@ -41,91 +41,82 @@
                         <h1>Matrimonio</h1>
                     </div>
 
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Solicitante</h2>
+                        </div>
+                    </div>
+
                     <div class="row justify-content-around mb-4">
-                        <div class="row">
+                        <div class="col-lg-6">
+                            <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
+                            <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
+                            <label for="ste_cat">Catalogo</label>
+                            <input value="" id="ste_cat" name="ste_cat" class="form-control" type="text" placeholder="numero de catalogo">
+                            <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
+                            <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
+                            <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
+                            <input value="" id="ste_comando" name="ste_comando" class="form-control" type="hidden">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="nombre">Nombres</label>
+                            <input value="" id="nombre" name="nombre" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="row justify-content-around mb-4">
+                        <div class="col-lg-6">
+                            <label for="ste_fecha">Fecha de Solicitud</label>
+                            <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
 
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h2>Solicitante</h2>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="ste_telefono">Telefono</label>
+                            <input id="ste_telefono" name="ste_telefono" class="form-control" type="number">
+                        </div>
+                    </div>
+                    <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
+                    <input value="1" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
+                    <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
+                    <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
+                    <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
 
+                    <div class="row justify-content-around mb-4">
+                        <div class="col-lg-6">
+                            <!-- <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control"> -->
+                        </div>
 
-                            <div class="row justify-content-around mb-4">
-                                <div class="col-lg-6">
-                                    <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
-                                    <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
-                                    <label for="ste_cat">Nombres</label>
-                                    <input value="" id="ste_cat" name="ste_cat" class="form-control" type="text" placeholder="numero de catalogo">
-                                    <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
-                                    <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
-                                    <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
-                                    <input value="" id="ste_comando" name="ste_comando" class="form-control" type="hidden">
-                                </div>
-                                <div class="col-lg-6">
-                                    <input value="" id="nombre" name="nombre" class="form-control" type="hidden">
-                                </div>
-                            </div>
-                            <div class="row justify-content-around mb-4">
-                                <div class="col-lg-6">
-                                    <label for="ste_fecha">Fecha de Solicitud</label>
-                                    <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
-
-                                </div>
-                                <div class="col-lg-6">
-                                    <label for="ste_telefono">Telefono</label>
-                                    <input id="ste_telefono" name="ste_telefono" class="form-control" type="number">
-                                </div>
-
-                            </div>
-                            <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
-                            <input value="1" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
-                            <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
-                            <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
-                            <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
-
-                            <div class="row justify-content-around mb-4">
-                                <div class="col-lg-6">
-                                    <!-- <input value="1" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control"> -->
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <!-- <input value=" " class="form-control"  type="hidden" name="sol_obs" id="sol_obs" rows="10" cols="50"> -->
-                                </div>
+                        <div class="col-lg-6">
+                            <!-- <input value=" " class="form-control"  type="hidden" name="sol_obs" id="sol_obs" rows="10" cols="50"> -->
+                        </div>
 
 
-                            </div>
-                            <div class="row ">
-                                <div class="col-lg-4">
-                                    <h2>Autorizador</h2>
-                                </div>
-                            </div>
-                            <div class="row justify-content-around mb-4">
-                                <div class="col-lg-4">
-                                    <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
-                                    <label for="aut_cat">Catalogo</label>
-                                    <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number">
-                                    <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
-                                    <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
-                                    <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
-                                    <input value="" id="aut_comando" name="aut_comando" class="form-control" type="hidden">
-                                </div>
-                                <div class="col-lg-4">
-                                    <input value="" id="nombre2" name="nombre2" class="form-control" type="hidden">
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="aut_fecha">Fecha</label>
-                                    <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date">
+                    </div>
 
-                                </div>
-                            </div>
+                    <div class="row justify-content-around mb-4">
+                        <div class="col-lg-4">
+                            <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
 
+                            <input value="" id="aut_cat" name="aut_cat" class="form-control" type="hidden">
+                            <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
+                            <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
+                            <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
+                            <input value="" id="aut_comando" name="aut_comando" class="form-control" type="hidden">
+                        </div>
+                        <div class="col-lg-4">
+                            <input value="" id="nombre2" name="nombre2" class="form-control" type="hidden">
+                        </div>
+                        <div class="col-lg-4">
+                            <!-- <label for="aut_fecha">Fecha</label> -->
+                            <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="hidden">
 
                         </div>
                     </div>
 
+
+
                     <div class="row">
-                        <div class="col flex-1">
+                        <div class="col-lg-12">
                             <input value="" id="mat_id" name="mat_id" class="form-control" type="hidden">
                             <input value="" id="mat_autorizacion" name="mat_autorizacion" class="form-control" type="hidden">
                             <h2>Solicitud</h2>
@@ -164,7 +155,7 @@
 
                     <div class="row justify-content-around mb-4">
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <label for="mat_fecha_lic_ini">Pareja Civil</label>
                             <input type="hidden" name="mat_per_civil" id="mat_per_civil" class="form-control">
                             <input type="text" name="parejac_nombres" placeholder="nombres" id="parejac_nombres" class="form-control">
@@ -174,7 +165,7 @@
                             <input type="text" name="parejac_dpi" placeholder="DPI" id="parejac_dpi" class="form-control">
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <label for="mat_fecha_bodar">Pareja Militar</label>
                             <input type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
                             <input type="hidden" name="mat_per_army" id="mat_per_army" class="form-control">

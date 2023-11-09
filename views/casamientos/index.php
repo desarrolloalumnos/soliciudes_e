@@ -15,16 +15,13 @@
                     <input value="1"type="hidden" id="tse_id" name="tse_id">
                     <h1>Matrimonio</h1>
                 </div>
-                <div class="carousel-item active">
-                    <div class="row justify-content-around mb-4">
+                <div class="carousel-item active">                 
                         <div class="row">
-
                             <div class="row">
                                 <div class="col-lg-12">
                                     <h2>Datos del solicitante</h2>
                                 </div>
                             </div>
-
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
@@ -105,7 +102,7 @@
 
 
                         </div>
-                    </div>
+                    
                 </div>
 
                 <div class="carousel-item ">
@@ -166,8 +163,8 @@
                             <input type="hidden" name="mat_per_army" id="mat_per_civil" class="form-control">
                             <input type="hidden" name="parejac_id" id="parejac_id" class="form-control">
                             <input type="hidden" name="parejam_id" id="parejac_id" class="form-control">
-                            <input type="text" name="parejac_nombres" id="parejac_nombres" class="form-control">
-                            <input type="text" name="parejam_cat" id="parejam_cat" class="form-control">
+                            <input type="hidden" name="parejac_nombres" id="parejac_nombres" class="form-control">
+                            <input type="hidden" name="parejam_cat" id="parejam_cat" class="form-control">
                         </div>
                         <div class="col-lg-3">
                             <input type="hidden" name="parejac_apellidos" id="parejac_apellidos" class="form-control">

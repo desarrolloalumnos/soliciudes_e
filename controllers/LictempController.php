@@ -43,33 +43,36 @@ class LictempController
     {
 
         try {
-       
+
+            
             $catalogo_doc = $_POST['ste_cat'];
-            $tiempo = $_POST['tiempo_servicio'];
-         
+            $tiempo = $_POST['tiempo'];
+            
+            
             $numeroEntero = intval($tiempo);
             
             if ($numeroEntero >= 10000 && $numeroEntero <= 50000) {
-                $consueldo = min(0, $_POST['lit_mes_sinsueldo']);  
-                $sinsueldo = min(3, $_POST['lit_mes_consueldo']);
+                $_POST['lit_mes_sinsueldo'] = min(3, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(0, $_POST['lit_mes_consueldo']);
             } else if ($numeroEntero >= 50001 && $numeroEntero <= 100000) {
-                $consueldo = min(0, $_POST['lit_mes_sinsueldo']);
-                $sinsueldo = min(6, $_POST['lit_mes_consueldo']);
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(0, $_POST['lit_mes_consueldo']);
             } else if ($numeroEntero >= 100001 && $numeroEntero <= 200000) {
-                $consueldo = min(1, $_POST['lit_mes_sinsueldo']);
-                $sinsueldo = min(6, $_POST['lit_mes_consueldo']);
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(1, $_POST['lit_mes_consueldo']);
             } else if ($numeroEntero >= 200001 && $numeroEntero <= 280000) {
-                $consueldo = min(2, $_POST['lit_mes_sinsueldo']);
-                $sinsueldo = min(6, $_POST['lit_mes_consueldo']);
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(2, $_POST['lit_mes_consueldo']);
             } else if ($numeroEntero >= 280001 && $numeroEntero <= 330000) {
-                $consueldo = min(1, $_POST['lit_mes_sinsueldo']);
-                $sinsueldo = min(6, $_POST['lit_mes_consueldo']);
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(1, $_POST['lit_mes_consueldo']);
             } else if ($numeroEntero >= 33001) {
-                $consueldo = min(2, $_POST['lit_mes_sinsueldo']);
-                $sinsueldo = min(6, $_POST['lit_mes_consueldo']);
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(2, $_POST['lit_mes_consueldo']);
             } else {
-                exit("Los rangos no se cumplen, la ejecución se detendrá aquí.");
-            }            
+                exit;
+            }
+       
 
             $fechaAutorizacion = $_POST['aut_fecha'];
             $fechaFormateadaAutorizacion = date('Y-m-d H:i', strtotime($fechaAutorizacion));
@@ -101,7 +104,7 @@ class LictempController
                     $solicitudId = $solicitudResultado['id'];
 
                     $archivo = $_FILES['pdf_ruta'];
-                    $ruta = "../storage/licenciastemp/$catalogo_doc". uniqid() . ".pdf";
+                    $ruta = "../storage/licencia/$catalogo_doc" . uniqid() . ".pdf";
                     $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
 
                     if ($subido) {
@@ -117,29 +120,24 @@ class LictempController
                             $autorizacionResultado = $autorizacion->crear();
 
                             if ($autorizacionResultado['resultado'] == 1) {
-                               $autorizacionId = $autorizacionResultado['id'];
+                                $autorizacionId = $autorizacionResultado['id'];
                                 $licencia = new Licenciatemporal($_POST);
-                                $licencia->lit_autorizacion = $autorizacionId;                                                            
+                                $licencia->lit_autorizacion = $autorizacionId;
                                 $licenciaResultado = $licencia->crear();
-
                             } else {
-                                echo "No se pudo crear la autorización";
+
                                 exit;
                             }
                         } else {
-                            echo "No se pudo crear el PDF";
                             exit;
                         }
                     } else {
-                        echo "No se pudo subir el archivo PDF";
                         exit;
                     }
                 } else {
-                    echo "No se pudo crear la solicitud";
                     exit;
                 }
             } else {
-                echo "No se pudo crear el solicitante";
                 exit;
             }
 

@@ -3,12 +3,12 @@ import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
-const formulario = document.getElementById('formularioAdministracion');
+const formulario = document.getElementById('formularioDirecciongeneral');
 const btnBuscar = document.getElementById('btnBuscar');
 
 
 let contador = 1;
-const datatable = new Datatable('#tablaAdministracion', {
+const datatable = new Datatable('#tablaDirecciongeneral', {
     language: lenguaje,
     data: null,
     columns: [
@@ -44,44 +44,19 @@ const datatable = new Datatable('#tablaAdministracion', {
             render: function (data, type, row) {
                 if (type === 'display') {
                     if (data === '1') {
-                        return `
-            <span style="color: red;">COMANDO</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
-                </div>
-            `;
+                        return `<span style="color: red;">COMANDO</span>`;
                     } else if (data === '2') {
-                        return `
-                        <span >DGAEMDN</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
-                </div>
-            `;
+                        return `<span >DGAEMDN</span>`;
                     } else if (data === '3') {
-                        return `
-                        <span >DPEMDN</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
-                </div>
-            `;
+                        return `<span >DPEMDN</span>`;
                     } else if (data === '4') {
-                        return `
-                        <span >MDN</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
-                </div>
-            `;
+                        return `<span >MDN</span>`;
                     } else if (data === '5') {
-                        return `
-                        <span>AUTORIZADO</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                </div>
-            `;
+                        return `<span>AUTORIZADO</span>`;
                     } else if (data === '6') {
-                        return `<button class="btn btn-danger">RECHAZADA</button>`;
+                        return `<span>RECHAZADA</span>`;
                     } else if (data === '7') {
-                        return `<button class="btn btn-warning">CORRECCIONES</button>`;
+                        return `<button class="btn btn-danger">Correcciones</button>`;
                     } else {
                         return '';
                     }
@@ -100,9 +75,9 @@ const datatable = new Datatable('#tablaAdministracion', {
             data: 'sol_id',
             searchable: false,
             orderable: false,
-            render: function (data, type, row) {
+            render: function(data, type, row) {
                 if (type === 'display') {
-                    if (row.sol_situacion !== '1') {
+                    if (row.sol_situacion !== '2') {
                         return `<button class="btn btn-secondary">Enviado</button>`;
                     } else {
                         return `<button class="btn btn-primary" data-id='${data}'>Enviar</button>`;
@@ -119,7 +94,7 @@ const buscar = async () => {
     // let dep_valor = dependencias.value 
     // let tipo = tipos.value 
 
-    const url = `/soliciudes_e/API/administraciones/buscar`;
+    const url = `/soliciudes_e/API/administraciones/buscarDireccion`;
 
 
     const config = {
@@ -158,7 +133,7 @@ const enviar = async (e) => {
     if (await confirmacion('warning', 'Desea enviar esta solicitud?')) {
         const body = new FormData()
         body.append('sol_id', id)
-        const url = '/soliciudes_e/API/administraciones/enviarDga';
+        const url = '/soliciudes_e/API/administraciones/enviarEmdn';
         const headers = new Headers();
         headers.append("X-Requested-With", "fetch");
         const config = {

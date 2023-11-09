@@ -172,22 +172,31 @@ const datatable = new Datatable('#tablaLicencias', {
         {
             title: 'Inicio de Licencia',
             className: 'text-center',
-            data: 'lit_fecha1'
+            data: function (row) {
+                return row.lit_fecha1.substring(0, 10);
+            }
         },
         {
             title: 'Fin de Licencia',
             className: 'text-center',
-            data: 'lit_fecha2'
+            data: function (row) {
+                return row.lit_fecha2.substring(0, 10);
+            }
         },
         {
             title: 'Telefono',
             className: 'text-center',
             data: 'ste_telefono'
+            
         },
         {
             title: 'PDF',
+            className: 'text-center',
             data: 'pdf_ruta',
-            render: (data, type, row, meta) => `<a class="btn btn-warning" href='C:/docker/${data}'>VER DOCUMENTACION</a>`
+            render: function (data) {
+                return `<button  class="btn btn-outline-info" data-ruta="${data.substr(10)}"><i class="bi bi-eye"></i>Ver PDF</button>`;
+            },
+            width: '150px'
         },
         {
             title: 'MODIFICAR',
@@ -407,11 +416,21 @@ const eliminar = async (e) => {
     buscar();
 }
 
+const verPDF = (e) => {
+    // const button = e.target;
+const boton = e.target
+let ruta = boton.dataset.ruta 
+
+let pdf = btoa(btoa(btoa(ruta))) 
+
+window.open(`/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`)
+ 
+}
 buscar();
 
 btnBuscar.addEventListener('click', buscar);
+datatable.on('click', '.btn-outline-info', verPDF);
 
-// datatable.on('click', '.btn-warning', traeDatos);
-// datatable.on('click', '.btn-danger', eliminar);
+
 // btnModificar.addEventListener('click', modificar)
 // btnCancelar.addEventListener('click', cancelarAccion)

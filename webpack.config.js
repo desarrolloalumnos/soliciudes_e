@@ -20,6 +20,7 @@ module.exports = {
     'js/licencias/index' : './src/js/licencias/index.js',
     'js/administraciones/index' : './src/js/administraciones/index.js',
     'js/administraciones/estadistica' : './src/js/administraciones/estadistica.js',
+    'js/administraciones/direcciongeneral' : './src/js/administraciones/direcciongeneral.js',
     'js/historiales/index' : './src/js/historiales/index.js',
     'js/protocolosol/index' : './src/js/protocolosol/index.js',
     'js/reportesolicitudes/index' : './src/js/reportesolicitudes/index.js',

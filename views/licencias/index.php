@@ -119,6 +119,7 @@
                         <div class="col-lg-6">
                             <label for="tiempo_servicio"><i class="bi bi-calendar-date-fill"></i>Tiempo de Servicio</label>
                             <input value="" id="tiempo_servicio" name="tiempo_servicio" class="form-control" type="text">
+                            <input value="" id="tiempo" name="tiempo" class="form-control" type="text">
                         </div>
                         <div class="col-lg-6">
                             <label for="lit_mes_consueldo"><i class="bi bi-body-text"></i>Meses con Sueldo </label>

@@ -8,11 +8,14 @@ const modalM = new Modal(document.getElementById('modalM'), {})
 const formulario = document.getElementById('formularioMatrimonio');
 const formulario2 = document.getElementById('formularioCasamiento');
 const idPareja = document.getElementById('parejac_id')
+const nombrePareja = document.getElementById('nombre')
 const btnModificar =  document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const btnBuscar = document.getElementById('btnBuscar');
 
-
+formulario2.ste_cat.disabled = true;
+formulario2.ste_fecha.disabled = true;
+formulario2.nombre.disabled = true;
 let contador = 1;
 const datatable = new Datatable('#tablaMatrimonios', {
     language: lenguaje,
@@ -242,18 +245,28 @@ const datatable = new Datatable('#tablaMatrimonios', {
         {
             title: 'Pareja Civil',
             className: 'text-center',
-            data: 'nombres'
+            data: 'nombres',
+            visible:false
         },
         {
             title: 'Grado Pareja',
             className: 'text-center',
-            data: 'grado_pareja'
+            data: 'grado_pareja',
+            visible: false
         },
         {
             title: 'Nombres Pareja',
             className: 'text-center',
-            data: 'nombres_pareja'
+            data: 'nombres_pareja',
+            visible: false
         },
+        {
+            title: 'Nombres de la Pareja',
+            render: function (data, type, row) {
+                return row.grado_pareja + ' ' + row.nombres_pareja + row.nombres;
+            }
+        },
+        
         {
             title: 'Fin de Licencia',
             className: 'text-center',
@@ -277,6 +290,10 @@ const datatable = new Datatable('#tablaMatrimonios', {
             title: 'PDF',
             className: 'text-center',
             data: 'pdf_ruta',
+            render: function (data) {
+                return `<button  class="btn btn-outline-info" data-ruta="${data.substr(10)}"><i class="bi bi-eye"></i>Ver PDF</button>`;
+            },
+            width: '150px'
 
         },
         {
@@ -291,7 +308,7 @@ const datatable = new Datatable('#tablaMatrimonios', {
         {
             title: 'ELIMINAR',
             className: 'text-center',
-            data: 'mat_id',
+            data: '',
             searchable: false,
             orderable: false,
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
@@ -453,7 +470,7 @@ const traeDatos = (e) => {
         pdf_ruta
 
     };
-    console.log(parejac_id)
+
     colocarDatos(dataset);
 
 
@@ -506,7 +523,7 @@ const colocarDatos = (dataset) => {
     formulario2.sol_solicitante.value = dataset.sol_solicitante
     formulario2.ste_id.value = dataset.ste_id
     formulario2.ste_comando.value = dataset.ste_comando
-    formulario2.ste_cat.value = dataset.nombres_solicitante
+    formulario2.ste_cat.value = dataset.ste_cat
     formulario2.ste_gra.value = dataset.ste_gra
     formulario2.ste_arm.value = dataset.ste_arm
     formulario2.ste_emp.value = dataset.ste_emp
@@ -542,9 +559,7 @@ const colocarDatos = (dataset) => {
     // formulario2.pdf_id.value = dataset.pdf_id
     // formulario2.pdf_solicitud.value = dataset.pdf_solicitud
     // formulario2.mat_situacion.value = dataset.mat_situacion
-    // formulario2.grado_solicitante.value = dataset.grado_solicitante
-    // formulario2.nombres_solicitante.value = dataset.nombres_solicitante
-    // formulario2.nombres.value = dataset.nombres
+    formulario2.nombre.value = dataset.nombres_solicitante
     // formulario2.grado_pareja.value = dataset.grado_pareja
     // formulario2.pdf_ruta.value = dataset.pdf_ruta
 
@@ -559,9 +574,12 @@ const limpiarModelM = async () => {
 const modificar = async (evento) => {
 
     evento.preventDefault();
-
+    let catalogo = formulario2.ste_cat.value
+    let fecha = formulario2.ste_fecha.value
 
     const body = new FormData(formulario2)
+    body.append('ste_cat', catalogo)
+    body.append('ste_fecha', fecha)
     const url = '/soliciudes_e/API/busquedasc/modificar';
     const headers = new Headers();
     headers.append("X-Requested-With", "fetch");
@@ -573,8 +591,8 @@ const modificar = async (evento) => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        console.log(data)
-        return
+        // console.log(data)
+        // return
            
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
@@ -583,7 +601,7 @@ const modificar = async (evento) => {
                 formulario.reset();
                 icon = 'success'
                 buscar();
-                cancelarAccion();
+                // cancelarAccion();
                 break;
 
             case 0:
@@ -657,9 +675,21 @@ const eliminar = async (e) => {
     // buscar();
 }
 
+
+const verPDF = (e) => {
+    // const button = e.target;
+const boton = e.target
+let ruta = boton.dataset.ruta 
+
+let pdf = btoa(btoa(btoa(ruta))) 
+
+window.open(`/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`)
+ 
+}
 buscar();
 
 btnBuscar.addEventListener('click', buscar);
 btnModificar.addEventListener('click', modificar)
 btnCancelar.addEventListener('click', limpiarModelM )
 datatable.on('click', '.btn-warning', traeDatos);
+datatable.on('click', '.btn-outline-info', verPDF);

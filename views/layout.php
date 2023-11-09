@@ -16,8 +16,7 @@
 
         <div class="container-fluid">
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
-                aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="/soliciudes_e/">
@@ -28,13 +27,11 @@
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin: 0;">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/soliciudes_e/"><i
-                                class="bi bi-house-fill me-2"></i>Inicio</a>
+                        <a class="nav-link" aria-current="page" href="/soliciudes_e/"><i class="bi bi-house-fill me-2"></i>Inicio</a>
                     </li>
 
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button"
-                            data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-calendar-heart-fill me-2"></i>Matrimonio
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
@@ -50,8 +47,7 @@
                         </ul>
                     </div>
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button"
-                            data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-airplane-engines me-2"></i>Salida del Pais
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
@@ -83,8 +79,7 @@
                         </ul>
                     </div>
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button"
-                            data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-music-note me-2"></i>Combos y vallas
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
@@ -101,14 +96,14 @@
                     </div>
 
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button"
-                            data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-check2-square"></i>Administracion
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
-                            <a class="dropdown-item" href="/soliciudes_e/administraciones">
-                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Enviar
-                            </a>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/administraciones">
+                                    <i class="bi bi-file-earmark-arrow-up"></i>Enviar
+                                </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/historiales">
@@ -123,17 +118,29 @@
                         </ul>
                     </div>
 
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-eye-fill"></i>DGAEMDN
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/administraciones/direcciongeneral">
+                                    <i class="bi bi-file-earmark-arrow-up"></i>Enviar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
 
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button"
-                            data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-check2-square"></i>MDN
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
-                            <li>   
-                            <a class="dropdown-item" href="/soliciudes_e/reportesolicitudes">
-                                <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas Solicitudes
-                            </a>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/reportesolicitudes">
+                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas Solicitudes
+                                </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/reporteaprobadas">
@@ -154,24 +161,19 @@
                         </a>
                         <ul class="dropdown-menu  dropdown-menu-dark " id="dropwdownRevision" style="margin: 0;">
                             <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/protocolos"><i
-                                        class="bi bi-file-music-fill me-2"></i>Combos musicales/Vallas</a>
+                                <a class="nav-link" aria-current="page" href="/soliciudes_e/protocolos"><i class="bi bi-file-music-fill me-2"></i>Combos musicales/Vallas</a>
                             </li>
                             <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/motivos"><i
-                                        class="bi bi-bookmark-star-fill me-2"></i>Motivos de las Solicitudes</a>
+                                <a class="nav-link" aria-current="page" href="/soliciudes_e/motivos"><i class="bi bi-bookmark-star-fill me-2"></i>Motivos de las Solicitudes</a>
                             </li>
                             <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/articulos"><i
-                                        class="bi bi-book-fill me-2"></i>Articulos Licencia Temporal</a>
+                                <a class="nav-link" aria-current="page" href="/soliciudes_e/articulos"><i class="bi bi-book-fill me-2"></i>Articulos Licencia Temporal</a>
                             </li>
                             <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/transportes"><i
-                                        class="bi bi-airplane-fill me-2"></i>Tipos de transportes</a>
+                                <a class="nav-link" aria-current="page" href="/soliciudes_e/transportes"><i class="bi bi-airplane-fill me-2"></i>Tipos de transportes</a>
                             </li>
                             <li>
-                                <a class="nav-link" aria-current="page" href="/soliciudes_e/tiposol"><i
-                                        class="bi bi-file-earmark-text-fill me-2"></i>Tipos de solicitudes</a>
+                                <a class="nav-link" aria-current="page" href="/soliciudes_e/tiposol"><i class="bi bi-file-earmark-text-fill me-2"></i>Tipos de solicitudes</a>
                             </li>
                         </ul>
                     </div>
@@ -188,8 +190,7 @@
     </nav>
 
     <div class="progress fixed-bottom" style="height: 6px;">
-        <div class="progress-bar progress-bar-animated bg-danger" id="bar" role="progressbar" aria-valuemin="0"
-            aria-valuemax="100"></div>
+        <div class="progress-bar progress-bar-animated bg-danger" id="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div class="container-fluid pt-5 mb-4" style="min-height: 85vh">
 

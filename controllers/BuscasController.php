@@ -17,9 +17,8 @@ class BuscasController
 {
     public static function index(Router $router)
     {
-        $router->render('busquedasc/index', [
-            // 'motivos' => $motivos
-        ]);
+           $router->render('busquedasc/index', []);
+        // $router->verPdf('matrimonio/634576.653b7cfdb545b', []);
     }
 
     public static function buscarApi()
@@ -166,6 +165,9 @@ class BuscasController
 
             $catalogo_doc = $_POST['ste_cat'];
 
+            $fechaSolicito = $_POST['ste_fecha'];
+            $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
+            $_POST['ste_fecha'] = $fechaFormateadaSolicito;
 
             $fechaIncioLicencia = $_POST['mat_fecha_lic_ini'];
             $fechaFormateadaIniLic = date('Y-m-d H:i', strtotime($fechaIncioLicencia));
@@ -183,41 +185,43 @@ class BuscasController
             $fechaFormateadaBodaR = date('Y-m-d H:i', strtotime($fechaBodaR));
             $_POST['mat_fecha_bodar'] =  $fechaFormateadaBodaR;
 
+       
+            $solicitante_id = $_POST['ste_id'];
+            $solicitante = Solicitante::find($solicitante_id);
+            $solicitante->ste_telefono = $_POST['ste_telefono'];
+            $resultado = $solicitante->actualizar();
 
-            $solicitudId = $_POST['sol_id'];
 
-            if (!empty($_FILES['pdf_ruta']['name'])) {
-                $archivo = $_FILES['pdf_ruta'];
-                $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
-                $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
-            
-                if ($subido) {
-                    $pdf = new Pdf([
-                        'pdf_solicitud' => $solicitudId,
-                        'pdf_ruta' => $ruta
-                    ]);
-                    $pdfResultado = $pdf->crear();
-                }
-            }
-               
+            // $solicitudId = $_POST['sol_id'];
 
-            $parejaCivilResultado = null;
-            $parejaMilitarResultado = null;
+            // if (!empty($_FILES['pdf_ruta']['name'])) {
+            //     $archivo = $_FILES['pdf_ruta'];
+            //     $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+            //     $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
 
-            if (!empty($_POST['parejac_nombres']) && !empty($_POST['parejac_apellidos']) && !empty($_POST['parejac_dpi'])) {
-                $parejaCivil = new ParejaCivil($_POST);
-                $parejaCivilResultado = $parejaCivil->actualizar();
-            } 
-            elseif (!empty($_POST['parejam_cat'])) {
-                $parejaMilitar = new ParejaMilitar($_POST);
-                $parejaMilitarResultado = $parejaMilitar->actualizar();
-            }
+            //     if ($subido) {
+            //         $pdf = new Pdf([
+            //             'pdf_solicitud' => $solicitudId,
+            //             'pdf_ruta' => $ruta
+            //         ]);
+            //         $pdfResultado = $pdf->crear();
+            //     }
+            // }
 
-                $matrimonio = new Matrimonio($_POST);
-                $matrimonioResultado = $matrimonio->actualizar();
-     
 
-            if ($matrimonioResultado !== null && $parejaCivilResultado['resultado'] == 1) {
+            $parejaCivil = new ParejaCivil($_POST);
+            $parejaCivilResultado = $parejaCivil->actualizar();
+
+            $parejaMilitar = new ParejaMilitar($_POST);
+            $parejaMilitarResultado = $parejaMilitar->actualizar();
+
+
+
+            $matrimonio = new Matrimonio($_POST);
+            $matrimonioResultado = $matrimonio->actualizar();
+
+
+            if ($matrimonioResultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1
@@ -228,7 +232,6 @@ class BuscasController
                     'codigo' => 0
                 ]);
             }
-            
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
@@ -237,4 +240,39 @@ class BuscasController
             ]);
         }
     }
+
+    public static function VerPdf(Router $router){
+
+        $ruta = base64_decode(base64_decode(base64_decode($_GET['ruta'])));
+      
+        $router->printPDF($ruta);
+    }
+
+    // public static function eliminarAPI()
+    // {
+    //     try {
+    //         $motivo_id = $_POST['mot_id'];
+    //         $motivo = Motivos::find($motivo_id);
+    //         $motivo->mot_situacion = 0;
+    //         $resultado = $motivo->actualizar();
+
+    //         if ($resultado['resultado'] == 1) {
+    //             echo json_encode([
+    //                 'mensaje' => 'Registro eliminado correctamente',
+    //                 'codigo' => 1
+    //             ]);
+    //         } else {
+    //             echo json_encode([
+    //                 'mensaje' => 'Ocurrió un error',
+    //                 'codigo' => 0
+    //             ]);
+    //         }
+    //     } catch (Exception $e) {
+    //         echo json_encode([
+    //             'detalle' => $e->getMessage(),
+    //             'mensaje' => 'Ocurrió un error',
+    //             'codigo' => 0
+    //         ]);
+    //     }
+    // }
 }

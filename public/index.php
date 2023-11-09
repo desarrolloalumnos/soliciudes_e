@@ -68,6 +68,7 @@ $router->post('/API/casamientos/guardar', [CasamientoController::class,'guardarA
 $router->get('/busquedasc', [BuscasController::class,'index']);
 $router->get('/API/busquedasc/buscar', [BuscasController::class,'buscarApi']);
 $router->post('/API/busquedasc/modificar', [BuscasController::class,'modificarApi']);
+$router->get('/API/busquedasc/pdf', [BuscasController::class,'VerPdf']);
 
 $router->get('/licencias', [LictempController::class,'index']);
 $router->get('/API/licencias/buscarCatalogo', [LictempController::class,'buscarCatalogoApi']);
@@ -100,7 +101,11 @@ $router->post('/API/salidapaises/guardar', [SalidapaisController::class,'guardar
 
 $router->get('/administraciones', [AdministracionController::class,'index']);
 $router->get('/API/administraciones/buscar', [AdministracionController::class,'buscarApi']);
-$router->post('/API/administraciones/enviar', [AdministracionController::class,'enviarEmdnApi']);
+$router->get('/API/administraciones/buscarDireccion', [AdministracionController::class,'buscarDireccionApi']);
+$router->post('/API/administraciones/enviarEmdn', [AdministracionController::class,'enviarEmdnApi']);
+$router->post('/API/administraciones/enviarDga', [AdministracionController::class,'enviarDgaApi']);
+$router->get('/administraciones/direcciongeneral', [AdministracionController::class,'direccionGeneral']);
+
 
 $router->get('/historiales', [HistorialController::class,'index']);
 $router->get('/API/historiales/buscar', [HistorialController::class,'buscarApi']);
