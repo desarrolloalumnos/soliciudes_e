@@ -45,7 +45,7 @@
                         </div>
 
                         <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
-                        <input value="1" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
+                        <input value="4" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
                         <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
 
                         <div class="row justify-content-around mb-4">

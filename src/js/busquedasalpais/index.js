@@ -3,7 +3,12 @@ import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
+
+const modalSalidaPaises = new Modal(document.getElementById('modalSalidapaises'), {});
 const formulario = document.getElementById('formularioSalidapaises');
+const formulario2 = document.getElementById('formularioSalidapais');
+const btnModificar = document.getElementById('btnModificar');
+const btnCancelar = document.getElementById('btnCancelar');
 const btnBuscar = document.getElementById('btnBuscar');
 
 
@@ -72,35 +77,26 @@ const datatable = new Datatable('#tablaSalidapaises', {
 });
 
 const buscar = async () => {
-
-    // let dep_valor = dependencias.value 
-    // let tipo = tipos.value 
-
     const url = `/soliciudes_e/API/busquedasalpais/buscar`;
-
 
     const config = {
         method: 'GET',
     }
 
     try {
-        const respuesta = await fetch(url, config)
+        const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-        console.log (data)
-        // return;      
-        datatable.clear().draw()
+        console.log(data);
+        datatable.clear().draw();
         if (data) {
             contador = 1;
             datatable.rows.add(data).draw();
-
         } else {
             Toast.fire({
                 title: 'No se encontraron registros',
                 icon: 'info'
-
-            })
+            });
         }
-
     } catch (error) {
         console.log(error);
     }
