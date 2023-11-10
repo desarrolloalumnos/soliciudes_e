@@ -4,7 +4,7 @@ namespace Model;
 
 class Solicitante extends ActiveRecord{
     public static $tabla = 'se_solicitante';
-    public static $columnasDB = ['ste_comando','ste_cat','ste_gra','ste_arm','ste_emp','ste_fecha','ste_telefono','ste_telefono','ste_situacion'];
+    public static $columnasDB = ['ste_comando','ste_cat','ste_gra','ste_arm','ste_emp','ste_fecha','ste_telefono','ste_situacion'];
     public static $idTabla = 'ste_id';
 
     public $ste_id ;

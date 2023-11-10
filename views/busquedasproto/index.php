@@ -29,4 +29,6 @@
             </div>
         </div>
 
+        <div  style="max-width: 1000px; margin:auto" id='calendar'></div>
+
 <script src="./build/js/busquedasproto/index.js"></script>
