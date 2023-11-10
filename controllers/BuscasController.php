@@ -17,7 +17,7 @@ class BuscasController
 {
     public static function index(Router $router)
     {
-           $router->render('busquedasc/index', []);
+        $router->render('busquedasc/index', []);
         // $router->verPdf('matrimonio/634576.653b7cfdb545b', []);
     }
 
@@ -46,31 +46,10 @@ class BuscasController
                     INNER JOIN grados ON mper.per_grado = grados.gra_codigo 
                     INNER JOIN armas ON mper.per_arma = armas.arm_codigo
                     WHERE per_catalogo = ste.ste_cat) AS grado_solicitante,
-                    mat.mat_autorizacion,
-                    auth.aut_id,
-                    auth.aut_solicitud,
-                    sol.sol_id,			
-                    sol.sol_tipo, 
-                    tipo.tse_id,
-                    sol.sol_solicitante,
-                    ste.ste_id, 				
-                    ste.ste_comando,        	
-                    ste.ste_cat,           
-                    ste.ste_gra,           	
-                    ste.ste_arm,           	
-                    ste.ste_emp,           	
-                    ste.ste_fecha,			
-                    ste.ste_telefono,  
-                    sol.sol_obs,			
-                    sol.sol_motivo,	
-                    mot.mot_id,	
-                    sol_situacion,
-                    auth.aut_comando,
-                    auth.aut_cat,
-                    auth.aut_gra,
-                    auth.aut_arm,
-                    auth.aut_emp,
-                    auth.aut_fecha,    
+                    sol.sol_id,	
+                    ste.ste_id,
+                    ste.ste_cat,           	
+                    ste.ste_telefono,   
                     mat.mat_lugar_civil,
                     mat.mat_fecha_bodac,
                     mat.mat_lugar_religioso,
@@ -82,19 +61,13 @@ class BuscasController
                     parc.parejac_dpi, 
                     mat.mat_per_army,
                     parm.parejam_id,			
-                    parm.parejam_cat,           	
-                    parm.parejam_comando,       
-                    parm.parejam_gra,           	
-                    parm.parejam_arm,           	
-                    parm.parejam_emp,           	
-                    parm.parejam_situacion,
+                    parm.parejam_cat,
                     pdf.pdf_id, 			
                     pdf.pdf_ruta,		
                     pdf.pdf_solicitud, 
                     pdf_ruta, 
                     mat.mat_fecha_lic_ini,
-                    mat.mat_fecha_lic_fin,
-                    mat.mat_situacion
+                    mat.mat_fecha_lic_fin
                 FROM 
                     se_matrimonio mat
                 LEFT JOIN
@@ -185,7 +158,7 @@ class BuscasController
             $fechaFormateadaBodaR = date('Y-m-d H:i', strtotime($fechaBodaR));
             $_POST['mat_fecha_bodar'] =  $fechaFormateadaBodaR;
 
-       
+
             $solicitante_id = $_POST['ste_id'];
             $solicitante = Solicitante::find($solicitante_id);
             $solicitante->ste_telefono = $_POST['ste_telefono'];
@@ -241,10 +214,11 @@ class BuscasController
         }
     }
 
-    public static function VerPdf(Router $router){
+    public static function VerPdf(Router $router)
+    {
 
         $ruta = base64_decode(base64_decode(base64_decode($_GET['ruta'])));
-      
+
         $router->printPDF($ruta);
     }
 

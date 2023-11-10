@@ -1,4 +1,8 @@
 import Swal from "sweetalert2";
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
@@ -6,6 +10,27 @@ import { validarFormulario, Toast, confirmacion } from "../funciones";
 
 const formulario = document.getElementById('formularioProtocolo');
 const btnBuscar = document.getElementById('btnBuscar');
+const calendarEl = document.getElementById('calendar');
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar'); 
+
+    const calendar = new Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        initialDate: 'today',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        locale: 'es', 
+        events: data       
+    });
+
+    calendar.render();
+});
+
 
 let contador = 1;
 const datatable = new Datatable('#tablaProtocolo', {

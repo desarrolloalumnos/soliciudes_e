@@ -4,8 +4,9 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
-
+const modalL = new Modal(document.getElementById('modalLicencia'), {})
 const formulario = document.getElementById('formularioLicencia');
+const formularioModal = document.getElementById('formularioLicenciasB');
 const btnBuscar = document.getElementById('btnBuscar');
 
 
@@ -20,34 +21,14 @@ const datatable = new Datatable('#tablaLicencias', {
             render: () => contador++
         },
         {
-            title: 'lit_autorizacion',
-            className: 'text-center',
-            data: 'lit_autorizacion'
-        },
-        {
-            title: 'aut_id',
-            className: 'text-center',
-            data: 'aut_id'
-        },
-        {
-            title: 'aut_solicitud',
-            className: 'text-center',
-            data: 'aut_solicitud'
-        },
-        {
             title: 'sol_id',
             className: 'text-center',
             data: 'sol_id'
         },
         {
-            title: 'sol_tipo',
+            title: 'tiempo',
             className: 'text-center',
-            data: 'sol_tipo'
-        },
-        {
-            title: 'tse_id',
-            className: 'text-center',
-            data: 'tse_id'
+            data: 'tiempo'
         },
         {
             title: 'sol_solicitante',
@@ -60,34 +41,9 @@ const datatable = new Datatable('#tablaLicencias', {
             data: 'ste_id'
         },
         {
-            title: 'ste_comando',
-            className: 'text-center',
-            data: 'ste_comando'
-        },
-        {
             title: 'ste_cat',
             className: 'text-center',
             data: 'ste_cat'
-        },
-        {
-            title: 'ste_gra',
-            className: 'text-center',
-            data: 'ste_gra'
-        },
-        {
-            title: 'ste_arm',
-            className: 'text-center',
-            data: 'ste_arm'
-        },
-        {
-            title: 'ste_emp',
-            className: 'text-center',
-            data: 'ste_emp'
-        },
-        {
-            title: 'ste_fecha',
-            className: 'text-center',
-            data: 'ste_fecha'
         },
         {
             title: 'sol_obs',
@@ -108,36 +64,6 @@ const datatable = new Datatable('#tablaLicencias', {
             title: 'sol_situacion',
             className: 'text-center',
             data: 'sol_situacion'
-        },
-        {
-            title: 'aut_comando',
-            className: 'text-center',
-            data: 'aut_comando'
-        },
-        {
-            title: 'aut_cat',
-            className: 'text-center',
-            data: 'aut_cat'
-        },
-        {
-            title: 'aut_gra',
-            className: 'text-center',
-            data: 'aut_gra'
-        },
-        {
-            title: 'aut_arm',
-            className: 'text-center',
-            data: 'aut_arm'
-        },
-        {
-            title: 'aut_emp',
-            className: 'text-center',
-            data: 'aut_emp'
-        },
-        {
-            title: 'aut_fecha',
-            className: 'text-center',
-            data: 'aut_fecha'
         },
         {
             title: 'pdf_id',
@@ -204,7 +130,29 @@ const datatable = new Datatable('#tablaLicencias', {
             data: 'lit_id',
             searchable: false,
             orderable: false,
-            render: (data, type, row, meta) => `<button class="btn btn-warning" data-id='${data}' data-dependencia='${row["cmv_dependencia"]}'data-llave='${row["dep_llave"]}' data-tipo ='${row["cmv_tip"]}' >Modificar</button>`
+            render: function (data, type, row, meta) {
+                return `<button class="btn btn-warning" 
+                                data-id="${data}"                                                   
+                                data-sol_id="${row['sol_id']}"
+                                data-tiempo="${row['tiempo']}"
+                                data-sol_solicitante="${row['sol_solicitante']}"
+                                data-ste_id="${row['ste_id']}"
+                                data-ste_cat="${row['ste_cat']}"
+                                data-sol_obs="${row['sol_obs']}"
+                                data-sol_motivo="${row['sol_motivo']}"
+                                data-mot_id="${row['mot_id']}"
+                                data-pdf_id="${row['pdf_id']}"
+                                data-pdf_solicitud="${row['pdf_solicitud']}"
+                                data-grado_solicitante="${row['grado_solicitante']}"
+                                data-nombres_solicitante="${row['nombres_solicitante']}"
+                                data-lit_mes_consueldo="${row['lit_mes_consueldo']}"
+                                data-lit_mes_sinsueldo="${row['lit_mes_sinsueldo']}"
+                                data-lit_fecha1="${row['lit_fecha1'].substring(0, 10)}"
+                                data-lit_fecha2="${row['lit_fecha2'].substring(0, 10)}"
+                                data-ste_telefono="${row['ste_telefono']}">
+                            Modificar
+                        </button>`;
+             }
         },
         {
             title: 'ELIMINAR',
@@ -217,7 +165,7 @@ const datatable = new Datatable('#tablaLicencias', {
     ],
     columnDefs: [
         {
-            targets: [1, , 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+            targets: [1,2, 3, 4, 5, 6, 7, 8, 9, 10,11],
             visible: false,
             searchable: false,
         },
@@ -240,8 +188,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log (data)
-        // return;      
+           
         datatable.clear().draw()
         if (data) {
             contador = 1;
@@ -262,46 +209,90 @@ const buscar = async () => {
 }
 
 const traeDatos = (e) => {
+    modalL.show();
     const button = e.target;
-    const numero = button.dataset.id
-    const dependencia = button.dataset.dependencia
-    const llave = button.dataset.llave
-    const tipo = button.dataset.tipo
-
-
+    const sol_id = button.dataset.sol_id;
+    const tiempo = button.dataset.tiempo;
+    const sol_solicitante = button.dataset.sol_solicitante;
+    const ste_id = button.dataset.ste_id;
+    const ste_cat = button.dataset.ste_cat;
+    const sol_obs = button.dataset.sol_obs;
+    const sol_motivo = button.dataset.sol_motivo;
+    const mot_id = button.dataset.mot_id;
+    const pdf_id = button.dataset.pdf_id;
+    const pdf_solicitud = button.dataset.pdf_solicitud;
+    const grado_solicitante = button.dataset.grado_solicitante;
+    const nombres_solicitante = button.dataset.nombres_solicitante;
+    const lit_mes_consueldo = button.dataset.lit_mes_consueldo;
+    const lit_mes_sinsueldo = button.dataset.lit_mes_sinsueldo;
+    
     const dataset = {
-        numero,
-        llave,
-        dependencia,
-        tipo
-
+        sol_id,
+        tiempo,
+        sol_solicitante,
+        ste_id,
+        ste_cat,
+        sol_obs,
+        sol_motivo,
+        mot_id,
+        pdf_id,
+        pdf_solicitud,
+        grado_solicitante,
+        nombres_solicitante,
+        lit_mes_consueldo,
+        lit_mes_sinsueldo
     };
 
+    formularioModal.sol_id.value = dataset.sol_id;
+    formularioModal.sol_solicitante.value = dataset.sol_solicitante;
+    formularioModal.ste_id.value = dataset.ste_id;
+    formularioModal.ste_cat.value = dataset.ste_cat;
+    formularioModal.sol_obs.value = dataset.sol_obs;
+    formularioModal.sol_motivo.value = dataset.sol_motivo;
+    formularioModal.mot_id.value = dataset.mot_id;
+    formularioModal.pdf_id.value = dataset.pdf_id;
+    formularioModal.pdf_solicitud.value = dataset.pdf_solicitud;
+    formularioModal.grado_solicitante.value = dataset.grado_solicitante;
+    formularioModal.nombres_solicitante.value = dataset.nombres_solicitante;
 
-    colocarDatos(dataset);
-
-
+    formularioModal.tiempo.value = dataset.tiempo;
+    const numero = dataset.tiempo;
+            formatoTiempo(numero).then((tiempoFormateado) => {
+                formulario.tiempo_servicio.value = tiempoFormateado;
+            })
+            const numeroEntero = parseInt(numero, 10);
+            if (numeroEntero >= 10000 && numeroEntero <= 50000) {
+                formulario.lit_mes_consueldo.setAttribute('max', '0');
+                formulario.lit_mes_sinsueldo.setAttribute('max', '3');
+                formulario.lit_articulo.value = '2'
+            } else if (numeroEntero >= 50001 && numeroEntero <= 100000) {
+                formulario.lit_mes_consueldo.setAttribute('max', '0');
+                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
+                formulario.lit_articulo.value = '3'
+            } else if (numeroEntero >= 100001 && numeroEntero <= 200000) {
+                formulario.lit_mes_consueldo.setAttribute('max', '1');
+                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
+                formulario.lit_articulo.value = '4'
+            } else if (numeroEntero >= 200001 && numeroEntero <= 280000) {
+                formulario.lit_mes_consueldo.setAttribute('max', '2');
+                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
+                formulario.lit_articulo.value = '5'
+            } else if (numeroEntero >= 280001 && numeroEntero <= 330000) {
+                formulario.lit_mes_consueldo.setAttribute('max', '1');
+                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
+                formulario.lit_articulo.value = '6'
+            } else if (numeroEntero >= 33001) {
+                formulario.lit_mes_consueldo.setAttribute('max', '2');
+                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
+                formulario.lit_articulo.value = '6'
+            } else {
+                return
+            }
+    formularioModal.lit_mes_consueldo.value = dataset.lit_mes_consueldo;
+    formularioModal.lit_mes_sinsueldo.value = dataset.lit_mes_sinsueldo;
 };
 
-const colocarDatos = (dataset) => {
 
-
-    dependencias.value = dataset.llave;
-    tipos.value = dataset.tipo;
-    id.value = dataset.numero;
-
-    btnGuardar.disabled = true
-    btnGuardar.parentElement.style.display = 'none'
-    btnBuscar.disabled = true
-    btnBuscar.parentElement.style.display = 'none'
-    btnModificar.disabled = false
-    btnModificar.parentElement.style.display = ''
-    btnCancelar.disabled = false
-    btnCancelar.parentElement.style.display = ''
-
-
-
-}
 
 const cancelarAccion = () => {
     btnGuardar.disabled = false
@@ -430,6 +421,7 @@ buscar();
 
 btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-outline-info', verPDF);
+datatable.on('click', '.btn-warning',traeDatos )
 
 
 // btnModificar.addEventListener('click', modificar)
