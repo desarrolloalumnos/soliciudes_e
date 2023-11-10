@@ -10,7 +10,7 @@
         </div>
         <div class="col-lg-6">
             <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i> Fecha de Solicitud</label>
-            <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+            <input value="" id="ste_fecha" name="ste_fecha" class="form-control" type="date">
         </div>
     </div>
 
@@ -145,11 +145,11 @@
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_ini">Inicio de la licencia</label>
-                            <input id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
+                            <input value="" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_fin">Finalizacion de la licencia</label>
-                            <input id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
+                            <input value="" id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
                         </div>
                     </div>
 
@@ -178,8 +178,11 @@
                     </div>
 
                     <div class="row justify-content-center mt-12 mb-4">
-
                         <div class="col-lg-12">
+                            <iframe id="pdfIframe" title="PDF" class="text-center" width="100%" height="500px" src=""></iframe>
+                        </div>
+                        <div class="col-lg-12">
+
                             <label for="mat_fecha_bodar"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>
                             <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
                             <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">

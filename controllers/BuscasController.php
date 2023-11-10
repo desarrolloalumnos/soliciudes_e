@@ -48,18 +48,17 @@ class BuscasController
                     WHERE per_catalogo = ste.ste_cat) AS grado_solicitante,
                     sol.sol_id,	
                     ste.ste_id,
-                    ste.ste_cat,           	
+                    ste.ste_cat, 
+                    ste.ste_fecha,                            	
                     ste.ste_telefono,   
                     mat.mat_lugar_civil,
                     mat.mat_fecha_bodac,
                     mat.mat_lugar_religioso,
                     mat.mat_fecha_bodar,
-                    mat.mat_per_civil,
                     parc.parejac_id, 			
                     TRIM(parc.parejac_nombres)||' '||TRIM(parc.parejac_apellidos) AS nombres,
                     parc.parejac_direccion,    
-                    parc.parejac_dpi, 
-                    mat.mat_per_army,
+                    parc.parejac_dpi,                  
                     parm.parejam_id,			
                     parm.parejam_cat,
                     pdf.pdf_id, 			
@@ -152,45 +151,74 @@ class BuscasController
 
             $fechaBodaC = $_POST['mat_fecha_bodac'];
             $fechaFormateadaBodaC = date('Y-m-d H:i', strtotime($fechaBodaC));
-            $_POST['mat_fecha_bodac'] =  $fechaFormateadaBodaC;
+            $_POST['mat_fecha_bodac'] = $fechaFormateadaBodaC;
 
             $fechaBodaR = $_POST['mat_fecha_bodar'];
             $fechaFormateadaBodaR = date('Y-m-d H:i', strtotime($fechaBodaR));
-            $_POST['mat_fecha_bodar'] =  $fechaFormateadaBodaR;
+            $_POST['mat_fecha_bodar'] = $fechaFormateadaBodaR;
 
 
-            $solicitante_id = $_POST['ste_id'];
-            $solicitante = Solicitante::find($solicitante_id);
+            $id = $_POST['ste_id'];
+            $solicitante = Solicitante::find($id);
             $solicitante->ste_telefono = $_POST['ste_telefono'];
             $resultado = $solicitante->actualizar();
 
+            $archivo = $_FILES['pdf_ruta'];
+            $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+            $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
+            if ($subido) {
+                $nuevoDocumento = Pdf::find($_POST['pdf_id']);
+                $nuevoDocumento->pdf_ruta = $ruta;
+                $resultado5 = $nuevoDocumento->actualizar();
 
-            // $solicitudId = $_POST['sol_id'];
+            }
 
-            // if (!empty($_FILES['pdf_ruta']['name'])) {
-            //     $archivo = $_FILES['pdf_ruta'];
-            //     $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
-            //     $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
+           
+            if (isset($_POST['parejac_id']) && !empty($_POST['parejac_id'])) {
+                $parejacId = $_POST['parejac_id'];
+                $parejaCivil = ParejaCivil::find($parejacId);
 
-            //     if ($subido) {
-            //         $pdf = new Pdf([
-            //             'pdf_solicitud' => $solicitudId,
-            //             'pdf_ruta' => $ruta
-            //         ]);
-            //         $pdfResultado = $pdf->crear();
-            //     }
-            // }
+               
+                if ($parejaCivil) {
+                    $parejaCivil->parejac_nombres = $_POST['parejac_nombres'];
+                    $parejaCivil->parejac_apellidos = $_POST['parejac_apellidos'];
+                    $parejaCivil->parejac_direccion = $_POST['parejac_direccion'];
+                    $parejaCivil->parejac_dpi = $_POST['parejac_dpi'] ?? '';
+                    $parejaCivilResultado = $parejaCivil->actualizar();
+                   
+                    return;
+                } else {
+                    
+                }
+            }
 
+            
+            if (isset($_POST['parejam_id']) && !empty($_POST['parejam_id'])) {
+                $parejamId = $_POST['parejam_id'];
+                $parejaMilitar = ParejaMilitar::find($parejamId);
 
-            $parejaCivil = new ParejaCivil($_POST);
-            $parejaCivilResultado = $parejaCivil->actualizar();
+                
+                if ($parejaMilitar) {
+                    $parejaMilitar->parejam_cat = $_POST['parejam_cat'];
+                    $parejaMilitar->parejam_comando = $_POST['parejam_comando'];
+                    $parejaMilitar->parejam_gra = $_POST['parejam_gra'];
+                    $parejaMilitar->parejam_arm = $_POST['parejam_arm'];
+                    $parejaMilitar->parejam_emp = $_POST['parejam_emp'];
+                    $parejaMilitarResultado = $parejaMilitar->actualizar();
+                   
+                } else {
+                   
+                }
+            }
 
-            $parejaMilitar = new ParejaMilitar($_POST);
-            $parejaMilitarResultado = $parejaMilitar->actualizar();
-
-
-
-            $matrimonio = new Matrimonio($_POST);
+            $matId = $_POST['mat_id'];
+            $matrimonio = Matrimonio::find($matId);
+            $matrimonio->mat_lugar_civil = $_POST['mat_lugar_civil'];
+            $matrimonio->mat_fecha_bodac = $_POST['mat_fecha_bodac'];
+            $matrimonio->mat_lugar_religioso = $_POST['mat_lugar_religioso'];
+            $matrimonio->mat_fecha_bodar = $_POST['mat_fecha_bodar'];
+            $matrimonio->mat_fecha_lic_ini = $_POST['mat_fecha_lic_ini'];
+            $matrimonio->mat_fecha_lic_fin = $_POST['mat_fecha_lic_fin'];
             $matrimonioResultado = $matrimonio->actualizar();
 
 

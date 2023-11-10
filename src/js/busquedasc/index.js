@@ -8,7 +8,7 @@ const modalM = new Modal(document.getElementById('modalM'), {})
 const formulario = document.getElementById('formularioMatrimonio');
 const formulario2 = document.getElementById('formularioCasamiento');
 const idPareja = document.getElementById('parejac_id')
-const nombrePareja = document.getElementById('nombre')
+const iframe = document.getElementById('pdfIframe')
 const btnModificar = document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const btnBuscar = document.getElementById('btnBuscar');
@@ -26,8 +26,12 @@ const datatable = new Datatable('#tablaMatrimonios', {
             title: 'NO',
             className: 'text-center',
             render: () => contador++
-        },
-   
+        },        
+        {
+            title: 'ste_fecha',
+            className: 'text-center',
+            data: 'ste_fecha'
+        },   
         {
             title: 'ste_id',
             className: 'text-center',
@@ -59,11 +63,7 @@ const datatable = new Datatable('#tablaMatrimonios', {
             className: 'text-center',
             data: 'mat_fecha_bodar'
         },
-        {
-            title: 'mat_per_civil',
-            className: 'text-center',
-            data: 'mat_per_civil'
-        },
+
         {
             title: 'parejac_id',
             className: 'text-center',
@@ -79,11 +79,7 @@ const datatable = new Datatable('#tablaMatrimonios', {
             className: 'text-center',
             data: 'parejac_dpi'
         },
-        {
-            title: 'mat_per_army',
-            className: 'text-center',
-            data: 'mat_per_army'
-        },
+
         {
             title: 'parejam_id',
             className: 'text-center',
@@ -176,12 +172,11 @@ const datatable = new Datatable('#tablaMatrimonios', {
             orderable: false,
             render: (data, type, row, meta) => `<button class="btn btn-warning" data-id='${data}'data-ste_id='${row["ste_id"]}'data-ste_cat='${row["ste_cat"]}' data-mat_lugar_civil='${row["mat_lugar_civil"]}'
              data-mat_fecha_bodac='${row["mat_fecha_bodac"]}' data-mat_lugar_religioso='${row["mat_lugar_religioso"]}' data-mat_fecha_bodar='${row["mat_fecha_bodar"]}' 
-             data-mat_per_civil='${row["mat_per_civil"]}' data-parejac_id='${row["parejac_id"]}' data-parejac_direccion='${row["parejac_direccion"]}' 
-             data-parejac_dpi='${row["parejac_dpi"]}' data-mat_per_army='${row["mat_per_army"]}' data-parejam_id='${row["parejam_id"]}' 
+             data-parejac_id='${row["parejac_id"]}' data-parejac_direccion='${row["parejac_direccion"]}' data-parejac_dpi='${row["parejac_dpi"]}' data-parejam_id='${row["parejam_id"]}' 
              data-parejam_cat='${row["parejam_cat"]}' data-pdf_id='${row["pdf_id"]}' data-pdf_solicitud='${row["pdf_solicitud"]}' 
              data-grado_solicitante='${row["grado_solicitante"]}' data-nombres_solicitante='${row["nombres_solicitante"]}' data-nombres='${row["nombres"]}'
               data-grado_pareja='${row["grado_pareja"]}' data-nombres_pareja='${row["nombres_pareja"]}' data-mat_fecha_lic_ini='${row["mat_fecha_lic_ini"]}' 
-              data-mat_fecha_lic_fin='${row["mat_fecha_lic_fin"]}' data-ste_telefono='${row["ste_telefono"]}' data-pdf_ruta='${row["pdf_ruta"]}'>Modificar</button>`
+              data-mat_fecha_lic_fin='${row["mat_fecha_lic_fin"]}' data-ste_telefono='${row["ste_telefono"]}' data-pdf_ruta='${row["pdf_ruta"]}' data-ste_fecha='${row["ste_fecha"]}'>Modificar</button>`
         },
         {
             title: 'ELIMINAR',
@@ -194,7 +189,7 @@ const datatable = new Datatable('#tablaMatrimonios', {
     ],
     columnDefs: [
         {
-            targets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            targets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14],
             visible: false,
             searchable: false,
         }
@@ -240,39 +235,42 @@ const buscar = async () => {
 const traeDatos = (e) => {
 
     modalM.show()
-    const mat_id = dataset.id;
-    const ste_id = dataset.ste_id;
-    const ste_cat = dataset.ste_cat;
-    const sol_id = dataset.sol_id;
-    const mat_lugar_civil = dataset.mat_lugar_civil;
-    const mat_fecha_bodac = dataset.mat_fecha_bodac;
-    const mat_lugar_religioso = dataset.mat_lugar_religioso;
-    const mat_fecha_bodar = dataset.mat_fecha_bodar;
-    const mat_per_civil = dataset.mat_per_civil;
-    const parejac_id = dataset.parejac_id;
-    const parejac_direccion = dataset.parejac_direccion;
-    const parejac_dpi = dataset.parejac_dpi;
-    const mat_per_army = dataset.mat_per_army;
-    const parejam_id = dataset.parejam_id;
-    const parejam_cat = dataset.parejam_cat;
-    const pdf_id = dataset.pdf_id;
-    const pdf_solicitud = dataset.pdf_solicitud;
-    const grado_solicitante = dataset.grado_solicitante;
-    const nombres_solicitante = dataset.nombres_solicitante;
-    const nombres = dataset.nombres;
-    const grado_pareja = dataset.grado_pareja;
-    const nombres_pareja = dataset.nombres_pareja;
-    const mat_fecha_lic_ini = dataset.mat_fecha_lic_ini;
-    const mat_fecha_lic_fin = dataset.mat_fecha_lic_fin;
-    const ste_telefono = dataset.ste_telefono;
-    const pdf_ruta = dataset.pdf_ruta;
+    const button = e.target;
+    const mat_id = button.dataset.id
+    const ste_id = button.dataset.ste_id;
+    const ste_cat = button.dataset.ste_cat;
+    // const sol_id = button.dataset.sol_id;
+    const mat_lugar_civil = button.dataset.mat_lugar_civil;
+    const mat_fecha_bodac = button.dataset.mat_fecha_bodac;
+    const mat_lugar_religioso = button.dataset.mat_lugar_religioso;
+    const mat_fecha_bodar = button.dataset.mat_fecha_bodar;
+    const mat_per_civil = button.dataset.mat_per_civil;
+    const parejac_id = button.dataset.parejac_id;
+    const parejac_direccion = button.dataset.parejac_direccion;
+    const parejac_dpi = button.dataset.parejac_dpi;
+    const mat_per_army = button.dataset.mat_per_army;
+    const parejam_id = button.dataset.parejam_id;
+    const parejam_cat = button.dataset.parejam_cat;
+    const pdf_id = button.dataset.pdf_id;
+    const pdf_solicitud = button.dataset.pdf_solicitud;
+    const grado_solicitante = button.dataset.grado_solicitante;
+    const nombres_solicitante = button.dataset.nombres_solicitante;
+    const nombres = button.dataset.nombres;
+    const grado_pareja = button.dataset.grado_pareja;
+    const nombres_pareja = button.dataset.nombres_pareja;
+    const mat_fecha_lic_ini = button.dataset.mat_fecha_lic_ini;
+    const mat_fecha_lic_fin = button.dataset.mat_fecha_lic_fin;
+    const ste_telefono = button.dataset.ste_telefono;
+    const pdf_ruta = button.dataset.pdf_ruta;
+    const ste_fecha = button.dataset.ste_fecha;
     
     const dataset = {
         
         ste_id,
         ste_cat,
-        sol_id,
+        // sol_id,
         ste_telefono,
+        ste_fecha,
         mat_id,
         mat_lugar_civil,
         mat_fecha_bodac,
@@ -289,13 +287,15 @@ const traeDatos = (e) => {
         nombres_solicitante,
         nombres,
         mat_fecha_lic_ini,
-        mat_fecha_lic_fin
-        // pdf_id,
-        // pdf_ruta,
+        mat_fecha_lic_fin,
+        pdf_id,
+        pdf_ruta,
         // pdf_solicitud,
         // grado_pareja,
         // nombres_pareja,
     };
+    console.log(dataset)
+    colocarDatos(dataset)
 
 };
 
@@ -304,17 +304,21 @@ const colocarDatos = (dataset) => {
     const mat_fecha_bodar = formatearFecha(dataset.mat_fecha_bodar);
     const mat_fecha_lic_ini = formatearFecha(dataset.mat_fecha_lic_ini);
     const mat_fecha_lic_fin = formatearFecha(dataset.mat_fecha_lic_fin);
-   
     const ste_fecha = formatearFecha(dataset.ste_fecha);
-
+    
     const partes = dataset.nombres.split(' ');
     const maxNombres = 2;
     const maxApellidos = 2;
     const nombres = partes.slice(0, maxNombres).join(' ');
     const apellidos = partes.slice(maxNombres, maxNombres + maxApellidos).join(' ');
+    formulario2.parejac_nombres.value = nombres;
+    formulario2.parejac_apellidos.value = apellidos;
+
     formulario2.ste_id.value = dataset.ste_id;
     formulario2.ste_cat.value = dataset.ste_cat;
-    formulario2.sol_id.value = dataset.sol_id;
+    formulario2.nombre.value = dataset.nombres_solicitante;
+    formulario2.ste_fecha.value = ste_fecha;
+    formulario2.pdf_id.value = pdf_id;
     formulario2.ste_telefono.value = dataset.ste_telefono;
     formulario2.mat_id.value = dataset.mat_id;
     formulario2.mat_lugar_civil.value = dataset.mat_lugar_civil;
@@ -328,13 +332,15 @@ const colocarDatos = (dataset) => {
     formulario2.mat_per_army.value = dataset.mat_per_army;
     formulario2.parejam_id.value = dataset.parejam_id;
     formulario2.parejam_cat.value = dataset.parejam_cat;
-    formulario2.grado_solicitante.value = dataset.grado_solicitante;
-    formulario2.nombres_solicitante.value = dataset.nombres_solicitante;
     formulario2.mat_fecha_lic_ini.value = mat_fecha_lic_ini;
-    formulario2.mat_fecha_lic_fin.value = mat_fecha_lic_fin;   
+    formulario2.mat_fecha_lic_fin.value = mat_fecha_lic_fin;
     
-    formulario2.parejac_nombres.value = nombres;
-    formulario2.parejac_apellidos.value = apellidos;
+   
+    let pdf = btoa(btoa(btoa(dataset.pdf_ruta)));
+    let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
+    
+    iframe.src = ver 
+    
 
 }
 
@@ -449,8 +455,11 @@ const eliminar = async (e) => {
 }
 
 
+
+
+
 const verPDF = (e) => {
-    // const button = e.target;
+
     const boton = e.target
     let ruta = boton.dataset.ruta
 
