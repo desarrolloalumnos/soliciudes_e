@@ -21,10 +21,12 @@ use Controllers\DetalleController;
 use Controllers\ReportesolController;
 use Controllers\BuscasalpaisController;
 use Controllers\BuscaprotoController;
+use Controllers\DireccionpersonalController;
 
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
+
 
 $router->get('/', [AppController::class,'index']);
 $router->get('/protocolos', [ProtocoloController::class,'index']);
@@ -40,17 +42,20 @@ $router->post('/API/motivos/guardar', [MotivoController::class,'guardarApi']);
 $router->post('/API/motivos/modificar', [MotivoController::class,'modificarApi']);
 $router->post('/API/motivos/eliminar', [MotivoController::class,'eliminarApi']);
 
+
 $router->get('/articulos', [ArticuloController::class,'index']);
 $router->get('/API/articulos/buscar', [ArticuloController::class,'buscarApi']);
 $router->post('/API/articulos/guardar', [ArticuloController::class,'guardarApi']);
 $router->post('/API/articulos/modificar', [ArticuloController::class,'modificarApi']);
 $router->post('/API/articulos/eliminar', [ArticuloController::class,'eliminarApi']);
 
+
 $router->get('/transportes', [TransporteController::class,'index']);
 $router->get('/API/transportes/buscar', [TransporteController::class,'buscarApi']);
 $router->post('/API/transportes/guardar', [TransporteController::class,'guardarApi']);
 $router->post('/API/transportes/modificar', [TransporteController::class,'modificarApi']);
 $router->post('/API/transportes/eliminar', [TransporteController::class,'eliminarApi']);
+
 
 $router->get('/tiposol', [TiposolController::class,'index']);
 $router->get('/API/tiposol/buscar', [TiposolController::class,'buscarApi']);
@@ -65,10 +70,12 @@ $router->get('/API/casamientos/buscarCatalogo2', [CasamientoController::class,'b
 $router->get('/API/casamientos/buscarCatalogo3', [CasamientoController::class,'buscarCatalogo3Api']);
 $router->post('/API/casamientos/guardar', [CasamientoController::class,'guardarApi']);
 
+
 $router->get('/busquedasc', [BuscasController::class,'index']);
 $router->get('/API/busquedasc/buscar', [BuscasController::class,'buscarApi']);
 $router->post('/API/busquedasc/modificar', [BuscasController::class,'modificarApi']);
 $router->get('/API/busquedasc/pdf', [BuscasController::class,'VerPdf']);
+
 
 $router->get('/licencias', [LictempController::class,'index']);
 $router->get('/API/licencias/buscarCatalogo', [LictempController::class,'buscarCatalogoApi']);
@@ -76,12 +83,15 @@ $router->get('/API/licencias/buscarTiempo', [LictempController::class,'buscarTie
 $router->get('/API/licencias/buscarCatalogo2', [LictempController::class,'buscarCatalogo2Api']);
 $router->post('/API/licencias/guardar', [LictempController::class,'guardarApi']);
 
+
 $router->get('/busquedaslict', [BuscalictController::class,'index']);
 $router->get('/API/busquedaslict/buscar', [BuscalictController::class,'buscarApi']);
+
 
 $router->get('/busquedasalpais', [BuscasalpaisController::class,'index']);
 $router->get('/API/busquedasalpais/buscar', [BuscasalpaisController::class,'buscarApi']);
 $router->post('/API/busquedasalpais/modificar', [BuscasController::class,'modificarApi']);
+
 
 $router->get('/busquedasproto', [BuscaprotoController::class,'index']);
 $router->get('/API/busquedasproto/buscar', [BuscaprotoController::class,'buscarApi']);
@@ -92,6 +102,7 @@ $router->get('/API/protocolosol/buscar', [ProtocolosolController::class,'buscarA
 $router->get('/API/protocolosol/buscarCatalogo', [ProtocolosolController::class,'buscarCatalogoApi']);
 $router->get('/API/protocolosol/buscarCatalogo', [ProtocolosolController::class,'buscarCatalogo2Api']);
 $router->post('/API/protocolosol/guardar', [ProtocolosolController::class,'guardarApi']);
+
 
 $router->get('/salidapaises', [SalidapaisController::class,'index']);
 $router->get('/API/salidapaises/buscar', [SalidapaisController::class,'buscarApi']);
@@ -108,12 +119,19 @@ $router->post('/API/administraciones/enviarDga', [AdministracionController::clas
 $router->get('/administraciones/direcciongeneral', [AdministracionController::class,'direccionGeneral']);
 
 
+$router->get('/direccionpersonal', [DireccionpersonalController::class,'index']);
+$router->get('/API/direccionpersonal/buscar', [DireccionpersonalController::class,'buscarApi']);
+$router->post('/API/direccionpersonal/enviarMdn', [DireccionpersonalController::class,'enviarMdnApi']);
+
+
 $router->get('/historiales', [HistorialController::class,'index']);
 $router->get('/API/historiales/buscar', [HistorialController::class,'buscarApi']);
+
 
 $router->get('/administraciones/estadistica', [DetalleController::class,'estadistica']);
 $router->get('/API/administraciones/estadistica', [DetalleController::class,'detalleApi']);
 $router->get('/API/administraciones/estadistica2', [DetalleController::class,'detalle2Api']);
+
 
 $router->get('/API/reportesolicitudes', [ReportesolController::class,'reporteSolicitudesAPI']);
 $router->get('/API/aprobadas', [ReportesolController::class,'AprobadasAPI']);

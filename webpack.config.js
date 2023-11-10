@@ -23,6 +23,7 @@ module.exports = {
     'js/administraciones/direcciongeneral' : './src/js/administraciones/direcciongeneral.js',
     'js/historiales/index' : './src/js/historiales/index.js',
     'js/protocolosol/index' : './src/js/protocolosol/index.js',
+    'js/direccionpersonal/index' : './src/js/direccionpersonal/index.js',
     'js/reportesolicitudes/index' : './src/js/reportesolicitudes/index.js',
     'js/reporteaprobadas/index' : './src/js/reporteaprobadas/index.js',
     'js/reporterechazadas/index' : './src/js/reporterechazadas/index.js',

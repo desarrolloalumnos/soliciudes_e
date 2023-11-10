@@ -30,6 +30,7 @@
                         <a class="nav-link" aria-current="page" href="/soliciudes_e/"><i class="bi bi-house-fill me-2"></i>Inicio</a>
                     </li>
 
+                    <!-- SOLICITUD DE MATRIMONIO -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-calendar-heart-fill me-2"></i>Matrimonio
@@ -46,6 +47,8 @@
                             </li>
                         </ul>
                     </div>
+
+                     <!-- SOLICITUD DE SALIDA DEL PAIS -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-airplane-engines me-2"></i>Salida del Pais
@@ -62,8 +65,10 @@
                             </li>
                         </ul>
                     </div>
+
+                     <!-- SOLICITUD DE LICENCIA TEMPORAL -->
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-person-dash me-2"></i>Licencia Temporal
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
@@ -78,8 +83,10 @@
                             </li>
                         </ul>
                     </div>
+
+                     <!-- SOLICITUD DE BANDA, COMBO, MARIMBA Y VALLAS -->
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-music-note me-2"></i>Combos y vallas
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
@@ -95,19 +102,20 @@
                         </ul>
                     </div>
 
+                    <!-- MODULO DE ADMINISTRACION DE LAS OFICINAS DE PERSONAL COMANDOS Y BRIGADAS -->
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-check2-square"></i>Administracion
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/administraciones" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-check2-square me-2"></i>Administracion
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/administraciones">
-                                    <i class="bi bi-file-earmark-arrow-up"></i>Enviar
+                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Enviar
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/historiales">
-                                    <i class="ms-lg-0 ms-2 bi bi-clock-history"></i>Historial
+                                    <i class="ms-lg-0 ms-2 bi bi-clock-history me-2"></i>Historial
                                 </a>
                             </li>
                             <li>
@@ -118,23 +126,40 @@
                         </ul>
                     </div>
 
+
+                    <!-- MODULO DE ADMINISTRACION DE LA DIRECCION GENERAL ADMINISTRATIVA DEL ESTADO MAYOR DE LA DEFENSA NACIONAL -->
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/protocolosol" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-eye-fill"></i>DGAEMDN
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-eye-fill me-2"></i>DGAEMDN
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/administraciones/direcciongeneral">
-                                    <i class="bi bi-file-earmark-arrow-up"></i>Enviar
+                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Enviar
                                 </a>
                             </li>
                         </ul>
                     </div>
 
 
+                    <!-- MODULO DE ADMINISTRACION DE LA DIRECCION DE PERSONAL DEL ESTADO MAYOR DE LA DEFENSA NACIONAL -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-check2-square"></i>MDN
+                            <i class="bi bi-p-square-fill me-2"></i>DPEMDN
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/direccionpersonal">
+                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Enviar
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- MODULO DE ADMINISTRACION DEL MINISTERIO DE LA DEFENSA NACIONAL -->
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-check2-square me-2"></i>MDN
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
@@ -155,6 +180,8 @@
                         </ul>
                     </div>
 
+
+                    <!-- MANTENIMIENTOS DE LAS TABLAS -->
                     <div class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                             <i class="bi bi-gear me-2"></i>Mantenimientos
@@ -168,7 +195,7 @@
                             </li>
                             <li>
                                 <a class="nav-link" aria-current="page" href="/soliciudes_e/articulos"><i class="bi bi-book-fill me-2"></i>Articulos Licencia Temporal</a>
-                            </li>
+                            </li> 
                             <li>
                                 <a class="nav-link" aria-current="page" href="/soliciudes_e/transportes"><i class="bi bi-airplane-fill me-2"></i>Tipos de transportes</a>
                             </li>
