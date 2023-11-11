@@ -196,7 +196,7 @@
                     <div class="row justify-content-center mt-12 mb-4">
                         <div class="col-lg-2">
                             <button type="button" id="btnGuardar" name="btnGuardar"
-                                class="btn btn-outline-primary w-100">Guardar</button>
+                                class="btn btn-outline-primary w-100 overflow-visible text-wrap">Guardar</button>
                         </div>
                     </div>
                 </div>

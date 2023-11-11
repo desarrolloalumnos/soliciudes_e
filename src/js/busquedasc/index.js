@@ -1,18 +1,32 @@
-import Swal from "sweetalert2";
 import { Dropdown, Modal } from "bootstrap";
+import Swal from "sweetalert2";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion, formatearFecha } from "../funciones";
 
-const modalM = new Modal(document.getElementById('modalM'), {})
+const modalM = new Modal(document.getElementById('modalM'), {
+    backdrop: 'static',
+    keyboard: false
+});
+const modalPdf = new Modal(document.getElementById('modalPdf'), {
+    backdrop: 'static',
+    keyboard: false
+});
 const formulario = document.getElementById('formularioMatrimonio');
 const formulario2 = document.getElementById('formularioCasamiento');
+const pdf = document.getElementById('formularioPdf');
+const ste_cat2 = document.getElementById('ste_cat2');
 const idPareja = document.getElementById('parejac_id')
 const iframe = document.getElementById('pdfIframe')
 const btnModificar = document.getElementById('btnModificar');
-const btnCancelar = document.getElementById('btnCancelar');
 const btnBuscar = document.getElementById('btnBuscar');
+const addPdf = document.getElementById('addPdf');
+const parejam_cat = document.getElementById('parejam_cat');
+const divMilitar = document.getElementById('parejaMilitar');
+const divCivil = document.getElementById('parejaCivil');
 
+divMilitar.style.display = 'none';
+divCivil.style.display = 'none';
 formulario2.ste_cat.disabled = true;
 formulario2.ste_fecha.disabled = true;
 formulario2.nombre.disabled = true;
@@ -26,12 +40,12 @@ const datatable = new Datatable('#tablaMatrimonios', {
             title: 'NO',
             className: 'text-center',
             render: () => contador++
-        },        
+        },
         {
             title: 'ste_fecha',
             className: 'text-center',
             data: 'ste_fecha'
-        },   
+        },
         {
             title: 'ste_id',
             className: 'text-center',
@@ -164,19 +178,26 @@ const datatable = new Datatable('#tablaMatrimonios', {
             width: '150px'
 
         },
+
         {
-            title: 'MODIFICAR',
+            title: 'MODIFICAR ',
             className: 'text-center',
             data: 'mat_id',
             searchable: false,
             orderable: false,
-            render: (data, type, row, meta) => `<button class="btn btn-warning" data-id='${data}'data-ste_id='${row["ste_id"]}'data-ste_cat='${row["ste_cat"]}' data-mat_lugar_civil='${row["mat_lugar_civil"]}'
-             data-mat_fecha_bodac='${row["mat_fecha_bodac"]}' data-mat_lugar_religioso='${row["mat_lugar_religioso"]}' data-mat_fecha_bodar='${row["mat_fecha_bodar"]}' 
-             data-parejac_id='${row["parejac_id"]}' data-parejac_direccion='${row["parejac_direccion"]}' data-parejac_dpi='${row["parejac_dpi"]}' data-parejam_id='${row["parejam_id"]}' 
-             data-parejam_cat='${row["parejam_cat"]}' data-pdf_id='${row["pdf_id"]}' data-pdf_solicitud='${row["pdf_solicitud"]}' 
-             data-grado_solicitante='${row["grado_solicitante"]}' data-nombres_solicitante='${row["nombres_solicitante"]}' data-nombres='${row["nombres"]}'
-              data-grado_pareja='${row["grado_pareja"]}' data-nombres_pareja='${row["nombres_pareja"]}' data-mat_fecha_lic_ini='${row["mat_fecha_lic_ini"]}' 
-              data-mat_fecha_lic_fin='${row["mat_fecha_lic_fin"]}' data-ste_telefono='${row["ste_telefono"]}' data-pdf_ruta='${row["pdf_ruta"]}' data-ste_fecha='${row["ste_fecha"]}'>Modificar</button>`
+            render: (data, type, row, meta) =>
+                `<div class="btn-group">
+                <button class="btn btn-warning" data-id='${data}' data-pdf_id='${row["pdf_id"]}' data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}' data-ste_id='${row["ste_id"]}' data-ste_cat='${row["ste_cat"]}' data-mat_lugar_civil='${row["mat_lugar_civil"]}'
+                    data-mat_fecha_bodac='${row["mat_fecha_bodac"]}' data-mat_lugar_religioso='${row["mat_lugar_religioso"]}' data-mat_fecha_bodar='${row["mat_fecha_bodar"]}' 
+                    data-parejac_id='${row["parejac_id"]}' data-parejac_direccion='${row["parejac_direccion"]}' data-parejac_dpi='${row["parejac_dpi"]}' data-parejam_id='${row["parejam_id"]}' 
+                    data-parejam_cat='${row["parejam_cat"]}' data-grado_solicitante='${row["grado_solicitante"]}' data-nombres_solicitante='${row["nombres_solicitante"]}' data-nombres='${row["nombres"]}'
+                    data-grado_pareja='${row["grado_pareja"]}' data-nombres_pareja='${row["nombres_pareja"]}' data-mat_fecha_lic_ini='${row["mat_fecha_lic_ini"]}' 
+                    data-mat_fecha_lic_fin='${row["mat_fecha_lic_fin"]}' data-ste_telefono='${row["ste_telefono"]}' data-pdf_ruta='${row["pdf_ruta"]}' data-ste_fecha='${row["ste_fecha"]}'>
+                    DATOS
+                </button>
+                <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
+            </div>`
+
         },
         {
             title: 'ELIMINAR',
@@ -189,7 +210,7 @@ const datatable = new Datatable('#tablaMatrimonios', {
     ],
     columnDefs: [
         {
-            targets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14],
+            targets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
             visible: false,
             searchable: false,
         }
@@ -251,8 +272,6 @@ const traeDatos = (e) => {
     const mat_per_army = button.dataset.mat_per_army;
     const parejam_id = button.dataset.parejam_id;
     const parejam_cat = button.dataset.parejam_cat;
-    const pdf_id = button.dataset.pdf_id;
-    const pdf_solicitud = button.dataset.pdf_solicitud;
     const grado_solicitante = button.dataset.grado_solicitante;
     const nombres_solicitante = button.dataset.nombres_solicitante;
     const nombres = button.dataset.nombres;
@@ -263,9 +282,9 @@ const traeDatos = (e) => {
     const ste_telefono = button.dataset.ste_telefono;
     const pdf_ruta = button.dataset.pdf_ruta;
     const ste_fecha = button.dataset.ste_fecha;
-    
+
     const dataset = {
-        
+
         ste_id,
         ste_cat,
         // sol_id,
@@ -288,13 +307,10 @@ const traeDatos = (e) => {
         nombres,
         mat_fecha_lic_ini,
         mat_fecha_lic_fin,
-        pdf_id,
         pdf_ruta,
-        // pdf_solicitud,
         // grado_pareja,
-        // nombres_pareja,
+        nombres_pareja
     };
-    console.log(dataset)
     colocarDatos(dataset)
 
 };
@@ -305,7 +321,7 @@ const colocarDatos = (dataset) => {
     const mat_fecha_lic_ini = formatearFecha(dataset.mat_fecha_lic_ini);
     const mat_fecha_lic_fin = formatearFecha(dataset.mat_fecha_lic_fin);
     const ste_fecha = formatearFecha(dataset.ste_fecha);
-    
+
     const partes = dataset.nombres.split(' ');
     const maxNombres = 2;
     const maxApellidos = 2;
@@ -318,7 +334,6 @@ const colocarDatos = (dataset) => {
     formulario2.ste_cat.value = dataset.ste_cat;
     formulario2.nombre.value = dataset.nombres_solicitante;
     formulario2.ste_fecha.value = ste_fecha;
-    formulario2.pdf_id.value = pdf_id;
     formulario2.ste_telefono.value = dataset.ste_telefono;
     formulario2.mat_id.value = dataset.mat_id;
     formulario2.mat_lugar_civil.value = dataset.mat_lugar_civil;
@@ -331,30 +346,64 @@ const colocarDatos = (dataset) => {
     formulario2.parejac_dpi.value = dataset.parejac_dpi;
     formulario2.mat_per_army.value = dataset.mat_per_army;
     formulario2.parejam_id.value = dataset.parejam_id;
-    formulario2.parejam_cat.value = dataset.parejam_cat;
+    parejam_cat.value = dataset.parejam_cat;
+    formulario2.parejaNombre.value = dataset.nombres_pareja;
     formulario2.mat_fecha_lic_ini.value = mat_fecha_lic_ini;
     formulario2.mat_fecha_lic_fin.value = mat_fecha_lic_fin;
-    
-   
+
+    if (parejam_cat.value === "") {
+        divMilitar.style.display = 'none';
+        divCivil.style.display = 'block';
+    } else {
+        divMilitar.style.display = 'block';
+        divCivil.style.display = 'none';
+        parejam_cat.addEventListener('change', buscarCatalogo)
+
+    }
+
+
     let pdf = btoa(btoa(btoa(dataset.pdf_ruta)));
     let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
-    
-    iframe.src = ver 
-    
+
+    iframe.src = ver
+
+}
+
+const traePdf = (e) => {
+
+    modalPdf.show()
+    const button = e.target;
+    const ste_cat = button.dataset.ste_cat;
+    const pdf_id = button.dataset.pdf_id;
+    const pdf_solicitud = button.dataset.pdf_solicitud;
+
+
+    const dataset = {
+
+        ste_cat,
+        pdf_id,
+        pdf_solicitud
+    };
+    colocarPdf(dataset)
+
+};
+
+const colocarPdf = (dataset) => {
+    ste_cat2.value = dataset.ste_cat;
+    pdf.pdf_solicitud.value = dataset.pdf_solicitud;
+    pdf.pdf_id.value = dataset.pdf_id;
+
 
 }
 
 
-
-const limpiarModelM = async () => {
-    modalM.hide()
-}
 
 const modificar = async (evento) => {
 
     evento.preventDefault();
     let catalogo = formulario2.ste_cat.value
     let fecha = formulario2.ste_fecha.value
+
 
     const body = new FormData(formulario2)
     body.append('ste_cat', catalogo)
@@ -370,9 +419,6 @@ const modificar = async (evento) => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log(data)
-        // return
-
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
         switch (codigo) {
@@ -380,7 +426,7 @@ const modificar = async (evento) => {
                 formulario.reset();
                 icon = 'success'
                 buscar();
-                // cancelarAccion();
+                modalM.hide()
                 break;
 
             case 0:
@@ -402,14 +448,67 @@ const modificar = async (evento) => {
     }
 }
 
+const modificarPdf = async (evento) => {
+
+    evento.preventDefault();
+
+
+    const body = new FormData(pdf);
+    body.append('ste_cat2', ste_id)
+    const url = '/soliciudes_e/API/busquedasc/modificarPdf';
+    const headers = new Headers();
+    headers.append("X-Requested-With", "fetch");
+    const config = {
+        method: 'POST',
+        body
+    }
+
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+       
+        const { codigo, mensaje, detalle } = data;
+        let icon = 'info'
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                icon = 'success'
+                buscar();
+                modalPdf.hide()
+                break;
+
+            case 0:
+                icon = 'error'
+                console.log(detalle)
+                break;
+
+            default:
+                break;
+        }
+
+        Toast.fire({
+            icon,
+            text: mensaje
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
 const eliminar = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
 
     if (await confirmacion('warning', 'Desea elminar este registro?')) {
+
         const body = new FormData()
-        body.append('cmv_id', id)
-        const url = '/soliciudes_e/API/protocolos/eliminar';
+        body.append('sol_id', id)
+        const url = '/soliciudes_e/API/busquedasc/eliminar';
+
         const headers = new Headers();
         headers.append("X-Requested-With", "fetch");
         const config = {
@@ -419,7 +518,7 @@ const eliminar = async (e) => {
         try {
             const respuesta = await fetch(url, config)
             const data = await respuesta.json();
-
+     
             const { codigo, mensaje, detalle } = data;
             let icon = 'info'
             switch (codigo) {
@@ -451,11 +550,52 @@ const eliminar = async (e) => {
         }
     }
 
-    // buscar();
+    buscar();
 }
 
 
+const buscarCatalogo = async () => {
 
+    let catalogo = parejam_cat.value;
+    const url = `/soliciudes_e/API/licencias/buscarCatalogo?per_catalogo=${catalogo}`;
+
+
+    const config = {
+        method: 'GET',
+    }
+
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        if (data.length > 0) {
+            const dato = data[0]
+            formulario2.parejam_arm.value = dato.per_arma;          
+            formulario2.parejam_gra.value = dato.per_grado;
+            formulario2.parejam_emp.value = dato.org_plaza_desc
+            formulario2.parejam_comando.value = dato.dep_llave
+            formulario2.parejam_cat.value = dato.per_catalogo
+            formulario2.parejaNombre.value = dato.nombres;
+
+
+            Toast.fire({
+                title: 'Catálogo válido',
+                icon: 'success'
+            });
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+            });
+            return;
+        }
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+
+
+}
 
 
 const verPDF = (e) => {
@@ -472,6 +612,8 @@ buscar();
 
 btnBuscar.addEventListener('click', buscar);
 btnModificar.addEventListener('click', modificar)
-btnCancelar.addEventListener('click', limpiarModelM)
 datatable.on('click', '.btn-warning', traeDatos);
+datatable.on('click', '.btn-outline-warning', traePdf);
+addPdf.addEventListener('click', modificarPdf)
 datatable.on('click', '.btn-outline-info', verPDF);
+datatable.on('click', '.btn-danger', eliminar);

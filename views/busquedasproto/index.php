@@ -18,7 +18,7 @@
 
     <div class="row justify-content-center mb-4 d-flex align-items-center overflow-visible">
     <div class="col-lg-2">
-        <button type="button" id="btnBuscar" name="btnBuscar" class="btn btn-outline-info w-100 overflow-visible">Buscar</button>
+        <button type="button" id="btnBuscar" name="btnBuscar"  class="btn btn-outline-info w-100 overflow-visible text-wrap">Buscar</button>
     </div>
 </div>
 </form>

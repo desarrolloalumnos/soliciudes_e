@@ -91,7 +91,6 @@ const guardar = async (evento) => {
         evento.preventDefault();
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         switch (codigo) {
@@ -325,7 +324,7 @@ const limpiarModelM = async () => {
 const limpiarModelC = async () => {
     nombreEsposaCivil.value = '';
     apellidoEsposaCivil.value = '';
-    direccionEsposaCivil.value ='';
+    direccionEsposaCivil.value = '';
     dpiEsposaCivil.value = '';
     checkboxCivil.disabled = false;
     checkboxMilitar.checked = false;
