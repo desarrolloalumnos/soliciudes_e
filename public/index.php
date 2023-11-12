@@ -95,6 +95,8 @@ $router->post('/API/busquedasalpais/modificar', [BuscasController::class,'modifi
 
 $router->get('/busquedasproto', [BuscaprotoController::class,'index']);
 $router->get('/API/busquedasproto/buscar', [BuscaprotoController::class,'buscarApi']);
+$router->get('/API/busquedasproto/buscarEventos', [BuscaprotoController::class,'buscarEventos']);
+$router->get('/API/busquedasproto/modificar', [BuscaprotoController::class,'modificarApi']);
 
 
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);
