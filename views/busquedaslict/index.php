@@ -50,8 +50,7 @@
 
 
                         <div class="row justify-content-around mb-4">
-                            <div class="col-lg-6">
-                                <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
+                            <div class="col-lg-6">                              
                                 <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
                                 <label for="ste_cat"><i class="bi bi-universal-access"></i>Catalogo</label>
                                 <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="numero de catalogo">
@@ -144,7 +143,7 @@
                             </div>
                             <div class="row justify-content-center mt-12 mb-4" style="margin-top: 20px;">
                                 <div class="col-lg-2">
-                                    <button type="button" id="btnGuardar" name="btnGuardar" class="btn btn-outline-primary w-100">Guardar</button>
+                                    <button type="button" id="btnGuardar" name="btnGuardar" class="btn btn-outline-primary w-100 overflow-visible text-wrap">Guardar</button>
                                 </div>
                             </div>
                         </div>

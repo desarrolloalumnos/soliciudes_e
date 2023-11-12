@@ -18,7 +18,6 @@ class BuscasController
     public static function index(Router $router)
     {
         $router->render('busquedasc/index', []);
-        // $router->verPdf('matrimonio/634576.653b7cfdb545b', []);
     }
 
     public static function buscarApi()
@@ -48,18 +47,17 @@ class BuscasController
                     WHERE per_catalogo = ste.ste_cat) AS grado_solicitante,
                     sol.sol_id,	
                     ste.ste_id,
-                    ste.ste_cat,           	
+                    ste.ste_cat, 
+                    ste.ste_fecha,                            	
                     ste.ste_telefono,   
                     mat.mat_lugar_civil,
                     mat.mat_fecha_bodac,
                     mat.mat_lugar_religioso,
                     mat.mat_fecha_bodar,
-                    mat.mat_per_civil,
                     parc.parejac_id, 			
                     TRIM(parc.parejac_nombres)||' '||TRIM(parc.parejac_apellidos) AS nombres,
                     parc.parejac_direccion,    
-                    parc.parejac_dpi, 
-                    mat.mat_per_army,
+                    parc.parejac_dpi,                  
                     parm.parejam_id,			
                     parm.parejam_cat,
                     pdf.pdf_id, 			
@@ -134,10 +132,7 @@ class BuscasController
 
         try {
 
-
-
-            $catalogo_doc = $_POST['ste_cat'];
-
+            
             $fechaSolicito = $_POST['ste_fecha'];
             $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
             $_POST['ste_fecha'] = $fechaFormateadaSolicito;
@@ -152,45 +147,60 @@ class BuscasController
 
             $fechaBodaC = $_POST['mat_fecha_bodac'];
             $fechaFormateadaBodaC = date('Y-m-d H:i', strtotime($fechaBodaC));
-            $_POST['mat_fecha_bodac'] =  $fechaFormateadaBodaC;
+            $_POST['mat_fecha_bodac'] = $fechaFormateadaBodaC;
 
             $fechaBodaR = $_POST['mat_fecha_bodar'];
             $fechaFormateadaBodaR = date('Y-m-d H:i', strtotime($fechaBodaR));
-            $_POST['mat_fecha_bodar'] =  $fechaFormateadaBodaR;
+            $_POST['mat_fecha_bodar'] = $fechaFormateadaBodaR;
 
-
-            $solicitante_id = $_POST['ste_id'];
-            $solicitante = Solicitante::find($solicitante_id);
+            
+            $id = $_POST['ste_id'];
+            $solicitante = Solicitante::find($id);
             $solicitante->ste_telefono = $_POST['ste_telefono'];
             $resultado = $solicitante->actualizar();
 
 
-            // $solicitudId = $_POST['sol_id'];
-
-            // if (!empty($_FILES['pdf_ruta']['name'])) {
-            //     $archivo = $_FILES['pdf_ruta'];
-            //     $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
-            //     $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
-
-            //     if ($subido) {
-            //         $pdf = new Pdf([
-            //             'pdf_solicitud' => $solicitudId,
-            //             'pdf_ruta' => $ruta
-            //         ]);
-            //         $pdfResultado = $pdf->crear();
-            //     }
-            // }
+            if (isset($_POST['parejac_id']) && !empty($_POST['parejac_id'])) {
+                $parejacId = $_POST['parejac_id'];
+                $parejaCivil = ParejaCivil::find($parejacId);
 
 
-            $parejaCivil = new ParejaCivil($_POST);
-            $parejaCivilResultado = $parejaCivil->actualizar();
+                if ($parejaCivil) {
+                    $parejaCivil->parejac_nombres = $_POST['parejac_nombres'];
+                    $parejaCivil->parejac_apellidos = $_POST['parejac_apellidos'];
+                    $parejaCivil->parejac_direccion = $_POST['parejac_direccion'];
+                    $parejaCivil->parejac_dpi = $_POST['parejac_dpi'] ?? '';
+                    $parejaCivilResultado = $parejaCivil->actualizar();
 
-            $parejaMilitar = new ParejaMilitar($_POST);
-            $parejaMilitarResultado = $parejaMilitar->actualizar();
+                
+                } 
+            }
 
 
+            if (isset($_POST['parejam_id']) && !empty($_POST['parejam_id'])&&!empty($_POST['parejam_comando'])) {
+                $parejamId = $_POST['parejam_id'];
+                $parejaMilitar = ParejaMilitar::find($parejamId);
 
-            $matrimonio = new Matrimonio($_POST);
+
+                if ($parejaMilitar) {
+                    $parejaMilitar->parejam_cat = $_POST['parejam_cat'];
+                    $parejaMilitar->parejam_comando = $_POST['parejam_comando'];
+                    $parejaMilitar->parejam_gra = $_POST['parejam_gra'];
+                    $parejaMilitar->parejam_arm = $_POST['parejam_arm'];
+                    $parejaMilitar->parejam_emp = $_POST['parejam_emp'];
+                    $parejaMilitarResultado = $parejaMilitar->actualizar();
+
+                } 
+            }
+
+            $matId = $_POST['mat_id'];
+            $matrimonio = Matrimonio::find($matId);
+            $matrimonio->mat_lugar_civil = $_POST['mat_lugar_civil'];
+            $matrimonio->mat_fecha_bodac = $_POST['mat_fecha_bodac'];
+            $matrimonio->mat_lugar_religioso = $_POST['mat_lugar_religioso'];
+            $matrimonio->mat_fecha_bodar = $_POST['mat_fecha_bodar'];
+            $matrimonio->mat_fecha_lic_ini = $_POST['mat_fecha_lic_ini'];
+            $matrimonio->mat_fecha_lic_fin = $_POST['mat_fecha_lic_fin'];
             $matrimonioResultado = $matrimonio->actualizar();
 
 
@@ -198,11 +208,6 @@ class BuscasController
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1
-                ]);
-            } else {
-                echo json_encode([
-                    'mensaje' => 'No se pudo modificar el registro',
-                    'codigo' => 0
                 ]);
             }
         } catch (Exception $e) {
@@ -222,31 +227,64 @@ class BuscasController
         $router->printPDF($ruta);
     }
 
-    // public static function eliminarAPI()
-    // {
-    //     try {
-    //         $motivo_id = $_POST['mot_id'];
-    //         $motivo = Motivos::find($motivo_id);
-    //         $motivo->mot_situacion = 0;
-    //         $resultado = $motivo->actualizar();
+        public static function modificarPdfApi()
+    {
+        try {
+            
+            $catalogo_doc = $_POST['ste_cat2'];
+           
+            if (!empty($_FILES['pdf_ruta']['name'])) {
+                $archivo = $_FILES['pdf_ruta'];
+                $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+                $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
 
-    //         if ($resultado['resultado'] == 1) {
-    //             echo json_encode([
-    //                 'mensaje' => 'Registro eliminado correctamente',
-    //                 'codigo' => 1
-    //             ]);
-    //         } else {
-    //             echo json_encode([
-    //                 'mensaje' => 'Ocurrió un error',
-    //                 'codigo' => 0
-    //             ]);
-    //         }
-    //     } catch (Exception $e) {
-    //         echo json_encode([
-    //             'detalle' => $e->getMessage(),
-    //             'mensaje' => 'Ocurrió un error',
-    //             'codigo' => 0
-    //         ]);
-    //     }
-    // }
+                if ($subido) {
+                    $pdf_id = $_POST['pdf_id'];
+                    $nuevoDocumento = Pdf::find($pdf_id);
+                    $nuevoDocumento->pdf_solicitud = $_POST['pdf_solicitud'];
+                    $nuevoDocumento->pdf_ruta = $ruta;
+                    $resultado = $nuevoDocumento->actualizar();
+                } else {
+
+                }
+            }
+
+            if ($resultado['resultado'] == 1) {
+                echo json_encode([
+                    'mensaje' => 'Registro modificado correctamente',
+                    'codigo' => 1
+                ]);
+            } 
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
+
+    public static function eliminarApi()
+    {
+        try {
+         
+            $solicitud_id = $_POST['sol_id'];
+            $solicitud = Solicitud::find($solicitud_id);
+            $solicitud->sol_situacion = 0;
+            $resultado = $solicitud->actualizar();
+
+            if ($resultado['resultado'] == 1) {
+                echo json_encode([
+                    'mensaje' => 'Registro eliminado correctamente',
+                    'codigo' => 1
+                ]);
+            } 
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
 }

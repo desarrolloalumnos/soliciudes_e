@@ -34,7 +34,7 @@ class LictempController
 
         $router->render('licencias/index', [
             'motivos' => $motivos,
-            'articulos' => $articulos0
+            'articulos' => $articulos
         ]);
     }
 
