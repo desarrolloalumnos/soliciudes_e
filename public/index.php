@@ -92,11 +92,17 @@ $router->get('/API/busquedaslict/buscar', [BuscalictController::class,'buscarApi
 
 $router->get('/busquedasalpais', [BuscasalpaisController::class,'index']);
 $router->get('/API/busquedasalpais/buscar', [BuscasalpaisController::class,'buscarApi']);
-$router->post('/API/busquedasalpais/modificar', [BuscasController::class,'modificarApi']);
+$router->post('/API/busquedasalpais/modificar', [BuscasalpaisController::class,'modificarApi']);
+$router->post('/API/busquedasalpais/eliminar', [BuscasalpaisController::class,'eliminarApi']);
+$router->get('/API/busquedasalpais/pdf', [BuscasalpaisController::class,'VerPdf']);
 
 
 $router->get('/busquedasproto', [BuscaprotoController::class,'index']);
 $router->get('/API/busquedasproto/buscar', [BuscaprotoController::class,'buscarApi']);
+$router->get('/API/busquedasproto/buscarEventos', [BuscaprotoController::class,'buscarEventos']);
+$router->get('/API/busquedasproto/modificar', [BuscaprotoController::class,'modificarApi']);
+$router->get('/API/busquedasproto/eliminar', [BuscaprotoController::class,'eliminarApi']);
+$router->get('/API/busquedasproto/pdf', [BuscaprotoController::class,'VerPdf']);
 
 
 $router->get('/protocolosol', [ProtocolosolController::class,'index']);

@@ -4,12 +4,25 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
-const modalSalidaPaises = new Modal(document.getElementById('modalSalidapaises'), {});
+const modalSalidapaises = new Modal(document.getElementById('modalSalidapaises'), {
+    backdrop: 'static',
+    keyboard: false
+});
+
 const formulario = document.getElementById('formularioSalidapaises');
 const formulario2 = document.getElementById('formularioSalidapais');
 const btnModificar = document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const btnBuscar = document.getElementById('btnBuscar');
+const ste_cat2 = document.getElementById('ste_cat2');
+const idPais = document.getElementById('pai_codigo')
+const idTransporte = document.getElementById('transporte_id')
+const pdf = document.getElementById('formularioPdf');
+const iframe = document.getElementById('pdfIframe')
+
+formulario2.ste_cat.disabled = true;
+formulario2.ste_fecha.disabled = true;
+formulario2.nombre.disabled = true;
 
 
 let contador = 1;
@@ -23,9 +36,9 @@ const datatable = new Datatable('#tablaSalidapaises', {
             render: () => contador++
         },
         {
-            title: 'CATALOGO',
+            title: 'GRADO',
             className: 'text-center',
-            data: 'ste_cat'
+            data: 'gra_desc_lg'
         },    
         {
             title: 'NOMBRE',
@@ -55,7 +68,10 @@ const datatable = new Datatable('#tablaSalidapaises', {
         {
             title: 'PDF',
             data: 'pdf_ruta',
-            render: (data, type, row, meta) => `<a class="btn btn-info" href="file:///C:\\docker\\soliciudes_e\\${data.substr(3)}">VER DOCUMENTACION</a>`
+            render: function (data) {
+                return `<button  class="btn btn-outline-info" data-ruta="${data.substr(10)}"><i class="bi bi-eye"></i>Ver PDF</button>`;
+            },
+            width: '150px'
         },
         {
             title: 'MODIFICAR',
@@ -63,7 +79,20 @@ const datatable = new Datatable('#tablaSalidapaises', {
             data: 'sal_id',
             searchable: false,
             orderable: false,
-            render: (data, type, row, meta) => `<button class="btn btn-warning" data-id='${data}' data-dependencia='${row["cmv_dependencia"]}'data-llave='${row["dep_llave"]}' data-tipo ='${row["cmv_tip"]}' >Modificar</button>`
+            render: (data, type, row, meta) => `<button class="btn btn-warning" 
+            data-id='${data}' 
+            data-ste_id='${row["ste_id"]}' 
+            data-ste_cat='${row["ste_cat"]}' 
+            data-nombre='${row["nombre"]}' 
+            data-dsal_ciudad='${row["dsal_ciudad"]}'  
+            data-dsal_pais='${row["dsal_pais"]}' 
+            data-dsal_transporte='${row["dep_dsal_transporte"]}' 
+            data-sal_salida='${row["sal_salida"]}' 
+            data-sal_ingreso='${row["sal_ingreso"]}' 
+            data-pai_codigo='${row["dep_pai_codigo"]}' 
+            data-pai_desc_lg='${row["dep_pai_desc_lg"]}' 
+            data-transporte_descripcion ='${row["transporte_descripcion"]}' 
+            data-pdf_ruta='${row["pdf_ruta"]}'>Modificar</button>`
         },
         {
             title: 'ELIMINAR',
@@ -86,7 +115,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-        console.log(data);
+        // console.log(data);
         datatable.clear().draw();
         if (data) {
             contador = 1;
@@ -103,58 +132,333 @@ const buscar = async () => {
     formulario.reset();
 }
 
-const traeDatos = (e) => {
-    const button = e.target;
-    const numero = button.dataset.id
-    const dependencia = button.dataset.dependencia
-    const llave = button.dataset.llave
-    const tipo = button.dataset.tipo
+    const traeDatos = (e) => {  
+
+        modalSalidapaises.show()
+
+        const button = e.target;
+        console.log(button.dataset.nombre);
+        const sal_id = button.dataset.id
+        const sal_autorizacion = button.dataset.sal_autorizacion
+        const aut_id = button.dataset.aut_id
+        const aut_solicitud = button.dataset.aut_solicitud
+        const sol_id = button.dataset.sol_id
+        const sol_tipo = button.dataset.sol_tipo
+        const tse_id = button.dataset.tse_id
+        const sol_solicitante = button.dataset.sol_solicitante
+        const ste_id = button.dataset.ste_id
+        const ste_comando = button.dataset.ste_comando
+        const ste_cat = button.dataset.ste_cat
+        const ste_gra = button.dataset.ste_gra
+        const ste_arm = button.dataset.ste_arm
+        const ste_emp = button.dataset.ste_emp
+        const ste_fecha = button.dataset.ste_fecha
+        const sol_obs = button.dataset.sol_obs
+        const sol_motivo = button.dataset.sol_motivo
+        const mot_id = button.dataset.mot_id
+        const sol_situacion = button.dataset.sol_situacion
+        const aut_comando = button.dataset.aut_comando
+        const aut_cat = button.dataset.aut_cat
+        const aut_gra = button.dataset.aut_gra
+        const aut_arm = button.dataset.aut_arm
+        const aut_emp = button.dataset.aut_emp
+        const aut_fecha = button.dataset.aut_fecha
+        const dsal_id = button.dataset.dsal_id;
+        const dsal_sol_salida = button.dataset.dsal_sol_salida;
+        const dsal_ciudad = button.dataset.dsal_ciudad;
+        const dsal_pais = button.dataset.dsal_pais;
+        const pai_codigo = button.dataset.pai_codigo;
+        const pai_desc_lg = button.dataset.pai_desc_lg;
+        const dsal_transporte = button.dataset.dsal_transporte;
+        const transporte_id = button.dataset.transporte_id;
+        const transporte_descripcion = button.dataset.transporte_descripcion;
+        const sal_salida = button.dataset.sal_salida;
+        const sal_ingreso = button.dataset.sal_ingreso;
+        const nombre = button.dataset.nombre;
+        const grado = button.dataset.grado
+        const ste_telefono = button.dataset.ste_telefono;
+        const pdf_ruta = button.dataset.pdf_ruta;
+      
 
 
     const dataset = {
-        numero,
-        llave,
-        dependencia,
-        tipo
-
+        sal_id,
+        sal_autorizacion,
+        ste_id,
+        ste_cat,
+        sol_id,
+        sol_tipo,
+        tse_id,
+        sol_solicitante,
+        ste_id,
+        ste_comando,
+        ste_gra,
+        ste_arm,
+        ste_emp,
+        ste_fecha,
+        sol_obs,
+        sol_motivo,
+        mot_id,
+        sol_situacion,
+        aut_id,
+        aut_solicitud,
+        aut_comando,
+        aut_cat,
+        aut_gra,
+        aut_arm,
+        aut_emp,
+        aut_fecha,
+        dsal_id,
+        dsal_sol_salida,
+        dsal_ciudad,
+        dsal_pais,
+        pai_codigo,
+        pai_desc_lg,
+        dsal_transporte,
+        transporte_id,
+        transporte_descripcion,
+        sal_salida,
+        sal_ingreso,
+        nombre,
+        grado,
+        ste_telefono,
+        pdf_ruta
     };
-
 
     colocarDatos(dataset);
 
+    };
 
-};
+    const colocarDatos = (dataset) => {
 
-const colocarDatos = (dataset) => {
+        // const sal_salida = formatearFecha(dataset.sal_salida);
+        // const sal_ingreso = formatearFecha(dataset.sal_ingreso);
+        // const ste_fecha = formatearFecha(dataset.ste_fecha);
+
+        formulario2.ste_id.value = dataset.ste_id;
+        formulario2.ste_cat.value = dataset.ste_cat;
+        formulario2.nombre.value = dataset.nombre;
+        formulario2.grado.value = dataset.grado;
+        formulario2.ste_fecha.value = ste_fecha;
+        formulario2.ste_telefono.value = dataset.ste_telefono;
+        formulario2.sal_id.value = dataset.sal_id;
+        formulario2.sal_salida.value = sal_salida;
+        formulario2.sal_ingreso.value = sal_ingreso;
+        formulario2.dsal_id.value = dataset.dsal_id;
+        formulario2.dsal_ciudad.value = dataset.dsal_ciudad;
+        formulario2.dsal_pais.value = dsal_pais;
+        formulario2.dsal_transporte.value = dsal_transporte;
+        idPais.value = dataset.pai_codigo;
+        formulario2.pai_desc_lg.value = dataset.pai_desc_lg;
+        idTransporte.value = dataset.transporte_id;
+        formulario2.transporte_descripcion.value = dataset.transporte_descripcion;
+        
+
+        // let pdf = btoa(btoa(btoa(dataset.pdf_ruta)));
+        // let ver = `/soliciudes_e/API/busquedasalpais/pdf?ruta=${pdf}`;
+
+        // iframe.src = ver
+
+    }
+
+    const limpiarModelSalidapaises = async () => {
+        modalSalidapaises.hide()
+    }
+    
+
+    // const traePdf = (e) => {
+
+    //     modalPdf.show()
+    //     const button = e.target;
+    //     const ste_cat = button.dataset.ste_cat;
+    //     const pdf_id = button.dataset.pdf_id;
+    //     const pdf_solicitud = button.dataset.pdf_solicitud;
 
 
-    dependencias.value = dataset.llave;
-    tipos.value = dataset.tipo;
-    id.value = dataset.numero;
+    //     const dataset = {
 
-    btnGuardar.disabled = true
-    btnGuardar.parentElement.style.display = 'none'
-    btnBuscar.disabled = true
-    btnBuscar.parentElement.style.display = 'none'
-    btnModificar.disabled = false
-    btnModificar.parentElement.style.display = ''
-    btnCancelar.disabled = false
-    btnCancelar.parentElement.style.display = ''
+    //         ste_cat,
+    //         pdf_id,
+    //         pdf_solicitud
+    //     };
+    //     colocarPdf(dataset)
+
+    // };
+
+    // const colocarPdf = (dataset) => {
+    //     ste_cat2.value = dataset.ste_cat;
+    //     pdf.pdf_solicitud.value = dataset.pdf_solicitud;
+    //     pdf.pdf_id.value = dataset.pdf_id;
 
 
+    // }
 
-}
+    const modificar = async (evento) => {
 
-const cancelarAccion = () => {
-    btnGuardar.disabled = false
-    btnGuardar.parentElement.style.display = ''
-    btnBuscar.disabled = false
-    btnBuscar.parentElement.style.display = ''
-    btnModificar.disabled = true
-    btnModificar.parentElement.style.display = 'none'
-    btnCancelar.disabled = true
-    btnCancelar.parentElement.style.display = 'none'
-    divTabla.style.display = ''
-    formulario.reset(); f
-}
-buscar()
+        evento.preventDefault();
+        let catalogo = formulario2.ste_cat.value
+        let fecha = formulario2.ste_fecha.value
+
+        const body = new FormData(formulario2);
+        body.append('ste_cat', catalogo)
+        body.append('ste_fecha', fecha)
+        const url = '/soliciudes_e/API/busquedasalpais/modificar';  
+        const headers = new Headers();
+        headers.append("X-Requested-With", "fetch");
+        const config = {
+            method: 'POST',
+            body,
+        };
+    
+        try {
+            const respuesta = await fetch(url, config);
+            const data = await respuesta.json();
+            const { codigo, mensaje, detalle } = data;
+            let icon = 'info'
+            switch (codigo) {
+                case 1:
+                    formulario.reset();
+                    icon = 'success'
+                    buscar();
+                        modalSalidapaises.hide();
+                        break;
+    
+                case 0:
+                    icon = 'error';
+                    console.log(detalle);
+                    break;
+    
+                default:
+                    break;
+            }
+    
+            Toast.fire({
+                icon,
+                text: mensaje,
+            });
+    
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // const modificarPdf = async (evento) => {
+
+    //     evento.preventDefault();
+    
+    
+    //     const body = new FormData(pdf);
+    //     body.append('ste_cat2', ste_id)
+    //     const url = '/soliciudes_e/API/busquedasalpais/modificarPdf';
+    //     const headers = new Headers();
+    //     headers.append("X-Requested-With", "fetch");
+    //     const config = {
+    //         method: 'POST',
+    //         body
+    //     }
+    
+    //     try {
+    //         const respuesta = await fetch(url, config)
+    //         const data = await respuesta.json();
+           
+    //         const { codigo, mensaje, detalle } = data;
+    //         let icon = 'info'
+    //         switch (codigo) {
+    //             case 1:
+    //                 formulario.reset();
+    //                 icon = 'success'
+    //                 buscar();
+    //                 modalPdf.hide()
+    //                 break;
+    
+    //             case 0:
+    //                 icon = 'error'
+    //                 console.log(detalle)
+    //                 break;
+    
+    //             default:
+    //                 break;
+    //         }
+    
+    //         Toast.fire({
+    //             icon,
+    //             text: mensaje
+    //         })
+    
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    const eliminar = async (e) => {
+        const button = e.target;
+        const id = button.dataset.id;
+    
+        if (await confirmacion('warning', 'Desea elminar este registro?')) {
+    
+            const body = new FormData()
+            body.append('sol_id', id)
+            const url = '/soliciudes_e/API/busquedasalpais/eliminar';
+    
+            const headers = new Headers();
+            headers.append("X-Requested-With", "fetch");
+            const config = {
+                method: 'POST',
+                body
+            }
+            try {
+                const respuesta = await fetch(url, config)
+                const data = await respuesta.json();
+         
+                const { codigo, mensaje, detalle } = data;
+                let icon = 'info'
+                switch (codigo) {
+                    case 1:
+    
+                        icon = 'success'
+    
+                        break;
+    
+                    case 0:
+                        icon = 'error'
+                        console.log(detalle)
+                        break;
+    
+                    default:
+                        break;
+                }
+    
+                Toast.fire({
+                    icon,
+                    text: mensaje
+                })
+
+    
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    
+        buscar();
+    }
+    
+    const verPDF = (e) => {
+
+        const boton = e.target
+        let ruta = boton.dataset.ruta
+    
+        let pdf = btoa(btoa(btoa(ruta)))
+    
+        window.open(`/soliciudes_e/API/busquedasalpais/pdf?ruta=${pdf}`)
+    
+    }
+    buscar();
+    
+    btnBuscar.addEventListener('click', buscar);
+    btnModificar.addEventListener('click', modificar)
+    btnCancelar.addEventListener('click', limpiarModelSalidapaises)
+    datatable.on('click', '.btn-warning', traeDatos);
+    datatable.on('click', '.btn-outline-warning', traePdf);
+    datatable.on('click', '.btn-outline-info', verPDF);
+    datatable.on('click', '.btn-danger', eliminar);
+    
