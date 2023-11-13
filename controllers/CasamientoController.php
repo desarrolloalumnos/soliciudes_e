@@ -58,6 +58,8 @@ class CasamientoController
             $fechaBodaR = $_POST['mat_fecha_bodar'];
             $fechaFormateadaBodaR = date('Y-m-d H:i', strtotime($fechaBodaR));
             $_POST['mat_fecha_bodar'] =  $fechaFormateadaBodaR;
+            
+            $_POST = array_map('strtoupper', $_POST);
 
             $solicitante = new Solicitante($_POST);
             $solicitanteResultado = $solicitante->crear();

@@ -89,6 +89,8 @@ class LictempController
             $fechaFinLicencia = $_POST['lit_fecha2'];
             $fechaFormateadaFinLic = date('Y-m-d H:i', strtotime($fechaFinLicencia));
             $_POST['lit_fecha2'] = $fechaFormateadaFinLic;
+            
+            $_POST = array_map('strtoupper', $_POST);
 
             $solicitante = new Solicitante($_POST);
             $solicitanteResultado = $solicitante->crear();

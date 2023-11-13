@@ -50,7 +50,7 @@
 
 
                         <div class="row justify-content-around mb-4">
-                            <div class="col-lg-6">                              
+                            <div class="col-lg-6">
                                 <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
                                 <label for="ste_cat"><i class="bi bi-universal-access"></i>Catalogo</label>
                                 <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="numero de catalogo">
@@ -65,23 +65,11 @@
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">
-                            <div class="col-lg-6">
-                                <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
 
-                            </div>
                             <div class="col-lg-6">
                                 <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Telefono</label>
                                 <input id="ste_telefono" name="ste_telefono" class="form-control" type="number">
                             </div>
-
-                        </div>
-                        <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
-                        <input value="2" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
-                        <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
-                        <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
-
-                        <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="sol_motivo"><i class="bi bi-journal-check"></i>Motivos</label>
                                 <select name="sol_motivo" id="sol_motivo" class="form-select">
@@ -92,9 +80,17 @@
                                     <?php } ?>
                                 </select>
                             </div>
+
+                        </div>
+                        <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
+                        <input value="2" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
+                        <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
+                        <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
+
+                        <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="sol_obs"><i class="bi bi-body-text"></i> Observaciones</label>
-                                <input class="form-control" type="text" id="sol_obs" name="sol_obs">
+                                <textarea class="form-control" type="text" id="sol_obs" name="sol_obs"></textarea>
                             </div>
 
                         </div>
@@ -113,7 +109,7 @@
                             <div class="col-lg-6">
                                 <label for="tiempo_servicio"><i class="bi bi-calendar-date-fill"></i>Tiempo de Servicio</label>
                                 <input value="" id="tiempo_servicio" name="tiempo_servicio" class="form-control" type="text">
-                                <input value="" id="tiempo" name="tiempo" class="form-control" type="text">
+                                <input value="" id="tiempo" name="tiempo" class="form-control" type="hidden">
                             </div>
                             <div class="col-lg-6">
                                 <label for="lit_mes_consueldo"><i class="bi bi-body-text"></i>Meses con Sueldo </label>
@@ -126,27 +122,28 @@
                                 <input id="lit_mes_sinsueldo" name="lit_mes_sinsueldo" class="form-control" type="number" type="number" min="0" max="0">
                             </div>
                             <div class="col-lg-6">
-                                <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i> de inicio de licencia Temporal</label>
+                                <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i>Inicio de licencia Temporal</label>
                                 <input value="" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
-                                <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i> de fin de licencia Temporal</label>
+                                <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i>Fin de licencia Temporal</label>
                                 <input id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
                             </div>
-                            <div class="col-lg-6">
-                                <label for="pdf_ruta"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>
-                                <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
-                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
-                                <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
-                            </div>
-                            <div class="row justify-content-center mt-12 mb-4" style="margin-top: 20px;">
-                                <div class="col-lg-2">
-                                    <button type="button" id="btnGuardar" name="btnGuardar" class="btn btn-outline-primary w-100 overflow-visible text-wrap">Guardar</button>
-                                </div>
+                        </div>
+                        <div class="row justify-content-center mt-12 mb-4">
+                            <div class="col-lg-12">
+                                <iframe id="pdfLicencia" title="PDF" class="text-center" width="100%" height="500px" src=""></iframe>
                             </div>
                         </div>
+
+                        <div class="row justify-content-center mt-12 mb-4" style="margin-top: 20px;">
+                            <div class="col-lg-2">
+                                <button type="button" id="modificar" name="modificar" class="btn btn-outline-warning w-100 overflow-visible text-wrap">Modificar</button>
+                            </div>
+                        </div>
+
                 </form>
 
                 <div class="modal-footer">

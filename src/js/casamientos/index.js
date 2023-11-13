@@ -20,8 +20,14 @@ const grado2 = document.getElementById('aut_gra');
 const arma2 = document.getElementById('aut_arm');
 const empleo2 = document.getElementById('aut_emp');
 const comando2 = document.getElementById('aut_comando');
-const modalC = new Modal(document.getElementById('modalC'), {})
-const modalM = new Modal(document.getElementById('modalM'), {})
+const modalC = new Modal(document.getElementById('modalC'), {
+    backdrop: 'static',
+    keyboard: false
+})
+const modalM = new Modal(document.getElementById('modalM'), {
+    backdrop: 'static',
+    keyboard: false
+})
 const checkboxCivil = document.getElementById('pareja_civil');
 const checkboxMilitar = document.getElementById('pareja_militar');
 const catalogo3 = document.getElementById('parejam1_cat');

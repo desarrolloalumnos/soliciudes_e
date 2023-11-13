@@ -17,7 +17,7 @@ const formulario2 = document.getElementById('formularioCasamiento');
 const pdf = document.getElementById('formularioPdf');
 const ste_cat2 = document.getElementById('ste_cat2');
 const idPareja = document.getElementById('parejac_id')
-const iframe = document.getElementById('pdfIframe')
+const iframe = document.getElementById('pdfIframe');
 const btnModificar = document.getElementById('btnModificar');
 const btnBuscar = document.getElementById('btnBuscar');
 const addPdf = document.getElementById('addPdf');
@@ -425,8 +425,8 @@ const modificar = async (evento) => {
             case 1:
                 formulario.reset();
                 icon = 'success'
-                buscar();
                 modalM.hide()
+                buscar();
                 break;
 
             case 0:
@@ -446,6 +446,7 @@ const modificar = async (evento) => {
     } catch (error) {
         console.log(error);
     }
+    buscar()
 }
 
 const modificarPdf = async (evento) => {
@@ -473,8 +474,8 @@ const modificarPdf = async (evento) => {
             case 1:
                 formulario.reset();
                 icon = 'success'
-                buscar();
                 modalPdf.hide()
+                buscar();
                 break;
 
             case 0:
@@ -494,6 +495,7 @@ const modificarPdf = async (evento) => {
     } catch (error) {
         console.log(error);
     }
+    buscar()
 }
 
 

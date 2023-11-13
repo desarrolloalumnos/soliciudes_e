@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="sol_obs"><i class="bi bi-body-text"></i> Observaciones</label>
-                                    <input class="form-control" type="text" id="sol_obs" name="sol_obs">
+                                    <textarea class="form-control"  id="sol_obs" name="sol_obs"></textarea>
                                 </div>
 
                             </div>

@@ -4,15 +4,22 @@ namespace Controllers;
 
 use Exception;
 use Model\Licenciatemporal;
+use Model\Motivos;
+use Model\Pdf;
+use Model\Solicitante;
+use Model\Solicitud;
 use MVC\Router;
 
 class BuscalictController
 {
     public static function index(Router $router)
     {
-        
+        $motivos = static::motivos();
+
         $router->render('busquedaslict/index', [
-            
+            'motivos' => $motivos,
+
+
         ]);
     }
 
@@ -109,77 +116,72 @@ class BuscalictController
     {
 
         try {
+            // echo json_encode($_POST);
+            // exit;
+          
+            $tiempo = $_POST['tiempo'];
+            $numeroEntero = intval($tiempo);
 
+            if ($numeroEntero >= 10000 && $numeroEntero <= 50000) {
+                $_POST['lit_mes_sinsueldo'] = min(3, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(0, $_POST['lit_mes_consueldo']);
+            } else if ($numeroEntero >= 50001 && $numeroEntero <= 100000) {
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(0, $_POST['lit_mes_consueldo']);
+            } else if ($numeroEntero >= 100001 && $numeroEntero <= 200000) {
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(1, $_POST['lit_mes_consueldo']);
+            } else if ($numeroEntero >= 200001 && $numeroEntero <= 280000) {
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(2, $_POST['lit_mes_consueldo']);
+            } else if ($numeroEntero >= 280001 && $numeroEntero <= 330000) {
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(1, $_POST['lit_mes_consueldo']);
+            } else if ($numeroEntero >= 33001) {
+                $_POST['lit_mes_sinsueldo'] = min(6, $_POST['lit_mes_sinsueldo']);
+                $_POST['lit_mes_consueldo'] = min(2, $_POST['lit_mes_consueldo']);
+            } else {
+                exit;
+            }
 
-            $fechaSolicito = $_POST['ste_fecha'];
-            $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
-            $_POST['ste_fecha'] = $fechaFormateadaSolicito;
-
-            $fechaIncioLicencia = $_POST['mat_fecha_lic_ini'];
+            $fechaIncioLicencia = $_POST['lit_fecha1'];
             $fechaFormateadaIniLic = date('Y-m-d H:i', strtotime($fechaIncioLicencia));
-            $_POST['mat_fecha_lic_ini'] = $fechaFormateadaIniLic;
+            $_POST['lit_fecha1'] = $fechaFormateadaIniLic;
 
-            $fechaFinLicencia = $_POST['mat_fecha_lic_fin'];
+            $fechaFinLicencia = $_POST['lit_fecha2'];
             $fechaFormateadaFinLic = date('Y-m-d H:i', strtotime($fechaFinLicencia));
-            $_POST['mat_fecha_lic_fin'] = $fechaFormateadaFinLic;
-
-            $fechaBodaC = $_POST['mat_fecha_bodac'];
-            $fechaFormateadaBodaC = date('Y-m-d H:i', strtotime($fechaBodaC));
-            $_POST['mat_fecha_bodac'] = $fechaFormateadaBodaC;
-
-            $fechaBodaR = $_POST['mat_fecha_bodar'];
-            $fechaFormateadaBodaR = date('Y-m-d H:i', strtotime($fechaBodaR));
-            $_POST['mat_fecha_bodar'] = $fechaFormateadaBodaR;
+            $_POST['lit_fecha2'] = $fechaFormateadaFinLic;
 
 
-            $id = $_POST['ste_id'];
-            $solicitante = Solicitante::find($id);
-            $solicitante->ste_telefono = $_POST['ste_telefono'];
-            $resultado = $solicitante->actualizar();
+            if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
+                $solicitante = Solicitante::find($_POST['ste_id']);
+                $solicitante->ste_telefono = $_POST['ste_telefono'];
+                $resultado = $solicitante->actualizar();
+            } else {
+            }
 
-
-            if (isset($_POST['parejac_id']) && !empty($_POST['parejac_id'])) {
-                $parejacId = $_POST['parejac_id'];
-                $parejaCivil = ParejaCivil::find($parejacId);
-
-
-                if ($parejaCivil) {
-                    $parejaCivil->parejac_nombres = $_POST['parejac_nombres'];
-                    $parejaCivil->parejac_apellidos = $_POST['parejac_apellidos'];
-                    $parejaCivil->parejac_direccion = $_POST['parejac_direccion'];
-                    $parejaCivil->parejac_dpi = $_POST['parejac_dpi'] ?? '';
-                    $parejaCivilResultado = $parejaCivil->actualizar();
-                }
+            if (isset($_POST['sol_id']) && !empty($_POST['sol_id'])) {
+                $solicitud = Solicitud::find($_POST['sol_id']);
+                $solicitud->sol_obs = $_POST['sol_obs'];
+                $solicitud->sol_motivo = $_POST['sol_motivo'];
+                $solicitudResultado = $solicitud->actualizar();
+            } else {
             }
 
 
-            if (isset($_POST['parejam_id']) && !empty($_POST['parejam_id']) && !empty($_POST['parejam_comando'])) {
-                $parejamId = $_POST['parejam_id'];
-                $parejaMilitar = ParejaMilitar::find($parejamId);
-
-
-                if ($parejaMilitar) {
-                    $parejaMilitar->parejam_cat = $_POST['parejam_cat'];
-                    $parejaMilitar->parejam_comando = $_POST['parejam_comando'];
-                    $parejaMilitar->parejam_gra = $_POST['parejam_gra'];
-                    $parejaMilitar->parejam_arm = $_POST['parejam_arm'];
-                    $parejaMilitar->parejam_emp = $_POST['parejam_emp'];
-                    $parejaMilitarResultado = $parejaMilitar->actualizar();
-                }
+            if (isset($_POST['lit_id']) && !empty($_POST['lit_id'])) {
+                $licencia = Licenciatemporal::find($_POST['lit_id']);
+                $licencia->lit_mes_consueldo = $_POST['lit_mes_consueldo'];
+                $licencia->lit_mes_sinsueldo = $_POST['lit_mes_sinsueldo'];
+                $licencia->lit_fecha1 = $_POST['lit_fecha1'];
+                $licencia->lit_fecha2 = $_POST['lit_fecha2'];
+                $licenciaResultado = $licencia->actualizar();
+            } else {
             }
 
-            $matId = $_POST['mat_id'];
-            $matrimonio = Matrimonio::find($matId);
-            $matrimonio->mat_lugar_civil = $_POST['mat_lugar_civil'];
-            $matrimonio->mat_fecha_bodac = $_POST['mat_fecha_bodac'];
-            $matrimonio->mat_lugar_religioso = $_POST['mat_lugar_religioso'];
-            $matrimonio->mat_fecha_bodar = $_POST['mat_fecha_bodar'];
-            $matrimonio->mat_fecha_lic_ini = $_POST['mat_fecha_lic_ini'];
-            $matrimonio->mat_fecha_lic_fin = $_POST['mat_fecha_lic_fin'];
-            $matrimonioResultado = $matrimonio->actualizar();
 
 
-            if ($matrimonioResultado['resultado'] == 1) {
+            if ($licenciaResultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1
@@ -192,14 +194,6 @@ class BuscalictController
                 'codigo' => 0
             ]);
         }
-    }
-
-    public static function VerPdf(Router $router)
-    {
-
-        $ruta = base64_decode(base64_decode(base64_decode($_GET['ruta'])));
-
-        $router->printPDF($ruta);
     }
 
     public static function modificarPdfApi()
@@ -237,28 +231,56 @@ class BuscalictController
             ]);
         }
     }
-
-    public static function eliminarApi()
+    public static function VerPdf(Router $router)
     {
+
+        $ruta = base64_decode(base64_decode(base64_decode($_GET['ruta'])));
+
+        $router->printPDF($ruta);
+    }
+
+
+    // public static function eliminarApi()
+    // {
+    //     try {
+
+    //         $solicitud_id = $_POST['sol_id'];
+    //         $solicitud = Solicitud::find($solicitud_id);
+    //         $solicitud->sol_situacion = 0;
+    //         $resultado = $solicitud->actualizar();
+
+    //         if ($resultado['resultado'] == 1) {
+    //             echo json_encode([
+    //                 'mensaje' => 'Registro eliminado correctamente',
+    //                 'codigo' => 1
+    //             ]);
+    //         }
+    //     } catch (Exception $e) {
+    //         echo json_encode([
+    //             'detalle' => $e->getMessage(),
+    //             'mensaje' => 'Ocurrió un error',
+    //             'codigo' => 0
+    //         ]);
+    //     }
+    // }
+
+    public static function motivos()
+    {
+        $sql = "SELECT * FROM se_motivos where mot_situacion = 1";
+
+
+
         try {
 
-            $solicitud_id = $_POST['sol_id'];
-            $solicitud = Solicitud::find($solicitud_id);
-            $solicitud->sol_situacion = 0;
-            $resultado = $solicitud->actualizar();
+            $motivos = Motivos::fetchArray($sql);
 
-            if ($resultado['resultado'] == 1) {
-                echo json_encode([
-                    'mensaje' => 'Registro eliminado correctamente',
-                    'codigo' => 1
-                ]);
+            if ($motivos) {
+
+                return $motivos;
+            } else {
+                return 0;
             }
         } catch (Exception $e) {
-            echo json_encode([
-                'detalle' => $e->getMessage(),
-                'mensaje' => 'Ocurrió un error',
-                'codigo' => 0
-            ]);
         }
     }
 }

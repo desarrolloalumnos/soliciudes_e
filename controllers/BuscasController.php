@@ -132,7 +132,7 @@ class BuscasController
 
         try {
 
-            
+
             $fechaSolicito = $_POST['ste_fecha'];
             $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
             $_POST['ste_fecha'] = $fechaFormateadaSolicito;
@@ -153,11 +153,15 @@ class BuscasController
             $fechaFormateadaBodaR = date('Y-m-d H:i', strtotime($fechaBodaR));
             $_POST['mat_fecha_bodar'] = $fechaFormateadaBodaR;
 
-            
-            $id = $_POST['ste_id'];
-            $solicitante = Solicitante::find($id);
-            $solicitante->ste_telefono = $_POST['ste_telefono'];
-            $resultado = $solicitante->actualizar();
+            if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
+                $id = $_POST['ste_id'];
+                $solicitante = Solicitante::find($id);
+
+                $solicitante->ste_telefono = $_POST['ste_telefono'];
+                $resultado = $solicitante->actualizar();
+            } else {
+            }
+
 
 
             if (isset($_POST['parejac_id']) && !empty($_POST['parejac_id'])) {
@@ -171,13 +175,11 @@ class BuscasController
                     $parejaCivil->parejac_direccion = $_POST['parejac_direccion'];
                     $parejaCivil->parejac_dpi = $_POST['parejac_dpi'] ?? '';
                     $parejaCivilResultado = $parejaCivil->actualizar();
-
-                
-                } 
+                }
             }
 
 
-            if (isset($_POST['parejam_id']) && !empty($_POST['parejam_id'])&&!empty($_POST['parejam_comando'])) {
+            if (isset($_POST['parejam_id']) && !empty($_POST['parejam_id']) && !empty($_POST['parejam_comando'])) {
                 $parejamId = $_POST['parejam_id'];
                 $parejaMilitar = ParejaMilitar::find($parejamId);
 
@@ -189,8 +191,7 @@ class BuscasController
                     $parejaMilitar->parejam_arm = $_POST['parejam_arm'];
                     $parejaMilitar->parejam_emp = $_POST['parejam_emp'];
                     $parejaMilitarResultado = $parejaMilitar->actualizar();
-
-                } 
+                }
             }
 
             $matId = $_POST['mat_id'];
@@ -227,12 +228,12 @@ class BuscasController
         $router->printPDF($ruta);
     }
 
-        public static function modificarPdfApi()
+    public static function modificarPdfApi()
     {
         try {
-            
+
             $catalogo_doc = $_POST['ste_cat2'];
-           
+
             if (!empty($_FILES['pdf_ruta']['name'])) {
                 $archivo = $_FILES['pdf_ruta'];
                 $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
@@ -245,7 +246,6 @@ class BuscasController
                     $nuevoDocumento->pdf_ruta = $ruta;
                     $resultado = $nuevoDocumento->actualizar();
                 } else {
-
                 }
             }
 
@@ -254,7 +254,7 @@ class BuscasController
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1
                 ]);
-            } 
+            }
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
@@ -267,7 +267,7 @@ class BuscasController
     public static function eliminarApi()
     {
         try {
-         
+
             $solicitud_id = $_POST['sol_id'];
             $solicitud = Solicitud::find($solicitud_id);
             $solicitud->sol_situacion = 0;
@@ -278,7 +278,7 @@ class BuscasController
                     'mensaje' => 'Registro eliminado correctamente',
                     'codigo' => 1
                 ]);
-            } 
+            }
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),

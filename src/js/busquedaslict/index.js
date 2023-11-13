@@ -1,15 +1,22 @@
-import Swal from "sweetalert2";
 import { Dropdown, Modal } from "bootstrap";
+import Swal from "sweetalert2";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
-import { validarFormulario, Toast, confirmacion } from "../funciones";
+import { validarFormulario, Toast, confirmacion, formatearFecha, formatoTiempo } from "../funciones";
 
-const modalL = new Modal(document.getElementById('modalLicencia'), {})
+const modalL = new Modal(document.getElementById('modalLicencia'), {
+    backdrop: 'static',
+    keyboard: false
+})
 const formulario = document.getElementById('formularioLicencia');
 const formularioModal = document.getElementById('formularioLicenciasB');
 const btnBuscar = document.getElementById('btnBuscar');
+const btnModficarDatos = document.getElementById('modificar')
 
-
+formularioModal.tiempo_servicio.disabled = true;
+formularioModal.ste_cat.disabled = true;
+formularioModal.nombre.disabled = true;
+const iframe = document.getElementById('pdfLicencia');
 let contador = 1;
 const datatable = new Datatable('#tablaLicencias', {
     language: lenguaje,
@@ -30,7 +37,7 @@ const datatable = new Datatable('#tablaLicencias', {
             className: 'text-center',
             data: 'tiempo'
         },
-       
+
         {
             title: 'ste_id',
             className: 'text-center',
@@ -46,7 +53,7 @@ const datatable = new Datatable('#tablaLicencias', {
             className: 'text-center',
             data: 'sol_obs'
         },
- 
+
         {
             title: 'mot_id',
             className: 'text-center',
@@ -100,7 +107,7 @@ const datatable = new Datatable('#tablaLicencias', {
             title: 'Telefono',
             className: 'text-center',
             data: 'ste_telefono'
-            
+
         },
         {
             title: 'PDF',
@@ -118,7 +125,8 @@ const datatable = new Datatable('#tablaLicencias', {
             searchable: false,
             orderable: false,
             render: function (data, type, row, meta) {
-                return `<button class="btn btn-warning" 
+                return ` <div class="btn-group">
+                <button class="btn btn-warning" 
                                 data-id="${data}"                                                   
                                 data-sol_id="${row['sol_id']}"
                                 data-tiempo="${row['tiempo']}"
@@ -126,6 +134,7 @@ const datatable = new Datatable('#tablaLicencias', {
                                 data-ste_cat="${row['ste_cat']}"
                                 data-sol_obs="${row['sol_obs']}"
                                 data-sol_motivo="${row['sol_motivo']}"
+                                data-ste_telefono="${row['ste_telefono']}"
                                 data-mot_id="${row['mot_id']}"
                                 data-pdf_id="${row['pdf_id']}"
                                 data-pdf_solicitud="${row['pdf_solicitud']}"
@@ -135,10 +144,13 @@ const datatable = new Datatable('#tablaLicencias', {
                                 data-lit_mes_sinsueldo="${row['lit_mes_sinsueldo']}"
                                 data-lit_fecha1="${row['lit_fecha1'].substring(0, 10)}"
                                 data-lit_fecha2="${row['lit_fecha2'].substring(0, 10)}"
-                                data-ste_telefono="${row['ste_telefono']}">
-                            Modificar
-                        </button>`;
-             }
+                                data-ste_telefono="${row['ste_telefono']}"
+                                data-pdf_ruta='${row["pdf_ruta"]}'>
+                            DATOS
+                        </button>
+                        <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
+                        </div>`;
+            }
         },
         {
             title: 'ELIMINAR',
@@ -151,7 +163,7 @@ const datatable = new Datatable('#tablaLicencias', {
     ],
     columnDefs: [
         {
-            targets: [1,2, 3, 4, 5, 6, 7, 8, 9],
+            targets: [1, 2, 3, 4, 5, 6, 7, 8],
             visible: false,
             searchable: false,
         },
@@ -174,7 +186,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-           
+
         datatable.clear().draw()
         if (data) {
             contador = 1;
@@ -197,98 +209,110 @@ const buscar = async () => {
 const traeDatos = (e) => {
     modalL.show();
     const button = e.target;
+    const lit_id = button.dataset.id;
     const sol_id = button.dataset.sol_id;
     const tiempo = button.dataset.tiempo;
     const ste_id = button.dataset.ste_id;
     const ste_cat = button.dataset.ste_cat;
     const sol_obs = button.dataset.sol_obs;
+    const ste_telefono = button.dataset.ste_telefono;
     const mot_id = button.dataset.mot_id;
     const grado_solicitante = button.dataset.grado_solicitante;
     const nombres_solicitante = button.dataset.nombres_solicitante;
     const lit_mes_consueldo = button.dataset.lit_mes_consueldo;
     const lit_mes_sinsueldo = button.dataset.lit_mes_sinsueldo;
     const lit_fecha1 = button.dataset.lit_fecha1;
-    const lit_fecha2 = button.dataset.lit_fecha2;   
-    const pdf_id = button.dataset.pdf_id;
-    const pdf_solicitud = button.dataset.pdf_solicitud;
-    
+    const lit_fecha2 = button.dataset.lit_fecha2;
+    const pdf_ruta = button.dataset.pdf_ruta;
+    // const pdf_id = button.dataset.pdf_id;
+    // const pdf_solicitud = button.dataset.pdf_solicitud;
+
     const dataset = {
+        lit_id,
         sol_id,
         tiempo,
         ste_id,
         ste_cat,
+        ste_telefono,
         sol_obs,
         mot_id,
         grado_solicitante,
         nombres_solicitante,
         lit_mes_consueldo,
         lit_mes_sinsueldo,
-        pdf_id,
-        pdf_solicitud,
+        // pdf_id,
+        // pdf_solicitud,
         lit_fecha1,
-        lit_fecha2
-        
-    
+        lit_fecha2,
+        pdf_ruta
+
     };
+
+    console.log(dataset);
+    formularioModal.lit_id.value = dataset.lit_id;
     formularioModal.sol_id.value = dataset.sol_id;
     formularioModal.ste_id.value = dataset.ste_id;
     formularioModal.ste_cat.value = dataset.ste_cat;
+    formularioModal.ste_telefono.value = dataset.ste_telefono;
     formularioModal.sol_obs.value = dataset.sol_obs;
-    formularioModal.nombres_solicitante.value = dataset.nombres_solicitante;
-    
+    formularioModal.sol_motivo.value = dataset.mot_id;
+    formularioModal.nombre.value = dataset.nombres_solicitante;
+
     formularioModal.tiempo.value = dataset.tiempo;
+   
     const numero = dataset.tiempo;
-            formatoTiempo(numero).then((tiempoFormateado) => {
-                formulario.tiempo_servicio.value = tiempoFormateado;
-            })
-            const numeroEntero = parseInt(numero, 10);
-            if (numeroEntero >= 10000 && numeroEntero <= 50000) {
-                formulario.lit_mes_consueldo.setAttribute('max', '0');
-                formulario.lit_mes_sinsueldo.setAttribute('max', '3');
-                formulario.lit_articulo.value = '2'
-            } else if (numeroEntero >= 50001 && numeroEntero <= 100000) {
-                formulario.lit_mes_consueldo.setAttribute('max', '0');
-                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
-                formulario.lit_articulo.value = '3'
-            } else if (numeroEntero >= 100001 && numeroEntero <= 200000) {
-                formulario.lit_mes_consueldo.setAttribute('max', '1');
-                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
-                formulario.lit_articulo.value = '4'
-            } else if (numeroEntero >= 200001 && numeroEntero <= 280000) {
-                formulario.lit_mes_consueldo.setAttribute('max', '2');
-                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
-                formulario.lit_articulo.value = '5'
-            } else if (numeroEntero >= 280001 && numeroEntero <= 330000) {
-                formulario.lit_mes_consueldo.setAttribute('max', '1');
-                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
-                formulario.lit_articulo.value = '6'
-            } else if (numeroEntero >= 33001) {
-                formulario.lit_mes_consueldo.setAttribute('max', '2');
-                formulario.lit_mes_sinsueldo.setAttribute('max', '6');
-                formulario.lit_articulo.value = '6'
-            } else {
-                return
-            }
+    
+
+    formatoTiempo(numero).then((tiempoFormateado) => {
+        formularioModal.tiempo_servicio.value = tiempoFormateado;
+    })
+    const numeroEntero = parseInt(numero, 10);
+    if (numeroEntero >= 10000 && numeroEntero <= 50000) {
+        formularioModal.lit_mes_consueldo.setAttribute('max', '0');
+        formularioModal.lit_mes_sinsueldo.setAttribute('max', '3');
+        formularioModal.lit_articulo.value = '2'
+    } else if (numeroEntero >= 50001 && numeroEntero <= 100000) {
+        formularioModal.lit_mes_consueldo.setAttribute('max', '0');
+        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+        formularioModal.lit_articulo.value = '3'
+    } else if (numeroEntero >= 100001 && numeroEntero <= 200000) {
+        formularioModal.lit_mes_consueldo.setAttribute('max', '1');
+        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+        formularioModal.lit_articulo.value = '4'
+    } else if (numeroEntero >= 200001 && numeroEntero <= 280000) {
+        formularioModal.lit_mes_consueldo.setAttribute('max', '2');
+        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+        formularioModal.lit_articulo.value = '5'
+    } else if (numeroEntero >= 280001 && numeroEntero <= 330000) {
+        formularioModal.lit_mes_consueldo.setAttribute('max', '1');
+        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+        formularioModal.lit_articulo.value = '6'
+    } else if (numeroEntero >= 33001) {
+        formularioModal.lit_mes_consueldo.setAttribute('max', '2');
+        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+        formularioModal.lit_articulo.value = '6'
+    } else {
+        return
+    }
     formularioModal.lit_mes_consueldo.value = dataset.lit_mes_consueldo;
     formularioModal.lit_mes_sinsueldo.value = dataset.lit_mes_sinsueldo;
     formularioModal.lit_fecha1.value = dataset.lit_fecha1;
     formularioModal.lit_fecha2.value = dataset.lit_fecha2
-    formularioModal.pdf_id.value = dataset.pdf_id;
-    formularioModal.pdf_solicitud.value = dataset.pdf_solicitud;
+    // formularioModal.pdf_id.value = dataset.pdf_id;
+    // formularioModal.pdf_solicitud.value = dataset.pdf_solicitud;
+    let pdf = btoa(btoa(btoa(dataset.pdf_ruta)));
+    let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
+    iframe.src = ver
 
 };
-
-
-
-
 
 const modificar = async (evento) => {
 
     evento.preventDefault();
 
 
-    const body = new FormData(formulario)
-    const url = '/soliciudes_e/API/protocolos/modificar';
+    const body = new FormData(formularioModal)
+    const url = '/soliciudes_e/API/busquedaslict/modificar';
     const headers = new Headers();
     headers.append("X-Requested-With", "fetch");
     const config = {
@@ -299,8 +323,8 @@ const modificar = async (evento) => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-
-
+        console.log(data)
+        return
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
         switch (codigo) {
@@ -384,20 +408,17 @@ const eliminar = async (e) => {
 
 const verPDF = (e) => {
     // const button = e.target;
-const boton = e.target
-let ruta = boton.dataset.ruta 
+    const boton = e.target
+    let ruta = boton.dataset.ruta
 
-let pdf = btoa(btoa(btoa(ruta))) 
+    let pdf = btoa(btoa(btoa(ruta)))
 
-window.open(`/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`)
- 
+    window.open(`/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`)
+
 }
 buscar();
 
 btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-outline-info', verPDF);
-datatable.on('click', '.btn-warning',traeDatos )
-
-
-// btnModificar.addEventListener('click', modificar)
-// btnCancelar.addEventListener('click', cancelarAccion)
+datatable.on('click', '.btn-warning', traeDatos)
+btnModficarDatos.addEventListener('click',modificar)
