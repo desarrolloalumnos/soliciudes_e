@@ -142,8 +142,7 @@ const datatable = new Datatable('#tablaProtocolo', {
                     data-pco_fechafin='${row["pco_fechafin"]}' 
                     data-pco_dir='${row["pco_dir"]}' 
                     data-pdf_id='${row["pdf_id"]}' 
-                    data-pdf_solicitud='${row["pdf_solicitud"]}' 
-                    data-ste_cat='${row["ste_cat"]}' 
+                    data-pdf_solicitud='${row["pdf_solicitud"]}'  
                     data-nombre='${row["nombre"]}' 
                     data-cmv_tip='${row["cmv_tip"]}' 
                     data-pdf_ruta='${row["pdf_ruta"]}'>Modificar</button>`
@@ -271,6 +270,7 @@ const traeDatos = (e) => {
         pdf_id,
         pdf_solicitud,
         nombre,
+        grado,
         ste_telefono,
         pdf_ruta
 
@@ -427,5 +427,6 @@ btnModificar.addEventListener('click', modificar)
 btnCancelar.addEventListener('click', limpiarModelProtocolo)
 datatable.on('click', '.btn-warning', traeDatos);
 datatable.on('click', '.btn-outline-info', verPDF);
+datatable.on('click', '.btn-danger', eliminar);
 
 

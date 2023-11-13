@@ -22,7 +22,9 @@ class BuscasalpaisController{
     public static function buscarApi(){
 
         $sql = "SELECT  
+        sal_id,
         ste_cat,
+        gra_desc_lg,
         TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
         sal_salida,
         sal_ingreso, 
@@ -35,6 +37,7 @@ class BuscasalpaisController{
         inner join se_solicitudes on aut_solicitud = sol_id
         inner join se_solicitante on sol_solicitante=ste_id
         inner join mper on ste_cat = per_catalogo
+        inner join grados on ste_gra = gra_codigo
         inner join paises on dsal_pais = pai_codigo
         inner join se_pdf on pdf_solicitud = sol_id";
 
@@ -53,7 +56,11 @@ class BuscasalpaisController{
     public static function modificarApi(){
 
         try {
-                $catalogo_doc = $_POST['ste_cat'];
+                    
+                $fechaSolicito = $_POST['ste_fecha'];
+                $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
+                $_POST['ste_fecha'] = $fechaFormateadaSolicito;
+                
 
                 $fechaSalida = $_POST['sal_salida'];
                 $fechaFormateadaSalida = date('Y-m-d H:i', strtotime($fechaSalida));
@@ -63,33 +70,47 @@ class BuscasalpaisController{
                 $fechaFormateadaIngreso = date('Y-m-d H:i', strtotime($fechaIngreso));
                 $_POST['sal_ingreso'] = $fechaFormateadaIngreso;
 
-                $solicitudId = $_POST['sol_id'];
+                $id = $_POST['ste_id'];
+                $solicitante = Solicitante::find($id);
+                $solicitante->ste_telefono = $_POST['ste_telefono'];
+                $resultado = $solicitante->actualizar();
+    
+                if (isset($_POST['pai_codigo']) && !empty($_POST['pai_codigo'])) {
+                    $paisId = $_POST['pai_codigo'];
+                    $pais = Pais::find($paisId);
+    
+    
+                    if ($pais) {
+                        $pais->pai_desc_lg = $_POST['pai_desc_lg'];
+                        $paisResultado = $pais->actualizar();
+                    }
+                } 
 
-                if (!empty($_FILES['pdf_ruta']['name'])) {
-                    $archivo = $_FILES['pdf_ruta'];
-                    $ruta = "../storage/salidapais/$catalogo_doc" . uniqid() . ".pdf";
-                    $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
-
-                    if ($subido) {
-                        $pdf = new Pdf([
-                            'pdf_solicitud' => $solicitudId,
-                            'pdf_ruta' => $ruta
-                        ]);
-                        $pdf = $pdf->crear();
+                if (isset($_POST['transporte_id']) && !empty($_POST['transporte_id'])) {
+                    $transporteId = $_POST['transporte_id'];
+                    $transporte = Transportes::find($transporteId);
+        
+                    if ($transporte) {
+                        $transporte->transporte_descripcion = $_POST['transporte_descripcion'];
+                        $transporteResultado = $transporte->actualizar();
                     }
                 }
 
-                $salidapais = new Salidapais($_POST); 
-                $salidaPaisResultado = $salidapais->actualizar();
+                $salId = $_POST['sal_id'];
+                $salidaPais = Salidapais::find($salId);
+                $salidaPais->sal_autorizacion = $_POST['sal_autorizacion'];
+                $salidaPais->sal_salida = $_POST['sal_salida'];
+                $salidaPais->sal_ingreso = $_POST['sal_ingreso'];
+                $salidaPaisResultado = $salidaPais->actualizar();
 
-                if ($salidaPaisResultado !== null) {
+                if ($salidaPaisResultado['resultado'] == 1) {
                     echo json_encode([
-                        'mensaje' => 'Registro modificado correctamente',
+                        'mensaje' => 'Registro de salida de país modificado correctamente',
                         'codigo' => 1
                     ]);
                 } else {
                     echo json_encode([
-                        'mensaje' => 'No se pudo modificar el registro',
+                        'mensaje' => 'Error al modificar el registro de salida de país',
                         'codigo' => 0
                     ]);
                 }
@@ -101,6 +122,80 @@ class BuscasalpaisController{
                 ]);
             }
         }
-    }
-           
+    
+    
+    public static function VerPdf(Router $router){
 
+        $ruta = base64_decode(base64_decode(base64_decode($_GET['ruta'])));
+
+        $router->printPDF($ruta);
+    }
+
+    public static function modificarPdfApi() {
+        try {
+
+            $catalogo_doc = $_POST['ste_cat'];
+
+            if (!empty($_FILES['pdf_ruta']['name'])) {
+                $archivo = $_FILES['pdf_ruta'];
+                $ruta = "../storage/salidapais/$catalogo_doc" . uniqid() . ".pdf";
+                $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
+
+                if ($subido) {
+                    $pdf_id = $_POST['pdf_id'];
+                    $nuevoDocumento = Pdf::find($pdf_id);
+                    $nuevoDocumento->pdf_solicitud = $_POST['pdf_solicitud'];
+                    $nuevoDocumento->pdf_ruta = $ruta;
+                    $resultado = $nuevoDocumento->actualizar();
+                } else {
+                }
+            }
+
+            if ($resultado['resultado'] == 1) {
+                echo json_encode([
+                    'mensaje' => 'Registro modificado correctamente',
+                    'codigo' => 1
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
+
+    public static function eliminarApi(){
+    try {
+        $salId = $_POST['sal_id'];
+        $salidaPais = Salidapais::find($salId);
+
+        if ($salidaPais) {
+            $salidaPais->sal_situacion = 0;
+            $resultado = $salidaPais->actualizar();
+
+            if ($resultado['resultado'] == 1) {
+                echo json_encode([
+                    'mensaje' => 'Registro de salida de país eliminado correctamente',
+                    'codigo' => 1
+                ]);
+                return;
+            }
+        }
+
+        echo json_encode([
+            'mensaje' => 'No se encontró el registro para eliminar',
+            'codigo' => 0
+        ]);
+
+    } catch (Exception $e) {
+        echo json_encode([
+            'detalle' => $e->getMessage(),
+            'mensaje' => 'Ocurrió un error',
+            'codigo' => 0
+        ]);
+    }
+}
+
+}    
