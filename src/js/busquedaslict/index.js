@@ -30,11 +30,7 @@ const datatable = new Datatable('#tablaLicencias', {
             className: 'text-center',
             data: 'tiempo'
         },
-        {
-            title: 'sol_solicitante',
-            className: 'text-center',
-            data: 'sol_solicitante'
-        },
+       
         {
             title: 'ste_id',
             className: 'text-center',
@@ -50,20 +46,11 @@ const datatable = new Datatable('#tablaLicencias', {
             className: 'text-center',
             data: 'sol_obs'
         },
-        {
-            title: 'sol_motivo',
-            className: 'text-center',
-            data: 'sol_motivo'
-        },
+ 
         {
             title: 'mot_id',
             className: 'text-center',
             data: 'mot_id'
-        },
-        {
-            title: 'sol_situacion',
-            className: 'text-center',
-            data: 'sol_situacion'
         },
         {
             title: 'pdf_id',
@@ -135,7 +122,6 @@ const datatable = new Datatable('#tablaLicencias', {
                                 data-id="${data}"                                                   
                                 data-sol_id="${row['sol_id']}"
                                 data-tiempo="${row['tiempo']}"
-                                data-sol_solicitante="${row['sol_solicitante']}"
                                 data-ste_id="${row['ste_id']}"
                                 data-ste_cat="${row['ste_cat']}"
                                 data-sol_obs="${row['sol_obs']}"
@@ -165,7 +151,7 @@ const datatable = new Datatable('#tablaLicencias', {
     ],
     columnDefs: [
         {
-            targets: [1,2, 3, 4, 5, 6, 7, 8, 9, 10,11],
+            targets: [1,2, 3, 4, 5, 6, 7, 8, 9],
             visible: false,
             searchable: false,
         },
@@ -213,48 +199,43 @@ const traeDatos = (e) => {
     const button = e.target;
     const sol_id = button.dataset.sol_id;
     const tiempo = button.dataset.tiempo;
-    const sol_solicitante = button.dataset.sol_solicitante;
     const ste_id = button.dataset.ste_id;
     const ste_cat = button.dataset.ste_cat;
     const sol_obs = button.dataset.sol_obs;
-    const sol_motivo = button.dataset.sol_motivo;
     const mot_id = button.dataset.mot_id;
-    const pdf_id = button.dataset.pdf_id;
-    const pdf_solicitud = button.dataset.pdf_solicitud;
     const grado_solicitante = button.dataset.grado_solicitante;
     const nombres_solicitante = button.dataset.nombres_solicitante;
     const lit_mes_consueldo = button.dataset.lit_mes_consueldo;
     const lit_mes_sinsueldo = button.dataset.lit_mes_sinsueldo;
+    const lit_fecha1 = button.dataset.lit_fecha1;
+    const lit_fecha2 = button.dataset.lit_fecha2;   
+    const pdf_id = button.dataset.pdf_id;
+    const pdf_solicitud = button.dataset.pdf_solicitud;
     
     const dataset = {
         sol_id,
         tiempo,
-        sol_solicitante,
         ste_id,
         ste_cat,
         sol_obs,
-        sol_motivo,
         mot_id,
-        pdf_id,
-        pdf_solicitud,
         grado_solicitante,
         nombres_solicitante,
         lit_mes_consueldo,
-        lit_mes_sinsueldo
+        lit_mes_sinsueldo,
+        pdf_id,
+        pdf_solicitud,
+        lit_fecha1,
+        lit_fecha2
+        
+    
     };
-
     formularioModal.sol_id.value = dataset.sol_id;
-    formularioModal.sol_solicitante.value = dataset.sol_solicitante;
     formularioModal.ste_id.value = dataset.ste_id;
     formularioModal.ste_cat.value = dataset.ste_cat;
     formularioModal.sol_obs.value = dataset.sol_obs;
-    formularioModal.sol_motivo.value = dataset.sol_motivo;
-    formularioModal.mot_id.value = dataset.mot_id;
-    formularioModal.pdf_id.value = dataset.pdf_id;
-    formularioModal.pdf_solicitud.value = dataset.pdf_solicitud;
-    formularioModal.grado_solicitante.value = dataset.grado_solicitante;
     formularioModal.nombres_solicitante.value = dataset.nombres_solicitante;
-
+    
     formularioModal.tiempo.value = dataset.tiempo;
     const numero = dataset.tiempo;
             formatoTiempo(numero).then((tiempoFormateado) => {
@@ -290,22 +271,16 @@ const traeDatos = (e) => {
             }
     formularioModal.lit_mes_consueldo.value = dataset.lit_mes_consueldo;
     formularioModal.lit_mes_sinsueldo.value = dataset.lit_mes_sinsueldo;
+    formularioModal.lit_fecha1.value = dataset.lit_fecha1;
+    formularioModal.lit_fecha2.value = dataset.lit_fecha2
+    formularioModal.pdf_id.value = dataset.pdf_id;
+    formularioModal.pdf_solicitud.value = dataset.pdf_solicitud;
+
 };
 
 
 
-const cancelarAccion = () => {
-    btnGuardar.disabled = false
-    btnGuardar.parentElement.style.display = ''
-    btnBuscar.disabled = false
-    btnBuscar.parentElement.style.display = ''
-    btnModificar.disabled = true
-    btnModificar.parentElement.style.display = 'none'
-    btnCancelar.disabled = true
-    btnCancelar.parentElement.style.display = 'none'
-    divTabla.style.display = ''
-    formulario.reset(); f
-}
+
 
 const modificar = async (evento) => {
 
