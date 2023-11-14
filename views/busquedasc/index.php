@@ -188,7 +188,4 @@
     </div>
 </div>
 
-
-
-
 <script src="./build/js/busquedasc/index.js"></script>

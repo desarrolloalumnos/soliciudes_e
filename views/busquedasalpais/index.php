@@ -1,5 +1,4 @@
-<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioSalidapaises" name="formularioSalidapaises"
-    style="min-height: 30vh; margin-top: 60px;">
+<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioSalidapaises" name="formularioSalidapaises" style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
         <h1>Solicitudes de Salida del País</h1>
     </div>
@@ -7,8 +6,7 @@
     <div class="row mb-4">
         <div class="col-lg-6">
             <label for="ste_cat"><i class="bi bi-universal-access"></i> Catálogo</label>
-            <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number"
-                placeholder="Número de catálogo">
+            <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="Número de catálogo">
         </div>
         <div class="col-lg-6">
             <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i> Fecha de Solicitud</label>
@@ -18,8 +16,7 @@
 
     <div class="row justify-content-center mb-4">
         <div class="col-lg-2">
-            <button type="button" id="btnBuscar" name="btnBuscar"
-                class="btn btn-outline-info w-100 overflow-visible text-wrap">Buscar</button>
+            <button type="button" id="btnBuscar" name="btnBuscar" class="btn btn-outline-info w-100 overflow-visible text-wrap">Buscar</button>
         </div>
     </div>
 </form>
@@ -34,15 +31,13 @@
 
 
 <!-- Modal para modificar la solicitud -->
-<div class="modal fade" id="modalSalidapaises" tabindroleex="-1" role="dialog" aria-labelledby="modalMLabel"
-    aria-hidden="true">
+<div class="modal fade" id="modalSalidapaises" tabindroleex="-1" role="dialog" aria-labelledby="modalMLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
             </div>
             <div class="modal-body">
-                <form class="border bg-light p-4" id="formularioSalidapais" name="formularioSalidapais"
-                    style="min-height: 50vh;">
+                <form class="border bg-light p-4" id="formularioSalidapais" name="formularioSalidapais" style="min-height: 50vh;">
 
                     <div class="text-center">
                         <input value="3" type="hidden" id="tse_id" name="tse_id">
@@ -60,8 +55,7 @@
                             <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                             <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
                             <label for="ste_cat">Catálogo</label>
-                            <input value="" id="ste_cat" name="ste_cat" class="form-control" type="text"
-                                placeholder="Número de catálogo">
+                            <input value="" id="ste_cat" name="ste_cat" class="form-control" type="text" placeholder="Número de catálogo">
                             <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
                             <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
                             <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
@@ -105,8 +99,7 @@
 
                         <div class="col-lg-6">
                             <label for="sol_obs"><i class="bi bi-body-text"></i> Observaciones</label>
-                            <input class="form-control" type="text" id="sol_obs" name="sol_obs"
-                                placeholder="Observaciones del viaje">
+                            <input class="form-control" type="text" id="sol_obs" name="sol_obs" placeholder="Observaciones del viaje">
                         </div>
                     </div>
 
@@ -136,8 +129,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <input value="" id="sal_id" name="sal_id" class="form-control" type="hidden">
-                            <input value="" id="sal_autorizacion" name="sal_autorizacion" class="form-control"
-                                type="hidden">
+                            <input value="" id="sal_autorizacion" name="sal_autorizacion" class="form-control" type="hidden">
                             <h2>Solicitud</h2>
                         </div>
                     </div>
@@ -156,10 +148,9 @@
                     </div>
 
                     <div class="row justify-content-around mb-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <input value="" id="dsal_id" name="dsal_id" class="form-control" type="hidden">
-                            <input value="" type="hidden" name="dsal_sol_salida" id="dsal_sol_salida"
-                                class="form-control">
+                            <input value="" type="hidden" name="dsal_sol_salida" id="dsal_sol_salida" class="form-control">
                             <label for="dsal_pais" class="form-label"><i class="bi bi-globe-americas"></i>Seleccione el
                                 país a viajar:</label>
                             <select name="dsal_pais" id="dsal_pais" class="form-select">
@@ -170,9 +161,14 @@
                                     </option>
                                 <?php } ?>
                             </select>
+                            <div class="col-lg-4">
+                              
+                                    <button type="button" id="btnAgregarCampo" class="btn btn-outline-success w-100 overflow-visible text-wrap">Agregar Campo</button>
+                           
+                            </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <label for="dsal_ciudad"><i class="bi bi-file-image-fill"></i>Ciudad del país a
                                 visitar</label>
                             <input value="" id="dsal_ciudad" name="dsal_ciudad" class="form-control" type="text">
@@ -181,8 +177,7 @@
 
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
-                            <label for="dsal_transporte" class="form-label"><i
-                                    class="bi bi-airplane-fill"></i>Seleccione el transporte:</label>
+                            <label for="dsal_transporte" class="form-label"><i class="bi bi-airplane-fill"></i>Seleccione el transporte:</label>
                             <select name="dsal_transporte" id="dsal_transporte" class="form-select">
                                 <option value="">Seleccione el transporte</option>
                                 <?php foreach ($transportes as $transporte) { ?>
@@ -198,8 +193,7 @@
                                 <label for="sal_salida"><i class="bi bi-file-pdf-fill"></i>Documentos
                                     PDF</label>
                                 <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
-                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control"
-                                    type="hidden">
+                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
                                 <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
                             </div>
 
@@ -207,15 +201,13 @@
 
                         <div class="row justify-content-center mt-12 mb-4">
                             <div class="col-lg-6">
-                                <button type="click" id="btnModificar" name="btnModificar"
-                                    class="btn btn-outline-warning w-100">Modificar</button>
+                                <button type="click" id="btnModificar" name="btnModificar" class="btn btn-outline-warning w-100">Modificar</button>
                             </div>
                         </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" id="btnCancelar"
-                    data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-danger" id="btnCancelar" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

@@ -118,7 +118,7 @@ class BuscalictController
         try {
             // echo json_encode($_POST);
             // exit;
-          
+
             $tiempo = $_POST['tiempo'];
             $numeroEntero = intval($tiempo);
 
@@ -199,23 +199,34 @@ class BuscalictController
     public static function modificarPdfApi()
     {
         try {
-
-            $catalogo_doc = $_POST['ste_cat2'];
+            $catalogo_doc = $_POST['ste_catalogo'];
 
             if (!empty($_FILES['pdf_ruta']['name'])) {
+                // Obtener la ruta del archivo anterior desde la base de datos
+                $pdf_id = $_POST['pdf_id'];
+                $documentoExistente = Pdf::find($pdf_id);
+                $rutaAnterior = $documentoExistente->pdf_ruta;
+
+                // Generar la nueva ruta para el archivo PDF
                 $archivo = $_FILES['pdf_ruta'];
-                $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
-                $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
+                $rutaNueva = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+
+                // Mover el nuevo archivo
+                $subido = move_uploaded_file($archivo['tmp_name'], $rutaNueva);
 
                 if ($subido) {
-                    $pdf_id = $_POST['pdf_id'];
-                    $nuevoDocumento = Pdf::find($pdf_id);
-                    $nuevoDocumento->pdf_solicitud = $_POST['pdf_solicitud'];
-                    $nuevoDocumento->pdf_ruta = $ruta;
-                    $resultado = $nuevoDocumento->actualizar();
+                    $documentoExistente->pdf_solicitud = $_POST['pdf_solicitud'];
+                    $documentoExistente->pdf_ruta = $rutaNueva;
+                    $resultado = $documentoExistente->actualizar();
+
+
+                    if ($resultado && file_exists($rutaAnterior)) {
+                        unlink($rutaAnterior);
+                    }
                 } else {
                 }
             }
+
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
@@ -240,29 +251,7 @@ class BuscalictController
     }
 
 
-    // public static function eliminarApi()
-    // {
-    //     try {
-
-    //         $solicitud_id = $_POST['sol_id'];
-    //         $solicitud = Solicitud::find($solicitud_id);
-    //         $solicitud->sol_situacion = 0;
-    //         $resultado = $solicitud->actualizar();
-
-    //         if ($resultado['resultado'] == 1) {
-    //             echo json_encode([
-    //                 'mensaje' => 'Registro eliminado correctamente',
-    //                 'codigo' => 1
-    //             ]);
-    //         }
-    //     } catch (Exception $e) {
-    //         echo json_encode([
-    //             'detalle' => $e->getMessage(),
-    //             'mensaje' => 'Ocurrió un error',
-    //             'codigo' => 0
-    //         ]);
-    //     }
-    // }
+   
 
     public static function motivos()
     {
