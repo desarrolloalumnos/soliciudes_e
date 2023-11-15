@@ -24,6 +24,7 @@ const addPdf = document.getElementById('addPdf');
 const parejam_cat = document.getElementById('parejam_cat');
 const divMilitar = document.getElementById('parejaMilitar');
 const divCivil = document.getElementById('parejaCivil');
+const formularioModal = document.getElementById('formularioPdf');
 
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';

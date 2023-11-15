@@ -1,19 +1,26 @@
-import { Dropdown, Modal } from "bootstrap";
 import Swal from "sweetalert2";
+import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion, formatearFecha, formatoTiempo } from "../funciones";
 
+
 const modalL = new Modal(document.getElementById('modalLicencia'), {
     backdrop: 'static',
     keyboard: false
-})
+});
+
+
+
 const formulario = document.getElementById('formularioLicencia');
 const formularioModal = document.getElementById('formularioLicenciasB');
 const btnBuscar = document.getElementById('btnBuscar');
 const btnModficarDatos = document.getElementById('modificar')
+const divPdf = document.getElementById('licencias');
+const divLicencias = document.getElementById('pdf');
+const addPdf = document.getElementById('addPdf')
 
-formularioModal.tiempo_servicio.disabled = true;
+
 formularioModal.ste_cat.disabled = true;
 formularioModal.nombre.disabled = true;
 const iframe = document.getElementById('pdfLicencia');
@@ -124,38 +131,38 @@ const datatable = new Datatable('#tablaLicencias', {
             data: 'lit_id',
             searchable: false,
             orderable: false,
-            render: function (data, type, row, meta) {
-                return ` <div class="btn-group">
-                <button class="btn btn-warning" 
-                                data-id="${data}"                                                   
-                                data-sol_id="${row['sol_id']}"
-                                data-tiempo="${row['tiempo']}"
-                                data-ste_id="${row['ste_id']}"
-                                data-ste_cat="${row['ste_cat']}"
-                                data-sol_obs="${row['sol_obs']}"
-                                data-sol_motivo="${row['sol_motivo']}"
-                                data-ste_telefono="${row['ste_telefono']}"
-                                data-mot_id="${row['mot_id']}"
-                                data-pdf_id="${row['pdf_id']}"
-                                data-pdf_solicitud="${row['pdf_solicitud']}"
-                                data-grado_solicitante="${row['grado_solicitante']}"
-                                data-nombres_solicitante="${row['nombres_solicitante']}"
-                                data-lit_mes_consueldo="${row['lit_mes_consueldo']}"
-                                data-lit_mes_sinsueldo="${row['lit_mes_sinsueldo']}"
-                                data-lit_fecha1="${row['lit_fecha1'].substring(0, 10)}"
-                                data-lit_fecha2="${row['lit_fecha2'].substring(0, 10)}"
-                                data-ste_telefono="${row['ste_telefono']}"
-                                data-pdf_ruta='${row["pdf_ruta"]}'>
-                            DATOS
-                        </button>
-                        <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
-                        </div>`;
-            }
+            render: (data, type, row, meta) =>
+                `<div class="btn-group">
+                        <button class="btn btn-warning" 
+                        data-id="${data}"                                                   
+                        data-sol_id="${row['sol_id']}"
+                        data-tiempo="${row['tiempo']}"
+                        data-ste_id="${row['ste_id']}"
+                        data-ste_cat="${row['ste_cat']}"
+                        data-sol_obs="${row['sol_obs']}"
+                        data-sol_motivo="${row['sol_motivo']}"
+                        data-ste_telefono="${row['ste_telefono']}"
+                        data-mot_id="${row['mot_id']}"
+                        data-pdf_id="${row['pdf_id']}"
+                        data-pdf_solicitud="${row['pdf_solicitud']}"
+                        data-grado_solicitante="${row['grado_solicitante']}"
+                        data-nombres_solicitante="${row['nombres_solicitante']}"
+                        data-lit_mes_consueldo="${row['lit_mes_consueldo']}"
+                        data-lit_mes_sinsueldo="${row['lit_mes_sinsueldo']}"
+                        data-lit_fecha1="${row['lit_fecha1'].substring(0, 10)}"
+                        data-lit_fecha2="${row['lit_fecha2'].substring(0, 10)}"
+                        data-ste_telefono="${row['ste_telefono']}"
+                        data-pdf_ruta='${row["pdf_ruta"]}'>
+                    DATOS
+                </button>
+                <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
+                    </div>`
+
         },
         {
             title: 'ELIMINAR',
             className: 'text-center',
-            data: 'lit_id',
+            data: 'sol_id',
             searchable: false,
             orderable: false,
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
@@ -203,11 +210,15 @@ const buscar = async () => {
     } catch (error) {
         console.log(error);
     }
+
     formulario.reset();
 }
 
 const traeDatos = (e) => {
     modalL.show();
+    divPdf.style.display = 'block';
+    divLicencias.style.display = 'none';
+
     const button = e.target;
     const lit_id = button.dataset.id;
     const sol_id = button.dataset.sol_id;
@@ -259,9 +270,9 @@ const traeDatos = (e) => {
     formularioModal.nombre.value = dataset.nombres_solicitante;
 
     formularioModal.tiempo.value = dataset.tiempo;
-   
+
     const numero = dataset.tiempo;
-    
+
 
     formatoTiempo(numero).then((tiempoFormateado) => {
         formularioModal.tiempo_servicio.value = tiempoFormateado;
@@ -323,8 +334,6 @@ const modificar = async (evento) => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        console.log(data)
-        return
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
         switch (codigo) {
@@ -354,14 +363,94 @@ const modificar = async (evento) => {
     }
 }
 
+const traePdf = (e) => {    
+    modalL.show()
+    divPdf.style.display = 'none';
+    divLicencias.style.display = 'block';
+  
+
+    const button = e.target;
+    const ste_cat = button.dataset.ste_cat;
+    const pdf_id = button.dataset.pdf_id;
+    const pdf_solicitud = button.dataset.pdf_solicitud;
+
+
+    const dataset = {
+
+        ste_cat,
+        pdf_id,
+        pdf_solicitud
+    };
+ 
+    formularioModal.pdf_solicitud.value = dataset.pdf_solicitud;
+    formularioModal.pdf_id.value = dataset.pdf_id;
+
+};
+
+
+
+
+
+const modificarPdf = async (evento) => {
+
+    evento.preventDefault();
+
+
+    const body = new FormData(formularioModal);
+    body.append('ste_catalogo', ste_id)
+    const url = '/soliciudes_e/API/busquedaslict/modificarPdf';
+    const headers = new Headers();
+    headers.append("X-Requested-With", "fetch");
+    const config = {
+        method: 'POST',
+        body
+    }
+
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+  
+        const { codigo, mensaje, detalle } = data;
+        let icon = 'info'
+        switch (codigo) {
+            case 1:
+                formularioModal.reset();
+                icon = 'success'
+                modalL.hide()
+                buscar();
+                break;
+
+            case 0:
+                icon = 'error'
+                console.log(detalle)
+                break;
+
+            default:
+                break;
+        }
+
+        Toast.fire({
+            icon,
+            text: mensaje
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+    buscar()
+}
+
+
 const eliminar = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
 
     if (await confirmacion('warning', 'Desea elminar este registro?')) {
+
         const body = new FormData()
-        body.append('cmv_id', id)
-        const url = '/soliciudes_e/API/protocolos/eliminar';
+        body.append('sol_id', id)
+        const url = '/soliciudes_e/API/busquedasc/eliminar';
+
         const headers = new Headers();
         headers.append("X-Requested-With", "fetch");
         const config = {
@@ -371,7 +460,7 @@ const eliminar = async (e) => {
         try {
             const respuesta = await fetch(url, config)
             const data = await respuesta.json();
-
+     
             const { codigo, mensaje, detalle } = data;
             let icon = 'info'
             switch (codigo) {
@@ -406,6 +495,7 @@ const eliminar = async (e) => {
     buscar();
 }
 
+
 const verPDF = (e) => {
     // const button = e.target;
     const boton = e.target
@@ -421,4 +511,7 @@ buscar();
 btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-outline-info', verPDF);
 datatable.on('click', '.btn-warning', traeDatos)
-btnModficarDatos.addEventListener('click',modificar)
+datatable.on('click', '.btn-outline-warning', traePdf);
+btnModficarDatos.addEventListener('click', modificar);
+addPdf.addEventListener('click',modificarPdf);
+datatable.on('click', '.btn-danger', eliminar)
