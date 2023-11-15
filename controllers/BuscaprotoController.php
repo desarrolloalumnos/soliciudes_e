@@ -21,20 +21,21 @@ class BuscaprotoController{
 
     public static function buscarApi(){
 
-        $sql = "SELECT
+        $sql = " SELECT
         pco_id,
         ste_cat,
         gra_desc_lg,
         TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
         cmv_tip,
+        dep_desc_lg,
         pco_fechainicio,
         pco_fechafin,
         pco_dir,
         pco_just,
-        pdf_id,
         pdf_ruta
         FROM se_protocolo
         INNER JOIN se_combos_marimbas_vallas ON pco_cmbv = cmv_id  
+        inner join mdep on cmv_dependencia = dep_llave
         inner join se_autorizacion on aut_id = pco_autorizacion
         inner join se_solicitudes on aut_solicitud = sol_id
         inner join se_solicitante on sol_solicitante= ste_id
@@ -59,12 +60,18 @@ class BuscaprotoController{
 public static function buscarCalender(){
     
     try {
-    $sql = "SELECT 
-    pco_just as  title,
-    pco_fechainicio as start,
-    pco_fechafin as end
-FROM se_protocolo
-WHERE pco_situacion = 1";
+            $sql = "SELECT 
+            c.cmv_tip || ' - ' || m.dep_desc_lg AS title,
+            p.pco_fechainicio AS start,
+            p.pco_fechafin AS end
+        FROM 
+            se_protocolo p
+        JOIN 
+            se_combos_marimbas_vallas c ON p.pco_cmbv = c.cmv_id
+        JOIN 
+            mdep m ON c.cmv_dependencia = m.dep_llave
+        WHERE 
+            p.pco_situacion = 1";
 
 
         $resultado = Protocolosol::fetchArray($sql);
@@ -86,17 +93,15 @@ public static function modificarApi(){
 
         try {
 
-            $fechaSolicito = $_POST['ste_fecha'];
-            $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
-            $_POST['ste_fecha'] = $fechaFormateadaSolicito;
+            $fechaInicioActividad = $_POST['pco_fechainicio'];
+            $fechaFormateadaIni = date('Y-m-d H:i', strtotime($fechaInicioActividad));
+            $_POST['pco_fechainicio'] = $fechaFormateadaIni;
             
-            $fechaInicioSol = $_POST['pco_fechainicio'];
-            $fechaFormateadaIniLic = date('Y-m-d H:i', strtotime($fechaInicioSol));
-            $_POST['pco_fechainicio'] = $fechaFormateadaIniLic;
-
-            $fechaFinSol= $_POST['pco_fechafin'];
-            $fechaFormateadaFinLic = date('Y-m-d H:i', strtotime($fechaFinSol));
-            $_POST['pco_fechafin'] = $fechaFormateadaFinLic;
+            
+            $fechaFinActividad = $_POST['pco_fechafin'];
+            $fechaFormateadaFin = date('Y-m-d H:i', strtotime($fechaFinActividad));
+            $_POST['pco_fechafin'] = $fechaFormateadaFin;
+         
 
             if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
                 $id = $_POST['ste_id'];
@@ -110,18 +115,14 @@ public static function modificarApi(){
             if (isset($_POST['cmv_id']) && !empty($_POST['cmv_id'])) {
                 $comboId = $_POST['cmv_id'];
                 $combo = Protocolo::find($comboId);
-
-
-                if ($combo) {
-                    $combo->cmv_dependencia = $_POST['cmv_dependencia'];
-                    $combo->cmv_tip = $_POST['cmv_tip'];
-                    $comboResultado = $combo->actualizar();
-                }
+                $combo->cmv_dependencia = $_POST['cmv_dependencia'];
+                $combo->cmv_tip = $_POST['cmv_tip'];
+                $comboResultado = $combo->actualizar();
+                
             }
 
             $pcoId = $_POST['pco_id'];
             $protocolo = Protocolosol::find($pcoId);
-            $protocolo->pco_civil = $_POST['pco_civil'];
             $protocolo->pco_fechainicio = $_POST['pco_fechainicio'];
             $protocolo->pco_dir = $_POST['pco_dir'];
             $protocolo->pco_just = $_POST['pco_just'];
@@ -210,4 +211,3 @@ public static function modificarApi(){
         }
     }
 }
-    
