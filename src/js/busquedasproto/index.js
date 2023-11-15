@@ -8,34 +8,57 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
+const modalProtocolo = new Modal(document.getElementById('modalProtocolo'), {
+    backdrop: 'static',
+    keyboard: false
+});
+// const modalPdf = new Modal(document.getElementById('modalPdf'), {
+//     backdrop: 'static',
+//     keyboard: false
+// });
 
-const modalProtocolo = new Modal(document.getElementById('modalProtocolo'), {})
 const formulario = document.getElementById('formularioProtocolo');
 const formulario2 = document.getElementById('formularioProto');
 const btnBuscar = document.getElementById('btnBuscar');
 const btnModificar = document.getElementById('btnModificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const calendarEl = document.getElementById('calendar');
+const verTabla = document.getElementById('dataTabla')
+const verCalendario = document.getElementById('calendario')
+const btnCalendario = document.getElementById('btnCalendario')
+// const pdf = document.getElementById('formularioPdf');
 
+// const iframe = document.getElementById('pdfIframe');
+// const addPdf = document.getElementById('addPdf');
+
+verCalendario.style.display ='none'
+verTabla.style.display ='none'
 formulario2.ste_cat.disabled = true;
 formulario2.ste_fecha.disabled = true;
 formulario2.nombre.disabled = true;
-// document.addEventListener('DOMContentLoaded', function() {
-//     const calendarEl = document.getElementById('calendar'); 
 
-//     const calendar = new Calendar(calendarEl, {
-//         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-//         initialView: 'dayGridMonth',
-//         locale: 'es',
-//         // events: data       
-//     });
 
-//     calendar.render();
-// });
+const buscarCalender = async () => {
+verCalendario.style.display ='block';
+verTabla.style.display = 'none';
+    // let dep_valor = dependencias.value 
+    // let tipo = tipos.value 
 
-document.addEventListener('DOMContentLoaded', function() {
+    const url = `/soliciudes_e/API/busquedasproto/buscarCalender`;
+
+
+    const config = {
+        method: 'GET',
+    }
+
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        
+        
    
     const calendar = new Calendar(calendarEl, {
+
         plugins: [dayGridPlugin], 
         initialView: 'dayGridMonth',
         height: 'auto',
@@ -44,19 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
           center: 'title',
           end: 'today,prev,next',
         },
-        events: [
-          {
-            title: 'Evento 1',
-            start: '2023-11-09T10:00:00',
-            end: '2023-11-09T12:00:00',
-          },
-          {
-            title: 'Evento 2',
-            start: '2023-11-11T14:00:00',
-            end: '2023-11-11T16:00:00',
-          },
-          
-        ],
+        events: data,
         dayMaxEvents: 5,
         locale: 'es',
         buttonText: {
@@ -68,8 +79,29 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     
       calendar.render();
-    
-  });
+        
+return
+
+        datatable.clear().draw()
+        if (data) {
+            contador = 1;
+            datatable.rows.add(data).draw();
+
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+
+            })
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+    formulario.reset();
+}
+
+
 
 
 
@@ -95,26 +127,31 @@ const datatable = new Datatable('#tablaProtocolo', {
             data: 'nombre'
         },
         {
-            title: 'Combo, banda, marimba o valla',
+            title: 'COMBO, VALLA, MARIMBA, BANDA',
             className: 'text-center',
             data: 'cmv_tip'
         },
         {
-            title: 'Fecha inicio actividad',
+            title: 'DEPENDECIA',
+            className: 'text-center',
+            data: 'dep_desc_lg'
+        },
+        {
+            title: 'FECHA INICIO ACTIVIDAD',
             className: 'text-center',
             data: function (row) {
                 return row.pco_fechainicio.substring(0, 10);
             }
         },
         {
-            title: 'Fecha fin actividad',
+            title: 'FECHA FIN ACTIVIDAD',
             className: 'text-center',
             data: function (row) {
                 return row.pco_fechafin.substring(0, 10);
             } 
         },
         {
-            title: 'Dirección',
+            title: 'DIRECCION',
             className: 'text-center',
             data: 'pco_dir'
         },
@@ -145,20 +182,25 @@ const datatable = new Datatable('#tablaProtocolo', {
                     data-pdf_solicitud='${row["pdf_solicitud"]}'  
                     data-nombre='${row["nombre"]}' 
                     data-cmv_tip='${row["cmv_tip"]}' 
-                    data-pdf_ruta='${row["pdf_ruta"]}'>Modificar</button>`
-        },
-        {
+                    data-dep_desc_lg='${row["dep_desc_lg"]}'
+                    data-pdf_ruta='${row["pdf_ruta"]}'>DATOS</button>
+                    <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
+                    </div>`
+                },
+            {
             title: 'ELIMINAR',
             className: 'text-center',
-            data: 'pco_id',
+            data: 'sol_id',
             searchable: false,
             orderable: false,
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
-        },
+            },
     ],
 });
 
 const buscar = async () => {
+    verCalendario.style.display ='none';
+    verTabla.style.display = 'block';
     const url = `/soliciudes_e/API/busquedasproto/buscar`;
     const config = {
         method: 'GET',
@@ -175,8 +217,8 @@ const buscar = async () => {
             data.forEach((evento) => {
                 Calendar.addEvent({
                     title: evento.titulo,
-                    start: evento.fecha_inicio,
-                    end: evento.fecha_fin,
+                    start: evento.pco_fechainicio,
+                    end: evento.pco_fechafin,
                 });
             });
             
@@ -228,6 +270,7 @@ const traeDatos = (e) => {
         const pco_dir = button.dataset.pco_dir
         const pco_just = button.dataset.pco_just
         const cmv_tip = button.dataset.cmv_tip
+        const dep_desc_lg = button.dataset.dep_desc_lg
         const pdf_id = button.dataset.pdf_id
         const pdf_solicitud = button.dataset.pdf_solicitud
         const grado = button.dataset.grado
@@ -267,6 +310,7 @@ const traeDatos = (e) => {
         pco_dir,
         pco_just,
         cmv_tip,
+        dep_desc_lg,
         pdf_id,
         pdf_solicitud,
         nombre,
@@ -293,9 +337,11 @@ const colocarDatos = (dataset) => {
     formulario2.ste_telefono.value = dataset.ste_telefono;
     formulario2.pco_id.value = dataset.pco_id;
     formulario2.pco_cmbv.value = dataset.pco_cmbv;
+    formulario2.cmv_tip.value = dataset.cmv_tip;
+    formulario2.dep_desc_lg.value = dataset.dep_desc_lg;
     // formulario2.pco_just.value = pco_just;
     formulario2.pco_dir.value = dataset.pco_dir;
-    // formulario2.pco_fechainicio.value = pco_fechainicio;
+    formulario2.pco_fechainicio.value = pco_fechainicio;
     formulario2.pco_fechafin.value = dataset.pco_fechafin;
     formulario2.ste_gra.value = dataset.grado;
     formulario2.nombre.value = dataset.nombre;
@@ -366,7 +412,7 @@ const eliminar = async (e) => {
 
     if (await confirmacion('warning', 'Desea elminar este registro?')) {
         const body = new FormData()
-        body.append('pco_id', id)
+        body.append('sol_id', id)
         const url = '/soliciudes_e/API/busquedasproto/eliminar';
         const headers = new Headers();
         headers.append("X-Requested-With", "fetch");
@@ -406,7 +452,7 @@ const eliminar = async (e) => {
         }
     }
 
-    // buscar();
+    buscar();
 }
 
 
@@ -428,5 +474,4 @@ btnCancelar.addEventListener('click', limpiarModelProtocolo)
 datatable.on('click', '.btn-warning', traeDatos);
 datatable.on('click', '.btn-outline-info', verPDF);
 datatable.on('click', '.btn-danger', eliminar);
-
-
+btnCalendario.addEventListener('click', buscarCalender)

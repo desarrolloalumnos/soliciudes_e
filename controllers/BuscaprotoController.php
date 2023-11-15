@@ -6,6 +6,8 @@ use Exception;
 use Model\Protocolosol;
 use Model\Pdf;
 use Model\Protocolo;
+use Model\Solicitud;
+use Model\Solicitante;
 use MVC\Router;
 
 class BuscaprotoController{
@@ -19,20 +21,21 @@ class BuscaprotoController{
 
     public static function buscarApi(){
 
-        $sql = "SELECT
+        $sql = " SELECT
         pco_id,
         ste_cat,
         gra_desc_lg,
         TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
         cmv_tip,
+        dep_desc_lg,
         pco_fechainicio,
         pco_fechafin,
         pco_dir,
         pco_just,
-        pdf_id,
         pdf_ruta
         FROM se_protocolo
         INNER JOIN se_combos_marimbas_vallas ON pco_cmbv = cmv_id  
+        inner join mdep on cmv_dependencia = dep_llave
         inner join se_autorizacion on aut_id = pco_autorizacion
         inner join se_solicitudes on aut_solicitud = sol_id
         inner join se_solicitante on sol_solicitante= ste_id
@@ -54,18 +57,27 @@ class BuscaprotoController{
 
 
 }
-public static function buscarEventos(){
-
-    $sql = "SELECT 
-                pco_just,
-                pco_fechainicio,
-                pco_fechafin 
-            FROM se_protocolo
-            WHERE pco_situacion = 1";
-
-
+public static function buscarCalender(){
+    
     try {
+            $sql = "SELECT 
+            c.cmv_tip || ' - ' || m.dep_desc_lg AS title,
+            p.pco_fechainicio AS start,
+            p.pco_fechafin AS end
+        FROM 
+            se_protocolo p
+        JOIN 
+            se_combos_marimbas_vallas c ON p.pco_cmbv = c.cmv_id
+        JOIN 
+            mdep m ON c.cmv_dependencia = m.dep_llave
+        WHERE 
+            p.pco_situacion = 1";
+
+
         $resultado = Protocolosol::fetchArray($sql);
+
+
+
         echo json_encode($resultado);
     } catch (Exception $e) {
         echo json_encode([
@@ -81,38 +93,36 @@ public static function modificarApi(){
 
         try {
 
-            $fechaSolicito = $_POST['ste_fecha'];
-            $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
-            $_POST['ste_fecha'] = $fechaFormateadaSolicito;
+            $fechaInicioActividad = $_POST['pco_fechainicio'];
+            $fechaFormateadaIni = date('Y-m-d H:i', strtotime($fechaInicioActividad));
+            $_POST['pco_fechainicio'] = $fechaFormateadaIni;
             
-            $fechaInicioSol = $_POST['pco_fechainicio'];
-            $fechaFormateadaIniLic = date('Y-m-d H:i', strtotime($fechaInicioSol));
-            $_POST['pco_fechainicio'] = $fechaFormateadaIniLic;
+            
+            $fechaFinActividad = $_POST['pco_fechafin'];
+            $fechaFormateadaFin = date('Y-m-d H:i', strtotime($fechaFinActividad));
+            $_POST['pco_fechafin'] = $fechaFormateadaFin;
+         
 
-            $fechaFinSol= $_POST['pco_fechafin'];
-            $fechaFormateadaFinLic = date('Y-m-d H:i', strtotime($fechaFinSol));
-            $_POST['pco_fechafin'] = $fechaFormateadaFinLic;
+            if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
+                $id = $_POST['ste_id'];
+                $solicitante = Solicitante::find($id);
 
-            $id = $_POST['ste_id'];
-            $solicitante = Solicitante::find($id);
-            $solicitante->ste_telefono = $_POST['ste_telefono'];
-            $resultado = $solicitante->actualizar();
+                $solicitante->ste_telefono = $_POST['ste_telefono'];
+                $resultado = $solicitante->actualizar();
+            } else {
+            }
 
             if (isset($_POST['cmv_id']) && !empty($_POST['cmv_id'])) {
                 $comboId = $_POST['cmv_id'];
-                $combo = Combo::find($comboId);
-
-
-                if ($combo) {
-                    $combo->cmv_dependencia = $_POST['cmv_dependencia'];
-                    $combo->cmv_tip = $_POST['cmv_tip'];
-                    $comboResultado = $combo->actualizar();
-                }
+                $combo = Protocolo::find($comboId);
+                $combo->cmv_dependencia = $_POST['cmv_dependencia'];
+                $combo->cmv_tip = $_POST['cmv_tip'];
+                $comboResultado = $combo->actualizar();
+                
             }
 
             $pcoId = $_POST['pco_id'];
             $protocolo = Protocolosol::find($pcoId);
-            $protocolo->pco_civil = $_POST['pco_civil'];
             $protocolo->pco_fechainicio = $_POST['pco_fechainicio'];
             $protocolo->pco_dir = $_POST['pco_dir'];
             $protocolo->pco_just = $_POST['pco_just'];
@@ -146,7 +156,7 @@ public static function modificarApi(){
     public static function modificarPdfApi() {
         try {
 
-            $catalogo_doc = $_POST['ste_cat'];
+            $catalogo_doc = $_POST['ste_cat2'];
 
             if (!empty($_FILES['pdf_ruta']['name'])) {
                 $archivo = $_FILES['pdf_ruta'];
@@ -179,38 +189,25 @@ public static function modificarApi(){
     }
 
     public static function eliminarApi(){
-    try {
-        $pcoId = $_POST['pco_id']; 
-        $protocolo = Protocolosol::find($pcoId);
-        
-        if ($protocolo) {
-            $protocolo->pco_situacion = 0; 
-            $resultado = $protocolo->actualizar();
+        try {
+
+            $solicitud_id = $_POST['sol_id'];
+            $solicitud = Solicitud::find($solicitud_id);
+            $solicitud->sol_situacion = 0;
+            $resultado = $solicitud->actualizar();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro eliminado correctamente',
                     'codigo' => 1
                 ]);
-                return;
             }
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
         }
-
-        echo json_encode([
-            'mensaje' => 'No se encontró el registro para eliminar',
-            'codigo' => 0
-        ]);
-
-    } catch (Exception $e) {
-        echo json_encode([
-            'detalle' => $e->getMessage(),
-            'mensaje' => 'Ocurrió un error',
-            'codigo' => 0
-        ]);
     }
 }
-
-
-
-}
-    

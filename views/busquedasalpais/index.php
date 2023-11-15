@@ -1,4 +1,5 @@
 <form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioSalidapaises" name="formularioSalidapaises" style="min-height: 30vh; margin-top: 60px;">
+<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioSalidapaises" name="formularioSalidapaises" style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
         <h1>Solicitudes de Salida del País</h1>
     </div>
@@ -31,7 +32,8 @@
 
 
 <!-- Modal para modificar la solicitud -->
-<div class="modal fade" id="modalSalidapaises" tabindroleex="-1" role="dialog" aria-labelledby="modalMLabel" aria-hidden="true">
+<div class="modal fade" id="modalSalidapaises" tabindroleex="-1" role="dialog" aria-labelledby="modalMLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -41,7 +43,7 @@
 
                     <div class="text-center">
                         <input value="3" type="hidden" id="tse_id" name="tse_id">
-                        <h1>Solicitud Salida del País</h1>
+                        <h1>Solicitud de Salida del País</h1>
                     </div>
 
                     <div class="row">
@@ -63,6 +65,7 @@
                         </div>
 
                         <div class="col-lg-6">
+                            <label for="nombre">Nombres</label>
                             <input value="" id="nombre" name="nombre" class="form-control" type="hidden">
                         </div>
                     </div>
@@ -78,11 +81,14 @@
                         </div>
                     </div>
 
-                    <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
-                    <input value="3" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
-                    <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
-                    <input value="" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
-                    <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
+
+                        <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
+                        <input value="3" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
+                        <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
+                        <input value="" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
+                        <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
+
+
 
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
@@ -103,33 +109,14 @@
                         </div>
                     </div>
 
-
-                    <div class="row justify-content-around mb-4">
-                        <div class="col-lg-4">
-                            <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
-
-                            <input value="" id="aut_cat" name="aut_cat" class="form-control" type="hidden">
-                            <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
-                            <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
-                            <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
-                            <input value="" id="aut_comando" name="aut_comando" class="form-control" type="hidden">
-                        </div>
-                        <div class="col-lg-4">
-                            <input value="" id="nombre2" name="nombre2" class="form-control" type="hidden">
-                        </div>
-                        <div class="col-lg-4">
-                            <!-- <label for="aut_fecha">Fecha</label> -->
-                            <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="hidden">
-
-                        </div>
-                    </div>
-
-
                     <!-- Detalle de la solicitud -->
+
+                    
                     <div class="row">
                         <div class="col-lg-12">
                             <input value="" id="sal_id" name="sal_id" class="form-control" type="hidden">
-                            <input value="" id="sal_autorizacion" name="sal_autorizacion" class="form-control" type="hidden">
+                            <input value="" id="sal_autorizacion" name="sal_autorizacion" class="form-control"
+                                type="hidden">
                             <h2>Solicitud</h2>
                         </div>
                     </div>
@@ -188,21 +175,24 @@
                                 <label for="sal_salida"><i class="bi bi-file-pdf-fill"></i>Documentos
                                     PDF</label>
                                 <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
-                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
+                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control"
+                                    type="hidden">
                                 <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
                             </div>
 
-                        </div>
+                            </div>
 
                         <div class="row justify-content-center mt-12 mb-4">
                             <div class="col-lg-6">
-                                <button type="click" id="btnModificar" name="btnModificar" class="btn btn-outline-warning w-100">Modificar</button>
+                                <button type="click" id="btnModificar" name="btnModificar"
+                                    class="btn btn-outline-warning w-100">Modificar</button>
                             </div>
                         </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" id="btnCancelar" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-danger" id="btnCancelar"
+                    data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
