@@ -93,27 +93,7 @@ const datatable = new Datatable('#tablaSalidapaises', {
             searchable: false,
             orderable: false,
             render: (data, type, row, meta) => `<button class="btn btn-warning" 
-<<<<<<< HEAD
             data-id='${data}'>Modificar</button>`
-=======
-            data-id='${data}' 
-            data-ste_id='${row["ste_id"]}' 
-            data-ste_cat='${row["ste_cat"]}' 
-            data-nombre='${row["nombre"]}' 
-            data-dsal_ciudad='${row["dsal_ciudad"]}'  
-            data-dsal_pais='${row["dsal_pais"]}' 
-            data-dsal_transporte='${row["dsal_transporte"]}' 
-            data-transporte_id='${row["transporte_id"]}' 
-            data-transporte_descripcion='${row["transporte_descripcion"]}' 
-            data-sal_salida='${row["sal_salida"]}' 
-            data-sal_ingreso='${row["sal_ingreso"]}' 
-            data-pai_codigo='${row["pai_codigo"]}' 
-            data-pai_desc_lg='${row["pai_desc_lg"]}' 
-            data-ste_telefono='${row["ste_telefono"]}'
-            data-pdf_ruta='${row["pdf_ruta"]}'>DATOS</button>
-            <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
-            </div>`
->>>>>>> 0cb6c4c6b9a4e057d53ef55dea49b05a30a9e2a6
         },
         {
             title: 'ELIMINAR',
