@@ -148,11 +148,6 @@
                                     </option>
                                 <?php } ?>
                             </select>
-                            <div class="col-lg-4">
-                              
-                                    <button type="button" id="btnAgregarCampo" class="btn btn-outline-success w-100 overflow-visible text-wrap">Agregar Campo</button>
-                           
-                            </div>
                         </div>
 
                         <div class="col-lg-4">

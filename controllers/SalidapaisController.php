@@ -18,24 +18,37 @@ use Model\Tiposolicitud;
 use Model\Transportes;
 use MVC\Router;
 
-class SalidapaisController {
-    public static function index(Router $router) {
+class SalidapaisController
+{
+    public static function index(Router $router)
+    {
         $motivos = static::motivos();
         $paises = static::paises();
-        $transporte = static::transportes();
+        $transportes = static::transportes();
 
         $router->render('salidapaises/index', [
             'motivos' => $motivos,
             'paises' => $paises,
-            'transportes' => $transporte
+            'transportes' => $transportes
         ]);
     }
 
 
-    public static function guardarApi(){
-        
+
+
+    public static function guardarApi()
+    {
+
         try {
-          
+
+            // echo json_encode($_POST);
+            // exit;
+            $paises_array = $_POST['dsal_pais_'];
+            $transportes_array = $_POST['dsal_transporte_'];
+            $ciudades_array = $_POST['dsal_ciudad_'];
+            
+            $num_elementos = count($paises_array);
+
             $catalogo_doc = $_POST['ste_cat'];
 
             $fechaAutorizacion = $_POST['aut_fecha'];
@@ -86,23 +99,34 @@ class SalidapaisController {
                             $autorizacionResultado = $autorizacion->crear();
                             if ($autorizacionResultado['resultado'] == 1) {
                                 $autorizacionId = $autorizacionResultado['id'];
-                                
+
                                 $salidapais = new Salidapais($_POST);
-                                $salidapais->sal_autorizacion = $autorizacionId;                                                
+                                $salidapais->sal_autorizacion = $autorizacionId;
                                 $salidapaisResultado = $salidapais->crear();
 
                                 if ($salidapaisResultado['resultado'] == 1) {
                                     $salidapaisId = $salidapaisResultado['id'];
-                                    $salidadetpais = new Saldetpaises($_POST);
-                                    $salidadetpais->dsal_sol_salida =  $salidapaisId;                                                
-                                    $salidadetpaisResultado = $salidadetpais->crear();
-    
+
+                                    for ($i = 0; $i < $num_elementos; $i++) {
+                                        $valor_paises = $paises_array[$i];
+                                        $valor_transportes = $transportes_array[$i];
+                                        $valor_ciudades = $ciudades_array[$i];
+
+                                        $salidadetpais = new Saldetpaises([
+                                            'dsal_sol_salida' => $salidapaisId,
+                                            'dsal_pais' => $valor_paises,
+                                            'dsal_transporte' => $valor_transportes,
+                                            'dsal_ciudad' => $valor_ciudades,
+                                        ]);
+
+                                        $salidadetpaisResultado = $salidadetpais->crear();
+                                    }
                                 } else {
                                     echo "No se pudo crear la solicitud de salida ";
-                                exit;
+                                    exit;
                                 }
                             } else {
-                                    echo "No se pudo crear la autorización";
+                                echo "No se pudo crear la autorización";
                                 exit;
                             }
                         } else {
@@ -129,105 +153,102 @@ class SalidapaisController {
                     'mensaje' => 'Registro guardado correctamente',
                     'codigo' => 1
                 ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
         }
-    
-    } catch (Exception $e) {
-        echo json_encode([
-            'detalle' => $e->getMessage(),
-            'mensaje' => 'Ocurrió un error',
-            'codigo' => 0
-        ]);
-
     }
-}
 
-public static function buscarCatalogoApi() {
-    $validarCatalogo = $_GET['per_catalogo'];
-    
-    $sql = "select  dep_llave,org_plaza_desc,per_grado, per_arma, per_catalogo, RTRIM(per_nom1) || ' ' || RTRIM(per_nom2) || ' ' || RTRIM( per_ape1)  ||  ' ' || RTRIM(per_ape2) nombre from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = $validarCatalogo";
-         
-    try {
-        $motivos = Personal::fetchArray($sql);
-        echo json_encode($motivos);
-        
-    } catch (Exception $e) {
-        echo json_encode([
-            'detalle' => $e->getMessage(),
-            'mensaje' => 'Ocurrió un error',
-            'codigo' => 0
-        ]);
-    }
-}
+    public static function buscarCatalogoApi()
+    {
+        $validarCatalogo = $_GET['per_catalogo'];
 
-public static function buscarCatalogo2Api(){
+        $sql = "select  dep_llave,org_plaza_desc,per_grado, per_arma, per_catalogo, RTRIM(per_nom1) || ' ' || RTRIM(per_nom2) || ' ' || RTRIM( per_ape1)  ||  ' ' || RTRIM(per_ape2) nombre from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = $validarCatalogo";
 
-    $validarCatalogo2 = $_GET['per_catalogo'];
-
-
-    $sql = "SELECT  dep_llave,org_plaza_desc,per_grado, per_arma, per_catalogo,trim(per_nom1) ||' '||trim(per_nom2)||' '||trim(per_ape1)||' '||trim(per_ape2) as nombres from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = $validarCatalogo2 ";
-
-
-    try {
-        $resultado = Personal::fetchArray($sql);
-        echo json_encode($resultado);
-    } catch (Exception $e) {
-        echo json_encode([
-            'detalle' => $e->getMessage(),
-            'mensaje' => 'Ocurrió un error',
-            'codigo' => 0
-        ]);
-    }
-}
-
-
-public static function motivos(){
-    $sql = "SELECT * FROM se_motivos where mot_situacion = 1";
-    
-    try {
-        
-        $motivos = Motivos::fetchArray($sql);
-
-        if ($motivos){
-            
-            return $motivos; 
-        }else {
-            return 0;
+        try {
+            $motivos = Personal::fetchArray($sql);
+            echo json_encode($motivos);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
         }
-    } catch (Exception $e) {
-        
     }
-}
 
-public static function transportes(){
-    $sql = "SELECT * FROM se_transporte WHERE transporte_situacion = 1";
-    
-    try {
-        $transportes = Transportes::fetchArray($sql);
+    public static function buscarCatalogo2Api()
+    {
 
-        if ($transportes){
-            return $transportes; 
-        } else {
-            return 0;
+        $validarCatalogo2 = $_GET['per_catalogo'];
+
+
+        $sql = "SELECT  dep_llave,org_plaza_desc,per_grado, per_arma, per_catalogo,trim(per_nom1) ||' '||trim(per_nom2)||' '||trim(per_ape1)||' '||trim(per_ape2) as nombres from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = $validarCatalogo2 ";
+
+
+        try {
+            $resultado = Personal::fetchArray($sql);
+            echo json_encode($resultado);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
         }
-    } catch (Exception $e) {
-        
     }
-}
-public static function paises(){
-    $sql = "SELECT * FROM paises";
-    
-    try {
-        $paises = Paises::fetchArray($sql);
 
-        if ($paises){
-            return $paises; 
-        } else {
-            return 0;
+
+    public static function motivos()
+    {
+        $sql = "SELECT * FROM se_motivos where mot_situacion = 1";
+
+        try {
+
+            $motivos = Motivos::fetchArray($sql);
+
+            if ($motivos) {
+
+                return $motivos;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
         }
-    } catch (Exception $e) {
-       
+    }
+
+    public static function transportes()
+    {
+        $sql = "SELECT * FROM se_transporte WHERE transporte_situacion = 1";
+
+        try {
+            $transportes = Transportes::fetchArray($sql);
+
+            if ($transportes) {
+                return $transportes;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+        }
+    }
+    public static function paises()
+    {
+        $sql = "SELECT * FROM paises";
+
+        try {
+            $paises = Paises::fetchArray($sql);
+
+            if ($paises) {
+                return $paises;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+        }
     }
 }
-
-}
-

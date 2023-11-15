@@ -55,12 +55,16 @@ const datatable = new Datatable('#tablaSalidapaises', {
         {
             title: 'FECHA SALIDA DEL PAIS',
             className: 'text-center',
-            data: 'sal_salida'
+            data: function (row) {
+                return row.sal_salida.substring(0, 10);
+            }
         },
         {
             title: 'FECHA INGRESO DEL PAIS',
-            className: 'text-center',
-            data: 'sal_ingreso'
+            className: 'text-center',           
+            data: function (row) {
+                return row.sal_ingreso.substring(0, 10);
+            }
         },
         {
             title: 'PAIS',
@@ -89,6 +93,9 @@ const datatable = new Datatable('#tablaSalidapaises', {
             searchable: false,
             orderable: false,
             render: (data, type, row, meta) => `<button class="btn btn-warning" 
+<<<<<<< HEAD
+            data-id='${data}'>Modificar</button>`
+=======
             data-id='${data}' 
             data-ste_id='${row["ste_id"]}' 
             data-ste_cat='${row["ste_cat"]}' 
@@ -106,6 +113,7 @@ const datatable = new Datatable('#tablaSalidapaises', {
             data-pdf_ruta='${row["pdf_ruta"]}'>DATOS</button>
             <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
             </div>`
+>>>>>>> 0cb6c4c6b9a4e057d53ef55dea49b05a30a9e2a6
         },
         {
             title: 'ELIMINAR',
