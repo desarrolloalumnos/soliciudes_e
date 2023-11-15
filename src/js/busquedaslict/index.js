@@ -35,48 +35,6 @@ const datatable = new Datatable('#tablaLicencias', {
             render: () => contador++
         },
         {
-            title: 'sol_id',
-            className: 'text-center',
-            data: 'sol_id'
-        },
-        {
-            title: 'tiempo',
-            className: 'text-center',
-            data: 'tiempo'
-        },
-
-        {
-            title: 'ste_id',
-            className: 'text-center',
-            data: 'ste_id'
-        },
-        {
-            title: 'ste_cat',
-            className: 'text-center',
-            data: 'ste_cat'
-        },
-        {
-            title: 'sol_obs',
-            className: 'text-center',
-            data: 'sol_obs'
-        },
-
-        {
-            title: 'mot_id',
-            className: 'text-center',
-            data: 'mot_id'
-        },
-        {
-            title: 'pdf_id',
-            className: 'text-center',
-            data: 'pdf_id'
-        },
-        {
-            title: 'pdf_solicitud',
-            className: 'text-center',
-            data: 'pdf_solicitud'
-        },
-        {
             title: 'Grado',
             className: 'text-center',
             data: 'grado_solicitante'
@@ -168,14 +126,7 @@ const datatable = new Datatable('#tablaLicencias', {
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
         },
     ],
-    columnDefs: [
-        {
-            targets: [1, 2, 3, 4, 5, 6, 7, 8],
-            visible: false,
-            searchable: false,
-        },
 
-    ]
 });
 
 const buscar = async () => {

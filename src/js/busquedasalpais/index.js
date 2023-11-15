@@ -48,12 +48,16 @@ const datatable = new Datatable('#tablaSalidapaises', {
         {
             title: 'FECHA SALIDA DEL PAIS',
             className: 'text-center',
-            data: 'sal_salida'
+            data: function (row) {
+                return row.sal_salida.substring(0, 10);
+            }
         },
         {
             title: 'FECHA INGRESO DEL PAIS',
-            className: 'text-center',
-            data: 'sal_ingreso'
+            className: 'text-center',           
+            data: function (row) {
+                return row.sal_ingreso.substring(0, 10);
+            }
         },
         {
             title: 'PAIS',
@@ -80,19 +84,7 @@ const datatable = new Datatable('#tablaSalidapaises', {
             searchable: false,
             orderable: false,
             render: (data, type, row, meta) => `<button class="btn btn-warning" 
-            data-id='${data}' 
-            data-ste_id='${row["ste_id"]}' 
-            data-ste_cat='${row["ste_cat"]}' 
-            data-nombre='${row["nombre"]}' 
-            data-dsal_ciudad='${row["dsal_ciudad"]}'  
-            data-dsal_pais='${row["dsal_pais"]}' 
-            data-dsal_transporte='${row["dep_dsal_transporte"]}' 
-            data-sal_salida='${row["sal_salida"]}' 
-            data-sal_ingreso='${row["sal_ingreso"]}' 
-            data-pai_codigo='${row["dep_pai_codigo"]}' 
-            data-pai_desc_lg='${row["dep_pai_desc_lg"]}' 
-            data-transporte_descripcion ='${row["transporte_descripcion"]}' 
-            data-pdf_ruta='${row["pdf_ruta"]}'>Modificar</button>`
+            data-id='${data}'>Modificar</button>`
         },
         {
             title: 'ELIMINAR',
