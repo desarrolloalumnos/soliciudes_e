@@ -195,7 +195,17 @@ class ProtocolosolController{
 
 
     public static function Protocolo(){
-        $sql = "SELECT * FROM se_combos_marimbas_vallas WHERE cmv_situacion = 1";
+        $sql = "SELECT 
+        cmv_id,
+        c.cmv_tip || ' - ' || m.dep_desc_lg AS tipo
+    FROM 
+        se_protocolo p
+    JOIN 
+        se_combos_marimbas_vallas c ON p.pco_cmbv = c.cmv_id
+    JOIN 
+        mdep m ON c.cmv_dependencia = m.dep_llave
+    WHERE 
+        c.cmv_situacion = 1";
     
         try {
             $combosMarimbasVallas = Protocolo::fetchArray($sql);

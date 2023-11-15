@@ -103,7 +103,7 @@
                                 <option value="">SELECCIONE SU REQUERIMIENTO</option>
                                 <?php foreach ($combos as $combo): ?>
                                     <option value="<?= $combo['cmv_id'] ?>">
-                                        <?= $combo['cmv_tip'] ?>
+                                        <?= $combo['tipo'] ?>
                                     </option>
                                 <?php endforeach ?>
                             </select>
