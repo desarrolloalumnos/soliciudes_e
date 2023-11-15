@@ -41,7 +41,7 @@
     <div style="max-width: 1000px; margin:auto" id='calendar'></div>
 
     <!-- Modal para modificar la solicitud -->
-    <div class="modal fade modal-lg" id="modalProtocolo" tabindex="-1" role="dialog"
+    <div class="modal fade modal-xl" id="modalProtocolo" tabindex="-1" role="dialog"
         aria-labelledby="modalProtocoloLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -97,7 +97,7 @@
                         <input value="6" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
                         <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
 
-                        <<div class="row justify-content-around mb-4">
+                        <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="sol_motivo"><i class="bi bi-journal-check"></i>Motivos</label>
                                     <select name="sol_motivo" id="sol_motivo" class="form-select">
@@ -115,29 +115,7 @@
                                     <input class="form-control" type="text" id="sol_obs" name="sol_obs" placeholder="Observaciones del viaje">
                                 </div>
                             </div>
-
-
-                        <div class="row justify-content-around mb-4">
-                            <div class="col-lg-4">
-                                <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control"
-                                    type="hidden">
-
-                                <input value="" id="aut_cat" name="aut_cat" class="form-control" type="hidden">
-                                <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
-                                <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
-                                <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
-                                <input value="" id="aut_comando" name="aut_comando" class="form-control" type="hidden">
-                            </div>
-                            <div class="col-lg-4">
-                                <input value="" id="nombre2" name="nombre2" class="form-control" type="hidden">
-                            </div>
-                            <div class="col-lg-4">
-                                <!-- <label for="aut_fecha">Fecha</label> -->
-                                <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="hidden">
-
-                            </div>
-                        </div>
-
+                            
 
                         <!-- Detalle de la solicitud -->
                         <div class="row">

@@ -7,6 +7,8 @@ use Model\Salidapais;
 use Model\Saldetpaises;
 use Model\Paises;
 use Model\Transportes;
+use Model\Solicitante;
+use Model\Solicitud;
 use Model\Pdf;
 use MVC\Router;
 
@@ -61,7 +63,6 @@ class BuscasalpaisController{
                 $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
                 $_POST['ste_fecha'] = $fechaFormateadaSolicito;
                 
-
                 $fechaSalida = $_POST['sal_salida'];
                 $fechaFormateadaSalida = date('Y-m-d H:i', strtotime($fechaSalida));
                 $_POST['sal_salida'] = $fechaFormateadaSalida;
@@ -70,14 +71,18 @@ class BuscasalpaisController{
                 $fechaFormateadaIngreso = date('Y-m-d H:i', strtotime($fechaIngreso));
                 $_POST['sal_ingreso'] = $fechaFormateadaIngreso;
 
-                $id = $_POST['ste_id'];
-                $solicitante = Solicitante::find($id);
-                $solicitante->ste_telefono = $_POST['ste_telefono'];
-                $resultado = $solicitante->actualizar();
+                if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
+                    $id = $_POST['ste_id'];
+                    $solicitante = Solicitante::find($id);
+    
+                    $solicitante->ste_telefono = $_POST['ste_telefono'];
+                    $resultado = $solicitante->actualizar();
+                } else {
+                }
     
                 if (isset($_POST['pai_codigo']) && !empty($_POST['pai_codigo'])) {
                     $paisId = $_POST['pai_codigo'];
-                    $pais = Pais::find($paisId);
+                    $pais = Paises::find($paisId);
     
     
                     if ($pais) {
@@ -93,6 +98,18 @@ class BuscasalpaisController{
                     if ($transporte) {
                         $transporte->transporte_descripcion = $_POST['transporte_descripcion'];
                         $transporteResultado = $transporte->actualizar();
+                    }
+                }
+
+                if (isset($_POST['dsal_id']) && !empty($_POST['dsal_id'])) {
+                    $dsalId = $_POST['dsal_id'];
+                    $detalleSalidaPais = Saldetpaises::find($dsalId);
+                
+                    if ($detalleSalidaPais) {
+                        $detalleSalidaPais->dsal_ciudad = $_POST['dsal_ciudad'];
+                        $detalleSalidaPais->dsal_pais = $_POST['dsal_pais'];
+                        $detalleSalidaPais->dsal_transporte = $_POST['dsal_transporte'];
+                        $detalleSalidaPaisResultado = $detalleSalidaPais->actualizar();
                     }
                 }
 
@@ -168,34 +185,24 @@ class BuscasalpaisController{
 
     public static function eliminarApi(){
     try {
-        $salId = $_POST['sal_id'];
-        $salidaPais = Salidapais::find($salId);
+            $solicitud_id = $_POST['sol_id'];
+            $solicitud = Solicitud::find($solicitud_id);
+            $solicitud->sol_situacion = 0;
+            $resultado = $solicitud->actualizar();
 
-        if ($salidaPais) {
-            $salidaPais->sal_situacion = 0;
-            $resultado = $salidaPais->actualizar();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro de salida de país eliminado correctamente',
                     'codigo' => 1
                 ]);
-                return;
             }
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
         }
-
-        echo json_encode([
-            'mensaje' => 'No se encontró el registro para eliminar',
-            'codigo' => 0
-        ]);
-
-    } catch (Exception $e) {
-        echo json_encode([
-            'detalle' => $e->getMessage(),
-            'mensaje' => 'Ocurrió un error',
-            'codigo' => 0
-        ]);
     }
 }
-
-}    

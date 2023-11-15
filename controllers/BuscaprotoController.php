@@ -6,6 +6,8 @@ use Exception;
 use Model\Protocolosol;
 use Model\Pdf;
 use Model\Protocolo;
+use Model\Solicitud;
+use Model\Solicitante;
 use MVC\Router;
 
 class BuscaprotoController{
@@ -54,18 +56,21 @@ class BuscaprotoController{
 
 
 }
-public static function buscarEventos(){
-
-    $sql = "SELECT 
-                pco_just,
-                pco_fechainicio,
-                pco_fechafin 
-            FROM se_protocolo
-            WHERE pco_situacion = 1";
-
-
+public static function buscarCalender(){
+    
     try {
+    $sql = "SELECT 
+    pco_just as  title,
+    pco_fechainicio as start,
+    pco_fechafin as end
+FROM se_protocolo
+WHERE pco_situacion = 1";
+
+
         $resultado = Protocolosol::fetchArray($sql);
+
+
+
         echo json_encode($resultado);
     } catch (Exception $e) {
         echo json_encode([
@@ -93,14 +98,18 @@ public static function modificarApi(){
             $fechaFormateadaFinLic = date('Y-m-d H:i', strtotime($fechaFinSol));
             $_POST['pco_fechafin'] = $fechaFormateadaFinLic;
 
-            $id = $_POST['ste_id'];
-            $solicitante = Solicitante::find($id);
-            $solicitante->ste_telefono = $_POST['ste_telefono'];
-            $resultado = $solicitante->actualizar();
+            if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
+                $id = $_POST['ste_id'];
+                $solicitante = Solicitante::find($id);
+
+                $solicitante->ste_telefono = $_POST['ste_telefono'];
+                $resultado = $solicitante->actualizar();
+            } else {
+            }
 
             if (isset($_POST['cmv_id']) && !empty($_POST['cmv_id'])) {
                 $comboId = $_POST['cmv_id'];
-                $combo = Combo::find($comboId);
+                $combo = Protocolo::find($comboId);
 
 
                 if ($combo) {
@@ -146,7 +155,7 @@ public static function modificarApi(){
     public static function modificarPdfApi() {
         try {
 
-            $catalogo_doc = $_POST['ste_cat'];
+            $catalogo_doc = $_POST['ste_cat2'];
 
             if (!empty($_FILES['pdf_ruta']['name'])) {
                 $archivo = $_FILES['pdf_ruta'];
@@ -179,38 +188,26 @@ public static function modificarApi(){
     }
 
     public static function eliminarApi(){
-    try {
-        $pcoId = $_POST['pco_id']; 
-        $protocolo = Protocolosol::find($pcoId);
-        
-        if ($protocolo) {
-            $protocolo->pco_situacion = 0; 
-            $resultado = $protocolo->actualizar();
+        try {
+
+            $solicitud_id = $_POST['sol_id'];
+            $solicitud = Solicitud::find($solicitud_id);
+            $solicitud->sol_situacion = 0;
+            $resultado = $solicitud->actualizar();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro eliminado correctamente',
                     'codigo' => 1
                 ]);
-                return;
             }
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
         }
-
-        echo json_encode([
-            'mensaje' => 'No se encontró el registro para eliminar',
-            'codigo' => 0
-        ]);
-
-    } catch (Exception $e) {
-        echo json_encode([
-            'detalle' => $e->getMessage(),
-            'mensaje' => 'Ocurrió un error',
-            'codigo' => 0
-        ]);
     }
-}
-
-
-
 }
     

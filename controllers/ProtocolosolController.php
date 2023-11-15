@@ -28,31 +28,34 @@ class ProtocolosolController{
     public static function guardarApi(){
         try {
 
+            // echo json_encode($_POST);
+            // exit;
             $catalogo_doc = $_POST['ste_cat'];
             
             // Formatear fechas
             $fechaAutorizacion = $_POST['aut_fecha'];
-            $fechaFormateadaAutorizacion = date('Y-m-d 00:00', strtotime($fechaAutorizacion));
+            $fechaFormateadaAutorizacion = date('Y-m-d H:i', strtotime($fechaAutorizacion));
             $_POST['aut_fecha'] = $fechaFormateadaAutorizacion;
             
             $fechaSolicito = $_POST['ste_fecha'];
-            $fechaFormateadaSolicito = date('Y-m-d 00:00', strtotime($fechaSolicito));
+            $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
             $_POST['ste_fecha'] = $fechaFormateadaSolicito;
             
             $fechaInicioActividad = $_POST['pco_fechainicio'];
-            $fechaFormateadaIni = date('Y-m-d 00:00', strtotime($fechaInicioActividad));
+            $fechaFormateadaIni = date('Y-m-d H:i', strtotime($fechaInicioActividad));
             $_POST['pco_fechainicio'] = $fechaFormateadaIni;
             // $_POST['pco_fechainicio'] = null;
             
             $fechaFinActividad = $_POST['pco_fechafin'];
-            $fechaFormateadaFin = date('Y-m-d 00:00', strtotime($fechaFinActividad));
+            $fechaFormateadaFin = date('Y-m-d H:i', strtotime($fechaFinActividad));
             $_POST['pco_fechafin'] = $fechaFormateadaFin;
             // $_POST['pco_fechafin'] = null;
 
             
             $solicitante = new Solicitante($_POST);
+          
             $solicitanteResultado = $solicitante->crear();
- 
+          
             
             if ($solicitanteResultado['resultado'] == 1) {
                 $solicitanteId = $solicitanteResultado['id'];
@@ -60,6 +63,7 @@ class ProtocolosolController{
                 $solicitud = new Solicitud($_POST);
                 $solicitud->sol_solicitante = $solicitanteId;
                 $solicitudResultado = $solicitud->crear();
+           
              
                 if ($solicitudResultado['resultado'] == 1) {
                     $solicitudId = $solicitudResultado['id'];
@@ -67,12 +71,15 @@ class ProtocolosolController{
                     $archivo = $_FILES['pdf_ruta'];
                     $ruta = "../storage/protocolos/$catalogo_doc". uniqid() . ".pdf";
                     $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
+                    // echo json_encode($subido);
+                    // exit;
                     
                     if ($subido) {
                         $pdf = new Pdf([
                             'pdf_solicitud' => $solicitudId,
                             'pdf_ruta' => $ruta
                         ]);
+                   
                         $pdfResultado = $pdf->crear();
 
                         if ($pdfResultado['resultado'] == 1) {

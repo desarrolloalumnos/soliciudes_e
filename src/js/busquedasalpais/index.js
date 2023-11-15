@@ -4,11 +4,17 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
-const modalSalidapaises = new Modal(document.getElementById('modalSalidapaises'), {
-    backdrop: 'static',
-    keyboard: false
-});
+// const modalSalidapaises = new Modal(document.getElementById('modalSalidapaises'), {
+//     backdrop: 'static',
+//     keyboard: false
+// });
 
+// const modalPdf = new Modal(document.getElementById('modalPdf'), {
+//     backdrop: 'static',
+//     keyboard: false
+// });
+
+const modalSalidapaises = new Modal(document.getElementById('modalSalidapaises'),  {})
 const formulario = document.getElementById('formularioSalidapaises');
 const formulario2 = document.getElementById('formularioSalidapais');
 const btnModificar = document.getElementById('btnModificar');
@@ -17,6 +23,7 @@ const btnBuscar = document.getElementById('btnBuscar');
 const ste_cat2 = document.getElementById('ste_cat2');
 const idPais = document.getElementById('pai_codigo')
 const idTransporte = document.getElementById('transporte_id')
+const addPdf = document.getElementById('addPdf');
 const pdf = document.getElementById('formularioPdf');
 const iframe = document.getElementById('pdfIframe')
 
@@ -67,11 +74,13 @@ const datatable = new Datatable('#tablaSalidapaises', {
         },
         {
             title: 'PDF',
+            className: 'text-center',
             data: 'pdf_ruta',
             render: function (data) {
                 return `<button  class="btn btn-outline-info" data-ruta="${data.substr(10)}"><i class="bi bi-eye"></i>Ver PDF</button>`;
             },
             width: '150px'
+
         },
         {
             title: 'MODIFICAR',
@@ -86,18 +95,22 @@ const datatable = new Datatable('#tablaSalidapaises', {
             data-nombre='${row["nombre"]}' 
             data-dsal_ciudad='${row["dsal_ciudad"]}'  
             data-dsal_pais='${row["dsal_pais"]}' 
-            data-dsal_transporte='${row["dep_dsal_transporte"]}' 
+            data-dsal_transporte='${row["dsal_transporte"]}' 
+            data-transporte_id='${row["transporte_id"]}' 
+            data-transporte_descripcion='${row["transporte_descripcion"]}' 
             data-sal_salida='${row["sal_salida"]}' 
             data-sal_ingreso='${row["sal_ingreso"]}' 
-            data-pai_codigo='${row["dep_pai_codigo"]}' 
-            data-pai_desc_lg='${row["dep_pai_desc_lg"]}' 
-            data-transporte_descripcion ='${row["transporte_descripcion"]}' 
-            data-pdf_ruta='${row["pdf_ruta"]}'>Modificar</button>`
+            data-pai_codigo='${row["pai_codigo"]}' 
+            data-pai_desc_lg='${row["pai_desc_lg"]}' 
+            data-ste_telefono='${row["ste_telefono"]}'
+            data-pdf_ruta='${row["pdf_ruta"]}'>DATOS</button>
+            <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
+            </div>`
         },
         {
             title: 'ELIMINAR',
             className: 'text-center',
-            data: 'sal_id',
+            data: 'sol_id',
             searchable: false,
             orderable: false,
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
@@ -140,29 +153,11 @@ const buscar = async () => {
         console.log(button.dataset.nombre);
         const sal_id = button.dataset.id
         const sal_autorizacion = button.dataset.sal_autorizacion
-        const aut_id = button.dataset.aut_id
-        const aut_solicitud = button.dataset.aut_solicitud
-        const sol_id = button.dataset.sol_id
-        const sol_tipo = button.dataset.sol_tipo
-        const tse_id = button.dataset.tse_id
-        const sol_solicitante = button.dataset.sol_solicitante
         const ste_id = button.dataset.ste_id
-        const ste_comando = button.dataset.ste_comando
         const ste_cat = button.dataset.ste_cat
-        const ste_gra = button.dataset.ste_gra
-        const ste_arm = button.dataset.ste_arm
-        const ste_emp = button.dataset.ste_emp
+        const sol_id = button.dataset.sol_id
         const ste_fecha = button.dataset.ste_fecha
-        const sol_obs = button.dataset.sol_obs
-        const sol_motivo = button.dataset.sol_motivo
-        const mot_id = button.dataset.mot_id
-        const sol_situacion = button.dataset.sol_situacion
-        const aut_comando = button.dataset.aut_comando
-        const aut_cat = button.dataset.aut_cat
-        const aut_gra = button.dataset.aut_gra
-        const aut_arm = button.dataset.aut_arm
-        const aut_emp = button.dataset.aut_emp
-        const aut_fecha = button.dataset.aut_fecha
+        const ste_telefono = button.dataset.ste_telefono;
         const dsal_id = button.dataset.dsal_id;
         const dsal_sol_salida = button.dataset.dsal_sol_salida;
         const dsal_ciudad = button.dataset.dsal_ciudad;
@@ -176,7 +171,6 @@ const buscar = async () => {
         const sal_ingreso = button.dataset.sal_ingreso;
         const nombre = button.dataset.nombre;
         const grado = button.dataset.grado
-        const ste_telefono = button.dataset.ste_telefono;
         const pdf_ruta = button.dataset.pdf_ruta;
       
 
@@ -186,28 +180,9 @@ const buscar = async () => {
         sal_autorizacion,
         ste_id,
         ste_cat,
-        sol_id,
-        sol_tipo,
-        tse_id,
-        sol_solicitante,
-        ste_id,
-        ste_comando,
-        ste_gra,
-        ste_arm,
-        ste_emp,
+        ste_telefono,
         ste_fecha,
-        sol_obs,
-        sol_motivo,
-        mot_id,
-        sol_situacion,
-        aut_id,
-        aut_solicitud,
-        aut_comando,
-        aut_cat,
-        aut_gra,
-        aut_arm,
-        aut_emp,
-        aut_fecha,
+        sol_id,
         dsal_id,
         dsal_sol_salida,
         dsal_ciudad,
@@ -221,7 +196,6 @@ const buscar = async () => {
         sal_ingreso,
         nombre,
         grado,
-        ste_telefono,
         pdf_ruta
     };
 
@@ -238,7 +212,7 @@ const buscar = async () => {
         formulario2.ste_id.value = dataset.ste_id;
         formulario2.ste_cat.value = dataset.ste_cat;
         formulario2.nombre.value = dataset.nombre;
-        formulario2.grado.value = dataset.grado;
+        formulario2.ste_gra.value = dataset.grado;
         formulario2.ste_fecha.value = ste_fecha;
         formulario2.ste_telefono.value = dataset.ste_telefono;
         formulario2.sal_id.value = dataset.sal_id;
@@ -251,13 +225,13 @@ const buscar = async () => {
         idPais.value = dataset.pai_codigo;
         formulario2.pai_desc_lg.value = dataset.pai_desc_lg;
         idTransporte.value = dataset.transporte_id;
-        formulario2.transporte_descripcion.value = dataset.transporte_descripcion;
+        // formulario2.transporte_descripcion.value = dataset.transporte_descripcion;
         
 
-        // let pdf = btoa(btoa(btoa(dataset.pdf_ruta)));
-        // let ver = `/soliciudes_e/API/busquedasalpais/pdf?ruta=${pdf}`;
+    //     let pdf = btoa(btoa(btoa(dataset.pdf_ruta)));
+    //     let ver = `/soliciudes_e/API/busquedasalpais/pdf?ruta=${pdf}`;
 
-        // iframe.src = ver
+    //     iframe.src = ver
 
     }
 
@@ -320,7 +294,7 @@ const buscar = async () => {
                     formulario.reset();
                     icon = 'success'
                     buscar();
-                        modalSalidapaises.hide();
+                        // modalSalidapaises.hide();
                         break;
     
                 case 0:
@@ -439,7 +413,7 @@ const buscar = async () => {
             }
         }
     
-        buscar();
+        // buscar();
     }
     
     const verPDF = (e) => {
