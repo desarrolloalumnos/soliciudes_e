@@ -15,10 +15,12 @@ use Controllers\TransporteController;
 use Controllers\TiposolController;
 use Controllers\BuscasController;
 use Controllers\HistorialController;
+use Controllers\HistorialdpController;
 use Controllers\LictempController;
 use Controllers\SalidapaisController;
 use Controllers\DetalleController;
-use Controllers\ReportesolController;
+use Controllers\DetalledpController;
+use Controllers\DetallemdnController;
 use Controllers\BuscasalpaisController;
 use Controllers\BuscaprotoController;
 use Controllers\DireccionpersonalController;
@@ -137,10 +139,15 @@ $router->get('/administraciones/direcciongeneral', [AdministracionController::cl
 $router->get('/direccionpersonal', [DireccionpersonalController::class,'index']);
 $router->get('/API/direccionpersonal/buscar', [DireccionpersonalController::class,'buscarApi']);
 $router->post('/API/direccionpersonal/enviarMdn', [DireccionpersonalController::class,'enviarMdnApi']);
+$router->get('/direccionpersonal/mdn', [DireccionpersonalController::class,'mdn']);
 
 
 $router->get('/historiales', [HistorialController::class,'index']);
 $router->get('/API/historiales/buscar', [HistorialController::class,'buscarApi']);
+
+
+$router->get('/historialdp', [HistorialdpController::class,'index']);
+$router->get('/API/historialdp/buscar', [HistorialdpController::class,'buscarApi']);
 
 
 $router->get('/administraciones/estadistica', [DetalleController::class,'estadistica']);
@@ -148,9 +155,16 @@ $router->get('/API/administraciones/estadistica', [DetalleController::class,'det
 $router->get('/API/administraciones/estadistica2', [DetalleController::class,'detalle2Api']);
 
 
-$router->get('/API/reportesolicitudes', [ReportesolController::class,'reporteSolicitudesAPI']);
-$router->get('/API/aprobadas', [ReportesolController::class,'AprobadasAPI']);
-$router->get('/API/rechazadas', [ReportesolController::class,'RechazadasAPI']);
+$router->get('/direccionpersonal/estadistica', [DetalledpController::class,'estadistica']);
+$router->get('/API/direccionpersonal/estadistica', [DetalledpController::class,'detalleApi']);
+$router->get('/API/direccionpersonal/estadistica2', [DetalledpController::class,'detalle2Api']);
+
+
+$router->get('/mdn/estadistica', [DetallemdnController::class,'estadistica']);
+$router->get('/API/mdn/estadistica', [DetallemdnController::class,'detalleApi']);
+$router->get('/API/mdn/estadistica2', [DetallemdnController::class,'detalle2Api']);
+
+
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

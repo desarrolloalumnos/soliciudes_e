@@ -21,7 +21,7 @@
             </button>
             <a class="navbar-brand" href="/soliciudes_e/">
                 <img src="<?= asset('./images/logo.png') ?>" width="35px'" alt="cit">
-                Solicitudes Electrónicas
+                S.E.
             </a>
             <div class="collapse navbar-collapse" id="navbarToggler">
 
@@ -105,7 +105,7 @@
                     <!-- MODULO DE ADMINISTRACION DE LAS OFICINAS DE PERSONAL COMANDOS Y BRIGADAS -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/administraciones" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-check2-square me-2"></i>Administracion
+                            <i class="bi bi-check2-square me-2"></i>Admon_OP
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
@@ -153,38 +153,61 @@
                                     <i class="bi bi-file-earmark-arrow-up me-2"></i>Enviar
                                 </a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/historialdp">
+                                    <i class="ms-lg-0 ms-2 bi bi-clock-history me-2"></i>Historial
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/direccionpersonal/estadistica">
+                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas
+                                </a>
+                            </li>
                         </ul>
                     </div>
 
                     <!-- MODULO DE ADMINISTRACION DEL MINISTERIO DE LA DEFENSA NACIONAL -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-check2-square me-2"></i>MDN
+                            <i class="bi bi-p-square-fill me-2"></i>MDN
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/reportesolicitudes">
-                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas Solicitudes
+                                <a class="dropdown-item" href="/soliciudes_e/direccionpersonal">
+                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Enviar
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/reporteaprobadas">
-                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Reporte Solicitudes Aprobadas
+                                <a class="dropdown-item" href="/soliciudes_e/historiales">
+                                    <i class="ms-lg-0 ms-2 bi bi-clock-history me-2"></i>Historial
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/reporterechazadas">
-                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Reporte Solicitudes Rechazadas
+                                <a class="dropdown-item" href="/soliciudes_e/mdn/estadistica">
+                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas
                                 </a>
                             </li>
                         </ul>
                     </div>
 
+                     <!-- MODULO DE ADMINISTRACION DEL MINISTRO DE LA DEFENSA NACIONAL -->
+                     <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-check2-square me-2"></i>MD
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/mdn/estadistica">
+                                    <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas Solicitudes
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
                     <!-- MANTENIMIENTOS DE LAS TABLAS -->
                     <div class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-gear me-2"></i>Mantenimientos
+                            <i class="bi bi-gear me-2"></i>Manttos
                         </a>
                         <ul class="dropdown-menu  dropdown-menu-dark " id="dropwdownRevision" style="margin: 0;">
                             <li>

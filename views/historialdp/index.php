@@ -1,6 +1,6 @@
- <form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioDirecciongeneral" name="formularioDirecciongeneral" id="tablaDirecciongeneral" style="min-height: 30vh; margin-top: 60px;">
+<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioDepersonal" name="formularioDepersonal" style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
-        <h1>Solicitudes Ingresadas</h1>
+        <h1>Historial de solicitudes</h1>
     </div>
 
     <div class="row mb-4">
@@ -22,10 +22,11 @@
 </form>
 
 <div class="row justify-content-center">
-    <div class="col table-responsive" style="max-width: 80%; padding: 10px;">
-        <table id="tablaDirecciongeneral" class="table table-bordered table-hover">
+    <div class="col table-resstyle="max-width: 80%; padding: 10px;">
+        <table id="tablaDepersonal" class="table table-bordered table-hover">
         </table>
     </div>
 </div>
 
-<script src="<?=asset('./build/js/administraciones/direcciongeneral.js') ?>"></script>
+
+<script src="./build/js/historialdp/index.js"></script> 
