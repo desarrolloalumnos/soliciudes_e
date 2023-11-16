@@ -69,12 +69,12 @@ const datatable = new Datatable('#tablaSalidapaises', {
         {
             title: 'PAIS',
             className: 'text-center',
-            data: 'pai_desc_lg'
+            data: 'paises'
         },
         {
             title: 'CIUDAD',
             className: 'text-center',
-            data: 'dsal_ciudad'
+            data: 'ciudad'
         },
         {
             title: 'PDF',
@@ -92,8 +92,12 @@ const datatable = new Datatable('#tablaSalidapaises', {
             data: 'sal_id',
             searchable: false,
             orderable: false,
-            render: (data, type, row, meta) => `<button class="btn btn-warning" 
-            data-id='${data}'>Modificar</button>`
+            render: (data, type, row, meta) => `
+            <div class="btn-group">
+            <button class="btn btn-warning" 
+            data-id='${data}'>DATOS</button>
+            <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
+            </div>`
         },
         {
             title: 'ELIMINAR',
@@ -116,7 +120,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-        // console.log(data);
+        
         datatable.clear().draw();
         if (data) {
             contador = 1;
@@ -420,7 +424,7 @@ const buscar = async () => {
     btnModificar.addEventListener('click', modificar)
     btnCancelar.addEventListener('click', limpiarModelSalidapaises)
     datatable.on('click', '.btn-warning', traeDatos);
-    datatable.on('click', '.btn-outline-warning', traePdf);
+    // datatable.on('click', '.btn-outline-warning', traePdf);
     datatable.on('click', '.btn-outline-info', verPDF);
     datatable.on('click', '.btn-danger', eliminar);
     
