@@ -32,12 +32,9 @@ btnGuardar.parentElement.style.display = 'block';
 
 const guardar = async (evento) => {
     evento.preventDefault();
-
+    let ruta = formulario.pdf_ruta.value
     const body = new FormData(formulario);
-    // body.append = ('sol_motivo',motivos)
-    // for (var pair of body.entries()) {
-    //     console.log(pair[0]+ ', *' + pair[1]+'*'); 
-    // }
+    body.append('pdf_ruta',ruta)
     const url = '/soliciudes_e/API/protocolosol/guardar';
     const config = {
         method: 'POST',
@@ -49,7 +46,8 @@ const guardar = async (evento) => {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
         const { codigo, mensaje, detalle } = data;
-        console.log(data);
+        // console.log(data);
+        // return
         let icon = 'info';
         switch (codigo) {
             case 1:

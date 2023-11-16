@@ -103,6 +103,7 @@ $router->get('/API/busquedasalpais/pdf', [BuscasalpaisController::class,'VerPdf'
 
 $router->get('/busquedasproto', [BuscaprotoController::class,'index']);
 $router->get('/API/busquedasproto/buscar', [BuscaprotoController::class,'buscarApi']);
+$router->get('/API/busquedasproto/buscarModal', [BuscaprotoController::class,'buscarModalApi']);
 $router->get('/API/busquedasproto/buscarCalender', [BuscaprotoController::class,'buscarCalender']);
 $router->get('/API/busquedasproto/buscarEventos', [BuscaprotoController::class,'buscarEventos']);
 $router->post('/API/busquedasproto/modificar', [BuscaprotoController::class,'modificarApi']);

@@ -28,8 +28,7 @@ class ProtocolosolController{
     public static function guardarApi(){
         try {
 
-            // echo json_encode($_POST);
-            // exit;
+
             $catalogo_doc = $_POST['ste_cat'];
             
             // Formatear fechas

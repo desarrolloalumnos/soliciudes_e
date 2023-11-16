@@ -32,11 +32,11 @@
                 <div class="row justify-content-around mb-4">
                     <div class="col-lg-6">
                         <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                        <input value="" id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+                        <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
                     </div>
                     <div class="col-lg-6">
                         <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
-                        <input value="" id="ste_telefono" name="ste_telefono" class="form-control" type="number" placeholder="Número telefónico">
+                        <input id="ste_telefono" name="ste_telefono" class="form-control" type="number" placeholder="Número telefónico">
                     </div>
                 </div>
 
@@ -135,10 +135,9 @@
                     </div>
                     <div class="col-lg-6">
                             <label for="pdf_ruta"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>
+                            <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
                             <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
                             <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
-                            <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
-                            <input value="" type ="hidden" id="sol_situacion" name="sol_situacion" class="form-control">
                         </div>
                     </div>
                         <div class="row justify-content-center mt-12 mb-4" style="margin-top: 20px;">

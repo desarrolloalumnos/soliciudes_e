@@ -6,16 +6,13 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
-import { validarFormulario, Toast, confirmacion } from "../funciones";
+import { validarFormulario, Toast, confirmacion, formatearFecha, } from "../funciones";
 
 const modalProtocolo = new Modal(document.getElementById('modalProtocolo'), {
     backdrop: 'static',
     keyboard: false
 });
-// const modalPdf = new Modal(document.getElementById('modalPdf'), {
-//     backdrop: 'static',
-//     keyboard: false
-// });
+
 
 const formulario = document.getElementById('formularioProtocolo');
 const formulario2 = document.getElementById('formularioProto');
@@ -26,10 +23,10 @@ const calendarEl = document.getElementById('calendar');
 const verTabla = document.getElementById('dataTabla')
 const verCalendario = document.getElementById('calendario')
 const btnCalendario = document.getElementById('btnCalendario')
-// const pdf = document.getElementById('formularioPdf');
+const divProtocolo = document.getElementById('Protocolo');
+const addPdf = document.getElementById('addPdf')
+const divPdf = document.getElementById('pdf');
 
-// const iframe = document.getElementById('pdfIframe');
-// const addPdf = document.getElementById('addPdf');
 
 verCalendario.style.display ='none'
 verTabla.style.display ='none'
@@ -104,7 +101,7 @@ return
 
 
 
-
+const iframe = document.getElementById('pdfSalida');
 
 let contador = 1;
 const datatable = new Datatable('#tablaProtocolo', {
@@ -170,20 +167,7 @@ const datatable = new Datatable('#tablaProtocolo', {
             searchable: false,
             orderable: false,
             render: (data, type, row, meta) => `<button class="btn btn-warning" 
-                    data-id='${data}' 
-                    data-ste_id='${row["ste_id"]}' 
-                    data-ste_cat='${row["ste_cat"]}' 
-                    data-pco_cmbv='${row["pco_cmbv"]}'  
-                    data-pco_just='${row["pco_just"]}' 
-                    data-pco_fechainicio='${row["pco_fechainicio"]}' 
-                    data-pco_fechafin='${row["pco_fechafin"]}' 
-                    data-pco_dir='${row["pco_dir"]}' 
-                    data-pdf_id='${row["pdf_id"]}' 
-                    data-pdf_solicitud='${row["pdf_solicitud"]}'  
-                    data-nombre='${row["nombre"]}' 
-                    data-cmv_tip='${row["cmv_tip"]}' 
-                    data-dep_desc_lg='${row["dep_desc_lg"]}'
-                    data-pdf_ruta='${row["pdf_ruta"]}'>DATOS</button>
+                    data-id='${data}' >DATOS</button>
                     <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
                     </div>`
                 },

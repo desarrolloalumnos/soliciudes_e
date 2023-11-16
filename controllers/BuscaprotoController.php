@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Exception;
 use Model\Protocolosol;
+use Model\Motivos;
 use Model\Pdf;
 use Model\Protocolo;
 use Model\Solicitud;
@@ -12,10 +13,10 @@ use MVC\Router;
 
 class BuscaprotoController{
     public static function index(Router $router){
-        // $motivos = static::motivos();
+        $motivos = static::motivos();
 
         $router->render('busquedasproto/index', [
-            // 'motivos' => $motivos
+            'motivos' => $motivos
         ]);
     }
 
@@ -31,7 +32,8 @@ class BuscaprotoController{
         pco_fechainicio,
         pco_fechafin,
         pco_dir,
-        pco_just,
+        pdf_id,
+        pdf_solicitud,
         pdf_ruta
         FROM se_protocolo
         INNER JOIN se_combos_marimbas_vallas ON pco_cmbv = cmv_id  
@@ -41,7 +43,8 @@ class BuscaprotoController{
         inner join se_solicitante on sol_solicitante= ste_id
         inner join mper on ste_cat = per_catalogo
         inner join grados on ste_gra = gra_codigo
-        inner join se_pdf on pdf_solicitud = sol_id";
+        inner join se_pdf on pdf_solicitud = sol_id
+        WHERE pco_situacion = 1";
     
 
         try {
@@ -57,6 +60,47 @@ class BuscaprotoController{
 
 
 }
+
+
+public static function buscarModalApi(){
+
+    $sql = " SELECT
+    ste_id,
+    ste_cat,
+    TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
+    ste_fecha,
+    ste_telefono,
+    mot_descripcion,
+    sol_obs,
+    cmv_tip || ' - ' || dep_desc_lg AS opciones,
+    pco_just,
+    pco_fechainicio,
+    pco_fechafin,
+    pco_dir
+    FROM se_protocolo
+    inner join se_combos_marimbas_vallas on pco_cmbv = cmv_id
+    inner join se_autorizacion on aut_id = pco_autorizacion
+    inner join se_solicitudes on aut_solicitud = sol_id
+    inner join se_solicitante on sol_solicitante = ste_id
+    inner join mper on ste_cat = per_catalogo
+    inner join se_motivos on sol_motivo = mot_id
+    inner join mdep on cmv_dependencia = dep_llave
+    WHERE pco_situacion = 1";
+
+
+    try {
+        $resultado = Protocolosol::fetchArray($sql);
+        echo json_encode($resultado);
+    } catch (Exception $e) {
+        echo json_encode([
+            'detalle' => $e->getMessage(),
+            'mensaje' => 'Ocurrió un error',
+            'codigo' => 0
+        ]);
+    }
+
+}
+
 public static function buscarCalender(){
     
     try {
@@ -104,11 +148,17 @@ public static function modificarApi(){
          
 
             if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
-                $id = $_POST['ste_id'];
-                $solicitante = Solicitante::find($id);
-
+                $solicitante = Solicitante::find($_POST['ste_id']);
                 $solicitante->ste_telefono = $_POST['ste_telefono'];
                 $resultado = $solicitante->actualizar();
+            } else {
+            }
+
+            if (isset($_POST['sol_id']) && !empty($_POST['sol_id'])) {
+                $solicitud = Solicitud::find($_POST['sol_id']);
+                $solicitud->sol_obs = $_POST['sol_obs'];
+                $solicitud->sol_motivo = $_POST['sol_motivo'];
+                $solicitudResultado = $solicitud->actualizar();
             } else {
             }
 
@@ -121,16 +171,18 @@ public static function modificarApi(){
                 
             }
 
-            $pcoId = $_POST['pco_id'];
-            $protocolo = Protocolosol::find($pcoId);
+            if (isset($_POST['pco_id']) && !empty($_POST['pco_id'])) {
+            $protocolo = Protocolosol::find($_POST['pco_id']);
             $protocolo->pco_fechainicio = $_POST['pco_fechainicio'];
             $protocolo->pco_dir = $_POST['pco_dir'];
             $protocolo->pco_just = $_POST['pco_just'];
             $protocolo->pco_fechainicio = strtotime($_POST['pco_fechainicio']); 
             $protocolo->pco_fechafin = strtotime($_POST['pco_fechafin']); 
             $protocoloResultado = $protocolo->actualizar();
-
             
+            } else {
+            }
+                
             if ($protocoloResultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
@@ -146,32 +198,37 @@ public static function modificarApi(){
         }
     }
 
-    public static function VerPdf(Router $router){
-
-        $ruta = base64_decode(base64_decode(base64_decode($_GET['ruta'])));
-
-        $router->printPDF($ruta);
-    }
-
-    public static function modificarPdfApi() {
+    public static function modificarPdfApi()
+    {
         try {
-
-            $catalogo_doc = $_POST['ste_cat2'];
+            $catalogo_doc = $_POST['ste_catalogo'];
 
             if (!empty($_FILES['pdf_ruta']['name'])) {
+                // Obtener la ruta del archivo anterior desde la base de datos
+                $pdf_id = $_POST['pdf_id'];
+                $documentoExistente = Pdf::find($pdf_id);
+                $rutaAnterior = $documentoExistente->pdf_ruta;
+
+                // Generar la nueva ruta para el archivo PDF
                 $archivo = $_FILES['pdf_ruta'];
-                $ruta = "../storage/protocolos/$catalogo_doc" . uniqid() . ".pdf";
-                $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
+                $rutaNueva = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+
+                // Mover el nuevo archivo
+                $subido = move_uploaded_file($archivo['tmp_name'], $rutaNueva);
 
                 if ($subido) {
-                    $pdf_id = $_POST['pdf_id'];
-                    $nuevoDocumento = Pdf::find($pdf_id);
-                    $nuevoDocumento->pdf_solicitud = $_POST['pdf_solicitud'];
-                    $nuevoDocumento->pdf_ruta = $ruta;
-                    $resultado = $nuevoDocumento->actualizar();
+                    $documentoExistente->pdf_solicitud = $_POST['pdf_solicitud'];
+                    $documentoExistente->pdf_ruta = $rutaNueva;
+                    $resultado = $documentoExistente->actualizar();
+
+
+                    if ($resultado && file_exists($rutaAnterior)) {
+                        unlink($rutaAnterior);
+                    }
                 } else {
                 }
             }
+
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
@@ -187,6 +244,36 @@ public static function modificarApi(){
             ]);
         }
     }
+    public static function VerPdf(Router $router)
+    {
+
+        $ruta = base64_decode(base64_decode(base64_decode($_GET['ruta'])));
+
+        $router->printPDF($ruta);
+    }
+
+
+   
+
+    public static function motivos(){
+        $sql = "SELECT * FROM se_motivos where mot_situacion = 1";
+
+
+
+        try {
+
+            $motivos = Motivos::fetchArray($sql);
+
+            if ($motivos) {
+
+                return $motivos;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+        }
+    }
+
 
     public static function eliminarApi(){
         try {
