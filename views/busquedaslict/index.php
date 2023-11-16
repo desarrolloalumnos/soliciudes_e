@@ -163,7 +163,6 @@
                             </div>
                         </div>
                     </div>
-
                 </form>
 
                 <div class="modal-footer">
