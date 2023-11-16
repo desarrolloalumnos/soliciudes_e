@@ -71,8 +71,8 @@
                         <div class="col-lg-6">
                         <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                         <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
-                        <label for="ste_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
-                        <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="Número de catálogo">
+                        <label for="ste_cat2"><i class="bi bi-universal-access"></i>Catálogo</label>
+                        <input value="" id="ste_cat2" name="ste_cat2" class="form-control" type="number" placeholder="Número de catálogo">
                         <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
                         <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
                         <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
@@ -85,8 +85,8 @@
                     </div>
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
-                            <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                            <input value="" id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+                            <label for="ste_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
+                            <input value="" id="ste_fecha2" name="ste_fecha2" class="form-control" type="date">
                         </div>
                         <div class="col-lg-6">
                             <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
@@ -112,8 +112,8 @@
 
 
                     <div class="col-lg-6">
-                        <label for="sol_obs"><i class="bi bi-body-text"></i> Observaciones</label>
-                        <textarea class="form-control"  id="sol_obs" name="sol_obs"></textarea>
+                        <label for="sol_obs2"><i class="bi bi-body-text"></i> Observaciones</label>
+                        <textarea class="form-control"  id="sol_obs2" name="sol_obs2"></textarea>
                     </div>
                 </div>
 
@@ -197,7 +197,6 @@
                             </div>
                         </div>
                     </div>
-
                 </form>
 
                 <div class="modal-footer">

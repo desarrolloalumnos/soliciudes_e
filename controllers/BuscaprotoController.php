@@ -14,15 +14,18 @@ use MVC\Router;
 class BuscaprotoController{
     public static function index(Router $router){
         $motivos = static::motivos();
+        $combo = static::Protocolo();
 
         $router->render('busquedasproto/index', [
-            'motivos' => $motivos
+            'motivos' => $motivos,
+            'combos' => $combo
         ]);
     }
 
     public static function buscarApi(){
 
         $sql = " SELECT
+        ste_id,
         pco_id,
         ste_cat,
         gra_desc_lg,
@@ -62,30 +65,34 @@ class BuscaprotoController{
 }
 
 
-public static function buscarModalApi(){
+public static function buscarModalApi()
+{
 
+    $id = $_GET ['id'];
     $sql = " SELECT
-    ste_id,
-    ste_cat,
-    TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
-    ste_fecha,
-    ste_telefono,
-    mot_descripcion,
-    sol_obs,
-    cmv_tip || ' - ' || dep_desc_lg AS opciones,
-    pco_just,
-    pco_fechainicio,
-    pco_fechafin,
-    pco_dir
-    FROM se_protocolo
-    inner join se_combos_marimbas_vallas on pco_cmbv = cmv_id
-    inner join se_autorizacion on aut_id = pco_autorizacion
-    inner join se_solicitudes on aut_solicitud = sol_id
-    inner join se_solicitante on sol_solicitante = ste_id
-    inner join mper on ste_cat = per_catalogo
-    inner join se_motivos on sol_motivo = mot_id
-    inner join mdep on cmv_dependencia = dep_llave
-    WHERE pco_situacion = 1";
+        ste_id,
+        pco_id,
+        ste_cat,
+        gra_desc_lg,
+        TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombre,
+        ste_fecha,
+        ste_telefono,
+        cmv_id,
+        pco_fechainicio,
+        sol_motivo,
+        sol_obs,
+        pco_just,
+        pco_fechafin,
+        pco_dir
+        FROM se_protocolo
+        INNER JOIN se_combos_marimbas_vallas ON pco_cmbv = cmv_id  
+        inner join mdep on cmv_dependencia = dep_llave
+        inner join se_autorizacion on aut_id = pco_autorizacion
+        inner join se_solicitudes on aut_solicitud = sol_id
+        inner join se_solicitante on sol_solicitante= ste_id
+        inner join mper on ste_cat = per_catalogo
+        inner join grados on ste_gra = gra_codigo
+        WHERE pco_situacion = 1  AND ste_id = $id";
 
 
     try {
@@ -198,8 +205,7 @@ public static function modificarApi(){
         }
     }
 
-    public static function modificarPdfApi()
-    {
+    public static function modificarPdfApi(){
         try {
             $catalogo_doc = $_POST['ste_catalogo'];
 
@@ -211,7 +217,7 @@ public static function modificarApi(){
 
                 // Generar la nueva ruta para el archivo PDF
                 $archivo = $_FILES['pdf_ruta'];
-                $rutaNueva = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+                $rutaNueva = "../storage/protocolos/$catalogo_doc" . uniqid() . ".pdf";
 
                 // Mover el nuevo archivo
                 $subido = move_uploaded_file($archivo['tmp_name'], $rutaNueva);
@@ -273,6 +279,35 @@ public static function modificarApi(){
         } catch (Exception $e) {
         }
     }
+
+
+    public static function Protocolo(){
+        $sql = "SELECT 
+        cmv_id,
+        c.cmv_tip || ' - ' || m.dep_desc_lg AS tipo
+    FROM 
+        se_protocolo p
+    JOIN 
+        se_combos_marimbas_vallas c ON p.pco_cmbv = c.cmv_id
+    JOIN 
+        mdep m ON c.cmv_dependencia = m.dep_llave
+    WHERE 
+        c.cmv_situacion = 1";
+    
+        try {
+            $combosMarimbasVallas = Protocolo::fetchArray($sql);
+    
+            if ($combosMarimbasVallas){
+                return $combosMarimbasVallas;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+            
+        }
+    }
+
+
 
 
     public static function eliminarApi(){
