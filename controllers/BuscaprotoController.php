@@ -85,7 +85,8 @@ public static function buscarModalApi()
         sol_obs,
         pco_just,
         pco_fechafin,
-        pco_dir
+        pco_dir,
+        pdf_ruta
         FROM se_protocolo
         INNER JOIN se_combos_marimbas_vallas ON pco_cmbv = cmv_id  
         inner join mdep on cmv_dependencia = dep_llave
@@ -93,6 +94,7 @@ public static function buscarModalApi()
         inner join se_solicitudes on aut_solicitud = sol_id
         inner join se_solicitante on sol_solicitante= ste_id
         inner join mper on ste_cat = per_catalogo
+        inner join se_pdf on pdf_solicitud = sol_id
         inner join grados on ste_gra = gra_codigo
         WHERE pco_situacion = 1  AND ste_id = $id";
 

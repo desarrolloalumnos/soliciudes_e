@@ -23,6 +23,9 @@ const calendarEl = document.getElementById('calendar');
 const verTabla = document.getElementById('dataTabla')
 const verCalendario = document.getElementById('calendario')
 const btnCalendario = document.getElementById('btnCalendario')
+const iframe = document.getElementById('pdfSalida');
+const divPdf = document.getElementById('pdf');
+const divProtocolo = document.getElementById('Protocolo');
 
 
 
@@ -33,7 +36,7 @@ formulario2.ste_fecha2.disabled = true;
 formulario2.nombre.disabled = true;
 
 
-const iframe = document.getElementById('pdfSalida');
+
 
 
 const buscarCalender = async () => {
@@ -217,6 +220,8 @@ const buscar = async () => {
 
 const buscarModal = async (e) => {
     modalProtocolo.show();
+    divPdf.style.display = 'none';
+    divProtocolo.style.display = 'block';
     const boton = e.target
     let ids = boton.dataset.id
     let id = ids
@@ -258,6 +263,13 @@ const buscarModal = async (e) => {
             formulario2.pco_fechafin.value = fechaFin
             formulario2.pco_dir.value = dato.pco_dir
 
+            let pdfSinCorregir = dato.pdf_ruta;
+            let pdfCorregido = pdfSinCorregir.substring(10);
+            
+            let verDoc = btoa(btoa(btoa(pdfCorregido)));
+            let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
+            iframe.src = ver
+
 
             Toast.fire({
                 title: 'Abriendo solicitud',
@@ -278,9 +290,9 @@ const buscarModal = async (e) => {
 
 
 
-const limpiarModelProtocolo = async () => {
-    modalProtocolo.hide()
-}
+// const limpiarModelProtocolo = async () => {
+//     modalProtocolo.hide()
+// }
 
 
 
@@ -339,6 +351,32 @@ const modificar = async (evento) => {
         console.log(error);
     }
 }
+
+const traePdf = (e) => {    
+    modalProtocolo.show()
+    divPdf.style.display = 'block';
+    divProtocolo.style.display = 'none';
+  
+
+    const button = e.target;
+    const ste_cat = button.dataset.ste_cat;
+    const pdf_id = button.dataset.pdf_id;
+    const pdf_solicitud = button.dataset.pdf_solicitud;
+
+
+    const dataset = {
+
+        ste_cat,
+        pdf_id,
+        pdf_solicitud
+    };
+ 
+    formulario2.pdf_solicitud.value = dataset.pdf_solicitud;
+    formulario2.pdf_id.value = dataset.pdf_id;
+
+};
+
+
 
 
 const eliminar = async (e) => {
@@ -407,7 +445,7 @@ const verPDF = (e) => {
 
 btnBuscar.addEventListener('click', buscar);
 btnModificar.addEventListener('click', modificar)
-// // addPdf.addEventListener('click',modificarPdf);
+// addPdf.addEventListener('click',modificarPdf);
 // btnCancelar.addEventListener('click', limpiarModelProtocolo)
 datatable.on('click', '.btn-warning', buscarModal);
 datatable.on('click', '.btn-outline-info', verPDF);
