@@ -6,41 +6,42 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
-import { validarFormulario, Toast, confirmacion } from "../funciones";
+import { validarFormulario, Toast, confirmacion,formatearFecha } from "../funciones";
 
 const modalProtocolo = new Modal(document.getElementById('modalProtocolo'), {
     backdrop: 'static',
     keyboard: false
 });
-// const modalPdf = new Modal(document.getElementById('modalPdf'), {
-//     backdrop: 'static',
-//     keyboard: false
-// });
+
 
 const formulario = document.getElementById('formularioProtocolo');
 const formulario2 = document.getElementById('formularioProto');
 const btnBuscar = document.getElementById('btnBuscar');
-const btnModificar = document.getElementById('btnModificar');
+const btnModificar = document.getElementById('modificar');
 const btnCancelar = document.getElementById('btnCancelar');
 const calendarEl = document.getElementById('calendar');
 const verTabla = document.getElementById('dataTabla')
 const verCalendario = document.getElementById('calendario')
 const btnCalendario = document.getElementById('btnCalendario')
-// const pdf = document.getElementById('formularioPdf');
+const iframe = document.getElementById('pdfSalida');
+const divPdf = document.getElementById('pdf');
+const divProtocolo = document.getElementById('Protocolo');
 
-// const iframe = document.getElementById('pdfIframe');
-// const addPdf = document.getElementById('addPdf');
 
-verCalendario.style.display ='none'
-verTabla.style.display ='none'
-formulario2.ste_cat.disabled = true;
-formulario2.ste_fecha.disabled = true;
+
+verCalendario.style.display = 'none'
+verTabla.style.display = 'none'
+formulario2.ste_cat2.disabled = true;
+formulario2.ste_fecha2.disabled = true;
 formulario2.nombre.disabled = true;
 
 
+
+
+
 const buscarCalender = async () => {
-verCalendario.style.display ='block';
-verTabla.style.display = 'none';
+    verCalendario.style.display = 'block';
+    verTabla.style.display = 'none';
     // let dep_valor = dependencias.value 
     // let tipo = tipos.value 
 
@@ -56,37 +57,34 @@ verTabla.style.display = 'none';
         const data = await respuesta.json();
         
         
-   
-    const calendar = new Calendar(calendarEl, {
-
-        plugins: [dayGridPlugin], 
-        initialView: 'dayGridMonth',
-        height: 'auto',
-        headerToolbar: {
-          start: 'dayGridMonth,dayGridWeek,listWeek',
-          center: 'title',
-          end: 'today,prev,next',
-        },
-        events: data,
-        dayMaxEvents: 5,
-        locale: 'es',
-        buttonText: {
-          today: 'Hoy',
-          month: 'Mes',
-          week: 'Semana',
-          list: 'Lista',
-        }
-      });
-    
-      calendar.render();
-        
-return
-
-        datatable.clear().draw()
         if (data) {
-            contador = 1;
-            datatable.rows.add(data).draw();
 
+        const calendar = new Calendar(calendarEl, {
+
+            plugins: [dayGridPlugin],
+            initialView: 'dayGridMonth',
+            height: 'auto',
+            headerToolbar: {
+                start: 'dayGridMonth,dayGridWeek,listWeek',
+                center: 'title',
+                end: 'today,prev,next',
+            },
+            events: data,
+            dayMaxEvents: 5,
+            locale: 'es',
+            buttonText: {
+                today: 'Hoy',
+                month: 'Mes',
+                week: 'Semana',
+                list: 'Lista',
+            }
+        });
+
+        calendar.render();
+
+        // return
+
+            
         } else {
             Toast.fire({
                 title: 'No se encontraron registros',
@@ -100,9 +98,6 @@ return
     }
     formulario.reset();
 }
-
-
-
 
 
 
@@ -148,7 +143,7 @@ const datatable = new Datatable('#tablaProtocolo', {
             className: 'text-center',
             data: function (row) {
                 return row.pco_fechafin.substring(0, 10);
-            } 
+            }
         },
         {
             title: 'DIRECCION',
@@ -166,40 +161,28 @@ const datatable = new Datatable('#tablaProtocolo', {
         {
             title: 'MODIFICAR',
             className: 'text-center',
-            data: 'pco_id',
+            data: 'ste_id',
             searchable: false,
             orderable: false,
-            render: (data, type, row, meta) => `<button class="btn btn-warning" 
-                    data-id='${data}' 
-                    data-ste_id='${row["ste_id"]}' 
-                    data-ste_cat='${row["ste_cat"]}' 
-                    data-pco_cmbv='${row["pco_cmbv"]}'  
-                    data-pco_just='${row["pco_just"]}' 
-                    data-pco_fechainicio='${row["pco_fechainicio"]}' 
-                    data-pco_fechafin='${row["pco_fechafin"]}' 
-                    data-pco_dir='${row["pco_dir"]}' 
-                    data-pdf_id='${row["pdf_id"]}' 
-                    data-pdf_solicitud='${row["pdf_solicitud"]}'  
-                    data-nombre='${row["nombre"]}' 
-                    data-cmv_tip='${row["cmv_tip"]}' 
-                    data-dep_desc_lg='${row["dep_desc_lg"]}'
-                    data-pdf_ruta='${row["pdf_ruta"]}'>DATOS</button>
+            render: (data, type, row, meta) => `
+            <div class="btn-group">
+            <button class="btn btn-warning" data-id='${data}'>DATOS</button>
                     <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
                     </div>`
-                },
-            {
+        },
+        {
             title: 'ELIMINAR',
             className: 'text-center',
             data: 'sol_id',
             searchable: false,
             orderable: false,
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
-            },
+        },
     ],
 });
 
 const buscar = async () => {
-    verCalendario.style.display ='none';
+    verCalendario.style.display = 'none';
     verTabla.style.display = 'block';
     const url = `/soliciudes_e/API/busquedasproto/buscar`;
     const config = {
@@ -210,7 +193,7 @@ const buscar = async () => {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
         datatable.clear().draw()
-       
+
         if (data) {
             contador = 1;
             datatable.rows.add(data).draw();
@@ -221,7 +204,7 @@ const buscar = async () => {
                     end: evento.pco_fechafin,
                 });
             });
-            
+
         } else {
             Toast.fire({
                 title: 'No se encontraron registros',
@@ -235,130 +218,89 @@ const buscar = async () => {
 }
 
 
-const traeDatos = (e) => {
+const buscarModal = async (e) => {
+    modalProtocolo.show();
+    divPdf.style.display = 'none';
+    divProtocolo.style.display = 'block';
+    const boton = e.target
+    let ids = boton.dataset.id
+    let id = ids
 
-        modalProtocolo.show()
-        const button = e.target;
-        console.log(button.dataset.nombre);
-        const pco_id = button.dataset.id
-        const pco_autorizacion = button.dataset.pco_autorizacion
-        const aut_id = button.dataset.aut_id
-        const aut_solicitud = button.dataset.aut_solicitud
-        const sol_id = button.dataset.sol_id
-        const sol_tipo = button.dataset.sol_tipo
-        const tse_id = button.dataset.tse_id
-        const sol_solicitante = button.dataset.sol_solicitante
-        const ste_id = button.dataset.ste_id
-        const ste_comando = button.dataset.ste_comando
-        const ste_cat = button.dataset.ste_cat
-        const ste_gra = button.dataset.ste_gra
-        const ste_arm = button.dataset.ste_arm
-        const ste_emp = button.dataset.ste_emp
-        const ste_fecha = button.dataset.ste_fecha
-        const sol_obs = button.dataset.sol_obs
-        const sol_motivo = button.dataset.sol_motivo
-        const mot_id = button.dataset.mot_id
-        const sol_situacion = button.dataset.sol_situacion
-        const aut_comando = button.dataset.aut_comando
-        const aut_cat = button.dataset.aut_cat
-        const aut_gra = button.dataset.aut_gra
-        const aut_arm = button.dataset.aut_arm
-        const aut_emp = button.dataset.aut_emp
-        const aut_fecha = button.dataset.aut_fecha
-        const pco_fechainicio = button.dataset.pco_fechainicio
-        const pco_fechafin = button.dataset.pco_fechafin
-        const pco_dir = button.dataset.pco_dir
-        const pco_just = button.dataset.pco_just
-        const cmv_tip = button.dataset.cmv_tip
-        const dep_desc_lg = button.dataset.dep_desc_lg
-        const pdf_id = button.dataset.pdf_id
-        const pdf_solicitud = button.dataset.pdf_solicitud
-        const grado = button.dataset.grado
-        const nombre = button.dataset.nombre
-        const ste_telefono = button.dataset.ste_telefono
-        const pdf_ruta = button.dataset.pdf_ruta
+    const url = `/soliciudes_e/API/busquedasproto/buscarModal?id=${id}`;
+    const config = {
+        method: 'GET',
+    }
 
-    const dataset = {
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
 
-        pco_id,
-        pco_autorizacion,
-        aut_id,
-        aut_solicitud,
-        sol_id,
-        sol_tipo,
-        tse_id,
-        sol_solicitante,
-        ste_id,
-        ste_comando,
-        ste_cat,
-        ste_gra,
-        ste_arm,
-        ste_emp,
-        ste_fecha,
-        sol_obs,
-        sol_motivo,
-        mot_id,
-        sol_situacion,
-        aut_comando,
-        aut_cat,
-        aut_gra,
-        aut_arm,
-        aut_emp,
-        aut_fecha,
-        pco_fechainicio,
-        pco_fechafin,
-        pco_dir,
-        pco_just,
-        cmv_tip,
-        dep_desc_lg,
-        pdf_id,
-        pdf_solicitud,
-        nombre,
-        grado,
-        ste_telefono,
-        pdf_ruta
 
-    };
-    colocarDatos(dataset);
+        if (data) {
+            const dato = data[0]
+            let fechaSinFormato = dato.ste_fecha
+            let fechaSolicitud = formatearFecha(fechaSinFormato)
 
-};
- 
+            let fecha2SinFormato = dato.pco_fechainicio
+            let fechaInicio = formatearFecha(fecha2SinFormato)
 
-const colocarDatos = (dataset) => {
-    // const pco_fechainicio = formatearFecha(dataset.pco_fechainicio);
-    // const pco_fechafin = formatearFecha(dataset.pco_fechafin);
-   
-    // const ste_fecha = formatearFecha(dataset.ste_fecha);
+            let fecha3SinFormato = dato.pco_fechafin
+            let fechaFin = formatearFecha(fecha3SinFormato)
 
-   console.log(dataset.pco_cmbv);
-    formulario2.ste_id.value = dataset.ste_id;
-    formulario2.ste_cat.value = dataset.ste_cat;
-    formulario2.sol_id.value = dataset.sol_id;
-    formulario2.ste_telefono.value = dataset.ste_telefono;
-    formulario2.pco_id.value = dataset.pco_id;
-    formulario2.pco_cmbv.value = dataset.pco_cmbv;
-    formulario2.cmv_tip.value = dataset.cmv_tip;
-    formulario2.dep_desc_lg.value = dataset.dep_desc_lg;
-    // formulario2.pco_just.value = pco_just;
-    formulario2.pco_dir.value = dataset.pco_dir;
-    formulario2.pco_fechainicio.value = pco_fechainicio;
-    formulario2.pco_fechafin.value = dataset.pco_fechafin;
-    formulario2.ste_gra.value = dataset.grado;
-    formulario2.nombre.value = dataset.nombre;
+            
+            formulario2.ste_id.value = dato.ste_id
+            formulario2.ste_cat2.value = dato.ste_cat
+            formulario2.nombre.value = dato.nombre
+            formulario2.ste_fecha2.value = fechaSolicitud
+            formulario2.ste_telefono.value = dato.ste_telefono
+            formulario2.sol_motivo.value = dato.sol_motivo
+            formulario2.sol_obs2.value = dato.sol_obs            
+            formulario2.pco_autorizacion.value = dato.pco_autorizacion
+            formulario2.pco_id.value = dato.pco_id
+            formulario2.pco_cmbv.value = dato.cmv_id
+            formulario2.pco_just.value = dato.pco_just
+            formulario2.pco_fechainicio.value = fechaInicio
+            formulario2.pco_fechafin.value = fechaFin
+            formulario2.pco_dir.value = dato.pco_dir
 
+            let pdfSinCorregir = dato.pdf_ruta;
+            let pdfCorregido = pdfSinCorregir.substring(10);
+            
+            let verDoc = btoa(btoa(btoa(pdfCorregido)));
+            let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
+            iframe.src = ver
+
+
+            Toast.fire({
+                title: 'Abriendo solicitud',
+                icon: 'success'
+            });
+
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+            });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    formulario.reset();
 }
 
 
-const limpiarModelProtocolo = async () => {
-    modalProtocolo.hide()
-}
+
+// const limpiarModelProtocolo = async () => {
+//     modalProtocolo.hide()
+// }
+
 
 
 const modificar = async (evento) => {
 
     evento.preventDefault();
-    let catalogo = formulario2.ste_cat.value
-    let fecha = formulario2.ste_fecha.value
+    let catalogo = formulario2.ste_cat2.value
+    let fecha = formulario2.ste_fecha2.value
 
     const body = new FormData(formulario2)
     body.append('ste_cat', catalogo)
@@ -366,6 +308,10 @@ const modificar = async (evento) => {
     const url = '/soliciudes_e/API/busquedasproto/modificar';
     const headers = new Headers();
     headers.append("X-Requested-With", "fetch");
+
+    for (var pair of body.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
     const config = {
         method: 'POST',
         body
@@ -384,7 +330,7 @@ const modificar = async (evento) => {
                 formulario.reset();
                 icon = 'success'
                 buscar();
-                // cancelarAccion();
+               
                 break;
 
             case 0:
@@ -406,6 +352,33 @@ const modificar = async (evento) => {
     }
 }
 
+const traePdf = (e) => {    
+    modalProtocolo.show()
+    divPdf.style.display = 'block';
+    divProtocolo.style.display = 'none';
+  
+
+    const button = e.target;
+    const ste_cat = button.dataset.ste_cat;
+    const pdf_id = button.dataset.pdf_id;
+    const pdf_solicitud = button.dataset.pdf_solicitud;
+
+
+    const dataset = {
+
+        ste_cat,
+        pdf_id,
+        pdf_solicitud
+    };
+ 
+    formulario2.pdf_solicitud.value = dataset.pdf_solicitud;
+    formulario2.pdf_id.value = dataset.pdf_id;
+
+};
+
+
+
+
 const eliminar = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
@@ -413,6 +386,8 @@ const eliminar = async (e) => {
     if (await confirmacion('warning', 'Desea elminar este registro?')) {
         const body = new FormData()
         body.append('sol_id', id)
+
+        // console.log(object);
         const url = '/soliciudes_e/API/busquedasproto/eliminar';
         const headers = new Headers();
         headers.append("X-Requested-With", "fetch");
@@ -456,6 +431,7 @@ const eliminar = async (e) => {
 }
 
 
+buscar();
 const verPDF = (e) => {
     // const button = e.target;
     const boton = e.target
@@ -463,15 +439,16 @@ const verPDF = (e) => {
 
     let pdf = btoa(btoa(btoa(ruta)))
 
-    window.open(`/soliciudes_e/API/busquedasproto/pdf?ruta=${pdf}`)
+    window.open(`/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`)
 
 }
-buscar();
 
 btnBuscar.addEventListener('click', buscar);
 btnModificar.addEventListener('click', modificar)
-btnCancelar.addEventListener('click', limpiarModelProtocolo)
-datatable.on('click', '.btn-warning', traeDatos);
+// addPdf.addEventListener('click',modificarPdf);
+// btnCancelar.addEventListener('click', limpiarModelProtocolo)
+datatable.on('click', '.btn-warning', buscarModal);
 datatable.on('click', '.btn-outline-info', verPDF);
 datatable.on('click', '.btn-danger', eliminar);
 btnCalendario.addEventListener('click', buscarCalender)
+datatable.on('click', '.btn-outline-warning', traePdf);
