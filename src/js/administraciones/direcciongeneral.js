@@ -23,6 +23,10 @@ const datatable = new Datatable('#tablaDirecciongeneral', {
             data: 'solicitante'
         },
         {
+            title: 'Telefono',
+            data: 'ste_telefono',
+        },
+        {
             title: 'Tipo',
             className: 'text-center',
             data: 'tipo'
@@ -63,11 +67,6 @@ const datatable = new Datatable('#tablaDirecciongeneral', {
                 }
                 return data;
             }
-        },
-
-        {
-            title: 'Telefono',
-            data: 'ste_telefono',
         },
         {
             title: 'Enviar',

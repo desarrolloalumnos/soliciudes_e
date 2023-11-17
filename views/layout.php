@@ -173,12 +173,12 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/direccionpersonal">
+                                <a class="dropdown-item" href="/soliciudes_e/direccionpersonal/mdn">
                                     <i class="bi bi-file-earmark-arrow-up me-2"></i>Enviar
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/historiales">
+                                <a class="dropdown-item" href="/soliciudes_e/historialmdn">
                                     <i class="ms-lg-0 ms-2 bi bi-clock-history me-2"></i>Historial
                                 </a>
                             </li>

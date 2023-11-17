@@ -16,6 +16,7 @@ use Controllers\TiposolController;
 use Controllers\BuscasController;
 use Controllers\HistorialController;
 use Controllers\HistorialdpController;
+use Controllers\HistorialmdnController;
 use Controllers\LictempController;
 use Controllers\SalidapaisController;
 use Controllers\DetalleController;
@@ -140,6 +141,8 @@ $router->get('/direccionpersonal', [DireccionpersonalController::class,'index'])
 $router->get('/API/direccionpersonal/buscar', [DireccionpersonalController::class,'buscarApi']);
 $router->post('/API/direccionpersonal/enviarMdn', [DireccionpersonalController::class,'enviarMdnApi']);
 $router->get('/direccionpersonal/mdn', [DireccionpersonalController::class,'mdn']);
+$router->get('/API/direccionpersonal/buscarMdn', [DireccionpersonalController::class,'buscarMdnApi']);
+$router->post('/API/direccionpersonal/aprobarRechazarSolicitud', [DireccionpersonalController::class,'aprobarRechazarSolicitudApi']);
 
 
 $router->get('/historiales', [HistorialController::class,'index']);
@@ -148,6 +151,10 @@ $router->get('/API/historiales/buscar', [HistorialController::class,'buscarApi']
 
 $router->get('/historialdp', [HistorialdpController::class,'index']);
 $router->get('/API/historialdp/buscar', [HistorialdpController::class,'buscarApi']);
+
+
+$router->get('/historialmdn', [HistorialmdnController::class,'index']);
+$router->get('/API/historialmdn/buscar', [HistorialmdnController::class,'buscarApi']);
 
 
 $router->get('/administraciones/estadistica', [DetalleController::class,'estadistica']);

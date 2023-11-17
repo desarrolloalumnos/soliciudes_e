@@ -14,10 +14,10 @@ class DireccionpersonalController{
         ]);
     }
 
-    public static function direccionPersonal(Router $router)
+    public static function mdn(Router $router)
     {
         
-        $router->render('direccionpersonal/direccionpersonal', [
+        $router->render('direccionpersonal/mdn', [
             
         ]);
     }
@@ -66,7 +66,7 @@ class DireccionpersonalController{
         }
     }
 
-    public static function buscarDepersonalApi(){
+    public static function buscarMdnApi(){
        
 
         $sql = "SELECT
@@ -135,19 +135,25 @@ class DireccionpersonalController{
         }
     }
 
-    public static function enviarDgaApi() {
+
+    public static function aprobarRechazarSolicitudApi() {
         try {
             $solicitud_id = $_POST['sol_id'];
+            $accion = $_POST['accion']; 
+    
             $solicitud = Solicitud::find($solicitud_id);
-            $solicitud->sol_situacion = 2;
+    
+            $nuevo_estado = ($accion === 'aprobar') ? 5 : 6;
+    
+            $solicitud->sol_situacion = $nuevo_estado;
             $resultado = $solicitud->actualizar();
-
+    
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
-                    'mensaje' => 'Solicitud enviada correctamente',
+                    'mensaje' => "Solicitud $accion correctamente",
                     'codigo' => 1
                 ]);
-            } 
+            }
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),

@@ -4,13 +4,12 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
-const modalDep = new Modal(document.getElementById('modalDep'), {})
-const formulario = document.getElementById('formularioDireccionpersonal');
+const formulario = document.getElementById('formularioDepersonal');
 const btnBuscar = document.getElementById('btnBuscar');
 
 
 let contador = 1;
-const datatable = new Datatable('#tablaDireccionpersonal', {
+const datatable = new Datatable('#tablaDepersonal', {
     language: lenguaje,
     data: null,
     columns: [
@@ -23,6 +22,10 @@ const datatable = new Datatable('#tablaDireccionpersonal', {
             title: 'Solicitante',
             className: 'text-center',
             data: 'solicitante'
+        },
+        {
+            title: 'Telefono',
+            data: 'ste_telefono',
         },
         {
             title: 'Tipo',
@@ -46,30 +49,50 @@ const datatable = new Datatable('#tablaDireccionpersonal', {
             render: function (data, type, row) {
                 if (type === 'display') {
                     if (data === '1') {
-                        return `<span style="color: red;">COMANDO</span>`;
+                        return `
+            <span style="color: red;">COMANDO</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+                </div>
+            `;
                     } else if (data === '2') {
-                        return `<span >DGAEMDN</span>`;
+                        return `
+                        <span >DGAEMDN</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+                </div>
+            `;
                     } else if (data === '3') {
-                        return `<span >DPEMDN</span>`;
+                        return `
+                        <span >DPEMDN</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                </div>
+            `;
                     } else if (data === '4') {
-                        return `<span >MDN</span>`;
+                        return `
+                        <span >MDN</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                </div>
+            `;
                     } else if (data === '5') {
-                        return `<span>AUTORIZADO</span>`;
+                        return `
+                        <span>AUTORIZADO</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                </div>
+            `;
                     } else if (data === '6') {
-                        return `<span>RECHAZADA</span>`;
+                        return `<button class="btn btn-danger">RECHAZADA</button>`;
                     } else if (data === '7') {
-                        return `<button class="btn btn-danger">Correcciones</button>`;
+                        return `<button class="btn btn-warning">CORRECCIONES</button>`;
                     } else {
                         return '';
                     }
                 }
                 return data;
             }
-        },
-
-        {
-            title: 'Telefono',
-            data: 'ste_telefono',
         },
         {
             title: 'Enviar',
@@ -125,16 +148,12 @@ const buscar = async () => {
     formulario.reset();
 }
 
-const abrirModal = async (e) => {
-modalDep.show()
-
-}
 
 const enviar = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
 
-       
+    if  (await confirmacion('warning', 'Desea enviar esta solicitud?')) {
         const body = new FormData()
         body.append('sol_id', id)
         const url = '/soliciudes_e/API/direccionpersonal/enviarMdn';
@@ -172,11 +191,11 @@ const enviar = async (e) => {
         } catch (error) {
             console.log(error);
         }
-    
+    }
 
 }
 buscar();
 
 
 btnBuscar.addEventListener('click', buscar);
-datatable.on('click', '.btn-primary', abrirModal );
+datatable.on('click', '.btn-primary', enviar);
