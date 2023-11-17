@@ -9,6 +9,7 @@ use Model\Paises;
 use Model\Transportes;
 use Model\Solicitante;
 use Model\Solicitud;
+use Model\Motivos;
 use Model\Pdf;
 use MVC\Router;
 
@@ -16,10 +17,15 @@ class BuscasalpaisController
 {
     public static function index(Router $router)
     {
-        // $motivos = static::motivos();
+
+        $motivos = static::motivos();
+        $paises = static::paises();
+        $transportes = static::transportes();
 
         $router->render('busquedasalpais/index', [
-            // 'motivos' => $motivos
+            'motivos' => $motivos,
+            'paises' => $paises,
+            'transportes' => $transportes
         ]);
     }
 
@@ -27,6 +33,7 @@ class BuscasalpaisController
     {
 
         $sql = "SELECT  
+        ste_id,
         sal_id,
         ste_cat,
         gra_desc_lg,
@@ -71,7 +78,7 @@ class BuscasalpaisController
 
                     $paises .= ($paises != '' && $value1['nombre_pais'] != null) ? ', ' : '';
                     $paises .= trim($value1['nombre_pais']);
-                   
+
                     $ciudad .= ($ciudad != '' && $value1['ciudad'] != null) ? ', ' : '';
                     $ciudad .= trim($value1['ciudad']);
                 }
@@ -82,12 +89,15 @@ class BuscasalpaisController
                     'sal_salida' => $value['sal_salida'],
                     'sal_ingreso' => $value['sal_ingreso'],
                     'pdf_ruta' => $value['pdf_ruta'],
+                    'pdf_id' => $value['pdf_id'],
+                    'pdf_solicitud' => $value['pdf_solicitud'],
+                    'ste_id' => $value['ste_id'],
                     'paises' => $paises,
                     'ciudad' => $ciudad
                 ];
             }
 
-            echo json_encode($valores);            
+            echo json_encode($valores);
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
@@ -99,28 +109,82 @@ class BuscasalpaisController
 
     public static function buscarModalApi()
     {
-            
-                $sql = "SELECT  
-                ste_id,
-                ste_cat, 
-                TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
-                sol_id,
-                sol_obs,
-                sol_motivo,
-                dsal_sol_salida,
-                dsal_ciudad,
-                dsal_pais
-                FROM se_dsalpais
-                inner join se_salpais on dsal_sol_salida = sal_id
-                  inner join se_autorizacion on aut_id = sal_autorizacion
-                  inner join se_solicitudes on aut_solicitud = sol_id
-                  inner join se_solicitante on sol_solicitante=ste_id
-                  inner join mper on ste_cat = per_catalogo
-               WHERE sol_situacion = 1";
-     try {
-        $resultado = Saldetpaises::fetchArray($sql);
+        $id = $_GET['id'];
+        $sql = "SELECT  
+        ste_id,
+        ste_cat,
+        ste_fecha,
+        ste_telefono,
+        TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombre,
+        sol_id,
+        sol_obs,
+        sol_motivo,
+        sal_id,
+        sal_salida,
+        sal_ingreso,
+        dsal_id,
+        pdf_ruta
+        FROM se_dsalpais
+        inner join se_salpais on dsal_sol_salida = sal_id
+          inner join se_autorizacion on aut_id = sal_autorizacion
+          inner join se_solicitudes on aut_solicitud = sol_id
+          inner join se_solicitante on sol_solicitante=ste_id
+          inner join se_pdf on pdf_solicitud=sol_id
+          inner join mper on ste_cat = per_catalogo
+       WHERE sol_situacion = 1 AND ste_id = $id";
 
-        echo json_encode($resultado);
+        $valores = [];
+
+        try {
+            $resultado = Salidapais::fetchArray($sql);
+
+            foreach ($resultado as $key => $value) {
+                $paises = [];
+                $ciudad = [];
+                $transporte = [];
+
+                $id = $value['sal_id'];
+
+                $sql1 = "SELECT 
+                dsal_sol_salida,
+                pai_codigo as nombre_pais, 
+                dsal_ciudad as ciudad,
+                transporte_id as transporte
+            FROM se_dsalpais
+            INNER JOIN se_salpais ON dsal_sol_salida = sal_id
+            INNER JOIN paises ON dsal_pais = pai_codigo
+            INNER JOIN se_transporte on dsal_transporte = transporte_id
+            where dsal_sol_salida = $id";
+                $resultado1 = Salidapais::fetchArray($sql1);
+
+                foreach ($resultado1 as $key1 => $value1) {
+
+                    $paises[] = trim($value1['nombre_pais']);
+
+                    $ciudad[] =  trim($value1['ciudad']);
+
+                    $transporte[] = trim($value1['transporte']);
+                }
+                $valores[] = [
+                    'sal_id' => $value['sal_id'],
+                    'ste_id' => $value['ste_id'],
+                    'ste_cat' => $value['ste_cat'],
+                    'ste_fecha' => $value['ste_fecha'],
+                    'ste_telefono' => $value['ste_telefono'],
+                    'nombre' => $value['nombre'],
+                    'sol_id' => $value['sol_id'],
+                    'sol_obs' => $value['sol_obs'],
+                    'sol_motivo' => $value['sol_motivo'],
+                    'sal_salida' => $value['sal_salida'],
+                    'sal_ingreso' => $value['sal_ingreso'],
+                    'dsal_id' => $value['dsal_id'],
+                    'pdf_ruta' => $value['pdf_ruta'],
+                    'paises' => $paises,
+                    'ciudad' => $ciudad,
+                    'transporte' => $transporte
+                ];
+            }
+            echo json_encode($valores);
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
@@ -134,9 +198,6 @@ class BuscasalpaisController
 
         try {
 
-            $fechaSolicito = $_POST['ste_fecha'];
-            $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
-            $_POST['ste_fecha'] = $fechaFormateadaSolicito;
 
             $fechaSalida = $_POST['sal_salida'];
             $fechaFormateadaSalida = date('Y-m-d H:i', strtotime($fechaSalida));
@@ -156,14 +217,10 @@ class BuscasalpaisController
             }
 
             if (isset($_POST['pai_codigo']) && !empty($_POST['pai_codigo'])) {
-                $paisId = $_POST['pai_codigo'];
+                $pasId=$_POST['pai_codigo'];
                 $pais = Paises::find($paisId);
-
-
-                if ($pais) {
-                    $pais->pai_desc_lg = $_POST['pai_desc_lg'];
-                    $paisResultado = $pais->actualizar();
-                }
+                $pais->pai_codigo=$_POST['pai_codigo'];
+                $paisResultado = $pais->actualizar();
             }
 
             if (isset($_POST['transporte_id']) && !empty($_POST['transporte_id'])) {
@@ -175,6 +232,12 @@ class BuscasalpaisController
                     $transporteResultado = $transporte->actualizar();
                 }
             }
+
+            $salId = $_POST['sal_id'];
+            $salidaPais = Salidapais::find($salId);
+            $salidaPais->sal_salida = $_POST['sal_salida'];
+            $salidaPais->sal_ingreso = $_POST['sal_ingreso'];
+            $salidaPaisResultado = $salidaPais->actualizar();
 
             if (isset($_POST['dsal_id']) && !empty($_POST['dsal_id'])) {
                 $dsalId = $_POST['dsal_id'];
@@ -188,14 +251,8 @@ class BuscasalpaisController
                 }
             }
 
-            $salId = $_POST['sal_id'];
-            $salidaPais = Salidapais::find($salId);
-            $salidaPais->sal_autorizacion = $_POST['sal_autorizacion'];
-            $salidaPais->sal_salida = $_POST['sal_salida'];
-            $salidaPais->sal_ingreso = $_POST['sal_ingreso'];
-            $salidaPaisResultado = $salidaPais->actualizar();
 
-            if ($salidaPaisResultado['resultado'] == 1) {
+            if ($detalleSalidaPaisResultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro de salida de país modificado correctamente',
                     'codigo' => 1
@@ -281,6 +338,55 @@ class BuscasalpaisController
                 'mensaje' => 'Ocurrió un error',
                 'codigo' => 0
             ]);
+        }
+    }
+
+    public static function motivos()
+    {
+        $sql = "SELECT * FROM se_motivos where mot_situacion = 1";
+
+        try {
+
+            $motivos = Motivos::fetchArray($sql);
+
+            if ($motivos) {
+
+                return $motivos;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+        }
+    }
+
+    public static function transportes()
+    {
+        $sql = "SELECT * FROM se_transporte WHERE transporte_situacion = 1";
+
+        try {
+            $transportes = Transportes::fetchArray($sql);
+
+            if ($transportes) {
+                return $transportes;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+        }
+    }
+    public static function paises()
+    {
+        $sql = "SELECT * FROM paises";
+
+        try {
+            $paises = Paises::fetchArray($sql);
+
+            if ($paises) {
+                return $paises;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
         }
     }
 }

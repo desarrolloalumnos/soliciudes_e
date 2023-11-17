@@ -32,7 +32,7 @@
 
 
     <!-- Modal para modificar la solicitud -->
-    <div class="modal fade-xl" id="modalSalidapaises" tabindroleex="-1" role="dialog" aria-labelledby="modalMLabel" aria-hidden="true">
+    <div class="modal fade modal-xl" id="modalSalidapaises" tabindroleex="-1" role="dialog" aria-labelledby="modalSalidapaisesLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -55,8 +55,8 @@
                                 <div class="col-lg-6">
                                     <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                                     <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
-                                    <label for="ste_cat">Catálogo</label>
-                                    <input value="" id="ste_cat" name="ste_cat" class="form-control" type="text" placeholder="Número de catálogo">
+                                    <label for="ste_cat2">Catálogo</label>
+                                    <input value="" id="ste_cat2" name="ste_cat2" class="form-control" type="text" placeholder="Número de catálogo">
                                     <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
                                     <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
                                     <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
@@ -65,13 +65,13 @@
 
                                 <div class="col-lg-6">
                                     <label for="nombre">Nombres</label>
-                                    <input value="" id="nombre" name="nombre" class="form-control" type="hidden">
+                                    <input value="" id="nombre" name="nombre" class="form-control" type="text">
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="ste_fecha">Fecha de Solicitud</label>
-                                    <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+                                    <input id="ste_fecha2" name="ste_fecha2" class="form-control" type="date">
 
                                 </div>
                                 <div class="col-lg-6">
@@ -84,8 +84,7 @@
                             <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
                             <input value="3" type="hidden" name="sol_tipo" id="sol_tipo" class="form-control">
                             <input value="" type="hidden" name="sol_solicitante" id="sol_solicitante" class="form-control">
-                            <input value="" type="hidden" name="sol_motivo" id="sol_motivo" class="form-control">
-                            <input value="" type="hidden" name="sol_obs" id="sol_obs" class="form-control">
+
 
 
 
@@ -130,62 +129,33 @@
                             </div>
 
                             <div class="row justify-content-around mb-4">
-                                <div class="col-lg-4">
-                                    <input value="" id="dsal_id" name="dsal_id" class="form-control" type="hidden">
-                                    <input value="" type="hidden" name="dsal_sol_salida" id="dsal_sol_salida" class="form-control">
-                                    <label for="dsal_pais" class="form-label"><i class="bi bi-globe-americas"></i>Seleccione el
-                                        país a viajar:</label>
-                                    <select name="dsal_pais" id="dsal_pais" class="form-select">
-                                        <option value="">Seleccione el país</option>
-                                        <?php foreach ($paises as $pais) { ?>
-                                            <option value="<?= $pais['pai_codigo'] ?>">
-                                                <?= $pais['pai_desc_lg'] ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
+                                <div id="seleccion" class="col-lg-12">
+                                    <div class="row justify-content-around mb-4">
+                                        <div id="" class="col-lg-12">
+                                            <div id="masInputs" class="row">
 
-                                <div class="col-lg-4">
-                                    <label for="dsal_ciudad"><i class="bi bi-file-image-fill"></i>Ciudad del país a
-                                        visitar</label>
-                                    <input value="" id="dsal_ciudad" name="dsal_ciudad" class="form-control" type="text">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mt-12 mb-4">
+                                <div class="col-lg-12">
+                                    <iframe id="pdfSalidaPais" title="PDF" class="text-center" width="100%" height="500px" src=""></iframe>
                                 </div>
                             </div>
 
-                            <div class="row justify-content-around mb-4">
-                                <div class="col-lg-6">
-                                    <label for="dsal_transporte" class="form-label"><i class="bi bi-airplane-fill"></i>Seleccione el transporte:</label>
-                                    <select name="dsal_transporte" id="dsal_transporte" class="form-select">
-                                        <option value="">Seleccione el transporte</option>
-                                        <?php foreach ($transportes as $transporte) { ?>
-                                            <option value="<?= $transporte['transporte_id'] ?>">
-                                                <?= $transporte['transporte_descripcion'] ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-
-                                <div class="row justify-content-center mt-12 mb-4">
-                                    <div class="col-lg-12">
-                                        <label for="sal_salida"><i class="bi bi-file-pdf-fill"></i>Documentos
-                                            PDF</label>
-                                        <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
-                                        <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
-                                        <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
-                                    </div>
-
-                                </div>
-
-                                <div class="row justify-content-center mt-12 mb-4">
-                                    <div class="col-lg-6">
-                                        <button type="click" id="btnModificar" name="btnModificar" class="btn btn-outline-warning w-100">Modificar</button>
-                                    </div>
+                            <div class="row justify-content-center mt-12 mb-4" style="margin-top: 20px;">
+                                <div class="col-lg-2">
+                                    <button type="button" id="modificar" name="modificar" class="btn btn-outline-warning w-100 overflow-visible text-wrap">Modificar</button>
                                 </div>
                             </div>
                         </div>
                         <div id="pdf">
                             <div class="row justify-content-around mb-4">
-    
+
                                 <div class="col-lg-12">
                                     <label for="pdf_ruta"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>
                                     <input value="" id="ste_catalogo" name="ste_catalogo" class="form-control" type="hidden" placeholder="Número de catálogo">
@@ -201,12 +171,21 @@
                             </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" id="btnCancelar" data-bs-dismiss="modal">Cerrar</button>
+
+                    <div class="modal-footer">
+                        <button type="button" id="cerrarModal"class="btn btn-danger W-40" data-bs-dismiss="modal" onclick=" borrarTodo()">Cerrar</button>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="./build/js/busquedasalpais/index.js"></script>
+        <script>
+            var paisesData = <?php echo json_encode($paises); ?>;
+            var transporteData = <?php echo json_encode($transportes); ?>;
+
+
+           
+        </script>
+
+        <script src="./build/js/busquedasalpais/index.js"></script>

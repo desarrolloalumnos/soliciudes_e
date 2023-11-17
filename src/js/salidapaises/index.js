@@ -25,15 +25,6 @@ window.eliminarDiv = (e) => {
 
 let counter = 1;
 const uniqueId = `eliminarDiv_${counter++}`;
-// const transporteId = `dsal_transporte_${counter}`;
-// const ciudadId = `dsal_ciudad_${counter}`;
-// const paisId = `dsal_pais_${counter}`;
-
-const eliminarDiv = async (e) => {
-    e.preventDefault();
-    const $element = e.target.closest('.row');
-    $element.remove();
-}
 
 const templateElement = (paises,transportes) => {
        
@@ -245,12 +236,12 @@ const guardar = async (evento) => {
         location.reload();
 };
 
-
-btnGuardar.addEventListener('click', guardar);
-btnAddPais.addEventListener("click", (e) => {
-    e.preventDefault();
+const agregaDiv = async(evento) =>{
+    evento.preventDefault();
     const $div = document.createElement("div");
     $div.innerHTML = templateElement(paisesData, transporteData);
     divAddPaises.appendChild($div);
-});
+}
+btnGuardar.addEventListener('click', guardar);
+btnAddPais.addEventListener("click", agregaDiv);
 
