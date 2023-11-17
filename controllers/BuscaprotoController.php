@@ -28,6 +28,7 @@ class BuscaprotoController{
         ste_id,
         pco_id,
         ste_cat,
+        sol_id,
         gra_desc_lg,
         TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
         cmv_tip,
@@ -47,7 +48,7 @@ class BuscaprotoController{
         inner join mper on ste_cat = per_catalogo
         inner join grados on ste_gra = gra_codigo
         inner join se_pdf on pdf_solicitud = sol_id
-        WHERE pco_situacion = 1";
+        WHERE pco_situacion = 1  AND sol_situacion = 1";
     
 
         try {
@@ -72,6 +73,7 @@ public static function buscarModalApi()
     $sql = " SELECT
         ste_id,
         pco_id,
+        pco_autorizacion,
         ste_cat,
         gra_desc_lg,
         TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombre,
@@ -144,6 +146,9 @@ public static function modificarApi(){
 
         try {
 
+            // echo json_encode($_POST);
+            // exit;
+
             $fechaInicioActividad = $_POST['pco_fechainicio'];
             $fechaFormateadaIni = date('Y-m-d H:i', strtotime($fechaInicioActividad));
             $_POST['pco_fechainicio'] = $fechaFormateadaIni;
@@ -153,14 +158,16 @@ public static function modificarApi(){
             $fechaFormateadaFin = date('Y-m-d H:i', strtotime($fechaFinActividad));
             $_POST['pco_fechafin'] = $fechaFormateadaFin;
          
+            // $Solicitud = new Protocolosol($_POST);
+            // $resultado = $Solicitud->actualizar();
 
-            if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
+             if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
                 $solicitante = Solicitante::find($_POST['ste_id']);
                 $solicitante->ste_telefono = $_POST['ste_telefono'];
                 $resultado = $solicitante->actualizar();
             } else {
             }
-
+            
             if (isset($_POST['sol_id']) && !empty($_POST['sol_id'])) {
                 $solicitud = Solicitud::find($_POST['sol_id']);
                 $solicitud->sol_obs = $_POST['sol_obs'];
@@ -172,7 +179,6 @@ public static function modificarApi(){
             if (isset($_POST['cmv_id']) && !empty($_POST['cmv_id'])) {
                 $comboId = $_POST['cmv_id'];
                 $combo = Protocolo::find($comboId);
-                $combo->cmv_dependencia = $_POST['cmv_dependencia'];
                 $combo->cmv_tip = $_POST['cmv_tip'];
                 $comboResultado = $combo->actualizar();
                 
@@ -180,17 +186,17 @@ public static function modificarApi(){
 
             if (isset($_POST['pco_id']) && !empty($_POST['pco_id'])) {
             $protocolo = Protocolosol::find($_POST['pco_id']);
-            $protocolo->pco_fechainicio = $_POST['pco_fechainicio'];
+            $protocolo->pco_cmbv = $_POST['pco_cmbv'];
             $protocolo->pco_dir = $_POST['pco_dir'];
             $protocolo->pco_just = $_POST['pco_just'];
-            $protocolo->pco_fechainicio = strtotime($_POST['pco_fechainicio']); 
-            $protocolo->pco_fechafin = strtotime($_POST['pco_fechafin']); 
+            $protocolo->pco_fechainicio = ($_POST['pco_fechainicio']); 
+            $protocolo->pco_fechafin = ($_POST['pco_fechafin']); 
             $protocoloResultado = $protocolo->actualizar();
             
             } else {
             }
                 
-            if ($protocoloResultado['resultado'] == 1) {
+            if ($resultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1

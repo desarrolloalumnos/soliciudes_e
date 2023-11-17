@@ -10,7 +10,6 @@ class Protocolosol extends ActiveRecord {
     public $pco_id;
     public $pco_autorizacion;
     public $pco_cmbv;
-    public $pco_civil;
     public $pco_fechainicio;
     public $pco_fechafin;
     public $pco_dir;
@@ -21,7 +20,6 @@ class Protocolosol extends ActiveRecord {
         $this->pco_id = $args['pco_id'] ?? null;
         $this->pco_autorizacion = $args['pco_autorizacion'] ?? '';
         $this->pco_cmbv = $args['pco_cmbv'] ?? '';
-        $this->pco_civil = $args['pco_civil'] ?? '';
         $this->pco_fechainicio = $args['pco_fechainicio'] ?? '';
         $this->pco_fechafin = $args['pco_fechafin'] ?? '';
         $this->pco_dir = $args['pco_dir'] ?? '';
