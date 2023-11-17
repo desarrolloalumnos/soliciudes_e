@@ -394,13 +394,23 @@ const eliminar = async (e) => {
 
 
 buscar();
+const verPDF = (e) => {
+    // const button = e.target;
+    const boton = e.target
+    let ruta = boton.dataset.ruta
+
+    let pdf = btoa(btoa(btoa(ruta)))
+
+    window.open(`/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`)
+
+}
 
 btnBuscar.addEventListener('click', buscar);
 btnModificar.addEventListener('click', modificar)
 // // addPdf.addEventListener('click',modificarPdf);
 // btnCancelar.addEventListener('click', limpiarModelProtocolo)
 datatable.on('click', '.btn-warning', buscarModal);
-// datatable.on('click', '.btn-outline-info', verPDF);
+datatable.on('click', '.btn-outline-info', verPDF);
 datatable.on('click', '.btn-danger', eliminar);
 btnCalendario.addEventListener('click', buscarCalender)
 datatable.on('click', '.btn-outline-warning', traePdf);
