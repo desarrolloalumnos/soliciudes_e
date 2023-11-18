@@ -198,7 +198,6 @@ class BuscasalpaisController
 
         try {
 
-
             $fechaSalida = $_POST['sal_salida'];
             $fechaFormateadaSalida = date('Y-m-d H:i', strtotime($fechaSalida));
             $_POST['sal_salida'] = $fechaFormateadaSalida;
@@ -232,12 +231,13 @@ class BuscasalpaisController
                     $transporteResultado = $transporte->actualizar();
                 }
             }
-
+            if (isset($_POST['sal_id']) && !empty($_POST['sal_id'])) {
             $salId = $_POST['sal_id'];
             $salidaPais = Salidapais::find($salId);
             $salidaPais->sal_salida = $_POST['sal_salida'];
             $salidaPais->sal_ingreso = $_POST['sal_ingreso'];
             $salidaPaisResultado = $salidaPais->actualizar();
+        }
 
             if (isset($_POST['dsal_id']) && !empty($_POST['dsal_id'])) {
                 $dsalId = $_POST['dsal_id'];
@@ -256,11 +256,6 @@ class BuscasalpaisController
                 echo json_encode([
                     'mensaje' => 'Registro de salida de país modificado correctamente',
                     'codigo' => 1
-                ]);
-            } else {
-                echo json_encode([
-                    'mensaje' => 'Error al modificar el registro de salida de país',
-                    'codigo' => 0
                 ]);
             }
         } catch (Exception $e) {

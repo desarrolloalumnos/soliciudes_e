@@ -7,14 +7,14 @@ import { validarFormulario, Toast, confirmacion } from "../funciones";
 const formulario = document.getElementById('formularioSalidapaises');
 const btnGuardar = document.getElementById('btnGuardar');
 const btnClearPais = document.getElementById('clearPais');
+const divAddPaises = document.getElementById('seleccion');
+const btnAddPais = document.getElementById('addPais');
 
 
 formulario.nombre.disabled = true;
 formulario.nombre2.disabled = true;
 btnGuardar.parentElement.style.display = 'block';
 
-const divAddPaises = document.getElementById('seleccion');
-const btnAddPais = document.getElementById('addPais');
 
 window.eliminarDiv = (e) => {
     const $element = e.target.closest('.row');

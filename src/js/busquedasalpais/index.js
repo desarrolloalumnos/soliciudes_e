@@ -8,24 +8,20 @@ const modalSalidapaises = new Modal(document.getElementById('modalSalidapaises')
     backdrop: 'static',
     keyboard: false
 });
-const divInpust = document.getElementById('masInputs')
-const btnAddPais = document.getElementById('addPais');
-const divAddPaises = document.getElementById('seleccion');
-const formulario = document.getElementById('formularioSalidapaises');
+const divInpust = document.getElementById('masInputs');
+const formulario = document.getElementById('formularioSalida');
 const formulario2 = document.getElementById('formularioSalidapais');
-const btnCerrarModal = document.getElementById('cerrarModal');
-const btnModificar = document.getElementById('btnModificar');
+const btnModificar = document.getElementById('modificarSalidas');
 const btnCancelar = document.getElementById('btnCancelar');
 const btnBuscar = document.getElementById('btnBuscar');
-const addPdf = document.getElementById('addPdf');
-const pdf = document.getElementById('formularioPdf');
+const divSalidas = document.getElementById('divSalidas');
+const divPdf = document.getElementById('divPdf');
 const iframe = document.getElementById('pdfSalidaPais')
 const ofModal = document.getElementById('cerrarModal')
 
 formulario2.ste_cat2.disabled = true;
 formulario2.ste_fecha2.disabled = true;
 formulario2.nombre.disabled = true;
-
 
 let contador = 1;
 const datatable = new Datatable('#tablaSalidapaises', {
@@ -91,7 +87,7 @@ const datatable = new Datatable('#tablaSalidapaises', {
             <div class="btn-group">
             <button class="btn btn-warning" 
             data-id='${data}'>DATOS</button>
-            <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
+            <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-pdf_solicitud='${row["pdf_solicitud"]}'>PDF</button>
             </div>`
         },
         {
@@ -104,8 +100,6 @@ const datatable = new Datatable('#tablaSalidapaises', {
         },
     ],
 });
-
-
 
 const buscar = async () => {
     const url = `/soliciudes_e/API/busquedasalpais/buscar`;
@@ -134,16 +128,7 @@ const buscar = async () => {
     formulario.reset();
 }
 
-
-
-
-
-let counter = 1;
-
-
-
 const buscarModal = async (e) => {
-    const contenedorElementos = document.getElementById("elementos");
 
     const boton = e.target
     let ids = boton.dataset.id
@@ -161,7 +146,11 @@ const buscarModal = async (e) => {
         const data = await respuesta.json();
 
 
-        if (data) {
+        if (data) {            
+            Toast.fire({
+                title: 'Abriendo solicitud',
+                icon: 'success'
+            });
             const dato = data[0]
             console.log(dato)
             let fecha1 = dato.ste_fecha
@@ -192,7 +181,7 @@ const buscarModal = async (e) => {
                 const agregaDivPais = async () => {
                     const $div = document.createElement("div");
                     $div.className = "col-lg-4 mb-3";
-                    $div.id = `dsal_pais${counter++}`;
+                    $div.id = `dsal_pais${contador++}`;
                     const label = document.createElement("label")
                     label.for = `dsal_pais${index}`;
                     label.class = 'form-label';
@@ -254,7 +243,7 @@ const buscarModal = async (e) => {
                 const agregaDivTransporte = async () => {
                     const $div = document.createElement("div");
                     $div.className = "col-lg-3 mb-3";
-                    $div.id = `dsal_transporte${counter++}`;
+                    $div.id = `dsal_transporte${contador++}`;
                     const label = document.createElement("label")
                     label.for = `dsal_transporte${indice}`;
                     label.class = 'form-label';
@@ -274,7 +263,6 @@ const buscarModal = async (e) => {
                     defaultOption.innerText = "Seleccione";
                     select.appendChild(defaultOption);
 
-                    // Agrega opciones desde dsal_transporteesData
                     transporteData.forEach(item => {
                         const option = document.createElement('option');
                         option.value = item.transporte_id;
@@ -287,7 +275,7 @@ const buscarModal = async (e) => {
                     closeButton.style.marginLeft = '10px';
                     closeButton.innerText = 'X';
                     closeButton.addEventListener('click', () => {
-                        // Elimina el div actual
+
                         $div.remove();
                     });
                     const addButton = document.createElement('button');
@@ -296,7 +284,7 @@ const buscarModal = async (e) => {
                     addButton.style.marginLeft = '10px';
                     addButton.innerText = 'ADD';
                     addButton.addEventListener('click', () => {
-                        // Elimina el div actual
+
                         agregaDivTransporte();
                     });
 
@@ -316,7 +304,7 @@ const buscarModal = async (e) => {
                 const agregaDivCiudad = async () => {
                     const $div = document.createElement("div");
                     $div.className = "col-lg-3 mb-3";
-                    $div.id = `dsal_ciudad${counter++}`;
+                    $div.id = `dsal_ciudad${contador++}`;
                     const label = document.createElement("label")
                     label.for = `dsal_ciudad${indice}`;
                     label.class = 'form-control';
@@ -329,14 +317,14 @@ const buscarModal = async (e) => {
                     input.className = "form-control";
                     input.appendChild(label)
 
-                
+
                     const closeButton = document.createElement('button');
                     closeButton.type = 'button';
                     closeButton.className = 'btn btn-danger mt-3';
                     closeButton.style.marginLeft = '10px';
                     closeButton.innerText = 'X';
                     closeButton.addEventListener('click', () => {
-                        // Elimina el div actual
+
                         $div.remove();
                     });
                     const addButton = document.createElement('button');
@@ -345,7 +333,7 @@ const buscarModal = async (e) => {
                     addButton.style.marginLeft = '10px';
                     addButton.innerText = 'ADD';
                     addButton.addEventListener('click', () => {
-                        // Elimina el div actual
+
                         agregaDivCiudad();
                     });
 
@@ -364,16 +352,12 @@ const buscarModal = async (e) => {
 
             let pdfSinCorregir = dato.pdf_ruta;
             let pdfCorregido = pdfSinCorregir.substring(10);
-            
+
             let pdf = btoa(btoa(btoa(pdfCorregido)));
             let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
             iframe.src = ver
-
-
-            Toast.fire({
-                title: 'Abriendo solicitud',
-                icon: 'success'
-            });
+            divPdf.style.display ='none';
+            divSalidas.style.display ='block';
             modalSalidapaises.show();
 
         } else {
@@ -385,53 +369,38 @@ const buscarModal = async (e) => {
     } catch (error) {
         console.log(error);
     }
-    formulario.reset();
+
 }
 
+const traePdf = (e) => {
 
+    const button = e.target;
+    const pdf_id = button.dataset.pdf_id;
+    const pdf_solicitud = button.dataset.pdf_solicitud;
 
+    const dataset = {
+        pdf_id,
+        pdf_solicitud
+    };
+        formulario2.pdf_solicitud.value = dataset.pdf_solicitud;
+        formulario2.pdf_id.value = dataset.pdf_id;
+        divSalidas.style.display = 'none'
+        divPdf.style.display ='block';
+        modalSalidapaises.show()
 
-const limpiarModelSalidapaises = async () => {
-    modalSalidapaises.hide()
-}
+     
+};
 
-
-// const traePdf = (e) => {
-
-//     modalPdf.show()
-//     const button = e.target;
-//     const ste_cat = button.dataset.ste_cat;
-//     const pdf_id = button.dataset.pdf_id;
-//     const pdf_solicitud = button.dataset.pdf_solicitud;
-
-
-//     const dataset = {
-
-//         ste_cat,
-//         pdf_id,
-//         pdf_solicitud
-//     };
-//     colocarPdf(dataset)
-
-// };
-
-// const colocarPdf = (dataset) => {
-//     ste_cat2.value = dataset.ste_cat;
-//     pdf.pdf_solicitud.value = dataset.pdf_solicitud;
-//     pdf.pdf_id.value = dataset.pdf_id;
-
-
-// }
 
 const modificar = async (evento) => {
 
     evento.preventDefault();
-    let catalogo = formulario2.ste_cat.value
-    let fecha = formulario2.ste_fecha.value
+    let catalogo = formulario2.ste_cat2.value
+    let fecha = formulario2.ste_fecha2.value
 
     const body = new FormData(formulario2);
-    body.append('ste_cat', catalogo)
-    body.append('ste_fecha', fecha)
+    body.append('ste_cat2', catalogo)
+    body.append('ste_fecha2', fecha)
     const url = '/soliciudes_e/API/busquedasalpais/modificar';
     const headers = new Headers();
     headers.append("X-Requested-With", "fetch");
@@ -450,7 +419,7 @@ const modificar = async (evento) => {
                 formulario.reset();
                 icon = 'success'
                 buscar();
-                // modalSalidapaises.hide();
+                modalSalidapaises.hide()
                 break;
 
             case 0:
@@ -569,7 +538,7 @@ const eliminar = async (e) => {
         }
     }
 
-    // buscar();
+    buscar();
 }
 
 const verPDF = (e) => {
@@ -583,7 +552,6 @@ const verPDF = (e) => {
 
 }
 
-
 const borrarTodo = (e) => {
     e.preventDefault()
     divInpust.innerHTML = ''
@@ -592,12 +560,12 @@ const borrarTodo = (e) => {
 buscar();
 
 // btnBuscar.addEventListener('click', buscar);
-// // btnModificar.addEventListener('click', modificar)
+btnModificar.addEventListener('click', modificar)
 // btnCancelar.addEventListener('click', limpiarModelSalidapaises)
 datatable.on('click', '.btn-warning', buscarModal);
-ofModal.addEventListener('click',borrarTodo)
+ofModal.addEventListener('click', borrarTodo)
 
-// datatable.on('click', '.btn-outline-warning', traePdf);
+datatable.on('click', '.btn-outline-warning', traePdf);
 datatable.on('click', '.btn-outline-info', verPDF);
 // datatable.on('click', '.btn-danger', eliminar);
 
