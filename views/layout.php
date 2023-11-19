@@ -60,7 +60,7 @@
                     <!-- div para busqueda de solicitudes  -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
-                            <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar Solicitud
+                            <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Revisar Solicitud
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
@@ -135,7 +135,7 @@
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/direccionpersonal">
-                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Enviar
+                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Solicitudes Recibidas
                                 </a>
                             </li>
                             <li>

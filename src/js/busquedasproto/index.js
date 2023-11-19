@@ -289,13 +289,6 @@ const buscarModal = async (e) => {
 }
 
 
-
-// const limpiarModelProtocolo = async () => {
-//     modalProtocolo.hide()
-// }
-
-
-
 const modificar = async (evento) => {
 
     evento.preventDefault();

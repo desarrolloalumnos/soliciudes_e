@@ -98,8 +98,9 @@ class BuscasalpaisController
                     'ciudad' => $ciudad
                 ];
             }
-
+        
             echo json_encode($valores);
+            
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
@@ -133,7 +134,7 @@ class BuscasalpaisController
           inner join se_solicitante on sol_solicitante=ste_id
           inner join se_pdf on pdf_solicitud=sol_id
           inner join mper on ste_cat = per_catalogo
-       WHERE sol_situacion = 1 AND ste_id = $id";
+       WHERE sol_situacion >= 1 AND ste_id = $id";
 
         $valores = [];
 
