@@ -159,8 +159,10 @@ class BuscasController
 
                 $solicitante->ste_telefono = $_POST['ste_telefono'];
                 $resultado = $solicitante->actualizar();
-            } else {
-            }
+                if ($resultado['resultado'] == 1) {
+                    $modificacionExitosa = true;
+                }
+            } 
 
 
 
@@ -175,6 +177,9 @@ class BuscasController
                     $parejaCivil->parejac_direccion = $_POST['parejac_direccion'];
                     $parejaCivil->parejac_dpi = $_POST['parejac_dpi'] ?? '';
                     $parejaCivilResultado = $parejaCivil->actualizar();
+                    if ($parejaCivilResultado['resultado'] == 1) {
+                        $modificacionExitosa = true;
+                    }
                 }
             }
 
@@ -191,6 +196,9 @@ class BuscasController
                     $parejaMilitar->parejam_arm = $_POST['parejam_arm'];
                     $parejaMilitar->parejam_emp = $_POST['parejam_emp'];
                     $parejaMilitarResultado = $parejaMilitar->actualizar();
+                    if ($parejaMilitarResultado['resultado'] == 1) {
+                        $modificacionExitosa = true;
+                    }
                 }
             }
 
@@ -203,9 +211,12 @@ class BuscasController
             $matrimonio->mat_fecha_lic_ini = $_POST['mat_fecha_lic_ini'];
             $matrimonio->mat_fecha_lic_fin = $_POST['mat_fecha_lic_fin'];
             $matrimonioResultado = $matrimonio->actualizar();
-
-
             if ($matrimonioResultado['resultado'] == 1) {
+                $modificacionExitosa = true;
+            }
+
+
+            if ($modificacionExitosa) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1

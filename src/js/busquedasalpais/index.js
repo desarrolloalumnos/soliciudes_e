@@ -13,6 +13,7 @@ const formulario = document.getElementById('formularioSalida');
 const formulario2 = document.getElementById('formularioSalidapais');
 const btnModificar = document.getElementById('modificarSalidas');
 const btnCancelar = document.getElementById('btnCancelar');
+const btnModificarPdf = document.getElementById('addPdf')
 const btnBuscar = document.getElementById('btnBuscar');
 const divSalidas = document.getElementById('divSalidas');
 const divPdf = document.getElementById('divPdf');
@@ -386,9 +387,8 @@ const traePdf = (e) => {
         formulario2.pdf_id.value = dataset.pdf_id;
         divSalidas.style.display = 'none'
         divPdf.style.display ='block';
-        modalSalidapaises.show()
-
-     
+        modalSalidapaises.className = 'modal fade modal-sm'
+        modalSalidapaises.show();     
 };
 
 
@@ -412,6 +412,7 @@ const modificar = async (evento) => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
+    
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
         switch (codigo) {
@@ -441,53 +442,52 @@ const modificar = async (evento) => {
     }
 }
 
-// const modificarPdf = async (evento) => {
+const modificarPdf = async (evento) => {
 
-//     evento.preventDefault();
+    evento.preventDefault();
+    let ste_id = formulario2.ste_cat2.value
+    const body = new FormData(formulario2);
+    body.append('ste_cat2', ste_id)
+    const url = '/soliciudes_e/API/busquedasalpais/modificarPdf';
+    const headers = new Headers();
+    headers.append("X-Requested-With", "fetch");
+    const config = {
+        method: 'POST',
+        body
+    }
 
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+   
+        const { codigo, mensaje, detalle } = data;
+        let icon = 'info'
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                icon = 'success'
+                buscar();
+                modalSalidapaises.hide()
+                break;
 
-//     const body = new FormData(pdf);
-//     body.append('ste_cat2', ste_id)
-//     const url = '/soliciudes_e/API/busquedasalpais/modificarPdf';
-//     const headers = new Headers();
-//     headers.append("X-Requested-With", "fetch");
-//     const config = {
-//         method: 'POST',
-//         body
-//     }
+            case 0:
+                icon = 'error'
+                console.log(detalle)
+                break;
 
-//     try {
-//         const respuesta = await fetch(url, config)
-//         const data = await respuesta.json();
+            default:
+                break;
+        }
 
-//         const { codigo, mensaje, detalle } = data;
-//         let icon = 'info'
-//         switch (codigo) {
-//             case 1:
-//                 formulario.reset();
-//                 icon = 'success'
-//                 buscar();
-//                 modalPdf.hide()
-//                 break;
+        Toast.fire({
+            icon,
+            text: mensaje
+        })
 
-//             case 0:
-//                 icon = 'error'
-//                 console.log(detalle)
-//                 break;
-
-//             default:
-//                 break;
-//         }
-
-//         Toast.fire({
-//             icon,
-//             text: mensaje
-//         })
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const eliminar = async (e) => {
     const button = e.target;
@@ -497,7 +497,7 @@ const eliminar = async (e) => {
 
         const body = new FormData()
         body.append('sol_id', id)
-        const url = '/soliciudes_e/API/busquedasalpais/eliminar';
+        const url = '/soliciudes_e/API/busquedasc/eliminar';
 
         const headers = new Headers();
         headers.append("X-Requested-With", "fetch");
@@ -561,13 +561,13 @@ buscar();
 
 // btnBuscar.addEventListener('click', buscar);
 btnModificar.addEventListener('click', modificar)
-// btnCancelar.addEventListener('click', limpiarModelSalidapaises)
 datatable.on('click', '.btn-warning', buscarModal);
-ofModal.addEventListener('click', borrarTodo)
+ofModal.addEventListener('click', borrarTodo);
+btnModificarPdf.addEventListener('click',modificarPdf);
 
 datatable.on('click', '.btn-outline-warning', traePdf);
 datatable.on('click', '.btn-outline-info', verPDF);
-// datatable.on('click', '.btn-danger', eliminar);
+datatable.on('click', '.btn-danger', eliminar);
 
 
 

@@ -29,78 +29,63 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/soliciudes_e/"><i class="bi bi-house-fill me-2"></i>Inicio</a>
                     </li>
-
-                    <!-- SOLICITUD DE MATRIMONIO -->
+                    <!-- div para ingreso de solicitudes -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-calendar-heart-fill me-2"></i>Matrimonio
+                            <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Solicitud
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
-                            <a class="dropdown-item" href="/soliciudes_e/busquedasc">
-                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
-                            </a>
-                            </li>
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/casamientos">
-                                    <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
+                                    <i class="bi bi-calendar-heart-fill me-2"></i>Matrimonio
                                 </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                     <!-- SOLICITUD DE SALIDA DEL PAIS -->
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-airplane-engines me-2"></i>Salida del Pais
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
-                            <a class="dropdown-item" href="/soliciudes_e/busquedasalpais">
-                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
-                            </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/salidapaises">
-                                    <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
+                                    <i class="bi bi-airplane-engines me-2"></i>Salida del Pais
                                 </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                     <!-- SOLICITUD DE LICENCIA TEMPORAL -->
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-dash me-2"></i>Licencia Temporal
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
-                            <a class="dropdown-item" href="/soliciudes_e/busquedaslict">
-                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
-                            </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/licencias">
-                                    <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
+                                    <i class="bi bi-person-dash me-2"></i>Licencia Temporal
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/protocolosol">
+                                    <i class="bi bi-music-note me-2"></i>Combos y Vallas
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- div para busqueda de solicitudes  -->
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
+                            <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar Solicitud
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/busquedasc">
+                                    <i class="bi bi-calendar-heart-fill me-2"></i>Matrimonio
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/busquedasalpais">
+                                    <i class="bi bi-airplane-engines me-2"></i>Salida del Pais
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/busquedaslict">
+                                    <i class="bi bi-person-dash me-2"></i>Licencia Temporal
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/soliciudes_e/busquedasproto">
+                                    <i class="bi bi-music-note me-2"></i>Combos y Vallas
                                 </a>
                             </li>
                         </ul>
                     </div>
 
-                     <!-- SOLICITUD DE BANDA, COMBO, MARIMBA Y VALLAS -->
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-music-note me-2"></i>Combos y vallas
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
-                            <a class="dropdown-item" href="/soliciudes_e/busquedasproto">
-                                <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Buscar
-                            </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="/soliciudes_e/protocolosol">
-                                    <i class="ms-lg-0 ms-2 bi bi-file-earmark-text me-2"></i>Llenar Documento
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
 
                     <!-- MODULO DE ADMINISTRACION DE LAS OFICINAS DE PERSONAL COMANDOS Y BRIGADAS -->
                     <div class="nav-item dropdown">
@@ -190,8 +175,8 @@
                         </ul>
                     </div>
 
-                     <!-- MODULO DE ADMINISTRACION DEL MINISTRO DE LA DEFENSA NACIONAL -->
-                     <div class="nav-item dropdown">
+                    <!-- MODULO DE ADMINISTRACION DEL MINISTRO DE LA DEFENSA NACIONAL -->
+                    <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-check2-square me-2"></i>MD
                         </a>
@@ -218,7 +203,7 @@
                             </li>
                             <li>
                                 <a class="nav-link" aria-current="page" href="/soliciudes_e/articulos"><i class="bi bi-book-fill me-2"></i>Articulos Licencia Temporal</a>
-                            </li> 
+                            </li>
                             <li>
                                 <a class="nav-link" aria-current="page" href="/soliciudes_e/transportes"><i class="bi bi-airplane-fill me-2"></i>Tipos de transportes</a>
                             </li>

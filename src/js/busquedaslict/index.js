@@ -292,7 +292,7 @@ const modificar = async (evento) => {
                 formulario.reset();
                 icon = 'success'
                 buscar();
-                cancelarAccion();
+                modalL.hide()
                 break;
 
             case 0:

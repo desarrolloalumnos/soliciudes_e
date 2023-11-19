@@ -69,7 +69,7 @@
                         </div>
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
-                                <label for="ste_fecha">Fecha de Solicitud</label>
+                                <label for="ste_fecha2">Fecha de Solicitud</label>
                                 <input id="ste_fecha2" name="ste_fecha2" class="form-control" type="date">
 
                             </div>
@@ -145,13 +145,13 @@
                             </div>
                         </div>
                     </div>
-                    <div id="divPdf" style="width: 75%;">
+                    <div id="divPdf" style="width: 75%;" class="mx-auto">
                         <div class="row justify-content-around mb-4">
 
                             <div class="col-lg-12">
                                 <label for="pdf_ruta"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>
                                 <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
-                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="text">
+                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
                                 <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
                             </div>
                         </div>

@@ -181,7 +181,7 @@ class BuscalictController
 
 
 
-            if ($licenciaResultado['resultado'] == 1) {
+            if ($licenciaResultado) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1

@@ -101,6 +101,7 @@ $router->get('/busquedasalpais', [BuscasalpaisController::class,'index']);
 $router->get('/API/busquedasalpais/buscar', [BuscasalpaisController::class,'buscarApi']);
 $router->get('/API/busquedasalpais/buscarModal', [BuscasalpaisController::class,'buscarModalApi']);
 $router->post('/API/busquedasalpais/modificar', [BuscasalpaisController::class,'modificarApi']);
+$router->post('/API/busquedasalpais/modificarPdf', [BuscasalpaisController::class,'modificarPdfApi']);
 $router->post('/API/busquedasalpais/eliminar', [BuscasalpaisController::class,'eliminarApi']);
 $router->get('/API/busquedasalpais/pdf', [BuscasalpaisController::class,'VerPdf']);
 
