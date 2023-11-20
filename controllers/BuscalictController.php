@@ -76,44 +76,30 @@ class BuscalictController
     public static function buscarModalApi()
     {
         $id = $_GET ['id'];
-        $sql = "SELECT  
-        ste_id,
-        ste_cat,
-        mat_id,
-        mat_lugar_civil,
-        mat_fecha_bodac,
-        mat_lugar_religioso,
-        mat_fecha_bodar,
-        mat_per_civil,
-        parejac_id,
-        parejac_direccion,
-        parejac_dpi,
-        mat_per_army,
-        parejam_id,
-        parejam_cat,    
-        ste_telefono,
-        gra_desc_lg AS grado_solicitante,
-        TRIM(parejac_nombres) || ' ' || (parejac_apellidos) AS pareja_civil,
-        (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) FROM mper 
-        INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
-        WHERE per_catalogo = parejam_cat) AS grado_pareja,
-        (SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper 
-        WHERE per_catalogo = parejam_cat) AS nombres_pareja,
-        TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombres_solicitante,
-        mat_fecha_lic_ini,
-        mat_fecha_lic_fin,
-        ste_fecha,
-        pdf_ruta
-    FROM se_matrimonio
-    INNER JOIN se_autorizacion ON aut_id = mat_autorizacion
-    INNER JOIN se_solicitudes ON aut_solicitud = sol_id
-    INNER JOIN se_solicitante ON sol_solicitante = ste_id
-    LEFT JOIN se_pareja_civil ON mat_per_civil = parejac_id
-    LEFT JOIN se_pareja_militar ON mat_per_army = parejam_id
-    LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
-    INNER JOIN grados ON ste_gra = gra_codigo
-    INNER JOIN se_pdf ON pdf_solicitud = sol_id 
-    where sol_situacion >= 1 AND ste_id = $id ";
+                    $sql = "SELECT  
+                    ste_id,
+                    ste_cat,
+                    sol_motivo,
+                    lit_id,
+                    lit_mes_consueldo,
+                    lit_mes_sinsueldo,
+                    lit_fecha1,
+                    lit_fecha2,
+                    ste_telefono,
+                    gra_desc_lg AS grado_solicitante,      
+                    TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombres_solicitante,
+                    ste_telefono,
+                    sol_id,
+                    sol_obs,
+                    pdf_ruta
+                FROM se_licencia_temporal
+                INNER JOIN se_autorizacion ON aut_id = lit_autorizacion
+                INNER JOIN se_solicitudes ON aut_solicitud = sol_id
+                INNER JOIN se_solicitante ON sol_solicitante = ste_id
+                INNER JOIN mper ON ste_cat = per_catalogo
+                INNER JOIN grados ON ste_gra = gra_codigo
+                INNER JOIN se_pdf ON pdf_solicitud = sol_id 
+                where sol_situacion >= 1 AND ste_id = $id ";
 
 
         try {
