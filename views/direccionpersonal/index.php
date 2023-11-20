@@ -398,12 +398,6 @@
                             <iframe id="pdfIframe" title="PDF" class="text-center" width="100%" height="500px" src=""></iframe>
                         </div>
                     </div>
-
-                    <div class="row justify-content-center mt-12 mb-4">
-                        <div class="col-lg-4 mt-12 mb-4">
-                            <button type="click" id="btnModificar" name="btnModificar" class="btn btn-outline-warning w-100">Modificar</button>
-                        </div>
-                    </div>
                 </form>
             </div>
             <div class="modal-footer">
