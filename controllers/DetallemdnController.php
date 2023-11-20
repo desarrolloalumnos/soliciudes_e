@@ -15,12 +15,25 @@ class DetallemdnController{
     
     public static function detalleApi()
     {
+        $fechaInicio = $_GET['fechaInicio'];
+        $fechaFin = $_GET['fechaFin'];
 
         $sql = "SELECT
                     SUM(CASE WHEN s.sol_situacion = 5 THEN 1 ELSE 0 END) AS autorizadas,
                     SUM(CASE WHEN s.sol_situacion = 6 THEN 1 ELSE 0 END) AS rechazadas
                 FROM se_solicitudes s
+                INNER JOIN se_solicitante ste ON s.sol_solicitante=ste.ste_id and ste.ste_situacion=1 and ste.ste_fecha is not null
                 WHERE s.sol_situacion IN (5, 6) ";
+                if ($fechaInicio != '' and $fechaFin != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) between '$fechaInicio' and '$fechaFin' ";
+                } elseif ($fechaInicio != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) >= '$fechaInicio' ";
+
+                } elseif ($fechaFin != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) <= '$fechaFin' ";
+                }
+
+
 
         try {
 
@@ -36,17 +49,29 @@ class DetallemdnController{
         }
     }
 
-    public static function detalle2Api()
-    {
-
+    public static function detalle2Api(){
+        
+        $fechaInicio = $_GET['fechaInicio'];
+        $fechaFin = $_GET['fechaFin'];
         $sql = "SELECT
                     m.tse_descripcion AS motivo,
                     COUNT(*) AS cantidad
                 FROM se_solicitudes s
-                INNER JOIN se_tipo_solicitud m ON s.sol_tipo = m.tse_id
-                WHERE s.sol_situacion = 1
-                GROUP BY m.tse_descripcion ";
+                INNER JOIN se_tipo_solicitud m ON s.sol_tipo = m.tse_id                
+                INNER JOIN se_solicitante ste ON s.sol_solicitante=ste.ste_id and ste.ste_situacion=1
+                WHERE s.sol_situacion = 1 ";
 
+
+                if ($fechaInicio != '' and $fechaFin != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) between '$fechaInicio' and '$fechaFin' ";
+                } elseif ($fechaInicio != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) >= '$fechaInicio' ";
+
+                } elseif ($fechaFin != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) <= '$fechaFin' ";
+                }
+
+                $sql .= " GROUP BY m.tse_descripcion ";
         try {
 
             $productos = Solicitud::fetchArray($sql);

@@ -184,7 +184,10 @@ const datatable = new Datatable('#tablaProtocolo', {
 const buscar = async () => {
     verCalendario.style.display = 'none';
     verTabla.style.display = 'block';
-    const url = `/soliciudes_e/API/busquedasproto/buscar`;
+const catalogo = formulario.ste_cat.value
+const fecha = formulario.ste_fecha.value
+console.log(catalogo,fecha);
+    const url = `/soliciudes_e/API/busquedasproto/buscar?catalogo=${catalogo}&fecha=${fecha}`;
     const config = {
         method: 'GET',
     }
@@ -192,6 +195,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
+        console.log(data);
         datatable.clear().draw()
 
         if (data) {

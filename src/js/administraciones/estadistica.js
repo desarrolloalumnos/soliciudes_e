@@ -6,6 +6,11 @@ import { Toast } from "../funciones";
 
 const canvas = document.getElementById('chartEstados')
 const btnActualizar = document.getElementById('btnActualizar')
+
+const inputFechaInicio = document.getElementById('fechaInicio')
+const inputFechaFin = document.getElementById('fechaFin')
+
+
 const context = canvas.getContext('2d');
 const canvas2 = document.getElementById('chartMotivos')
 const context2 = canvas2.getContext('2d');
@@ -49,7 +54,14 @@ const chartMotivos = new Chart(context2, {
 });
 
 const getEstadisticas = async () => {
-    const url = `/soliciudes_e/API/administraciones/estadistica`;
+    const fechaInicio=inputFechaInicio.value
+    const fechaFin=inputFechaFin.value
+
+    console.log(fechaInicio);
+    
+    console.log(fechaFin);
+
+    const url = `/soliciudes_e/API/administraciones/estadistica?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     const config = {
         method: 'GET'
     }
@@ -57,7 +69,7 @@ const getEstadisticas = async () => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-
+// console.log(data);
         if (data) {
             chartEstados.data.labels = ['Enviadas', 'Autorizadas', 'Rechazadas'];
             chartEstados.data.datasets[0].data = [data[0].enviadas, data[0].autorizadas, data[0].rechazadas];
@@ -79,7 +91,9 @@ const getEstadisticas = async () => {
 
 
 const getEstadisticas2 = async () => {
-    const url = `/soliciudes_e/API/administraciones/estadistica2`;
+    const fechaInicio=inputFechaInicio.value
+    const fechaFin=inputFechaFin.value
+    const url = `/soliciudes_e/API/administraciones/estadistica2?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     const config = {
         method: 'GET'
     }
