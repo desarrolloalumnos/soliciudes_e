@@ -32,7 +32,7 @@ class BuscasController
         ste_cat,
         ste_telefono,
         gra_desc_lg,
-        TRIM(parejac_nombres) || '' || TRIM(parejac_apellidos) AS pareja_civil,
+        TRIM(parejac_nombres) || '' || (parejac_apellidos) AS pareja_civil,
         (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) FROM mper 
         INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
         WHERE per_catalogo = parejam_cat) AS grado_pareja,
@@ -100,7 +100,7 @@ class BuscasController
         parejam_cat,    
         ste_telefono,
         gra_desc_lg AS grado_solicitante,
-        TRIM(parejac_nombres) || ' ' || TRIM(parejac_apellidos) AS pareja_civil,
+        TRIM(parejac_nombres) || ' ' || (parejac_apellidos) AS pareja_civil,
         (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) FROM mper 
         INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
         WHERE per_catalogo = parejam_cat) AS grado_pareja,
@@ -174,14 +174,9 @@ class BuscasController
                     $modificacionExitosa = true;
                 }
             } 
-
-
-
             if (isset($_POST['parejac_id']) && !empty($_POST['parejac_id'])) {
                 $parejacId = $_POST['parejac_id'];
                 $parejaCivil = ParejaCivil::find($parejacId);
-
-
                 if ($parejaCivil) {
                     $parejaCivil->parejac_nombres = $_POST['parejac_nombres'];
                     $parejaCivil->parejac_apellidos = $_POST['parejac_apellidos'];
@@ -193,13 +188,9 @@ class BuscasController
                     }
                 }
             }
-
-
             if (isset($_POST['parejam_id']) && !empty($_POST['parejam_id']) && !empty($_POST['parejam_comando'])) {
                 $parejamId = $_POST['parejam_id'];
                 $parejaMilitar = ParejaMilitar::find($parejamId);
-
-
                 if ($parejaMilitar) {
                     $parejaMilitar->parejam_cat = $_POST['parejam_cat'];
                     $parejaMilitar->parejam_comando = $_POST['parejam_comando'];
@@ -212,7 +203,6 @@ class BuscasController
                     }
                 }
             }
-
             $matId = $_POST['mat_id'];
             $matrimonio = Matrimonio::find($matId);
             $matrimonio->mat_lugar_civil = $_POST['mat_lugar_civil'];
@@ -225,8 +215,6 @@ class BuscasController
             if ($matrimonioResultado['resultado'] == 1) {
                 $modificacionExitosa = true;
             }
-
-
             if ($modificacionExitosa) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',

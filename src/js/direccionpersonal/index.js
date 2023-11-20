@@ -173,8 +173,7 @@ const buscarModal = async (e) => {
 
     const boton = e.target
     let tse_id = boton.dataset.tse_id
-    let tipoSolicitud = tse_id
-
+    let tipoSolicitud = tse_id   
     try {
         const boton = e.target
         let ste_id = boton.dataset.id
@@ -190,7 +189,7 @@ const buscarModal = async (e) => {
             if (data) {
                 Toast.fire({
                     title: 'Abriendo Solicitud',
-                    icon: 'info'
+                    icon: 'success'
 
                 })
                 const dato = data[0];

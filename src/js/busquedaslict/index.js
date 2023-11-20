@@ -37,12 +37,12 @@ const datatable = new Datatable('#tablaLicencias', {
         {
             title: 'Grado',
             className: 'text-center',
-            data: 'grado_solicitante'
+            data: 'gra_desc_lg'
         },
         {
             title: 'Nombres',
             className: 'text-center',
-            data: 'nombres_solicitante'
+            data: 'nombre_solicitante'
         },
         {
             title: 'Meses con sueldo',
@@ -92,25 +92,7 @@ const datatable = new Datatable('#tablaLicencias', {
             render: (data, type, row, meta) =>
                 `<div class="btn-group">
                         <button class="btn btn-warning" 
-                        data-id="${data}"                                                   
-                        data-sol_id="${row['sol_id']}"
-                        data-tiempo="${row['tiempo']}"
-                        data-ste_id="${row['ste_id']}"
-                        data-ste_cat="${row['ste_cat']}"
-                        data-sol_obs="${row['sol_obs']}"
-                        data-sol_motivo="${row['sol_motivo']}"
-                        data-ste_telefono="${row['ste_telefono']}"
-                        data-mot_id="${row['mot_id']}"
-                        data-pdf_id="${row['pdf_id']}"
-                        data-pdf_solicitud="${row['pdf_solicitud']}"
-                        data-grado_solicitante="${row['grado_solicitante']}"
-                        data-nombres_solicitante="${row['nombres_solicitante']}"
-                        data-lit_mes_consueldo="${row['lit_mes_consueldo']}"
-                        data-lit_mes_sinsueldo="${row['lit_mes_sinsueldo']}"
-                        data-lit_fecha1="${row['lit_fecha1'].substring(0, 10)}"
-                        data-lit_fecha2="${row['lit_fecha2'].substring(0, 10)}"
-                        data-ste_telefono="${row['ste_telefono']}"
-                        data-pdf_ruta='${row["pdf_ruta"]}'>
+                        data-id="${data}">
                     DATOS
                 </button>
                 <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
