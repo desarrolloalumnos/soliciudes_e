@@ -185,9 +185,6 @@ const buscarModal = async (e) => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log (data)
-        // return;      
-        
         if (data) {
             Toast.fire({
                 title: 'Abriendo Solicitud',
@@ -195,20 +192,19 @@ const buscarModal = async (e) => {
 
             })
             const dato = data[0];
+         
             const mat_fecha_bodac = formatearFecha(dato.mat_fecha_bodac);
             const mat_fecha_bodar = formatearFecha(dato.mat_fecha_bodar);
             const mat_fecha_lic_ini = formatearFecha(dato.mat_fecha_lic_ini);
             const mat_fecha_lic_fin = formatearFecha(dato.mat_fecha_lic_fin);
             const ste_fecha = formatearFecha(dato.ste_fecha);
-        
-            const partes = dato.pareja_civil.split(' ');
+            const partes = dato.pareja_civil.split(' ');                     
             const maxNombres = 2;
             const maxApellidos = 2;
             const nombres = partes.slice(0, maxNombres).join(' ');
             const apellidos = partes.slice(maxNombres, maxNombres + maxApellidos).join(' ');
             formulario2.parejac_nombres.value = nombres;
-            formulario2.parejac_apellidos.value = apellidos;
-        
+            formulario2.parejac_apellidos.value = apellidos;        
             formulario2.ste_id.value = dato.ste_id;
             formulario2.ste_cat.value = dato.ste_cat;
             formulario2.nombre.value = dato.nombres_solicitante;
@@ -314,6 +310,7 @@ const modificar = async (evento) => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
+
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
         switch (codigo) {

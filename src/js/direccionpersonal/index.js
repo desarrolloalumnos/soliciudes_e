@@ -5,13 +5,6 @@ import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion, formatearFecha, formatoTiempo } from "../funciones";
 
 
-const formulario = document.getElementById('formularioDepersonal');
-const formulario2 = document.getElementById('formularioSalidapais');
-const formulario3 = document.getElementById('formularioProto');
-const btnBuscar = document.getElementById('btnBuscar')
-const divInpust = document.getElementById('masInputs');
-const iframe = document.getElementById('pdfSalidaPais')
-const iframeProto = document.getElementById('pdfSalida');
 const modalSalidapaises = new Modal(document.getElementById('modal1'), {
     backdrop: 'static',
     keyboard: false
@@ -20,9 +13,25 @@ const modalProtocolo = new Modal(document.getElementById('modalProto'), {
     backdrop: 'static',
     keyboard: false
 });
-
-
-
+const modalM = new Modal(document.getElementById('modalCasamiento'), {
+    backdrop: 'static',
+    keyboard: false
+});
+const formulario = document.getElementById('formularioDepersonal');
+const formulario2 = document.getElementById('formularioSalidapais');
+const formulario4 = document.getElementById('formularioCasamiento');
+const idPareja = document.getElementById('parejac_id')
+const iframeCasamiento = document.getElementById('pdfIframe');
+const parejam_cat = document.getElementById('parejam_cat');
+const divMilitar = document.getElementById('parejaMilitar');
+const divCivil = document.getElementById('parejaCivil');
+const formulario3 = document.getElementById('formularioProto');
+const btnBuscar = document.getElementById('btnBuscar')
+const divInpust = document.getElementById('masInputs');
+const iframe = document.getElementById('pdfSalidaPais')
+const iframeProto = document.getElementById('pdfSalida');
+divMilitar.style.display = 'none';
+divCivil.style.display = 'none';
 
 let contador = 1;
 const datatable = new Datatable('#tablaDepersonal', {
@@ -163,21 +172,86 @@ const buscar = async () => {
 const buscarModal = async (e) => {
 
     const boton = e.target
-    let ste_id = boton.dataset.id
     let tse_id = boton.dataset.tse_id
-
-    let id = ste_id
-
     let tipoSolicitud = tse_id
 
     try {
         const boton = e.target
         let ste_id = boton.dataset.id
         let id = ste_id
-        if (tipoSolicitud == 3) {
+        if (tipoSolicitud == 1) {
+            console.log(id)
+            const url = `/soliciudes_e/API/busquedasc/buscarModal?id=${id}`;
+            const config = {
+                method: 'GET',
+            }
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
+            if (data) {
+                Toast.fire({
+                    title: 'Abriendo Solicitud',
+                    icon: 'info'
+
+                })
+                const dato = data[0];
+                const mat_fecha_bodac = formatearFecha(dato.mat_fecha_bodac);
+                const mat_fecha_bodar = formatearFecha(dato.mat_fecha_bodar);
+                const mat_fecha_lic_ini = formatearFecha(dato.mat_fecha_lic_ini);
+                const mat_fecha_lic_fin = formatearFecha(dato.mat_fecha_lic_fin);
+                const ste_fecha = formatearFecha(dato.ste_fecha);
+                const partes = dato.pareja_civil.split(' ');
+                const maxNombres = 2;
+                const maxApellidos = 2;
+                const nombres = partes.slice(0, maxNombres).join(' ');
+                const apellidos = partes.slice(maxNombres, maxNombres + maxApellidos).join(' ');
+                formulario4.parejac_nombres.value = nombres;
+                formulario4.parejac_apellidos.value = apellidos;
+                formulario4.ste_id.value = dato.ste_id;
+                formulario4.ste_cat.value = dato.ste_cat;
+                formulario4.nombre.value = dato.nombres_solicitante;
+                formulario4.ste_fecha.value = ste_fecha;
+                formulario4.ste_telefono.value = dato.ste_telefono;
+                formulario4.mat_id.value = dato.mat_id;
+                formulario4.mat_lugar_civil.value = dato.mat_lugar_civil;
+                formulario4.mat_fecha_bodac.value = mat_fecha_bodac;
+                formulario4.mat_lugar_religioso.value = dato.mat_lugar_religioso;
+                formulario4.mat_fecha_bodar.value = mat_fecha_bodar;
+                formulario4.mat_per_civil.value = dato.mat_per_civil;
+                idPareja.value = dato.parejac_id;
+                formulario4.parejac_direccion.value = dato.parejac_direccion;
+                formulario4.parejac_dpi.value = dato.parejac_dpi;
+                formulario4.mat_per_army.value = dato.mat_per_army;
+                formulario4.parejam_id.value = dato.parejam_id;
+                parejam_cat.value = dato.parejam_cat;
+                formulario4.parejaNombre.value = dato.nombres_pareja;
+                formulario4.mat_fecha_lic_ini.value = mat_fecha_lic_ini;
+                formulario4.mat_fecha_lic_fin.value = mat_fecha_lic_fin;
+
+                if (parejam_cat.value === "") {
+                    divMilitar.style.display = 'none';
+                    divCivil.style.display = 'block';
+                } else {
+                    divMilitar.style.display = 'block';
+                    divCivil.style.display = 'none';
+                    parejam_cat.addEventListener('change', buscarCatalogo)
+
+                }
 
 
+                let pdf = btoa(btoa(btoa(dato.pdf_ruta)));
+                let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
 
+                iframeCasamiento.src = ver
+
+                modalM.show()
+            } else {
+                Toast.fire({
+                    title: 'No se encontraron registros',
+                    icon: 'info'
+                });
+            }
+
+        } else if (tipoSolicitud == 3) {
             const url = `/soliciudes_e/API/busquedasalpais/buscarModal?id=${id}`;
 
             const config = {
@@ -345,114 +419,114 @@ const buscarModal = async (e) => {
             const config = {
                 method: 'GET',
             }
-            
-                const respuesta = await fetch(url, config)
-                const data = await respuesta.json();
+
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
 
 
-                if (data) {
-                    Toast.fire({
-                        title: 'Abriendo solicitud',
-                        icon: 'success'
-                    });
-                    const dato = data[0]
-                    let fechaSinFormato = dato.ste_fecha
-                    let fechaSolicitud = formatearFecha(fechaSinFormato)
+            if (data) {
+                Toast.fire({
+                    title: 'Abriendo solicitud',
+                    icon: 'success'
+                });
+                const dato = data[0]
+                let fechaSinFormato = dato.ste_fecha
+                let fechaSolicitud = formatearFecha(fechaSinFormato)
 
-                    let fecha2SinFormato = dato.pco_fechainicio
-                    let fechaInicio = formatearFecha(fecha2SinFormato)
+                let fecha2SinFormato = dato.pco_fechainicio
+                let fechaInicio = formatearFecha(fecha2SinFormato)
 
-                    let fecha3SinFormato = dato.pco_fechafin
-                    let fechaFin = formatearFecha(fecha3SinFormato)
+                let fecha3SinFormato = dato.pco_fechafin
+                let fechaFin = formatearFecha(fecha3SinFormato)
 
 
-                    formulario3.ste_id.value = dato.ste_id
-                    formulario3.ste_cat2.value = dato.ste_cat
-                    formulario3.nombre.value = dato.nombre
-                    formulario3.ste_fecha2.value = fechaSolicitud
-                    formulario3.ste_telefono.value = dato.ste_telefono
-                    formulario3.sol_motivo.value = dato.sol_motivo
-                    formulario3.sol_obs2.value = dato.sol_obs
-                    formulario3.pco_autorizacion.value = dato.pco_autorizacion
-                    formulario3.pco_id.value = dato.pco_id
-                    formulario3.pco_cmbv.value = dato.cmv_id
-                    formulario3.pco_just.value = dato.pco_just
-                    formulario3.pco_fechainicio.value = fechaInicio
-                    formulario3.pco_fechafin.value = fechaFin
-                    formulario3.pco_dir.value = dato.pco_dir
+                formulario3.ste_id.value = dato.ste_id
+                formulario3.ste_cat2.value = dato.ste_cat
+                formulario3.nombre.value = dato.nombre
+                formulario3.ste_fecha2.value = fechaSolicitud
+                formulario3.ste_telefono.value = dato.ste_telefono
+                formulario3.sol_motivo.value = dato.sol_motivo
+                formulario3.sol_obs2.value = dato.sol_obs
+                formulario3.pco_autorizacion.value = dato.pco_autorizacion
+                formulario3.pco_id.value = dato.pco_id
+                formulario3.pco_cmbv.value = dato.cmv_id
+                formulario3.pco_just.value = dato.pco_just
+                formulario3.pco_fechainicio.value = fechaInicio
+                formulario3.pco_fechafin.value = fechaFin
+                formulario3.pco_dir.value = dato.pco_dir
 
-                    let pdfSinCorregir = dato.pdf_ruta;
-                    let pdfCorregido = pdfSinCorregir.substring(10);
+                let pdfSinCorregir = dato.pdf_ruta;
+                let pdfCorregido = pdfSinCorregir.substring(10);
 
-                    let verDoc = btoa(btoa(btoa(pdfCorregido)));
-                    let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
-                    iframeProto.src = ver
-                    modalProtocolo.show()
+                let verDoc = btoa(btoa(btoa(pdfCorregido)));
+                let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
+                iframeProto.src = ver
+                modalProtocolo.show()
 
-                } else {
-                    Toast.fire({
-                        title: 'No se encontraron registros',
-                        icon: 'info'
-                    });
-                }
+            } else {
+                Toast.fire({
+                    title: 'No se encontraron registros',
+                    icon: 'info'
+                });
             }
-        
-        } catch (error) {
-            console.log(error);
         }
+
+    } catch (error) {
+        console.log(error);
     }
+}
 
 
 
 
 const enviar = async (e) => {
-        const button = e.target;
-        const id = button.dataset.id;
+    const button = e.target;
+    const id = button.dataset.id;
 
-        if (await confirmacion('warning', 'Desea enviar esta solicitud?')) {
-            const body = new FormData()
-            body.append('sol_id', id)
-            const url = '/soliciudes_e/API/direccionpersonal/enviarMdn';
-            const headers = new Headers();
-            headers.append("X-Requested-With", "fetch");
-            const config = {
-                method: 'POST',
-                body
-            }
-            try {
-                const respuesta = await fetch(url, config)
-                const data = await respuesta.json();
-                console.log(data);
-
-                const { codigo, mensaje, detalle } = data;
-                let icon = 'info';
-                switch (codigo) {
-                    case 1:
-                        icon = 'success';
-                        buscar();
-                        break;
-
-                    case 0:
-                        icon = 'error';
-                        console.log(detalle);
-                        break;
-
-                    default:
-                        break;
-                }
-
-                Toast.fire({
-                    icon,
-                    text: mensaje,
-                });
-            } catch (error) {
-                console.log(error);
-            }
+    if (await confirmacion('warning', 'Desea enviar esta solicitud?')) {
+        const body = new FormData()
+        body.append('sol_id', id)
+        const url = '/soliciudes_e/API/direccionpersonal/enviarMdn';
+        const headers = new Headers();
+        headers.append("X-Requested-With", "fetch");
+        const config = {
+            method: 'POST',
+            body
         }
+        try {
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
+            console.log(data);
 
+            const { codigo, mensaje, detalle } = data;
+            let icon = 'info';
+            switch (codigo) {
+                case 1:
+                    icon = 'success';
+                    buscar();
+                    break;
+
+                case 0:
+                    icon = 'error';
+                    console.log(detalle);
+                    break;
+
+                default:
+                    break;
+            }
+
+            Toast.fire({
+                icon,
+                text: mensaje,
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
-    buscar();
+
+}
+buscar();
 
 
-    btnBuscar.addEventListener('click', buscar);
-    datatable.on('click', '.btn-primary', buscarModal);
+btnBuscar.addEventListener('click', buscar);
+datatable.on('click', '.btn-primary', buscarModal);

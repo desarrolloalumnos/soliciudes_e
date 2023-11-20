@@ -58,7 +58,7 @@ class DireccionpersonalController
                 JOIN 
                     se_autorizacion aut ON aut.aut_solicitud = s.sol_id
                 WHERE 
-                    s.sol_situacion >= 3 ";
+                    s.sol_situacion = 3 ";
 
         try {
             $resultado = Solicitud::fetchArray($sql);

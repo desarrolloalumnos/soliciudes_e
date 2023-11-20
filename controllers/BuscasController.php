@@ -86,6 +86,7 @@ class BuscasController
         $sql = "SELECT  
         ste_id,
         ste_cat,
+        mat_id,
         mat_lugar_civil,
         mat_fecha_bodac,
         mat_lugar_religioso,
@@ -99,7 +100,7 @@ class BuscasController
         parejam_cat,    
         ste_telefono,
         gra_desc_lg AS grado_solicitante,
-        TRIM(parejac_nombres) || '' || TRIM(parejac_apellidos) AS pareja_civil,
+        TRIM(parejac_nombres) || ' ' || TRIM(parejac_apellidos) AS pareja_civil,
         (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) FROM mper 
         INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
         WHERE per_catalogo = parejam_cat) AS grado_pareja,
@@ -119,7 +120,7 @@ class BuscasController
     LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
     INNER JOIN se_pdf ON pdf_solicitud = sol_id 
-    where sol_situacion = 1 AND ste_id = $id ";
+    where sol_situacion >= 1 AND ste_id = $id ";
 
 
         try {
