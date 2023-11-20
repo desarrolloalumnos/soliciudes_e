@@ -9,7 +9,7 @@ const btnActualizar = document.getElementById('btnActualizar')
 
 const inputFechaInicio = document.getElementById('fechaInicio')
 const inputFechaFin = document.getElementById('fechaFin')
-const buttonRefrescar = document.getElementById('refrescarGraficas')
+
 
 const context = canvas.getContext('2d');
 const canvas2 = document.getElementById('chartMotivos')
@@ -69,7 +69,7 @@ const getEstadisticas = async () => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-console.log(data);
+// console.log(data);
         if (data) {
             chartEstados.data.labels = ['Enviadas', 'Autorizadas', 'Rechazadas'];
             chartEstados.data.datasets[0].data = [data[0].enviadas, data[0].autorizadas, data[0].rechazadas];

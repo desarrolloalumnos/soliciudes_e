@@ -9,6 +9,8 @@ const btnActualizar = document.getElementById('btnActualizar')
 const context = canvas.getContext('2d');
 const canvas2 = document.getElementById('chartMotivos')
 const context2 = canvas2.getContext('2d');
+const inputFechaInicio = document.getElementById('fechaInicio')
+const inputFechaFin = document.getElementById('fechaFin')
 
 
 const chartEstados = new Chart(context, {
@@ -49,7 +51,15 @@ const chartMotivos = new Chart(context2, {
 });
 
 const getEstadisticas = async () => {
-    const url = `/soliciudes_e/API/direccionpersonal/estadistica`;
+
+    const fechaInicio=inputFechaInicio.value
+    const fechaFin=inputFechaFin.value
+
+    console.log(fechaInicio);
+    
+    console.log(fechaFin);
+
+    const url = `/soliciudes_e/API/direccionpersonal/estadistica?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     const config = {
         method: 'GET'
     }
@@ -79,7 +89,11 @@ const getEstadisticas = async () => {
 
 
 const getEstadisticas2 = async () => {
-    const url = `/soliciudes_e/API/direccionpersonal/estadistica2`;
+
+    const fechaInicio=inputFechaInicio.value
+    const fechaFin=inputFechaFin.value
+
+    const url = `/soliciudes_e/API/direccionpersonal/estadistica2?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     const config = {
         method: 'GET'
     }

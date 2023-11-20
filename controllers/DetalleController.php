@@ -27,14 +27,14 @@ class DetalleController
                 FROM se_solicitudes s
                 INNER JOIN se_solicitante ste ON s.sol_solicitante=ste.ste_id and ste.ste_situacion=1 and ste.ste_fecha is not null
                 WHERE s.sol_situacion IN (5,2, 6) ";
-        if ($fechaInicio != '' and $fechaFin != '') {
-            $sql .= " AND cast(ste.ste_fecha as date) between '$fechaInicio' and '$fechaFin' ";
-        } elseif ($fechaInicio != '') {
-            $sql .= " AND cast(ste.ste_fecha as date) >= '$fechaInicio' ";
+                if ($fechaInicio != '' and $fechaFin != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) between '$fechaInicio' and '$fechaFin' ";
+                } elseif ($fechaInicio != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) >= '$fechaInicio' ";
 
-        } elseif ($fechaFin != '') {
-            $sql .= " AND cast(ste.ste_fecha as date) <= '$fechaFin' ";
-        }
+                } elseif ($fechaFin != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) <= '$fechaFin' ";
+                }
 
 
         try {
@@ -64,16 +64,16 @@ class DetalleController
                 WHERE s.sol_situacion = 1 ";
 
 
-        if ($fechaInicio != '' and $fechaFin != '') {
-            $sql .= " AND cast(ste.ste_fecha as date) between '$fechaInicio' and '$fechaFin' ";
-        } elseif ($fechaInicio != '') {
-            $sql .= " AND cast(ste.ste_fecha as date) >= '$fechaInicio' ";
+                if ($fechaInicio != '' and $fechaFin != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) between '$fechaInicio' and '$fechaFin' ";
+                } elseif ($fechaInicio != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) >= '$fechaInicio' ";
 
-        } elseif ($fechaFin != '') {
-            $sql .= " AND cast(ste.ste_fecha as date) <= '$fechaFin' ";
-        }
+                } elseif ($fechaFin != '') {
+                    $sql .= " AND cast(ste.ste_fecha as date) <= '$fechaFin' ";
+                }
 
-        $sql .= " GROUP BY m.tse_descripcion ";
+                $sql .= " GROUP BY m.tse_descripcion ";
         try {
 
             $productos = Solicitud::fetchArray($sql);
