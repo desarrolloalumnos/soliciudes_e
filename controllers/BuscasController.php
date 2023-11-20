@@ -24,10 +24,12 @@ class BuscasController
     {
         // $cmv_dependencia = $_GET['cmv_dependencia'];
         // $cmv_tip = $_GET['cmv_tip'];
-
+        $catalogo = $_GET['catalogo'];
+        $fecha = $_GET['fecha'];
 
 
         $sql = "SELECT  
+
         ste_id,
         ste_cat,
         ste_telefono,
@@ -55,8 +57,15 @@ class BuscasController
     LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
     INNER JOIN se_pdf ON pdf_solicitud = sol_id 
-    where sol_situacion = 1";
-
+    WHERE mat_situacion = 1  
+    AND sol_situacion = 1           
+                ";
+        if ($fecha != '') {
+            $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+        }
+        if ($catalogo != '') {
+            $sql .= " AND ste_cat = '$catalogo'";
+        }
         // if ($cmv_dependencia != 0) {
         //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";
         // }
@@ -64,7 +73,6 @@ class BuscasController
         // if (!empty($cmv_tip)) {
         //     $sql .= " AND cmv_tip = '$cmv_tip' ";
         // }
-
 
 
         try {
