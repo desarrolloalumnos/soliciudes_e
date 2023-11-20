@@ -14,7 +14,7 @@ const inputFechaFin = document.getElementById('fechaFin')
 
 
 const chartEstados = new Chart(context, {
-    type: 'polarArea',
+    type: 'bar',
     data: {
         labels: [],
         datasets: [
@@ -33,7 +33,7 @@ const chartEstados = new Chart(context, {
 
 
 const chartMotivos = new Chart(context2, {
-    type : 'polarArea',
+    type : 'bar',
     data : {
         labels : [],
         datasets : [
