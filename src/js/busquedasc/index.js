@@ -169,121 +169,100 @@ const buscar = async () => {
     formulario.reset();
 }
 
-const traeDatos = (e) => {
+const buscarModal = async (e) => {
 
-    modalM.show()
-    const button = e.target;
-    const mat_id = button.dataset.id
-    const ste_id = button.dataset.ste_id;
-    const ste_cat = button.dataset.ste_cat;
-    // const sol_id = button.dataset.sol_id;
-    const mat_lugar_civil = button.dataset.mat_lugar_civil;
-    const mat_fecha_bodac = button.dataset.mat_fecha_bodac;
-    const mat_lugar_religioso = button.dataset.mat_lugar_religioso;
-    const mat_fecha_bodar = button.dataset.mat_fecha_bodar;
-    const mat_per_civil = button.dataset.mat_per_civil;
-    const parejac_id = button.dataset.parejac_id;
-    const parejac_direccion = button.dataset.parejac_direccion;
-    const parejac_dpi = button.dataset.parejac_dpi;
-    const mat_per_army = button.dataset.mat_per_army;
-    const parejam_id = button.dataset.parejam_id;
-    const parejam_cat = button.dataset.parejam_cat;
-    const grado_solicitante = button.dataset.grado_solicitante;
-    const nombres_solicitante = button.dataset.nombres_solicitante;
-    const nombres = button.dataset.pareja_civil;
-    const grado_pareja = button.dataset.grado_pareja;
-    const nombres_pareja = button.dataset.nombres_pareja;
-    const mat_fecha_lic_ini = button.dataset.mat_fecha_lic_ini;
-    const mat_fecha_lic_fin = button.dataset.mat_fecha_lic_fin;
-    const ste_telefono = button.dataset.ste_telefono;
-    const pdf_ruta = button.dataset.pdf_ruta;
-    const ste_fecha = button.dataset.ste_fecha;
+    const boton = e.target
+    let ids = boton.dataset.id
 
-    const dataset = {
+    let id = ids
+    const url = `/soliciudes_e/API/busquedasc/buscarModal?id=${id}`;
 
-        ste_id,
-        ste_cat,
-        // sol_id,
-        ste_telefono,
-        ste_fecha,
-        mat_id,
-        mat_lugar_civil,
-        mat_fecha_bodac,
-        mat_lugar_religioso,
-        mat_fecha_bodar,
-        mat_per_civil,
-        parejac_id,
-        parejac_direccion,
-        parejac_dpi,
-        mat_per_army,
-        parejam_id,
-        parejam_cat,
-        grado_solicitante,
-        nombres_solicitante,
-        nombres,
-        mat_fecha_lic_ini,
-        mat_fecha_lic_fin,
-        pdf_ruta,
-        // grado_pareja,
-        nombres_pareja
-    };
-    colocarDatos(dataset)
 
-};
-
-const colocarDatos = (dataset) => {
-    const mat_fecha_bodac = formatearFecha(dataset.mat_fecha_bodac);
-    const mat_fecha_bodar = formatearFecha(dataset.mat_fecha_bodar);
-    const mat_fecha_lic_ini = formatearFecha(dataset.mat_fecha_lic_ini);
-    const mat_fecha_lic_fin = formatearFecha(dataset.mat_fecha_lic_fin);
-    const ste_fecha = formatearFecha(dataset.ste_fecha);
-
-    const partes = dataset.nombres.split(' ');
-    const maxNombres = 2;
-    const maxApellidos = 2;
-    const nombres = partes.slice(0, maxNombres).join(' ');
-    const apellidos = partes.slice(maxNombres, maxNombres + maxApellidos).join(' ');
-    formulario2.parejac_nombres.value = nombres;
-    formulario2.parejac_apellidos.value = apellidos;
-
-    formulario2.ste_id.value = dataset.ste_id;
-    formulario2.ste_cat.value = dataset.ste_cat;
-    formulario2.nombre.value = dataset.nombres_solicitante;
-    formulario2.ste_fecha.value = ste_fecha;
-    formulario2.ste_telefono.value = dataset.ste_telefono;
-    formulario2.mat_id.value = dataset.mat_id;
-    formulario2.mat_lugar_civil.value = dataset.mat_lugar_civil;
-    formulario2.mat_fecha_bodac.value = mat_fecha_bodac;
-    formulario2.mat_lugar_religioso.value = dataset.mat_lugar_religioso;
-    formulario2.mat_fecha_bodar.value = mat_fecha_bodar;
-    formulario2.mat_per_civil.value = dataset.mat_per_civil;
-    idPareja.value = dataset.parejac_id;
-    formulario2.parejac_direccion.value = dataset.parejac_direccion;
-    formulario2.parejac_dpi.value = dataset.parejac_dpi;
-    formulario2.mat_per_army.value = dataset.mat_per_army;
-    formulario2.parejam_id.value = dataset.parejam_id;
-    parejam_cat.value = dataset.parejam_cat;
-    formulario2.parejaNombre.value = dataset.nombres_pareja;
-    formulario2.mat_fecha_lic_ini.value = mat_fecha_lic_ini;
-    formulario2.mat_fecha_lic_fin.value = mat_fecha_lic_fin;
-
-    if (parejam_cat.value === "") {
-        divMilitar.style.display = 'none';
-        divCivil.style.display = 'block';
-    } else {
-        divMilitar.style.display = 'block';
-        divCivil.style.display = 'none';
-        parejam_cat.addEventListener('change', buscarCatalogo)
-
+    const config = {
+        method: 'GET',
     }
 
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        // console.log (data)
+        // return;      
+        
+        if (data) {
+            Toast.fire({
+                title: 'Abriendo Solicitud',
+                icon: 'info'
 
-    let pdf = btoa(btoa(btoa(dataset.pdf_ruta)));
-    let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
+            })
+            const dato = data[0];
+            const mat_fecha_bodac = formatearFecha(dato.mat_fecha_bodac);
+            const mat_fecha_bodar = formatearFecha(dato.mat_fecha_bodar);
+            const mat_fecha_lic_ini = formatearFecha(dato.mat_fecha_lic_ini);
+            const mat_fecha_lic_fin = formatearFecha(dato.mat_fecha_lic_fin);
+            const ste_fecha = formatearFecha(dato.ste_fecha);
+        
+            const partes = dato.pareja_civil.split(' ');
+            const maxNombres = 2;
+            const maxApellidos = 2;
+            const nombres = partes.slice(0, maxNombres).join(' ');
+            const apellidos = partes.slice(maxNombres, maxNombres + maxApellidos).join(' ');
+            formulario2.parejac_nombres.value = nombres;
+            formulario2.parejac_apellidos.value = apellidos;
+        
+            formulario2.ste_id.value = dato.ste_id;
+            formulario2.ste_cat.value = dato.ste_cat;
+            formulario2.nombre.value = dato.nombres_solicitante;
+            formulario2.ste_fecha.value = ste_fecha;
+            formulario2.ste_telefono.value = dato.ste_telefono;
+            formulario2.mat_id.value = dato.mat_id;
+            formulario2.mat_lugar_civil.value = dato.mat_lugar_civil;
+            formulario2.mat_fecha_bodac.value = mat_fecha_bodac;
+            formulario2.mat_lugar_religioso.value = dato.mat_lugar_religioso;
+            formulario2.mat_fecha_bodar.value = mat_fecha_bodar;
+            formulario2.mat_per_civil.value = dato.mat_per_civil;
+            idPareja.value = dato.parejac_id;
+            formulario2.parejac_direccion.value = dato.parejac_direccion;
+            formulario2.parejac_dpi.value = dato.parejac_dpi;
+            formulario2.mat_per_army.value = dato.mat_per_army;
+            formulario2.parejam_id.value = dato.parejam_id;
+            parejam_cat.value = dato.parejam_cat;
+            formulario2.parejaNombre.value = dato.nombres_pareja;
+            formulario2.mat_fecha_lic_ini.value = mat_fecha_lic_ini;
+            formulario2.mat_fecha_lic_fin.value = mat_fecha_lic_fin;
+        
+            if (parejam_cat.value === "") {
+                divMilitar.style.display = 'none';
+                divCivil.style.display = 'block';
+            } else {
+                divMilitar.style.display = 'block';
+                divCivil.style.display = 'none';
+                parejam_cat.addEventListener('change', buscarCatalogo)
+        
+            }
+        
+        
+            let pdf = btoa(btoa(btoa(dato.pdf_ruta)));
+            let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
+        
+            iframe.src = ver
 
-    iframe.src = ver
+           modalM.show()
+
+
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+
+            })
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
 
 }
+
 
 const traePdf = (e) => {
 
@@ -530,7 +509,7 @@ buscar();
 
 btnBuscar.addEventListener('click', buscar);
 btnModificar.addEventListener('click', modificar)
-datatable.on('click', '.btn-warning', traeDatos);
+datatable.on('click', '.btn-warning', buscarModal);
 datatable.on('click', '.btn-outline-warning', traePdf);
 addPdf.addEventListener('click', modificarPdf)
 datatable.on('click', '.btn-outline-info', verPDF);

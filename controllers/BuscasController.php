@@ -82,7 +82,7 @@ class BuscasController
 
     public static function buscarModalApi()
     {
-        
+        $id = $_GET ['id'];
         $sql = "SELECT  
         ste_id,
         ste_cat,
@@ -119,7 +119,7 @@ class BuscasController
     LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
     INNER JOIN se_pdf ON pdf_solicitud = sol_id 
-    where sol_situacion = 1 ";
+    where sol_situacion = 1 AND ste_id = $id ";
 
 
         try {
