@@ -43,92 +43,19 @@ const datatable = new Datatable('#tablaMatrimonios', {
             render: () => contador++
         },
         {
-            title: 'ste_fecha',
-            className: 'text-center',
-            data: 'ste_fecha'
-        },
-        {
-            title: 'ste_id',
-            className: 'text-center',
-            data: 'ste_id'
-        },
-        {
-            title: 'ste_cat',
-            className: 'text-center',
-            data: 'ste_cat'
-        },
-
-        {
-            title: 'mat_lugar_civil',
-            className: 'text-center',
-            data: 'mat_lugar_civil'
-        },
-        {
-            title: 'mat_fecha_bodac',
-            className: 'text-center',
-            data: 'mat_fecha_bodac'
-        },
-        {
-            title: 'mat_lugar_religioso',
-            className: 'text-center',
-            data: 'mat_lugar_religioso'
-        },
-        {
-            title: 'mat_fecha_bodar',
-            className: 'text-center',
-            data: 'mat_fecha_bodar'
-        },
-
-        {
-            title: 'parejac_id',
-            className: 'text-center',
-            data: 'parejac_id'
-        },
-        {
-            title: 'parejac_direccion',
-            className: 'text-center',
-            data: 'parejac_direccion'
-        },
-        {
-            title: 'parejac_dpi',
-            className: 'text-center',
-            data: 'parejac_dpi'
-        },
-
-        {
-            title: 'parejam_id',
-            className: 'text-center',
-            data: 'parejam_id'
-        },
-        {
-            title: 'parejam_cat',
-            className: 'text-center',
-            data: 'parejam_cat'
-        },
-        {
-            title: 'pdf_id',
-            className: 'text-center',
-            data: 'pdf_id'
-        },
-        {
-            title: 'pdf_solicitud',
-            className: 'text-center',
-            data: 'pdf_solicitud'
-        },
-        {
             title: 'Grado',
-            className: 'text-center',
-            data: 'grado_solicitante'
+            className: 'gra_desc_lg',
+            data: 'gra_desc_lg'
         },
         {
             title: 'Nombres',
             className: 'text-center',
-            data: 'nombres_solicitante'
+            data: 'nombre_solicitante'
         },
         {
             title: 'Pareja Civil',
             className: 'text-center',
-            data: 'nombres',
+            data: 'pareja_civil',
             visible: false
         },
         {
@@ -146,19 +73,19 @@ const datatable = new Datatable('#tablaMatrimonios', {
         {
             title: 'Nombres de la Pareja',
             render: function (data, type, row) {
-                return row.grado_pareja + ' ' + row.nombres_pareja + row.nombres;
+                return row.grado_pareja + ' ' + row.nombres_pareja + row.pareja_civil;
             }
         },
 
         {
-            title: 'Fin de Licencia',
+            title: 'Inicio de Licencia',
             className: 'text-center',
             data: function (row) {
                 return row.mat_fecha_lic_ini.substring(0, 10);
             }
         },
         {
-            title: 'Inicio de Licencia',
+            title: 'Fin de Licencia',
             className: 'text-center',
             data: function (row) {
                 return row.mat_fecha_lic_fin.substring(0, 10);
@@ -183,17 +110,12 @@ const datatable = new Datatable('#tablaMatrimonios', {
         {
             title: 'MODIFICAR ',
             className: 'text-center',
-            data: 'mat_id',
+            data: 'ste_id',
             searchable: false,
             orderable: false,
             render: (data, type, row, meta) =>
                 `<div class="btn-group">
-                <button class="btn btn-warning" data-id='${data}' data-pdf_id='${row["pdf_id"]}' data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}' data-ste_id='${row["ste_id"]}' data-ste_cat='${row["ste_cat"]}' data-mat_lugar_civil='${row["mat_lugar_civil"]}'
-                    data-mat_fecha_bodac='${row["mat_fecha_bodac"]}' data-mat_lugar_religioso='${row["mat_lugar_religioso"]}' data-mat_fecha_bodar='${row["mat_fecha_bodar"]}' 
-                    data-parejac_id='${row["parejac_id"]}' data-parejac_direccion='${row["parejac_direccion"]}' data-parejac_dpi='${row["parejac_dpi"]}' data-parejam_id='${row["parejam_id"]}' 
-                    data-parejam_cat='${row["parejam_cat"]}' data-grado_solicitante='${row["grado_solicitante"]}' data-nombres_solicitante='${row["nombres_solicitante"]}' data-nombres='${row["nombres"]}'
-                    data-grado_pareja='${row["grado_pareja"]}' data-nombres_pareja='${row["nombres_pareja"]}' data-mat_fecha_lic_ini='${row["mat_fecha_lic_ini"]}' 
-                    data-mat_fecha_lic_fin='${row["mat_fecha_lic_fin"]}' data-ste_telefono='${row["ste_telefono"]}' data-pdf_ruta='${row["pdf_ruta"]}' data-ste_fecha='${row["ste_fecha"]}'>
+                <button class="btn btn-warning" data-id='${data}'>
                     DATOS
                 </button>
                 <button class="btn btn-outline-warning" data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}' data-pdf_ruta='${row["pdf_ruta"]}'>PDF</button>
@@ -209,13 +131,6 @@ const datatable = new Datatable('#tablaMatrimonios', {
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
         },
     ],
-    columnDefs: [
-        {
-            targets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-            visible: false,
-            searchable: false,
-        }
-    ]
 });
 
 const buscar = async () => {
@@ -275,7 +190,7 @@ const traeDatos = (e) => {
     const parejam_cat = button.dataset.parejam_cat;
     const grado_solicitante = button.dataset.grado_solicitante;
     const nombres_solicitante = button.dataset.nombres_solicitante;
-    const nombres = button.dataset.nombres;
+    const nombres = button.dataset.pareja_civil;
     const grado_pareja = button.dataset.grado_pareja;
     const nombres_pareja = button.dataset.nombres_pareja;
     const mat_fecha_lic_ini = button.dataset.mat_fecha_lic_ini;
