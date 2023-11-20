@@ -76,6 +76,7 @@ $router->post('/API/casamientos/guardar', [CasamientoController::class,'guardarA
 
 $router->get('/busquedasc', [BuscasController::class,'index']);
 $router->get('/API/busquedasc/buscar', [BuscasController::class,'buscarApi']);
+$router->get('/API/busquedasc/buscarModal', [BuscasController::class,'buscarModalApi']);
 $router->post('/API/busquedasc/modificar', [BuscasController::class,'modificarApi']);
 $router->post('/API/busquedasc/modificarPdf', [BuscasController::class,'modificarPdfApi']);
 $router->post('/API/busquedasc/eliminar', [BuscasController::class,'eliminarApi']);

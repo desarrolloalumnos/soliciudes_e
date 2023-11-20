@@ -27,80 +27,35 @@ class BuscasController
 
 
 
-        $sql = "SELECT 
-                    mat.mat_id,
-                    (SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) 
-                    FROM mper 
-                    WHERE per_catalogo = parm.parejam_cat) AS nombres_pareja,
-                    (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) 
-                    FROM mper 
-                    INNER JOIN grados ON mper.per_grado = grados.gra_codigo 
-                    INNER JOIN armas ON mper.per_arma = armas.arm_codigo
-                    WHERE per_catalogo = parm.parejam_cat) AS grado_pareja,     
-                    (SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) 
-                    FROM mper 
-                    WHERE per_catalogo = ste.ste_cat) AS nombres_solicitante,
-                    (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) 
-                    FROM mper 
-                    INNER JOIN grados ON mper.per_grado = grados.gra_codigo 
-                    INNER JOIN armas ON mper.per_arma = armas.arm_codigo
-                    WHERE per_catalogo = ste.ste_cat) AS grado_solicitante,
-                    sol.sol_id,	
-                    ste.ste_id,
-                    ste.ste_cat, 
-                    ste.ste_fecha,                            	
-                    ste.ste_telefono,   
-                    mat.mat_lugar_civil,
-                    mat.mat_fecha_bodac,
-                    mat.mat_lugar_religioso,
-                    mat.mat_fecha_bodar,
-                    parc.parejac_id, 			
-                    TRIM(parc.parejac_nombres)||' '||TRIM(parc.parejac_apellidos) AS nombres,
-                    parc.parejac_direccion,    
-                    parc.parejac_dpi,                  
-                    parm.parejam_id,			
-                    parm.parejam_cat,
-                    pdf.pdf_id, 			
-                    pdf.pdf_ruta,		
-                    pdf.pdf_solicitud, 
-                    pdf_ruta, 
-                    mat.mat_fecha_lic_ini,
-                    mat.mat_fecha_lic_fin
-                FROM 
-                    se_matrimonio mat
-                LEFT JOIN
-                    se_autorizacion auth
-                ON
-                    mat.mat_autorizacion = auth.aut_id
-                LEFT JOIN 
-                    se_solicitudes sol
-                ON 
-                    auth.aut_solicitud = sol.sol_id
-                LEFT JOIN 
-                    se_pdf pdf
-                ON 
-                    pdf.pdf_solicitud = sol.sol_id
-                LEFT JOIN
-                    se_tipo_solicitud tipo
-                ON 
-                    sol.sol_tipo = tipo.tse_id
-                LEFT JOIN
-                    se_motivos  mot
-                ON 
-                    sol.sol_motivo = mot.mot_id
-                LEFT JOIN
-                    se_solicitante  ste
-                ON 
-                    sol.sol_solicitante = ste.ste_id
-                LEFT JOIN
-                    se_pareja_civil parc
-                ON 
-                    mat.mat_per_civil = parc.parejac_id
-                LEFT JOIN
-                    se_pareja_militar parm
-                ON 
-                    mat.mat_per_army = parm.parejam_id
-                WHERE mat.mat_situacion = 1 AND sol.sol_situacion = 1";
+        $sql = "SELECT  
+        ste_id,
+        ste_cat,
+        ste_telefono,
+        gra_desc_lg,
+        TRIM(parejac_nombres) || '' || TRIM(parejac_apellidos) AS pareja_civil,
+        (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) FROM mper 
+        INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
+        WHERE per_catalogo = parejam_cat) AS grado_pareja,
+        (SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper 
+        WHERE per_catalogo = parejam_cat) AS nombres_pareja,
+        TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombre_solicitante,
+        mat_fecha_lic_ini,
+        mat_fecha_lic_fin, 
+        pdf_solicitud,
+        sol_id,
+        pdf_id,
+        pdf_solicitud,
+        pdf_ruta
+    FROM se_matrimonio
+    INNER JOIN se_autorizacion ON aut_id = mat_autorizacion
+    INNER JOIN se_solicitudes ON aut_solicitud = sol_id
+    INNER JOIN se_solicitante ON sol_solicitante = ste_id
+    LEFT JOIN se_pareja_civil ON mat_per_civil = parejac_id
+    LEFT JOIN se_pareja_militar ON mat_per_army = parejam_id
+    LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
+    INNER JOIN grados ON ste_gra = gra_codigo
+    INNER JOIN se_pdf ON pdf_solicitud = sol_id 
+    where sol_situacion = 1";
 
         // if ($cmv_dependencia != 0) {
         //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";
@@ -110,6 +65,61 @@ class BuscasController
         //     $sql .= " AND cmv_tip = '$cmv_tip' ";
         // }
 
+
+
+        try {
+            $resultado = Matrimonio::fetchArray($sql);
+
+            echo json_encode($resultado);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
+
+    public static function buscarModalApi()
+    {
+        $id = $_GET ['id'];
+        $sql = "SELECT  
+        ste_id,
+        ste_cat,
+        mat_lugar_civil,
+        mat_fecha_bodac,
+        mat_lugar_religioso,
+        mat_fecha_bodar,
+        mat_per_civil,
+        parejac_id,
+        parejac_direccion,
+        parejac_dpi,
+        mat_per_army,
+        parejam_id,
+        parejam_cat,    
+        ste_telefono,
+        gra_desc_lg AS grado_solicitante,
+        TRIM(parejac_nombres) || '' || TRIM(parejac_apellidos) AS pareja_civil,
+        (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) FROM mper 
+        INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
+        WHERE per_catalogo = parejam_cat) AS grado_pareja,
+        (SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper 
+        WHERE per_catalogo = parejam_cat) AS nombres_pareja,
+        TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombres_solicitante,
+        mat_fecha_lic_ini,
+        mat_fecha_lic_fin,
+        ste_fecha,
+        pdf_ruta
+    FROM se_matrimonio
+    INNER JOIN se_autorizacion ON aut_id = mat_autorizacion
+    INNER JOIN se_solicitudes ON aut_solicitud = sol_id
+    INNER JOIN se_solicitante ON sol_solicitante = ste_id
+    LEFT JOIN se_pareja_civil ON mat_per_civil = parejac_id
+    LEFT JOIN se_pareja_militar ON mat_per_army = parejam_id
+    LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
+    INNER JOIN grados ON ste_gra = gra_codigo
+    INNER JOIN se_pdf ON pdf_solicitud = sol_id 
+    where sol_situacion = 1 AND ste_id = $id ";
 
 
         try {
