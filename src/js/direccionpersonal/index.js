@@ -17,6 +17,10 @@ const modalM = new Modal(document.getElementById('modalCasamiento'), {
     backdrop: 'static',
     keyboard: false
 });
+const modalL = new Modal(document.getElementById('modalMostrarLicencias'), {
+    backdrop: 'static',
+    keyboard: false
+});
 const formulario = document.getElementById('formularioDepersonal');
 const formulario2 = document.getElementById('formularioSalidapais');
 const formulario4 = document.getElementById('formularioCasamiento');
@@ -25,6 +29,8 @@ const iframeCasamiento = document.getElementById('pdfIframe');
 const parejam_cat = document.getElementById('parejam_cat');
 const divMilitar = document.getElementById('parejaMilitar');
 const divCivil = document.getElementById('parejaCivil');
+const formularioModal = document.getElementById('formularioLicenciasB');
+const iframeLicencias = document.getElementById('pdfLicencia');
 const formulario3 = document.getElementById('formularioProto');
 const btnBuscar = document.getElementById('btnBuscar')
 const divInpust = document.getElementById('masInputs');
@@ -32,6 +38,8 @@ const iframe = document.getElementById('pdfSalidaPais')
 const iframeProto = document.getElementById('pdfSalida');
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';
+formularioModal.ste_cat.disabled = true;
+formularioModal.nombre.disabled = true;
 
 let contador = 1;
 const datatable = new Datatable('#tablaDepersonal', {
@@ -173,7 +181,8 @@ const buscarModal = async (e) => {
 
     const boton = e.target
     let tse_id = boton.dataset.tse_id
-    let tipoSolicitud = tse_id   
+    let tipoSolicitud = tse_id
+    console.log(tipoSolicitud)
     try {
         const boton = e.target
         let ste_id = boton.dataset.id
@@ -248,6 +257,85 @@ const buscarModal = async (e) => {
                     title: 'No se encontraron registros',
                     icon: 'info'
                 });
+            }
+
+        } else if (tipoSolicitud == 2) {
+            const url = `/soliciudes_e/API/busquedaslict/buscarModal?id=${id}`;
+            const config = {
+                method: 'GET',
+            }
+
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
+
+            if (data) {
+                Toast.fire({
+                    title: 'Abriendo Solicitud',
+                    icon: 'success'
+
+                })
+                modalL.show();
+                const dato = data[0];
+                formularioModal.lit_id.value = dato.lit_id;
+                formularioModal.sol_id.value = dato.sol_id;
+                formularioModal.ste_id.value = dato.ste_id;
+                formularioModal.ste_cat.value = dato.ste_cat;
+                formularioModal.ste_telefono.value = dato.ste_telefono;
+                formularioModal.sol_obs.value = dato.sol_obs;
+                formularioModal.sol_motivo.value = dato.sol_motivo;
+                formularioModal.nombre.value = dato.nombres_solicitante;
+                formularioModal.tiempo.value = dato.tiempo;
+                const numero = dato.tiempo;
+                formatoTiempo(numero).then((tiempoFormateado) => {
+                    formularioModal.tiempo_servicio.value = tiempoFormateado;
+                    formularioModal.tiempo_servicio.disabled = true;
+                })
+                const numeroEntero = parseInt(numero, 10);
+                if (numeroEntero >= 10000 && numeroEntero <= 50000) {
+                    formularioModal.lit_mes_consueldo.setAttribute('max', '0');
+                    formularioModal.lit_mes_sinsueldo.setAttribute('max', '3');
+                    formularioModal.lit_articulo.value = '2'
+                } else if (numeroEntero >= 50001 && numeroEntero <= 100000) {
+                    formularioModal.lit_mes_consueldo.setAttribute('max', '0');
+                    formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                    formularioModal.lit_articulo.value = '3'
+                } else if (numeroEntero >= 100001 && numeroEntero <= 200000) {
+                    formularioModal.lit_mes_consueldo.setAttribute('max', '1');
+                    formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                    formularioModal.lit_articulo.value = '4'
+                } else if (numeroEntero >= 200001 && numeroEntero <= 280000) {
+                    formularioModal.lit_mes_consueldo.setAttribute('max', '2');
+                    formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                    formularioModal.lit_articulo.value = '5'
+                } else if (numeroEntero >= 280001 && numeroEntero <= 330000) {
+                    formularioModal.lit_mes_consueldo.setAttribute('max', '1');
+                    formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                    formularioModal.lit_articulo.value = '6'
+                } else if (numeroEntero >= 33001) {
+                    formularioModal.lit_mes_consueldo.setAttribute('max', '2');
+                    formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                    formularioModal.lit_articulo.value = '6'
+                } else {
+                    return
+                }
+                formularioModal.lit_mes_consueldo.value = dato.lit_mes_consueldo;
+                formularioModal.lit_mes_sinsueldo.value = dato.lit_mes_sinsueldo;
+         
+                let fecha1SinFormato = dato.lit_fecha1
+                let fecha1ConFormato = formatearFecha(fecha1SinFormato)
+                formularioModal.lit_fecha1.value = fecha1ConFormato;
+                let fecha2SinFormato = dato.lit_fecha2
+                let fecha2ConFormato = formatearFecha(fecha2SinFormato)
+                formularioModal.lit_fecha2.value = fecha2ConFormato;
+                let pdf = btoa(btoa(btoa(dato.pdf_ruta)));
+                let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
+                iframeLicencias.src = ver
+            } else {
+                Toast.fire({
+                    title: 'No se encontraron registros',
+                    icon: 'info'
+
+                })
             }
 
         } else if (tipoSolicitud == 3) {
@@ -474,9 +562,6 @@ const buscarModal = async (e) => {
         console.log(error);
     }
 }
-
-
-
 
 const enviar = async (e) => {
     const button = e.target;

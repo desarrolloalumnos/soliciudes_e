@@ -37,6 +37,7 @@ class DireccionpersonalController
         $sql = "SELECT
                     s.sol_id,
                     ste.ste_id,
+                    t.tse_id,
                     (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) 
                     FROM mper 
                     INNER JOIN grados ON mper.per_grado = grados.gra_codigo 
