@@ -57,9 +57,6 @@ const getEstadisticas = async () => {
     const fechaInicio=inputFechaInicio.value
     const fechaFin=inputFechaFin.value
 
-    console.log(fechaInicio);
-    
-    console.log(fechaFin);
 
     const url = `/soliciudes_e/API/administraciones/estadistica?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     const config = {
@@ -96,20 +93,13 @@ const getEstadisticas2 = async () => {
     const url = `/soliciudes_e/API/administraciones/estadistica2?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     const config = {
         method: 'GET'
-    }
-
-   
+    }   
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log(data)
-        // return
         chartMotivos.data.labels = [];
         chartMotivos.data.datasets[0].data = [];
         chartMotivos.data.datasets[0].backgroundColor = []
-
-
-
         if(data){
 
             data.forEach( registro => {
@@ -117,22 +107,17 @@ const getEstadisticas2 = async () => {
                 chartMotivos.data.datasets[0].data.push(registro.cantidad)
                 chartMotivos.data.datasets[0].backgroundColor.push(getRandomColor())
             });
-
         }else{
             Toast.fire({
                 title : 'No se encontraron registros',
                 icon : 'info'
             })
-        }
-        
-        chartMotivos.update();
-       
+        }        
+        chartMotivos.update();       
     } catch (error) {
         console.log(error);
     }
 }
-
-
 const getRandomColor = () => {
     const r = Math.floor(Math.random() * 256)
     const g = Math.floor(Math.random() * 256)
@@ -141,7 +126,5 @@ const getRandomColor = () => {
     const rgbColor = `rgba(${r},${g},${b},0.5)`
     return rgbColor
 }
-
 getEstadisticas();
-
 btnActualizar.addEventListener('click', getEstadisticas)

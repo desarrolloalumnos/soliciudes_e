@@ -86,7 +86,7 @@ const datatable = new Datatable('#tablaLicencias', {
         {
             title: 'MODIFICAR',
             className: 'text-center',
-            data: 'lit_id',
+            data: 'ste_id',
             searchable: false,
             orderable: false,
             render: (data, type, row, meta) =>
@@ -113,7 +113,7 @@ const datatable = new Datatable('#tablaLicencias', {
 
 const buscar = async () => {
 
-    const catalogo = formulario.ste_cat.value
+    const catalogo = formulario.ste_catalogo.value
     const fecha = formulario.ste_fecha.value
 
     const url = `/soliciudes_e/API/busquedaslict/buscar?catalogo=${catalogo}&fecha=${fecha}`;
@@ -146,115 +146,97 @@ const buscar = async () => {
 
     formulario.reset();
 }
-
-const traeDatos = (e) => {
-    modalL.show();
-    divPdf.style.display = 'block';
-    divLicencias.style.display = 'none';
-
-    const button = e.target;
-    const lit_id = button.dataset.id;
-    const sol_id = button.dataset.sol_id;
-    const tiempo = button.dataset.tiempo;
-    const ste_id = button.dataset.ste_id;
-    const ste_cat = button.dataset.ste_cat;
-    const sol_obs = button.dataset.sol_obs;
-    const ste_telefono = button.dataset.ste_telefono;
-    const mot_id = button.dataset.mot_id;
-    const grado_solicitante = button.dataset.grado_solicitante;
-    const nombres_solicitante = button.dataset.nombres_solicitante;
-    const lit_mes_consueldo = button.dataset.lit_mes_consueldo;
-    const lit_mes_sinsueldo = button.dataset.lit_mes_sinsueldo;
-    const lit_fecha1 = button.dataset.lit_fecha1;
-    const lit_fecha2 = button.dataset.lit_fecha2;
-    const pdf_ruta = button.dataset.pdf_ruta;
-    // const pdf_id = button.dataset.pdf_id;
-    // const pdf_solicitud = button.dataset.pdf_solicitud;
-
-    const dataset = {
-        lit_id,
-        sol_id,
-        tiempo,
-        ste_id,
-        ste_cat,
-        ste_telefono,
-        sol_obs,
-        mot_id,
-        grado_solicitante,
-        nombres_solicitante,
-        lit_mes_consueldo,
-        lit_mes_sinsueldo,
-        // pdf_id,
-        // pdf_solicitud,
-        lit_fecha1,
-        lit_fecha2,
-        pdf_ruta
-
-    };
-
-    console.log(dataset);
-    formularioModal.lit_id.value = dataset.lit_id;
-    formularioModal.sol_id.value = dataset.sol_id;
-    formularioModal.ste_id.value = dataset.ste_id;
-    formularioModal.ste_cat.value = dataset.ste_cat;
-    formularioModal.ste_telefono.value = dataset.ste_telefono;
-    formularioModal.sol_obs.value = dataset.sol_obs;
-    formularioModal.sol_motivo.value = dataset.mot_id;
-    formularioModal.nombre.value = dataset.nombres_solicitante;
-
-    formularioModal.tiempo.value = dataset.tiempo;
-
-    const numero = dataset.tiempo;
-
-
-    formatoTiempo(numero).then((tiempoFormateado) => {
-        formularioModal.tiempo_servicio.value = tiempoFormateado;
-    })
-    const numeroEntero = parseInt(numero, 10);
-    if (numeroEntero >= 10000 && numeroEntero <= 50000) {
-        formularioModal.lit_mes_consueldo.setAttribute('max', '0');
-        formularioModal.lit_mes_sinsueldo.setAttribute('max', '3');
-        formularioModal.lit_articulo.value = '2'
-    } else if (numeroEntero >= 50001 && numeroEntero <= 100000) {
-        formularioModal.lit_mes_consueldo.setAttribute('max', '0');
-        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
-        formularioModal.lit_articulo.value = '3'
-    } else if (numeroEntero >= 100001 && numeroEntero <= 200000) {
-        formularioModal.lit_mes_consueldo.setAttribute('max', '1');
-        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
-        formularioModal.lit_articulo.value = '4'
-    } else if (numeroEntero >= 200001 && numeroEntero <= 280000) {
-        formularioModal.lit_mes_consueldo.setAttribute('max', '2');
-        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
-        formularioModal.lit_articulo.value = '5'
-    } else if (numeroEntero >= 280001 && numeroEntero <= 330000) {
-        formularioModal.lit_mes_consueldo.setAttribute('max', '1');
-        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
-        formularioModal.lit_articulo.value = '6'
-    } else if (numeroEntero >= 33001) {
-        formularioModal.lit_mes_consueldo.setAttribute('max', '2');
-        formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
-        formularioModal.lit_articulo.value = '6'
-    } else {
-        return
+const buscarModal = async (e) => {
+    const boton = e.target
+    let ids = boton.dataset.id
+    let id = ids
+    const url = `/soliciudes_e/API/busquedaslict/buscarModal?id=${id}`;
+    const config = {
+        method: 'GET',
     }
-    formularioModal.lit_mes_consueldo.value = dataset.lit_mes_consueldo;
-    formularioModal.lit_mes_sinsueldo.value = dataset.lit_mes_sinsueldo;
-    formularioModal.lit_fecha1.value = dataset.lit_fecha1;
-    formularioModal.lit_fecha2.value = dataset.lit_fecha2
-    // formularioModal.pdf_id.value = dataset.pdf_id;
-    // formularioModal.pdf_solicitud.value = dataset.pdf_solicitud;
-    let pdf = btoa(btoa(btoa(dataset.pdf_ruta)));
-    let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
-    iframe.src = ver
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+      
+        if (data) {
+            Toast.fire({
+                title: 'Abriendo Solicitud',
+                icon: 'success'
+                
+            })
+            modalL.show();
+            const dato = data[0];
+            divPdf.style.display = 'block';           
+            formularioModal.lit_id.value = dato.lit_id;
+            formularioModal.sol_id.value = dato.sol_id;
+            formularioModal.ste_id.value = dato.ste_id;
+            formularioModal.ste_cat.value = dato.ste_cat;
+            formularioModal.ste_telefono.value = dato.ste_telefono;
+            formularioModal.sol_obs.value = dato.sol_obs;
+            formularioModal.sol_motivo.value = dato.sol_motivo;
+            formularioModal.nombre.value = dato.nombres_solicitante;
+            formularioModal.tiempo.value = dato.tiempo;
+            const numero = dato.tiempo;
+            formatoTiempo(numero).then((tiempoFormateado) => {
+                formularioModal.tiempo_servicio.value = tiempoFormateado;
+                formularioModal.tiempo_servicio.disabled = true;
+            })
+            const numeroEntero = parseInt(numero, 10);
+            if (numeroEntero >= 10000 && numeroEntero <= 50000) {
+                formularioModal.lit_mes_consueldo.setAttribute('max', '0');
+                formularioModal.lit_mes_sinsueldo.setAttribute('max', '3');
+                formularioModal.lit_articulo.value = '2'
+            } else if (numeroEntero >= 50001 && numeroEntero <= 100000) {
+                formularioModal.lit_mes_consueldo.setAttribute('max', '0');
+                formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                formularioModal.lit_articulo.value = '3'
+            } else if (numeroEntero >= 100001 && numeroEntero <= 200000) {
+                formularioModal.lit_mes_consueldo.setAttribute('max', '1');
+                formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                formularioModal.lit_articulo.value = '4'
+            } else if (numeroEntero >= 200001 && numeroEntero <= 280000) {
+                formularioModal.lit_mes_consueldo.setAttribute('max', '2');
+                formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                formularioModal.lit_articulo.value = '5'
+            } else if (numeroEntero >= 280001 && numeroEntero <= 330000) {
+                formularioModal.lit_mes_consueldo.setAttribute('max', '1');
+                formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                formularioModal.lit_articulo.value = '6'
+            } else if (numeroEntero >= 33001) {
+                formularioModal.lit_mes_consueldo.setAttribute('max', '2');
+                formularioModal.lit_mes_sinsueldo.setAttribute('max', '6');
+                formularioModal.lit_articulo.value = '6'
+            } else {
+                return
+            }
+            formularioModal.lit_mes_consueldo.value = dato.lit_mes_consueldo;
+            formularioModal.lit_mes_sinsueldo.value = dato.lit_mes_sinsueldo;
+            divLicencias.style.display = 'none';
+            let fecha1SinFormato = dato.lit_fecha1
+            let fecha1ConFormato = formatearFecha(fecha1SinFormato)
+            formularioModal.lit_fecha1.value = fecha1ConFormato;
+            let fecha2SinFormato = dato.lit_fecha2
+            let fecha2ConFormato = formatearFecha(fecha2SinFormato)
+            formularioModal.lit_fecha2.value = fecha2ConFormato;
+            let pdf = btoa(btoa(btoa(dato.pdf_ruta)));
+            let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
+            iframe.src = ver           
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
 
-};
+            })
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
 
 const modificar = async (evento) => {
-
     evento.preventDefault();
-
-
     const body = new FormData(formularioModal)
     const url = '/soliciudes_e/API/busquedaslict/modificar';
     const headers = new Headers();
@@ -296,11 +278,11 @@ const modificar = async (evento) => {
     }
 }
 
-const traePdf = (e) => {    
+const traePdf = (e) => {
     modalL.show()
     divPdf.style.display = 'none';
     divLicencias.style.display = 'block';
-  
+
 
     const button = e.target;
     const ste_cat = button.dataset.ste_cat;
@@ -314,16 +296,11 @@ const traePdf = (e) => {
         pdf_id,
         pdf_solicitud
     };
- 
+
     formularioModal.pdf_solicitud.value = dataset.pdf_solicitud;
     formularioModal.pdf_id.value = dataset.pdf_id;
 
 };
-
-
-
-
-
 const modificarPdf = async (evento) => {
 
     evento.preventDefault();
@@ -342,7 +319,7 @@ const modificarPdf = async (evento) => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-  
+
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
         switch (codigo) {
@@ -393,7 +370,7 @@ const eliminar = async (e) => {
         try {
             const respuesta = await fetch(url, config)
             const data = await respuesta.json();
-     
+
             const { codigo, mensaje, detalle } = data;
             let icon = 'info'
             switch (codigo) {
@@ -443,8 +420,8 @@ buscar();
 
 btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-outline-info', verPDF);
-datatable.on('click', '.btn-warning', traeDatos)
+datatable.on('click', '.btn-warning', buscarModal)
 datatable.on('click', '.btn-outline-warning', traePdf);
 btnModficarDatos.addEventListener('click', modificar);
-addPdf.addEventListener('click',modificarPdf);
+addPdf.addEventListener('click', modificarPdf);
 datatable.on('click', '.btn-danger', eliminar)

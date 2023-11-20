@@ -92,6 +92,7 @@ $router->post('/API/licencias/guardar', [LictempController::class,'guardarApi'])
 
 $router->get('/busquedaslict', [BuscalictController::class,'index']);
 $router->get('/API/busquedaslict/buscar', [BuscalictController::class,'buscarApi']);
+$router->get('/API/busquedaslict/buscarModal', [BuscalictController::class,'buscarModalApi']);
 $router->post('/API/busquedaslict/modificar', [BuscalictController::class,'modificarApi']);
 $router->post('/API/busquedaslict/modificarPdf', [BuscalictController::class,'modificarPdfApi']);
 $router->post('/API/busquedaslict/eliminar', [BuscalictController::class,'eliminarApi']);

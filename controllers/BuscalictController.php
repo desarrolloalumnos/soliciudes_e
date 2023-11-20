@@ -97,6 +97,7 @@ class BuscalictController
                     ste_telefono,
                     sol_id,
                     sol_obs,
+                    (select t_oficial from tiempos where t_catalogo =  ste_cat) AS tiempo,
                     pdf_ruta
                 FROM se_licencia_temporal
                 INNER JOIN se_autorizacion ON aut_id = lit_autorizacion
@@ -162,18 +163,24 @@ class BuscalictController
 
 
             if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
-                $solicitante = Solicitante::find($_POST['ste_id']);
+                $id = $_POST['ste_id'];
+                $solicitante = Solicitante::find($id);
+
                 $solicitante->ste_telefono = $_POST['ste_telefono'];
                 $resultado = $solicitante->actualizar();
-            } else {
-            }
+                if ($resultado['resultado'] == 1) {
+                    $modificacionExitosa = true;
+                }
+            } 
 
             if (isset($_POST['sol_id']) && !empty($_POST['sol_id'])) {
                 $solicitud = Solicitud::find($_POST['sol_id']);
                 $solicitud->sol_obs = $_POST['sol_obs'];
                 $solicitud->sol_motivo = $_POST['sol_motivo'];
                 $solicitudResultado = $solicitud->actualizar();
-            } else {
+                if ($solicitudResultado['resultado'] == 1) {
+                    $modificacionExitosa = true;
+                }
             }
 
 
@@ -184,12 +191,14 @@ class BuscalictController
                 $licencia->lit_fecha1 = $_POST['lit_fecha1'];
                 $licencia->lit_fecha2 = $_POST['lit_fecha2'];
                 $licenciaResultado = $licencia->actualizar();
-            } else {
+                if ($licenciaResultado['resultado'] == 1) {
+                    $modificacionExitosa = true;
+                }
             }
 
 
 
-            if ($licenciaResultado) {
+            if ($modificacionExitosa) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1
