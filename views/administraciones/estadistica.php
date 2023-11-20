@@ -1,5 +1,13 @@
 <div class="row mt-5">
     <div class="col-lg-6 offset-lg-3">
+       <input type="date" id='fechaInicio'  name='fechaInicio'>
+       <input type="date" id='fechaFin' name='fechaFin'>
+       <button id="refrescarGraficas" class="btn btn-success mt-3">Actualizar</button>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-6 offset-lg-3">
         <h1 class="text-center">Estados de Las Solicitudes</h1>
     </div>
 </div>

@@ -11,8 +11,10 @@ use Model\Solicitud;
 use Model\Solicitante;
 use MVC\Router;
 
-class BuscaprotoController{
-    public static function index(Router $router){
+class BuscaprotoController
+{
+    public static function index(Router $router)
+    {
         $motivos = static::motivos();
         $combo = static::Protocolo();
 
@@ -22,34 +24,46 @@ class BuscaprotoController{
         ]);
     }
 
-    public static function buscarApi(){
+    public static function buscarApi()
+    {
 
-        $sql = " SELECT
-        ste_id,
-        pco_id,
-        ste_cat,
-        sol_id,
-        gra_desc_lg,
-        TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
-        cmv_tip,
-        dep_desc_lg,
-        pco_fechainicio,
-        pco_fechafin,
-        pco_dir,
-        pdf_id,
-        pdf_solicitud,
-        pdf_ruta
-        FROM se_protocolo
-        INNER JOIN se_combos_marimbas_vallas ON pco_cmbv = cmv_id  
-        inner join mdep on cmv_dependencia = dep_llave
-        inner join se_autorizacion on aut_id = pco_autorizacion
-        inner join se_solicitudes on aut_solicitud = sol_id
-        inner join se_solicitante on sol_solicitante= ste_id
-        inner join mper on ste_cat = per_catalogo
-        inner join grados on ste_gra = gra_codigo
-        inner join se_pdf on pdf_solicitud = sol_id
-        WHERE pco_situacion = 1  AND sol_situacion = 1";
-    
+        $catalogo = $_GET['catalogo'];
+        $fecha = $_GET['fecha'];
+
+        $sql = "SELECT
+                    ste_id,
+                    pco_id,
+                    ste_cat,
+                    sol_id,
+                    gra_desc_lg,
+                    TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
+                    cmv_tip,
+                    dep_desc_lg,
+                    pco_fechainicio,
+                    pco_fechafin,
+                    pco_dir,
+                    pdf_id,
+                    pdf_solicitud,
+                    pdf_ruta
+                FROM se_protocolo
+                INNER JOIN se_combos_marimbas_vallas ON pco_cmbv = cmv_id  
+                inner join mdep on cmv_dependencia = dep_llave
+                inner join se_autorizacion on aut_id = pco_autorizacion
+                inner join se_solicitudes on aut_solicitud = sol_id
+                inner join se_solicitante on sol_solicitante= ste_id
+                inner join mper on ste_cat = per_catalogo
+                inner join grados on ste_gra = gra_codigo
+                inner join se_pdf on pdf_solicitud = sol_id
+                WHERE pco_situacion = 1  
+                AND sol_situacion = 1           
+                ";
+        if ($fecha != '') {
+            $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+        }
+        if ($catalogo != '') {
+            $sql .= " AND ste_cat = '$catalogo'";
+        }
+
 
         try {
             $resultado = Protocolosol::fetchArray($sql);
@@ -63,14 +77,14 @@ class BuscaprotoController{
         }
 
 
-}
+    }
 
 
-public static function buscarModalApi()
-{
+    public static function buscarModalApi()
+    {
 
-    $id = $_GET ['id'];
-    $sql = " SELECT
+        $id = $_GET['id'];
+        $sql = " SELECT
         ste_id,
         pco_id,
         pco_autorizacion,
@@ -99,22 +113,23 @@ public static function buscarModalApi()
         WHERE pco_situacion = 1  AND ste_id = $id";
 
 
-    try {
-        $resultado = Protocolosol::fetchArray($sql);
-        echo json_encode($resultado);
-    } catch (Exception $e) {
-        echo json_encode([
-            'detalle' => $e->getMessage(),
-            'mensaje' => 'Ocurrió un error',
-            'codigo' => 0
-        ]);
+        try {
+            $resultado = Protocolosol::fetchArray($sql);
+            echo json_encode($resultado);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+
     }
 
-}
+    public static function buscarCalender()
+    {
 
-public static function buscarCalender(){
-    
-    try {
+        try {
             $sql = "SELECT 
             c.cmv_tip || ' - ' || m.dep_desc_lg AS title,
             p.pco_fechainicio AS start,
@@ -129,22 +144,23 @@ public static function buscarCalender(){
             p.pco_situacion = 1";
 
 
-        $resultado = Protocolosol::fetchArray($sql);
+            $resultado = Protocolosol::fetchArray($sql);
 
 
 
-        echo json_encode($resultado);
-    } catch (Exception $e) {
-        echo json_encode([
-            'detalle' => $e->getMessage(),
-            'mensaje' => 'Ocurrió un error',
-            'codigo' => 0
-        ]);
+            echo json_encode($resultado);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+
     }
 
-}
-
-public static function modificarApi(){
+    public static function modificarApi()
+    {
 
         try {
 
@@ -154,22 +170,22 @@ public static function modificarApi(){
             $fechaInicioActividad = $_POST['pco_fechainicio'];
             $fechaFormateadaIni = date('Y-m-d H:i', strtotime($fechaInicioActividad));
             $_POST['pco_fechainicio'] = $fechaFormateadaIni;
-            
-            
+
+
             $fechaFinActividad = $_POST['pco_fechafin'];
             $fechaFormateadaFin = date('Y-m-d H:i', strtotime($fechaFinActividad));
             $_POST['pco_fechafin'] = $fechaFormateadaFin;
-         
+
             // $Solicitud = new Protocolosol($_POST);
             // $resultado = $Solicitud->actualizar();
 
-             if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
+            if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
                 $solicitante = Solicitante::find($_POST['ste_id']);
                 $solicitante->ste_telefono = $_POST['ste_telefono'];
                 $resultado = $solicitante->actualizar();
             } else {
             }
-            
+
             if (isset($_POST['sol_id']) && !empty($_POST['sol_id'])) {
                 $solicitud = Solicitud::find($_POST['sol_id']);
                 $solicitud->sol_obs = $_POST['sol_obs'];
@@ -183,21 +199,21 @@ public static function modificarApi(){
                 $combo = Protocolo::find($comboId);
                 $combo->cmv_tip = $_POST['cmv_tip'];
                 $comboResultado = $combo->actualizar();
-                
+
             }
 
             if (isset($_POST['pco_id']) && !empty($_POST['pco_id'])) {
-            $protocolo = Protocolosol::find($_POST['pco_id']);
-            $protocolo->pco_cmbv = $_POST['pco_cmbv'];
-            $protocolo->pco_dir = $_POST['pco_dir'];
-            $protocolo->pco_just = $_POST['pco_just'];
-            $protocolo->pco_fechainicio = ($_POST['pco_fechainicio']); 
-            $protocolo->pco_fechafin = ($_POST['pco_fechafin']); 
-            $protocoloResultado = $protocolo->actualizar();
-            
+                $protocolo = Protocolosol::find($_POST['pco_id']);
+                $protocolo->pco_cmbv = $_POST['pco_cmbv'];
+                $protocolo->pco_dir = $_POST['pco_dir'];
+                $protocolo->pco_just = $_POST['pco_just'];
+                $protocolo->pco_fechainicio = ($_POST['pco_fechainicio']);
+                $protocolo->pco_fechafin = ($_POST['pco_fechafin']);
+                $protocoloResultado = $protocolo->actualizar();
+
             } else {
             }
-                
+
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
@@ -213,7 +229,8 @@ public static function modificarApi(){
         }
     }
 
-    public static function modificarPdfApi(){
+    public static function modificarPdfApi()
+    {
         try {
             $catalogo_doc = $_POST['ste_catalogo'];
 
@@ -267,9 +284,10 @@ public static function modificarApi(){
     }
 
 
-   
 
-    public static function motivos(){
+
+    public static function motivos()
+    {
         $sql = "SELECT * FROM se_motivos where mot_situacion = 1";
 
 
@@ -289,7 +307,8 @@ public static function modificarApi(){
     }
 
 
-    public static function Protocolo(){
+    public static function Protocolo()
+    {
         $sql = "SELECT 
         cmv_id,
         c.cmv_tip || ' - ' || m.dep_desc_lg AS tipo
@@ -301,24 +320,25 @@ public static function modificarApi(){
         mdep m ON c.cmv_dependencia = m.dep_llave
     WHERE 
         c.cmv_situacion = 1";
-    
+
         try {
             $combosMarimbasVallas = Protocolo::fetchArray($sql);
-    
-            if ($combosMarimbasVallas){
+
+            if ($combosMarimbasVallas) {
                 return $combosMarimbasVallas;
             } else {
                 return 0;
             }
         } catch (Exception $e) {
-            
+
         }
     }
 
 
 
 
-    public static function eliminarApi(){
+    public static function eliminarApi()
+    {
         try {
 
             $solicitud_id = $_POST['sol_id'];

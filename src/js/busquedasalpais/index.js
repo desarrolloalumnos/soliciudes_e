@@ -103,7 +103,10 @@ const datatable = new Datatable('#tablaSalidapaises', {
 });
 
 const buscar = async () => {
-    const url = `/soliciudes_e/API/busquedasalpais/buscar`;
+    
+    const catalogo = formulario.ste_cat.value
+    const fecha = formulario.ste_fecha.value    
+    const url = `/soliciudes_e/API/busquedasalpais/buscar?catalogo=${catalogo}&fecha=${fecha}`;
 
     const config = {
         method: 'GET',
@@ -559,12 +562,11 @@ const borrarTodo = (e) => {
 };
 buscar();
 
-// btnBuscar.addEventListener('click', buscar);
+btnBuscar.addEventListener('click', buscar);
 btnModificar.addEventListener('click', modificar)
 datatable.on('click', '.btn-warning', buscarModal);
 ofModal.addEventListener('click', borrarTodo);
 btnModificarPdf.addEventListener('click',modificarPdf);
-
 datatable.on('click', '.btn-outline-warning', traePdf);
 datatable.on('click', '.btn-outline-info', verPDF);
 datatable.on('click', '.btn-danger', eliminar);
