@@ -135,10 +135,10 @@ const datatable = new Datatable('#tablaMatrimonios', {
 
 const buscar = async () => {
 
-    // let dep_valor = dependencias.value 
-    // let tipo = tipos.value 
+    const catalogo = formulario.ste_cat.value
+    const fecha = formulario.ste_fecha.value
 
-    const url = `/soliciudes_e/API/busquedasc/buscar`;
+    const url = `/soliciudes_e/API/busquedasc/buscar?catalogo=${catalogo}&fecha=${fecha}`;
 
 
     const config = {

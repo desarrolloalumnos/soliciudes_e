@@ -184,8 +184,8 @@ const datatable = new Datatable('#tablaProtocolo', {
 const buscar = async () => {
     verCalendario.style.display = 'none';
     verTabla.style.display = 'block';
-const catalogo = formulario.ste_cat.value
-const fecha = formulario.ste_fecha.value
+    const catalogo = formulario.ste_cat.value
+    const fecha = formulario.ste_fecha.value
 console.log(catalogo,fecha);
     const url = `/soliciudes_e/API/busquedasproto/buscar?catalogo=${catalogo}&fecha=${fecha}`;
     const config = {
@@ -442,8 +442,8 @@ const verPDF = (e) => {
 
 btnBuscar.addEventListener('click', buscar);
 btnModificar.addEventListener('click', modificar)
-// addPdf.addEventListener('click',modificarPdf);
-// btnCancelar.addEventListener('click', limpiarModelProtocolo)
+addPdf.addEventListener('click',modificarPdf);
+btnCancelar.addEventListener('click', limpiarModelProtocolo)
 datatable.on('click', '.btn-warning', buscarModal);
 datatable.on('click', '.btn-outline-info', verPDF);
 datatable.on('click', '.btn-danger', eliminar);

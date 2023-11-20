@@ -23,12 +23,10 @@ class BuscalictController
         ]);
     }
 
-    public static function buscarApi()
-    {
-        // $cmv_dependencia = $_GET['cmv_dependencia'];
-        // $cmv_tip = $_GET['cmv_tip'];
-
-
+    public static function buscarApi(){
+        
+        $catalogo = $_GET['catalogo'];
+        $fecha = $_GET['fecha'];
 
         $sql = " SELECT  
         ste_id,
@@ -53,6 +51,14 @@ class BuscalictController
     INNER JOIN grados ON ste_gra = gra_codigo
     INNER JOIN se_pdf ON pdf_solicitud = sol_id 
     WHERE sol_situacion = 1 ";
+
+
+                    if ($fecha != '') {
+                        $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+                    }
+                    if ($catalogo != '') {
+                        $sql .= " AND ste_cat = '$catalogo'";
+                    }
 
         // if ($cmv_dependencia != 0) {
         //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";
