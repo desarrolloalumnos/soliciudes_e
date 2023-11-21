@@ -18,7 +18,7 @@
                         <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                         <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
                         <label for="ste_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
-                        <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="Número de catálogo">
+                        <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="Número de catálogo" required>
                         <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
                         <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
                         <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
@@ -32,11 +32,11 @@
                 <div class="row justify-content-around mb-4">
                     <div class="col-lg-6">
                         <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                        <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+                        <input id="ste_fecha" name="ste_fecha" class="form-control" type="date" required>
                     </div>
                     <div class="col-lg-6">
                         <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
-                        <input id="ste_telefono" name="ste_telefono" class="form-control" type="number" placeholder="Número telefónico">
+                        <input id="ste_telefono" name="ste_telefono" class="form-control" type="number" placeholder="Número telefónico" required>
                     </div>
                 </div>
 
@@ -48,7 +48,7 @@
                 <div class="row justify-content-around mb-4">
                     <div class="col-lg-6">
                         <label for="sol_motivo"><i class="bi bi-journal-check"></i>Motivos</label>
-                        <select name="sol_motivo" id="sol_motivo" class="form-select">
+                        <select name="sol_motivo" id="sol_motivo" class="form-select" required>
                             <option value=" " selected>Seleccione...</option>
                             <?php foreach ($motivos as $motivo) { ?>
                                 <option value="<?= $motivo['mot_id'] ?>"><?= $motivo['mot_descripcion'] ?></option>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-lg-6">
                         <label for="sol_obs"><i class="bi bi-body-text"></i> Observaciones</label>
-                        <textarea class="form-control"  id="sol_obs" name="sol_obs"></textarea>
+                        <textarea class="form-control"  id="sol_obs" name="sol_obs" required></textarea>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                     <div class="col-lg-4">
                         <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
                         <label for="aut_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
-                        <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catálogo">
+                        <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catálogo" required>
                         <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                         <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
                         <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="col-lg-4">
                         <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                        <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date">
+                        <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date" required>
                     </div>
                 </div>
 
@@ -100,7 +100,7 @@
                         <div class="col-lg-6">
                             <label for="pco_cmbv">Seleccione el Combo o banda musical, Marimba o valla</label>
                             <select name="pco_cmbv" id="pco_cmbv" class="form-control">
-                                <option value="">SELECCIONE SU REQUERIMIENTO</option>
+                                <option value="" selected>Seleccione su requerimiento...</option>
                                 <?php foreach ($combos as $combo): ?>
                                     <option value="<?= $combo['cmv_id'] ?>">
                                         <?= $combo['tipo'] ?>
@@ -110,23 +110,23 @@
                         </div>
                         <div class="col-lg-6">
                             <label for="pco_just">Justificación de la actividad:</label>
-                            <input type="text" name="pco_just" id="pco_just" class="form-control" placeholder="Escriba la justificación de su requerimiento">
+                            <input type="text" name="pco_just" id="pco_just" class="form-control" placeholder="Escriba la justificación de su requerimiento" required>
                         </div>
                     </div>
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
                             <label for="pco_fechainicio"><i class="bi bi-calendar-date-fill"></i>Fecha de inicio</label>
-                            <input value="" id="pco_fechainicio" name="pco_fechainicio" class="form-control" type="date">
+                            <input value="" id="pco_fechainicio" name="pco_fechainicio" class="form-control" type="date" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="pco_fechafin"><i class="bi bi-calendar-date-fill"></i>Fecha de finalización</label>
-                            <input value="" id="pco_fechafin" name="pco_fechafin" class="form-control" type="date">
+                            <input value="" id="pco_fechafin" name="pco_fechafin" class="form-control" type="date" required>
                         </div>
                     </div>
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
                             <label for="pco_dir">Dirección de actividad:</label>
-                            <input type="text" name="pco_dir" id="pco_dir" class="form-control" placeholder="Escriba la dirección de la actividad">
+                            <input type="text" name="pco_dir" id="pco_dir" class="form-control" placeholder="Escriba la dirección de la actividad" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="pco_civil"></label>
@@ -135,7 +135,7 @@
                     </div>
                     <div class="col-lg-6">
                             <label for="pdf_ruta"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>
-                            <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
+                            <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file" required>
                             <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
                             <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
                         </div>

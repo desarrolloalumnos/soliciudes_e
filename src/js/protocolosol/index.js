@@ -6,6 +6,8 @@ import { validarFormulario, Toast, confirmacion } from "../funciones";
 
 const formulario = document.getElementById('formularioProtocolo');
 const btnGuardar = document.getElementById('btnGuardar');
+
+
 const catalogo = document.getElementById('ste_cat')
 const nombre = document.getElementById('nombre');
 const grado = document.getElementById('ste_gra');

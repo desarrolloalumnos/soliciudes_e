@@ -13,7 +13,8 @@ use Model\Solicitud;
 use Model\Protocolosol;
 use MVC\Router;
 
-class ProtocolosolController{
+class ProtocolosolController
+{
     public static function index(Router $router)
     {
         $motivos = static::motivos();
@@ -25,75 +26,76 @@ class ProtocolosolController{
         ]);
     }
 
-    public static function guardarApi(){
+    public static function guardarApi()
+    {
         try {
 
 
             $catalogo_doc = $_POST['ste_cat'];
-            
+
             // Formatear fechas
             $fechaAutorizacion = $_POST['aut_fecha'];
             $fechaFormateadaAutorizacion = date('Y-m-d H:i', strtotime($fechaAutorizacion));
             $_POST['aut_fecha'] = $fechaFormateadaAutorizacion;
-            
+
             $fechaSolicito = $_POST['ste_fecha'];
             $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
             $_POST['ste_fecha'] = $fechaFormateadaSolicito;
-            
+
             $fechaInicioActividad = $_POST['pco_fechainicio'];
             $fechaFormateadaIni = date('Y-m-d H:i', strtotime($fechaInicioActividad));
             $_POST['pco_fechainicio'] = $fechaFormateadaIni;
             // $_POST['pco_fechainicio'] = null;
-            
+
             $fechaFinActividad = $_POST['pco_fechafin'];
             $fechaFormateadaFin = date('Y-m-d H:i', strtotime($fechaFinActividad));
             $_POST['pco_fechafin'] = $fechaFormateadaFin;
             // $_POST['pco_fechafin'] = null;
 
-            
+
             $solicitante = new Solicitante($_POST);
-          
+
             $solicitanteResultado = $solicitante->crear();
-          
-            
+
+
             if ($solicitanteResultado['resultado'] == 1) {
                 $solicitanteId = $solicitanteResultado['id'];
-                
+
                 $solicitud = new Solicitud($_POST);
                 $solicitud->sol_solicitante = $solicitanteId;
                 $solicitudResultado = $solicitud->crear();
-           
-             
+
+
                 if ($solicitudResultado['resultado'] == 1) {
                     $solicitudId = $solicitudResultado['id'];
 
                     $archivo = $_FILES['pdf_ruta'];
-                    $ruta = "../storage/protocolos/$catalogo_doc". uniqid() . ".pdf";
+                    $ruta = "../storage/protocolos/$catalogo_doc" . uniqid() . ".pdf";
                     $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
                     // echo json_encode($subido);
                     // exit;
-                    
+
                     if ($subido) {
                         $pdf = new Pdf([
                             'pdf_solicitud' => $solicitudId,
                             'pdf_ruta' => $ruta
                         ]);
-                   
+
                         $pdfResultado = $pdf->crear();
 
                         if ($pdfResultado['resultado'] == 1) {
                             $autorizacion = new Autorizacion($_POST);
                             $autorizacion->aut_solicitud = $solicitudId;
                             $autorizacionResultado = $autorizacion->crear();
-                          
+
                             if ($autorizacionResultado['resultado'] == 1) {
                                 $autorizacionId = $autorizacionResultado['id'];
-                                
+
                                 $protocolosol = new Protocolosol($_POST);
-                                $protocolosol->pco_autorizacion = $autorizacionId;                                                
+                                $protocolosol->pco_autorizacion = $autorizacionId;
                                 $protocolosolResultado = $protocolosol->crear();
                             } else {
-                                    echo "No se pudo crear la autorización";
+                                echo "No se pudo crear la autorización";
                                 exit;
                             }
                         } else {
@@ -120,29 +122,30 @@ class ProtocolosolController{
                     'mensaje' => 'Registro guardado correctamente',
                     'codigo' => 1
                 ]);
+            }
+
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+
         }
-    
-    } catch (Exception $e) {
-        echo json_encode([
-            'detalle' => $e->getMessage(),
-            'mensaje' => 'Ocurrió un error',
-            'codigo' => 0
-        ]);
-
     }
-}
 
 
 
-    public static function buscarCatalogoApi() {
+    public static function buscarCatalogoApi()
+    {
         $validarCatalogo = $_GET['per_catalogo'];
-        
+
         $sql = "select  dep_llave,org_plaza_desc,per_grado, per_arma, per_catalogo, RTRIM(per_nom1) || ' ' || RTRIM(per_nom2) || ' ' || RTRIM( per_ape1)  ||  ' ' || RTRIM(per_ape2) nombre from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = $validarCatalogo";
-             
+
         try {
             $motivos = Personal::fetchArray($sql);
             echo json_encode($motivos);
-            
+
         } catch (Exception $e) {
             echo json_encode([
                 'detalle' => $e->getMessage(),
@@ -152,7 +155,8 @@ class ProtocolosolController{
         }
     }
 
-    public static function buscarCatalogo2Api(){
+    public static function buscarCatalogo2Api()
+    {
 
         $validarCatalogo2 = $_GET['per_catalogo'];
 
@@ -173,49 +177,49 @@ class ProtocolosolController{
     }
 
 
-    public static function motivos(){
+    public static function motivos()
+    {
         $sql = "SELECT * FROM se_motivos where mot_situacion = 1";
-        
+
         try {
-            
+
             $motivos = Motivos::fetchArray($sql);
- 
-            if ($motivos){
-                
-                return $motivos; 
-            }else {
+
+            if ($motivos) {
+
+                return $motivos;
+            } else {
                 return 0;
             }
         } catch (Exception $e) {
-            
+
         }
     }
 
 
 
-    public static function Protocolo(){
-        $sql = "SELECT 
+    public static function Protocolo()
+    {
+        $sql = " SELECT 
         cmv_id,
-        c.cmv_tip || ' - ' || m.dep_desc_lg AS tipo
+        cmv_tip || ' - ' || dep_desc_lg AS tipo
     FROM 
-        se_protocolo p
-    JOIN 
-        se_combos_marimbas_vallas c ON p.pco_cmbv = c.cmv_id
-    JOIN 
-        mdep m ON c.cmv_dependencia = m.dep_llave
+        se_combos_marimbas_vallas
+    INNER JOIN 
+        mdep  ON cmv_dependencia = dep_llave
     WHERE 
-        c.cmv_situacion = 1";
-    
+        cmv_situacion = 1";
+
         try {
             $combosMarimbasVallas = Protocolo::fetchArray($sql);
-    
-            if ($combosMarimbasVallas){
+
+            if ($combosMarimbasVallas) {
                 return $combosMarimbasVallas;
             } else {
                 return 0;
             }
         } catch (Exception $e) {
-            
+
         }
     }
 
