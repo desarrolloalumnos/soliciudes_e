@@ -11,7 +11,7 @@
             <form class="carousel-inner border bg-light p-4" id="formularioSalidapaises" style="min-height: 50vh;">
 
                 <div class="text-center">
-                    <h1>Solicitud de Salida del País</h1>
+                    <h2>Solicitud de Salida del País</h2>
                     <br>
                     <input value="" id="sal_id" name="sal_id" class="form-control" type="hidden">
                 </div>
@@ -42,7 +42,7 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+                                <input id="ste_fecha" name="ste_fecha" class="form-control" type="date" placeholder="Fecha de la solicitud">
                             </div>
 
                             <div class="col-lg-6">
@@ -78,14 +78,14 @@
 
                         <div class="row">
                             <div class="col-lg-8">
-                                <h3>Autorizador</h3>
+                                <h3>Oficial que autoriza</h3>
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-4">
                                 <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
-                                <label for="aut_cat"><i class="bi bi-universal-access">Catálogo</i></label>
-                                <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catalogo">
+                                <label for="aut_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
+                                <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catálogo">
                                 <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                                 <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
                                 <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label for="nombre2"><i class="bi bi-clipboard-data-fill"></i>Nombres y Apellidos</label>
-                                <input value="" id="nombre2" name="nombre2" class="form-control" type="text">
+                                <input value="" id="nombre2" name="nombre2" class="form-control" type="text" placeholder="Nombre del Autorizador">
                             </div>
 
                             <div class="col-lg-4">

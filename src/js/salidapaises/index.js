@@ -4,6 +4,49 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
+const mensajesPersonalizados = {
+    ste_cat: 'Ingrese el número de catálogo',
+    nombre: 'Ingrese el nombre y apellidos',
+    ste_fecha: 'Ingrese la fecha de solicitud',
+    ste_telefono: 'Ingrese el número telefónico',
+    sol_motivo: 'Seleccione el motivo',
+    aut_cat: 'Ingrese el número de catálogo del autorizador',
+    nombre2: 'Ingrese el nombre y apellidos del autorizador',
+    aut_fecha: 'Ingrese la fecha de autorización',
+    sal_salida: 'Ingrese la fecha de salida del pais',
+    sal_ingreso: 'Ingrese la fecha de ingreso del pais',
+    dsal_pais: 'Seleccione el país a visitar',
+    dsal_transporte: 'Seleccione el transporte',
+    dsal_ciudad: 'Ingrese la ciudad del país a visitar',
+    pdf_ruta: 'Adjunte el documento PDF',
+    
+};
+
+// Función para validar el formulario
+const validarFormularioSalidaPaises = (formulario) => {
+    const camposRequeridos = ['ste_cat', 'nombre', 'ste_fecha', 'ste_telefono', 'sol_motivo', 'aut_cat', 'nombre2', 'aut_fecha', 'sal_salida', 'sal_ingreso','pdf_ruta'];
+    
+    const camposSalidaPaises = ['dsal_pais', 'dsal_transporte', 'dsal_ciudad'];
+
+    for (const campo of camposRequeridos) {
+        const esCampoSalidaPaises = camposSalidaPaises.includes(campo);
+        const selector = esCampoSalidaPaises ? `[name="${campo}[]"]` : `[name="${campo}"]`;
+        const input = formulario.querySelector(selector);
+    
+        if (!input.value.trim()) {
+            const mensaje = mensajesPersonalizados[campo] || `Ingrese datos en el campo ${campo.replace('_', ' ')}`;
+            Toast.fire({
+                icon: 'info',
+                text: mensaje,
+            });
+            return false;
+        }
+    }
+
+    return true;
+};
+
+
 const formulario = document.getElementById('formularioSalidapaises');
 const btnGuardar = document.getElementById('btnGuardar');
 const btnClearPais = document.getElementById('clearPais');
@@ -189,6 +232,9 @@ async function colocarCatalogo2(datos) {
 const guardar = async (evento) => {
     
     evento.preventDefault();
+    if (!validarFormularioSalidaPaises(formulario)) {
+        return;
+    }
     let paisSeleccionado = formulario.dsal_pais.value;
     
     if (paisSeleccionado === 596 || paisSeleccionado === 504 || paisSeleccionado === 55 || paisSeleccionado === 506 || paisSeleccionado === 507) {

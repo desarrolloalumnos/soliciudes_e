@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-lg-6">
                         <label for="sol_obs"><i class="bi bi-body-text"></i> Observaciones</label>
-                        <textarea class="form-control"  id="sol_obs" name="sol_obs" required></textarea>
+                        <textarea class="form-control"  id="sol_obs" name="sol_obs" placeholder="Ingrese sus obserciones, si no tiene, colocar SIN OBSERVACION" required></textarea>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                             </select>
                         </div>
                         <div class="col-lg-6">
-                            <label for="pco_just">Justificación de la actividad:</label>
+                            <label for="pco_just"><i class="bi bi-body-text"></i>Justificación de la actividad:</label>
                             <input type="text" name="pco_just" id="pco_just" class="form-control" placeholder="Escriba la justificación de su requerimiento" required>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
-                            <label for="pco_dir">Dirección de actividad:</label>
+                            <label for="pco_dir"><i class="bi bi-geo-fill"></i>Dirección de actividad:</label>
                             <input type="text" name="pco_dir" id="pco_dir" class="form-control" placeholder="Escriba la dirección de la actividad" required>
                         </div>
                         <div class="col-lg-6">
