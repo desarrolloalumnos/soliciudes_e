@@ -13,13 +13,13 @@
             <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio"   style="min-height: 50vh;">
                 <div class="text-center">
                     <input value="1"type="hidden" id="tse_id" name="tse_id">
-                    <h1>Matrimonio</h1>
+                    <h2 class="text-center">Matrimonio</h2>
                 </div>
                 <div class="carousel-item active">                 
                         <div class="row">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <h2>Datos del solicitante</h2>
+                                    <h3>Datos del solicitante</h3>
                                 </div>
                             </div>
 
@@ -29,9 +29,9 @@
                                         type="hidden">
                                     <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                                     <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
-                                    <label for="ste_cat">Catalogo</label>
+                                    <label for="ste_cat">Catálogo</label>
                                     <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number"
-                                        placeholder="numero de catalogo">
+                                        placeholder="Número de catalogo">
                                     <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
                                     <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
                                     <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
@@ -50,7 +50,7 @@
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="ste_telefono">Telefono</label>
+                                    <label for="ste_telefono">Teléfono</label>
                                     <input id="ste_telefono" name="ste_telefono" class="form-control" type="number">
                                 </div>
 
@@ -70,24 +70,22 @@
                                     <!-- <input value=" " class="form-control"  type="hidden" name="sol_obs" id="sol_obs" rows="10" cols="50"> -->
                                 </div>
 
-
                             </div>
                             <div class="row ">
                                 <div class="col-lg-4">
-                                    <h2>Autorizador</h2>
+                                    <h3>Oficial que autoriza</h3>
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-4">
                                     <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control"
                                         type="hidden">
-                                    <label for="aut_cat">Catalogo</label>
+                                    <label for="aut_cat">Catálogo</label>
                                     <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number">
                                     <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                                     <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
                                     <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
-                                    <input value="" id="aut_comando" name="aut_comando" class="form-control"
-                                        type="hidden">
+                                    <input value="" id="aut_comando" name="aut_comando" class="form-control" type="hidden">
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="nombre2">Nombres y Apellidos</label>
@@ -99,8 +97,6 @@
 
                                 </div>
                             </div>
-
-
                         </div>
                     
                 </div>
@@ -111,7 +107,7 @@
                             <input value="" id="mat_id" name="mat_id" class="form-control" type="hidden">
                             <input value="" id="mat_autorizacion" name="mat_autorizacion" class="form-control"
                                 type="hidden">
-                            <h2>Solicitud</h2>
+                            <h3>Detalle de la Solicitud</h3>
                         </div>
                     </div>
 
@@ -222,7 +218,7 @@
                             <input type="text" name="parejac1_apellidos" id="parejac1_apellidos" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="parejac1_direccion">Direccion</label>
+                            <label for="parejac1_direccion">Dirección</label>
                             <input type="text" name="parejac1_direccion" id="parejac1_direccion" class="form-control">
                         </div>
                         <div class="col-lg-12">
@@ -252,7 +248,7 @@
                 <form class="modal-body container" id="formMatrimonio" novalidate>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label for="parejam1_cat">Catalogo</label>
+                            <label for="parejam1_cat">Catálogo</label>
                             <input type="number" name="parejam1_cat" id="parejam1_cat" class="form-control">
                         </div>
                         <div class="col-lg-12">
