@@ -1,10 +1,10 @@
 <?php 
 require_once __DIR__ . '/../includes/app.php';
 
-
+use MVC\Router;
 use Controllers\AdministracionController;
 use Controllers\BuscalictController;
-use MVC\Router;
+use Controllers\LoginController;
 use Controllers\AppController;
 use Controllers\ProtocoloController;
 use Controllers\ProtocolosolController;
@@ -29,6 +29,10 @@ use Controllers\DireccionpersonalController;
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
+
+$router->get('/', [LoginController::class,'index']);
+$router->post('/API/login', [LoginController::class,'login']);
+$router->get('/logout', [LoginController::class,'logout']);
 
 
 $router->get('/', [AppController::class,'index']);
