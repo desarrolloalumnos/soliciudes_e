@@ -209,6 +209,7 @@ const guardar = async (evento) => {
         return;
     }
     const body = new FormData(formulario);
+    body.delete('tse_id');
     const url = '/soliciudes_e/API/tiposol/guardar';
     const config = {
         method: 'POST',
@@ -217,10 +218,10 @@ const guardar = async (evento) => {
 
     try {
         const respuesta = await fetch(url, config);
-        const data = await respuesta.text();
-
+        const data = await respuesta.json();
+        const { codigo, mensaje, detalle } = data;
         let icon = 'info';
-        switch (data.codigo) {
+        switch (codigo) {
             case 1:
                 formulario.reset();
                 icon = 'success';
@@ -228,7 +229,7 @@ const guardar = async (evento) => {
                 break;
             case 0:
                 icon = 'error';
-                console.log(data.detalle);
+                console.log(detalle);
                 break;
             default:
                 break;
@@ -236,14 +237,14 @@ const guardar = async (evento) => {
 
         Toast.fire({
             icon,
-            text: data.mensaje,
+            text: mensaje,
         });
     } catch (error) {
         console.log(error);
     }
 };
 
-// buscar();
+buscar();
 
 datatable.on('click', '.btn-warning', traeDatos);
 datatable.on('click', '.btn-danger', eliminar);
