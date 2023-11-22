@@ -4,6 +4,43 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
+const mensajesPersonalizados = {
+    ste_cat: 'Ingrese el número de catálogo del solicitante',
+    nombre: 'Ingrese el nombre y apellidos',
+    ste_fecha: 'Ingrese la fecha de solicitud',
+    ste_telefono: 'Ingrese el número telefónico del solicitante',
+    sol_motivo: 'Seleccione el motivo de su solicitud',
+    aut_cat: 'Ingrese el número de catálogo del autorizador',
+    nombre2: 'Ingrese el nombre y apellidos del autorizador',
+    aut_fecha: 'Ingrese la fecha de autorización',
+    mat_lugar_civil: 'Ingrese la ubicación de la boda civil',
+    mat_fecha_bodac: 'Ingrese la fecha de la boda civil',
+    mat_lugar_religioso: 'Ingrese la ubicación de la boda religiosa',
+    mat_fecha_bodar: 'Ingrese la fecha de la boda religiosa',
+    mat_fecha_lic_ini: 'Ingrese la fecha de inicio de la licencia',
+    mat_fecha_lic_fin: 'Ingrese la fecha de finalización de la licencia',
+    pdf_ruta: 'Adjunte el documento PDF',
+};
+
+const validarFormularioProtocolo = (formulario) => {
+    const camposRequeridos = ['ste_cat', 'nombre', 'ste_fecha', 'ste_telefono', 'sol_motivo', 'aut_cat', 'nombre2', 'aut_fecha', 'mat_lugar_civil', 'mat_fecha_bodac', 'pco_fechainicio', 'mat_lugar_religioso', 'mat_fecha_bodar', 'mat_fecha_lic_ini', 'mat_fecha_lic_fin', 'pco_dir', 'pdf_ruta'];
+
+    for (const campo of camposRequeridos) {
+        const input = formulario.querySelector(`[name="${campo}"]`);
+        if (!input.value.trim()) {
+            const mensaje = mensajesPersonalizados[campo] || `Ingrese datos en el campo ${campo.replace('_', ' ')}`;
+            Toast.fire({
+                icon: 'info',
+                text: mensaje,
+            });
+            return false;
+        }
+    }
+
+    return true;
+};
+
+
 const formulario = document.getElementById('formularioMatrimonio');
 const botonSlide2 = document.getElementById('botonSlide2');
 const btnGuardar = document.getElementById('btnGuardar');
@@ -85,6 +122,9 @@ checkboxMilitar.addEventListener('change', () => {
 
 const guardar = async (evento) => {
     evento.preventDefault();
+    if (!validarFormularioProtocolo(formulario)) {
+        return;
+    }
 
     const body = new FormData(formulario);
     const url = '/soliciudes_e/API/casamientos/guardar';

@@ -12,6 +12,7 @@
                 <div class="text-center">
                 <h2 class="text-center">Licencia Temporal</h2>
                 </div>
+                <br>
                 <div class="carousel-item active">
                     <div class="row justify-content-around mb-4">
                         <div class="row">
@@ -74,7 +75,7 @@
 
                             </div>
                             <div class="row ">
-                                <div class="col-lg-4">
+                                <div class="col-lg-8">
                                     <h3>Oficial que autoriza</h3>
                                 </div>
                             </div>
