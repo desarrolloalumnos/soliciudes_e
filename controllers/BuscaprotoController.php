@@ -54,15 +54,14 @@ class BuscaprotoController
                 inner join mper on ste_cat = per_catalogo
                 inner join grados on ste_gra = gra_codigo
                 inner join se_pdf on pdf_solicitud = sol_id
-                WHERE pco_situacion = 1  
-                AND sol_situacion = 1           
-                ";
-        if ($fecha != '') {
-            $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
-        }
-        if ($catalogo != '') {
-            $sql .= " AND ste_cat = '$catalogo'";
-        }
+                WHERE sol_situacion = 1";
+
+                if ($fecha != '') {
+                    $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+                }
+                if ($catalogo != '') {
+                    $sql .= " AND ste_cat = '$catalogo'";
+                }
 
 
         try {
@@ -176,22 +175,25 @@ class BuscaprotoController
             $fechaFormateadaFin = date('Y-m-d H:i', strtotime($fechaFinActividad));
             $_POST['pco_fechafin'] = $fechaFormateadaFin;
 
-            // $Solicitud = new Protocolosol($_POST);
-            // $resultado = $Solicitud->actualizar();
 
             if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
-                $solicitante = Solicitante::find($_POST['ste_id']);
+                $id = $_POST['ste_id'];
+                $solicitante = Solicitante::find($id);
                 $solicitante->ste_telefono = $_POST['ste_telefono'];
                 $resultado = $solicitante->actualizar();
-            } else {
-            }
+                if ($resultado['resultado'] == 1) {
+                    $modificacionExitosa = true;
+                }
+            } 
 
             if (isset($_POST['sol_id']) && !empty($_POST['sol_id'])) {
                 $solicitud = Solicitud::find($_POST['sol_id']);
                 $solicitud->sol_obs = $_POST['sol_obs'];
                 $solicitud->sol_motivo = $_POST['sol_motivo'];
                 $solicitudResultado = $solicitud->actualizar();
-            } else {
+                if ($solicitudResultado['resultado'] == 1) {
+                    $modificacionExitosa = true;
+                }
             }
 
             if (isset($_POST['cmv_id']) && !empty($_POST['cmv_id'])) {
@@ -199,7 +201,9 @@ class BuscaprotoController
                 $combo = Protocolo::find($comboId);
                 $combo->cmv_tip = $_POST['cmv_tip'];
                 $comboResultado = $combo->actualizar();
-
+                if ($comboResultado['resultado'] == 1) {
+                    $modificacionExitosa = true;
+                }
             }
 
             if (isset($_POST['pco_id']) && !empty($_POST['pco_id'])) {
@@ -210,11 +214,12 @@ class BuscaprotoController
                 $protocolo->pco_fechainicio = ($_POST['pco_fechainicio']);
                 $protocolo->pco_fechafin = ($_POST['pco_fechafin']);
                 $protocoloResultado = $protocolo->actualizar();
-
-            } else {
+                if ($protocoloResultado['resultado'] == 1) {
+                    $modificacionExitosa = true;
+                }
             }
 
-            if ($resultado['resultado'] == 1) {
+             if ($modificacionExitosa) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
                     'codigo' => 1
@@ -228,6 +233,7 @@ class BuscaprotoController
             ]);
         }
     }
+
 
     public static function modificarPdfApi()
     {
@@ -284,7 +290,7 @@ class BuscaprotoController
     }
 
 
-
+   
 
     public static function motivos()
     {
@@ -305,7 +311,6 @@ class BuscaprotoController
         } catch (Exception $e) {
         }
     }
-
 
     public static function Protocolo()
     {

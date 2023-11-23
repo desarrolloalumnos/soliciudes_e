@@ -37,7 +37,7 @@
                 <form class="border bg-light p-4" id="formularioLicenciasB" name="formularioLicenciasB" style="min-height: 50vh;">
                     <div id="licencias">
                         <div class="text-center">
-                            <h1>Licencia Temporal</h1>
+                            <h1>Solicitud de Licencia Temporal</h1>
                         </div>
 
                         <div class="row justify-content-around mb-4">
@@ -101,7 +101,7 @@
                                     <input value="" id="lit_id" name="lit_id" class="form-control" type="hidden">
                                     <input value="" id="lit_autorizacion" name="lit_autorizacion" class="form-control" type="hidden">
                                     <input value="" id="lit_articulo" name="lit_articulo" class="form-control" type="hidden">
-                                    <h2>Solicitud</h2>
+                                    <h3>Detalle de la Solicitud</h3>
                                 </div>
                             </div>
 

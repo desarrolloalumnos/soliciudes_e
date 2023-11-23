@@ -56,7 +56,6 @@
                 <form class="border bg-light p-4" id="formularioProto" name="formularioProto" style="min-height: 50vh;">
                     <div id="Protocolo">
                         <div class="text-center">
-                            <input value="4" type="hidden" id="tse_id" name="tse_id">
                             <h1>Solicitud de banda o combo musical, marimba y valla</h1>
                         </div>
 
