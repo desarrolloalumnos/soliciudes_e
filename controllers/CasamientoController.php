@@ -32,8 +32,9 @@ class CasamientoController
 
         try {
 
+            //$identificador = static::generaridentificador();
             $catalogo_doc = $_POST['ste_cat'];
-
+            //$_POST['identificador'] = $identificador;
 
             $fechaAutorizacion = $_POST['aut_fecha'];
             $fechaFormateadaAutorizacion = date('Y-m-d H:i', strtotime($fechaAutorizacion));

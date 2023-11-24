@@ -44,7 +44,6 @@
     "fullcalendar": "^5.11.5",
     "jquery": "^3.6.1",
     "leaflet": "^1.9.2",
-    "moment": "^2.29.4",
     "sweetalert2": "^11.4.38"
   }
 }

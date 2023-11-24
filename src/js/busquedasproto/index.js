@@ -182,6 +182,7 @@ const datatable = new Datatable('#tablaProtocolo', {
             orderable: false,
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
         },
+      
     ],
 });
 
@@ -478,7 +479,6 @@ const eliminar = async (e) => {
 
     buscar();
 }
-
 
 const verPDF = (e) => {
     // const button = e.target;

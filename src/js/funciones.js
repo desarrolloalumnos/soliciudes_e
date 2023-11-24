@@ -73,4 +73,6 @@ export const formatoTiempo = (numero) =>{
         resolve(resultado);
     });
 }
+
+
   

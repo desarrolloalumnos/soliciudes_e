@@ -35,6 +35,7 @@ class BuscaprotoController
                     pco_id,
                     ste_cat,
                     sol_id,
+                    sol_situacion,
                     gra_desc_lg,
                     TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
                     cmv_tip,
@@ -54,14 +55,16 @@ class BuscaprotoController
                 inner join mper on ste_cat = per_catalogo
                 inner join grados on ste_gra = gra_codigo
                 inner join se_pdf on pdf_solicitud = sol_id
-                WHERE sol_situacion = 1";
 
-                if ($fecha != '') {
-                    $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
-                }
-                if ($catalogo != '') {
-                    $sql .= " AND ste_cat = '$catalogo'";
-                }
+                AND (sol_situacion = 1 OR sol_situacion = 7)
+             ORDER BY ste_fecha DESC";
+        if ($fecha != '') {
+            $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+        }
+        if ($catalogo != '') {
+            $sql .= " AND ste_cat = '$catalogo'";
+        }
+
 
 
         try {
@@ -162,9 +165,6 @@ class BuscaprotoController
     {
 
         try {
-
-            // echo json_encode($_POST);
-            // exit;
 
             $fechaInicioActividad = $_POST['pco_fechainicio'];
             $fechaFormateadaIni = date('Y-m-d H:i', strtotime($fechaInicioActividad));

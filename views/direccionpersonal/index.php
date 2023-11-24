@@ -1,6 +1,6 @@
 <form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioDepersonal" name="formularioDepersonal" style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
-        <h1>Solicitudes Realizadas</h1>
+        <h1>Solicitudes Ingresadas</h1>
     </div>
 
     <div class="row mb-4">
@@ -137,6 +137,14 @@
                         </div>
                     </div>
                 </form>
+                <div class="row justify-content-center mt-12 mt-4 mb-4">
+                    <div class="col-lg-2">
+                        <button id="aceptarFormularioSalida" name="aceptarFormularioSalida" class="btn btn-primary">Elevar Solicitud</button>
+                    </div>
+                    <div class="col-lg-2">
+                        <button id="corregirFormularioSalida" name="corregirFormularioSalida" class="btn btn-warning">Corregir</button>
+                    </div>
+                </div>
 
                 <div class="modal-footer">
                     <button type="button" id="cerrarModal" class="btn btn-danger W-40" data-bs-dismiss="modal" onclick="borrarTodo(event)">Cerrar</button>
@@ -159,8 +167,6 @@
                             <input value="4" type="hidden" id="tse_id" name="tse_id">
                             <h1>Solicitud de banda o combo musical, marimba y valla</h1>
                         </div>
-
-
                         <div class="row">
                             <div class="col-lg-12">
                                 <h3>Datos del solicitante</h3>
@@ -219,8 +225,6 @@
                                 <textarea class="form-control" id="sol_obs2" name="sol_obs2"></textarea>
                             </div>
                         </div>
-
-
                         <!-- Detalle de la solicitud -->
                         <div class="row">
                             <div class="col-lg-12">
@@ -229,8 +233,6 @@
                                 <h3>Detalle de la Solicitud</h3>
                             </div>
                         </div>
-
-
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="pco_cmbv">Seleccione el Combo o banda musical, Marimba o valla</label>
@@ -278,6 +280,14 @@
                         </div>
                     </div>
                 </form>
+                <div class="row justify-content-center mt-12 mt-4 mb-4">
+                    <div class="col-lg-2">
+                        <button id="aceptarFormularioCombo" name="aceptarFormularioCombo" class="btn btn-primary">Elevar Solicitud</button>
+                    </div>
+                    <div class="col-lg-2">
+                        <button id="corregirFormularioCombo" name="corregirFormularioCombo" class="btn btn-warning">Corregir</button>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" id="btnCancelar" data-bs-dismiss="modal">Cerrar</button>
@@ -371,21 +381,27 @@
                     <div class="row justify-content-around mb-4">
 
                         <div id="parejaCivil" class="col-lg-6">
-                            <label for="mat_fecha_lic_ini">Pareja Civil</label>
+                            <h1>Pareja</h1>
                             <input value="" type="hidden" name="mat_per_civil" id="mat_per_civil" class="form-control">
+                            <label><i class="bi bi-bag-heart"></i>Nombres</label>
                             <input value="" type="text" name="parejac_nombres" placeholder="nombres" id="parejac_nombres" class="form-control">
                             <input value="" type="hidden" name="parejac_id" id="parejac_id" class="form-control">
+                            <label><i class="bi bi-bag-heart"></i>Apellidos</label>
                             <input value="" type="text" name="parejac_apellidos" placeholder="apellidos" id="parejac_apellidos" class="form-control">
+                            <label><i class="bi bi-house-door-fill"></i>Direccion</label>
                             <input value="" type="text" name="parejac_direccion" placeholder="direccion" id="parejac_direccion" class="form-control">
+                            <label><i class="bi bi-key"></i>DPI</label>
                             <input value="" type="text" name="parejac_dpi" placeholder="DPI" id="parejac_dpi" class="form-control">
                         </div>
 
                         <div id="parejaMilitar" class="col-lg-6">
-                            <label for="mat_fecha_bodar">Pareja Militar</label>
+                            <h1>Pareja</h1>
                             <input value="" type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
                             <input value="" type="hidden" name="mat_per_army" id="mat_per_army" class="form-control">
                             <input value="" type="hidden" name="parejam_id" id="parejac_id" class="form-control">
+                            <label> <i class="bi bi-key"></i> Catalogo</label>
                             <input value="" type="text" name="parejam_cat" id="parejam_cat" class="form-control">
+                            <label><i class="bi bi-bag-heart"></i>Nombres</label>
                             <input value="" type="text" name="parejaNombre" id="parejaNombre" class="form-control">
                             <input value="" type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
                             <input value="" type="hidden" name="parejam_gra" id="parejam_gra" class="form-control">
@@ -399,6 +415,14 @@
                         </div>
                     </div>
                 </form>
+                <div class="row justify-content-center mt-12 mt-4 mb-4">
+                    <div class="col-lg-2">
+                        <button id="aceptarFormulario" name="aceptarFormulario" class="btn btn-primary">Elevar Solicitud</button>
+                    </div>
+                    <div class="col-lg-2">
+                        <button id="corregirFormulario" name="corregirFormulario" class="btn btn-warning">Corregir</button>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" id="btnCancelar" data-bs-dismiss="modal">Cerrar</button>
@@ -519,12 +543,106 @@
                             </div>
                         </div>
                     </div>
-                 
                 </form>
+                <div class="row justify-content-center mt-12 mt-4 mb-4">
+                    <div class="col-lg-2">
+                        <button id="aceptarFormularioLicencia" name="aceptarFormularioLicencia" class="btn btn-primary">Elevar Solicitud</button>
+                    </div>
+                    <div class="col-lg-2">
+                        <button id="corregirFormularioLicencia" name="corregirFormularioLicencia" class="btn btn-warning">Corregir</button>
+                    </div>
+                </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" id="btnCancelar" data-bs-dismiss="modal">Cerrar</button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-xl" id="modalAceptar" tabindex="-1" role="dialog" aria-labelledby="modalAceptarLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <form class="border bg-light p-4" id="formularioValidar" name="formularioValidar" style="min-height: 50vh;">
+                    <div id="autorizarSolicitud">
+                        <div class="text-center">
+                            <h1>Autorizar</h1>
+                        </div>
+                        <div class="row justify-content-around mb-4">
+                            <div class="col-lg-4">
+                                <input value="" id="aut_solicitud2" name="aut_solicitud2" class="form-control" type="hidden">
+                                <input value="" id="sol_id" name="sol_id" class="form-control" type="text">
+                                <label for="aut_cat2"><i class="bi bi-universal-access">Catalogo</i></label>
+                                <input value="" id="aut_cat2" name="aut_cat2" class="form-control" type="number" placeholder="numero de catalogo">
+                                <input value="" id="aut_gra2" name="aut_gra2" class="form-control" type="hidden">
+                                <input value="" id="aut_arm2" name="aut_arm2" class="form-control" type="hidden">
+                                <input value="" id="aut_emp2" name="aut_emp2" class="form-control" type="hidden">
+                                <input value="" id="aut_comando2" name="aut_comando2" class="form-control" type="hidden">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="nombre2"><i class="bi bi-clipboard-data-fill"></i>Nombres y Apellidos</label>
+                                <input value="" id="nombre2" name="nombre2" class="form-control" type="text">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="aut_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
+                                <input value="" id="aut_fecha2" name="aut_fecha2" class="form-control" type="date">
+                            </div>
+                        </div>
+                        <div class="row justify-content-around mb-4">
+                            <div class="col-lg-6">
+                                <label for="aut_obs2"><i class="bi bi-body-text"></i> Observaciones</label>
+                                <textarea class="form-control" id="aut_obs2" name="aut_obs2"></textarea>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-12 mt-4 mb-4">
+                            <div class="col-lg-2">
+                                <button id="guardarAutorizacion" name="guardarAutorizacion" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="corregirSolicitud">
+                        <div class="text-center">
+                            <h1>Corregir</h1>
+                        </div>
+                        <div class="row justify-content-around mb-4">
+                            <div class="col-lg-4">
+
+                                <label for="aut_catalogo"><i class="bi bi-universal-access">Catalogo</i></label>
+                                <input value="" id="aut_catalogo" name="aut_catalogo" class="form-control" type="number" placeholder="numero de catalogo">
+                                <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
+                                <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
+                                <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
+                                <input value="" id="aut_comando" name="aut_comando" class="form-control" type="hidden">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="nombre_autorizador"><i class="bi bi-clipboard-data-fill"></i>Nombres y Apellidos</label>
+                                <input value="" id="nombre_autorizador" name="nombre_autorizador" class="form-control" type="text">
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
+                                <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date">
+                            </div>
+                        </div>
+                        <div class="row justify-content-around mb-4">
+                            <div class="col-lg-6">
+                                <label for="aut_obs"><i class="bi bi-body-text"></i> Observaciones</label>
+                                <textarea class="form-control" id="aut_obs" name="aut_obs"></textarea>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-12 mt-4 mb-4">
+                        <div class="col-lg-2">
+                            <button id="guardarCorreccion" name="guardarCorreccion" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                    </div>                  
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" id="btnCancelar" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

@@ -38,31 +38,34 @@ const datatable = new Datatable('#tablaMdn', {
             data: 'motivo'
         },
         {
-            title: 'Autorizador',
+            title: 'Dependencia',
             className: 'text-center',
-            data: 'autorizador'
+            data: 'dependencia_solicitante'
         },
+        
         {
             title: 'Estado',
             className: 'text-center',
             data: 'sol_situacion',
             render: function (data, type, row) {
                 if (type === 'display') {
-                    if (data === '1') {
-                        return `<span style="color: red;">COMANDO</span>`;
-                    } else if (data === '2') {
-                        return `<span >DGAEMDN</span>`;
-                    } else if (data === '3') {
-                        return `<span >DPEMDN</span>`;
-                    } else if (data === '4') {
-                        return `<span >MDN</span>`;
+                 if (data === '4') {
+                        return `
+                        <span >MDN</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                </div>
+            `;
                     } else if (data === '5') {
-                        return `<span>AUTORIZADO</span>`;
+                        return `
+                        <span>AUTORIZADO</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                </div>
+            `;
                     } else if (data === '6') {
-                        return `<span>RECHAZADA</span>`;
-                    } else if (data === '7') {
-                        return `<button class="btn btn-danger">CORREGIR</button>`;
-                    } else {
+                        return `<button class="btn btn-danger">RECHAZADA</button>`;
+                    }  else {
                         return '';
                     }
                 }
@@ -72,22 +75,33 @@ const datatable = new Datatable('#tablaMdn', {
         {
             title: 'Autorización',
             className: 'text-center',
-            data: 'sol_situacion',
-            render: function(data, type, row) {
+            data: 'ste_id',
+            searchable: false,
+            orderable: false,
+            render: function (data, type, row) {
                 if (type === 'display') {
-                    if (data === '5') {
-                        return `<button class="btn btn-success btn-autorizar" data-id='${row.sol_id}'>Autorizado</button>`;
-                    } else if (data === '6') {
-                        return `<button class="btn btn-danger btn-rechazar" data-id='${row.sol_id}'>Rechazado</button>`;
-                    } else if (data === '7') {
-                        return `<button class="btn btn-danger">Correcciones</button>`;
-                    } else {
-                        return '';
-                    }
+                    if (row.sol_situacion === '6') {
+                        return `
+                        <div  class="btn-group">
+                        <button class="btn btn-secondary">Autorizada</button>
+                        
+                         </div>
+                         `;
+                    } else (row.sol_situacion === '4') 
+                    {
+                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
                 }
+            }
                 return data;
             }
-        }
+        },
+        
+    ],
+    columnDefs: [
+        {
+            targets: [1],
+            visible: false
+        },
     ],
 });
 

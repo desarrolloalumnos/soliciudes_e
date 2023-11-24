@@ -15,7 +15,7 @@ const modalPdf = new Modal(document.getElementById('modalPdf'), {
 const formulario = document.getElementById('formularioMatrimonio');
 const formulario2 = document.getElementById('formularioCasamiento');
 const pdf = document.getElementById('formularioPdf');
-const ste_cat2 = document.getElementById('ste_cat2');
+const ste_cat2 = document.getElementById('catalogo');
 const idPareja = document.getElementById('parejac_id')
 const iframe = document.getElementById('pdfIframe');
 const btnModificar = document.getElementById('btnModificar');
@@ -24,7 +24,6 @@ const addPdf = document.getElementById('addPdf');
 const parejam_cat = document.getElementById('parejam_cat');
 const divMilitar = document.getElementById('parejaMilitar');
 const divCivil = document.getElementById('parejaCivil');
-const formularioModal = document.getElementById('formularioPdf');
 
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';
@@ -44,8 +43,8 @@ const datatable = new Datatable('#tablaMatrimonios', {
         },
         {
             title: 'Grado',
-            className: 'gra_desc_lg',
-            data: 'gra_desc_lg'
+            className: 'text-center',
+            data: 'grado_solicitante'
         },
         {
             title: 'Nombres',
@@ -67,13 +66,13 @@ const datatable = new Datatable('#tablaMatrimonios', {
         {
             title: 'Nombres Pareja',
             className: 'text-center',
-            data: 'nombres_pareja',
+            data: 'nombre_solicitante',
             visible: false
         },
         {
             title: 'Nombres de la Pareja',
             render: function (data, type, row) {
-                return row.grado_pareja + ' ' + row.nombres_pareja + row.pareja_civil;
+                return row.grado_pareja + ' ' + row.nombre_pareja + row.pareja_civil;
             }
         },
 
@@ -130,6 +129,7 @@ const datatable = new Datatable('#tablaMatrimonios', {
             orderable: false,
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
         },
+                
     ],
 });
 
@@ -345,7 +345,6 @@ const modificarPdf = async (evento) => {
 
     evento.preventDefault();
 
-
     const body = new FormData(pdf);
     body.append('ste_cat2', ste_id)
     const url = '/soliciudes_e/API/busquedasc/modificarPdf';
@@ -402,6 +401,59 @@ const eliminar = async (e) => {
         const body = new FormData()
         body.append('sol_id', id)
         const url = '/soliciudes_e/API/busquedasc/eliminar';
+
+        const headers = new Headers();
+        headers.append("X-Requested-With", "fetch");
+        const config = {
+            method: 'POST',
+            body
+        }
+        try {
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
+     
+            const { codigo, mensaje, detalle } = data;
+            let icon = 'info'
+            switch (codigo) {
+                case 1:
+
+                    icon = 'success'
+
+                    break;
+
+                case 0:
+                    icon = 'error'
+                    console.log(detalle)
+                    break;
+
+                default:
+                    break;
+            }
+
+            Toast.fire({
+                icon,
+                text: mensaje
+            })
+
+
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    buscar();
+}
+const corregir = async (e) => {
+    const button = e.target;
+    const id = button.dataset.sol_id;
+
+    if (await confirmacion('warning', 'Desea corregir este registro?')) {
+
+        const body = new FormData()
+        body.append('sol_id', id)
+        const url = '/soliciudes_e/API/busquedasc/corregir';
 
         const headers = new Headers();
         headers.append("X-Requested-With", "fetch");
@@ -510,4 +562,5 @@ datatable.on('click', '.btn-warning', buscarModal);
 datatable.on('click', '.btn-outline-warning', traePdf);
 addPdf.addEventListener('click', modificarPdf)
 datatable.on('click', '.btn-outline-info', verPDF);
+datatable.on('click', '.btn-success',corregir)
 datatable.on('click', '.btn-danger', eliminar);

@@ -11,3 +11,11 @@ las situaciones de las solicitudes seran de la siguiente manera
 5 autorizado
 6 rechazada 
 7 correcciones
+8 corregido
+
+las situaciones para los autorizadores seran
+
+0 eliminado 
+1 comando 
+3 direccion de personal Estado Mayor 
+4 ministerio 

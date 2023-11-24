@@ -28,10 +28,11 @@ class BuscalictController
         $catalogo = $_GET['catalogo'];
         $fecha = $_GET['fecha'];
 
-        $sql = " SELECT  
+        $sql = " SELECT
         ste_id,
         ste_cat,
         ste_telefono,
+        sol_situacion,
         gra_desc_lg,
         TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombre_solicitante,
         lit_mes_consueldo,
@@ -50,7 +51,8 @@ class BuscalictController
     LEFT JOIN mper ON ste_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
     INNER JOIN se_pdf ON pdf_solicitud = sol_id 
-    WHERE sol_situacion = 1 ";
+    AND (sol_situacion = 1 OR sol_situacion = 7)
+    ORDER BY ste_fecha DESC";
 
 
                     if ($fecha != '') {
@@ -226,7 +228,7 @@ class BuscalictController
 
                 // Generar la nueva ruta para el archivo PDF
                 $archivo = $_FILES['pdf_ruta'];
-                $rutaNueva = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+                $rutaNueva = "../storage/licencia/$catalogo_doc" . uniqid() . ".pdf";
 
                 // Mover el nuevo archivo
                 $subido = move_uploaded_file($archivo['tmp_name'], $rutaNueva);
