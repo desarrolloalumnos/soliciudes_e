@@ -4,6 +4,41 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion, formatoTiempo } from "../funciones";
 
+const mensajesPersonalizados = {
+    ste_cat: 'Ingrese el número de catálogo del solicitante',
+    nombre: 'Ingrese el nombre y apellidos',
+    ste_fecha: 'Ingrese la fecha de solicitud',
+    ste_telefono: 'Ingrese el número telefónico del solicitante',
+    sol_motivo: 'Seleccione el motivo de su solicitud',
+    aut_cat: 'Ingrese el número de catálogo del autorizador',
+    nombre2: 'Ingrese el nombre y apellidos del autorizador',
+    aut_fecha: 'Ingrese la fecha de autorización',
+    lit_mes_consueldo: 'Seleccione la cantidad de meses con sueldo',
+    lit_mes_sinsueldo: 'Seleccione la cantidad de meses sin sueldo',
+    lit_fecha1: 'Ingrese la fecha de inicio de la licencia',
+    lit_fecha2: 'Ingrese la fecha de finalización de la licencia',
+    lit_articulo: 'Ingrese el articulo',
+    pdf_ruta: 'Adjunte el documento PDF',
+};
+
+const validarFormularioProtocolo = (formulario) => {
+    const camposRequeridos = ['ste_cat', 'nombre', 'ste_fecha', 'ste_telefono', 'sol_motivo', 'aut_cat', 'nombre2', 'aut_fecha', 'lit_mes_consueldo', 'lit_mes_sinsueldo', 'lit_fecha1', 'lit_fecha2', 'lit_articulo', 'pdf_ruta'];
+
+    for (const campo of camposRequeridos) {
+        const input = formulario.querySelector(`[name="${campo}"]`);
+        if (!input.value.trim()) {
+            const mensaje = mensajesPersonalizados[campo] || `Ingrese datos en el campo ${campo.replace('_', ' ')}`;
+            Toast.fire({
+                icon: 'info',
+                text: mensaje,
+            });
+            return false;
+        }
+    }
+
+    return true;
+};
+
 const formulario = document.getElementById('formularioLicencias');
 const btnGuardar = document.getElementById('btnGuardar');
 
@@ -186,6 +221,9 @@ const buscarCatalogo2 = async () => {
 
 const guardar = async (evento) => {
     evento.preventDefault();
+    if (!validarFormularioProtocolo(formulario)) {
+        return;
+    }
     let tiempo = formulario.tiempo_servicio.value
     const body = new FormData(formulario);
     body.append('tiempo_servicio', tiempo)

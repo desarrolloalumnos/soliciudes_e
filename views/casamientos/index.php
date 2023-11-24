@@ -13,15 +13,16 @@
             <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio"   style="min-height: 50vh;">
                 <div class="text-center">
                     <input value="1"type="hidden" id="tse_id" name="tse_id">
-                    <h1>Matrimonio</h1>
+                    <h2 class="text-center">Matrimonio</h2>
+                    <br>
                 </div>
-                <div class="carousel-item active">                 
+                <div class="carousel-item active"> 
+                    <div class="row justify-content-around mb-4">                
                         <div class="row">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <h2>Datos del solicitante</h2>
-                                </div>
+                            <div class="col-lg-8">
+                                <h3>Datos del solicitante</h3>
                             </div>
+                        </div>
 
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
@@ -29,9 +30,9 @@
                                         type="hidden">
                                     <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                                     <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
-                                    <label for="ste_cat">Catalogo</label>
+                                    <label for="ste_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
                                     <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number"
-                                        placeholder="numero de catalogo">
+                                        placeholder="Número de catálogo">
                                     <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
                                     <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
                                     <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
@@ -39,19 +40,19 @@
                                         type="hidden">
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="ste_cat">Nombres y Apellidos</label>
+                                    <label for="ste_cat"><i class="bi bi-clipboard-data-fill"></i>Nombres y Apellidos</label>
                                     <input value="" id="nombre" name="nombre" class="form-control" type="Text">
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
-                                    <label for="ste_fecha">Fecha de Solicitud</label>
-                                    <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+                                    <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
+                                    <input id="ste_fecha" name="ste_fecha" class="form-control" type="date" placeholder="Fecha de la solicitud">
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="ste_telefono">Telefono</label>
-                                    <input id="ste_telefono" name="ste_telefono" class="form-control" type="number">
+                                    <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
+                                    <input id="ste_telefono" name="ste_telefono" class="form-control" type="number" placeholder="Ingrese su número telefónico">
                                 </div>
 
                             </div>
@@ -70,37 +71,33 @@
                                     <!-- <input value=" " class="form-control"  type="hidden" name="sol_obs" id="sol_obs" rows="10" cols="50"> -->
                                 </div>
 
-
                             </div>
+                        </div>
                             <div class="row ">
-                                <div class="col-lg-4">
-                                    <h2>Autorizador</h2>
+                                <div class="col-lg-8">
+                                    <h3>Oficial que autoriza</h3>
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-4">
                                     <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control"
                                         type="hidden">
-                                    <label for="aut_cat">Catalogo</label>
-                                    <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number">
+                                    <label for="aut_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
+                                    <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catálogo">
                                     <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                                     <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
                                     <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
-                                    <input value="" id="aut_comando" name="aut_comando" class="form-control"
-                                        type="hidden">
+                                    <input value="" id="aut_comando" name="aut_comando" class="form-control" type="hidden">
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="nombre2">Nombres y Apellidos</label>
-                                    <input value="" id="nombre2" name="nombre2" class="form-control" type="text">
+                                    <label for="nombre2"><i class="bi bi-clipboard-data-fill"></i>Nombres y Apellidos</label>
+                                    <input value="" id="nombre2" name="nombre2" class="form-control" type="text" placeholder="Nombre del Autorizador">
                                 </div>
                                 <div class="col-lg-4">
-                                    <label for="aut_fecha">Fecha</label>
-                                    <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date">
-
+                                    <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
+                                    <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date" placeholder="Fecha de autorización">
                                 </div>
                             </div>
-
-
                         </div>
                     
                 </div>
@@ -111,48 +108,47 @@
                             <input value="" id="mat_id" name="mat_id" class="form-control" type="hidden">
                             <input value="" id="mat_autorizacion" name="mat_autorizacion" class="form-control"
                                 type="hidden">
-                            <h2>Solicitud</h2>
+                            <h3>Detalle de la Solicitud</h3>
                         </div>
                     </div>
 
 
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-4">
-                            <label for="mat_lugar_civil">Lugar de la boda Civil</label>
+                            <label for="mat_lugar_civil"><i class="bi bi-bank"></i>Lugar de la boda Civil</label>
                             <input value="" id="mat_lugar_civil" name="mat_lugar_civil" class="form-control"
                                 type="text">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_fecha_bodac">Fecha de la boda Civil</label>
+                            <label for="mat_fecha_bodac"><i class="bi bi-calendar-date-fill"></i>Fecha de la boda Civil</label>
                             <input id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_lugar_religioso">Lugar de la boda Religiosa</label>
-                            <input value="" id="mat_lugar_religioso" name="mat_lugar_religioso" class="form-control"
-                                type="text">
+                            <label for="mat_fecha_bodar"><i class="bi bi-calendar-date-fill"></i>Fecha de la boda Religiosa</label>
+                            <input value="" id="mat_lugar_religioso" name="mat_lugar_religioso" class="form-control" type="text">
                         </div>
                     </div>
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-4">
-                            <label for="mat_fecha_bodar">Fecha de la boda Religiosa</label>
+                            <label for="mat_fecha_bodar"><i class="bi bi-calendar-date-fill"></i>Fecha de la boda Religiosa</label>
                             <input id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_fecha_lic_ini">Inicio de la licencia</label>
+                            <label for="mat_fecha_lic_ini"><i class="bi bi-journal-check"></i>Inicio de la licencia</label>
                             <input id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_fecha_lic_fin">Finalizacion de la licencia</label>
+                            <label for="mat_fecha_lic_fin"><i class="bi bi-body-text"></i>Finalizacion de la licencia</label>
                             <input id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
                         </div>
                     </div>
                     <div class="row justify-content-center  mb-4">
                         <div class="col-lg-3">
-                            <label for="mat_fecha_bodar">Pareja Militar</label>
+                            <label for="mat_fecha_bodar"><i class="bi bi-clipboard-data-fill"></i>Pareja Militar</label>
                             <input type="checkbox" id="pareja_militar" name="pareja_militar" class="form-check-input">
                         </div>
                         <div class="col-lg-2">
-                            <label for="mat_fecha_lic_ini">Pareja Civil</label>
+                            <label for="mat_fecha_lic_ini"><i class="bi bi-clipboard-data-fill"></i>Pareja Civil</label>
                             <input type="checkbox" id="pareja_civil" name="pareja_civil" class="form-check-input">
                         </div>
 
@@ -214,19 +210,19 @@
                 <form class="modal-body container" id="formCasamiento" novalidate>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label for="parejac1_nombres">Nombres</label>
+                            <label for="parejac1_nombres"><i class="bi bi-clipboard-data-fill"></i>Nombres</label>
                             <input type="text" name="parejac1_nombres" id="parejac1_nombres" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="parejac1_apellidos">Apellidos</label>
+                            <label for="parejac1_apellidos"><i class="bi bi-clipboard-data-fill"></i>Apellidos</label>
                             <input type="text" name="parejac1_apellidos" id="parejac1_apellidos" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="parejac1_direccion">Direccion</label>
+                            <label for="parejac1_direccion"><i class="bi bi-geo-fill"></i>Dirección</label>
                             <input type="text" name="parejac1_direccion" id="parejac1_direccion" class="form-control">
                         </div>
                         <div class="col-lg-12">
-                            <label for="parejac1_dpi">DPI</label>
+                            <label for="parejac1_dpi"><i class="bi bi-passport"></i>DPI</label>
                             <input type="text" name="parejac1_dpi" id="parejac1_dpi" class="form-control">
                         </div>
                     </div>
@@ -252,7 +248,7 @@
                 <form class="modal-body container" id="formMatrimonio" novalidate>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label for="parejam1_cat">Catalogo</label>
+                            <label for="parejam1_cat">Catálogo</label>
                             <input type="number" name="parejam1_cat" id="parejam1_cat" class="form-control">
                         </div>
                         <div class="col-lg-12">

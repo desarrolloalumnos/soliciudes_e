@@ -1,10 +1,10 @@
 <?php 
 require_once __DIR__ . '/../includes/app.php';
 
-
+use MVC\Router;
 use Controllers\AdministracionController;
 use Controllers\BuscalictController;
-use MVC\Router;
+use Controllers\LoginController;
 use Controllers\AppController;
 use Controllers\ProtocoloController;
 use Controllers\ProtocolosolController;
@@ -29,6 +29,10 @@ use Controllers\ReporteController;
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
+
+$router->get('/', [LoginController::class,'index']);
+$router->post('/API/login', [LoginController::class,'login']);
+$router->get('/logout', [LoginController::class,'logout']);
 
 
 $router->get('/', [AppController::class,'index']);
@@ -115,6 +119,7 @@ $router->get('/API/busquedasproto/buscarModal', [BuscaprotoController::class,'bu
 $router->get('/API/busquedasproto/buscarCalender', [BuscaprotoController::class,'buscarCalender']);
 $router->get('/API/busquedasproto/buscarEventos', [BuscaprotoController::class,'buscarEventos']);
 $router->post('/API/busquedasproto/modificar', [BuscaprotoController::class,'modificarApi']);
+$router->post('/API/busquedasproto/modificarPdf', [BuscaprotoController::class,'modificarPdfApi']);
 $router->post('/API/busquedasproto/eliminar', [BuscaprotoController::class,'eliminarApi']);
 $router->get('/API/busquedasproto/pdf', [BuscaprotoController::class,'VerPdf']);
 

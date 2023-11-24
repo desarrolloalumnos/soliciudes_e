@@ -10,15 +10,16 @@
             </div>
             <form class="carousel-inner border bg-light p-4" id="formularioLicencias" name="formularioLicencias" style="min-height: 50vh;">
                 <div class="text-center">
-                    <h1>Licencia Temporal</h1>
+                <h2 class="text-center">Licencia Temporal</h2>
                 </div>
+                <br>
                 <div class="carousel-item active">
                     <div class="row justify-content-around mb-4">
                         <div class="row">
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <h2>Datos del solicitante</h2>
+                                    <h3>Datos del solicitante</h3>
                                 </div>
                             </div>
 
@@ -27,8 +28,8 @@
                                 <div class="col-lg-6">
                                     <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                                     <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
-                                    <label for="ste_cat"><i class="bi bi-universal-access"></i>Catalogo</label>
-                                    <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="numero de catalogo">
+                                    <label for="ste_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
+                                    <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="Número de catalogo">
                                     <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
                                     <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
                                     <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
@@ -46,7 +47,7 @@
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Telefono</label>
+                                    <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
                                     <input id="ste_telefono" name="ste_telefono" class="form-control" type="number">
                                 </div>
 
@@ -74,14 +75,14 @@
 
                             </div>
                             <div class="row ">
-                                <div class="col-lg-4">
-                                    <h2>Autorizador</h2>
+                                <div class="col-lg-8">
+                                    <h3>Oficial que autoriza</h3>
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-4">
                                     <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
-                                    <label for="aut_cat"><i class="bi bi-universal-access">Catalogo</i></label>
+                                    <label for="aut_cat"><i class="bi bi-universal-access">Catálogo</i></label>
                                     <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="numero de catalogo">
                                     <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                                     <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
@@ -98,8 +99,6 @@
 
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -110,7 +109,7 @@
                             <input value="" id="lit_id" name="lit_id" class="form-control" type="hidden">
                             <input value="" id="lit_autorizacion" name="lit_autorizacion" class="form-control" type="hidden">
                             <input value="" id="lit_articulo" name="lit_articulo" class="form-control" type="hidden">
-                            <h2>Solicitud</h2>
+                            <h3>Detalle de la Solicitud</h3>
                         </div>
                     </div>
 

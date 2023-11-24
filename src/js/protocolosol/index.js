@@ -4,8 +4,45 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
+const mensajesPersonalizados = {
+    ste_cat: 'Ingrese el número de catálogo del solicitante',
+    nombre: 'Ingrese el nombre y apellidos',
+    ste_fecha: 'Ingrese la fecha de solicitud',
+    ste_telefono: 'Ingrese el número telefónico del solicitante',
+    sol_motivo: 'Seleccione el motivo de su solicitud',
+    aut_cat: 'Ingrese el número de catálogo del autorizador',
+    nombre2: 'Ingrese el nombre y apellidos del autorizador',
+    aut_fecha: 'Ingrese la fecha de autorización',
+    pco_cmbv: 'Seleccione el combo o banda musical, marimba o valla',
+    pco_just: 'Ingrese la justificación de la actividad',
+    pco_fechainicio: 'Ingrese la fecha de inicio de la actividad',
+    pco_fechafin: 'Ingrese la fecha de finalización de la actividad',
+    pco_dir: 'Ingrese la dirección de la actividad',
+    pdf_ruta: 'Adjunte el documento PDF',
+};
+
+const validarFormularioProtocolo = (formulario) => {
+    const camposRequeridos = ['ste_cat', 'nombre', 'ste_fecha', 'ste_telefono', 'sol_motivo', 'aut_cat', 'nombre2', 'aut_fecha', 'pco_cmbv', 'pco_just', 'pco_fechainicio', 'pco_fechafin', 'pco_dir', 'pdf_ruta'];
+
+    for (const campo of camposRequeridos) {
+        const input = formulario.querySelector(`[name="${campo}"]`);
+        if (!input.value.trim()) {
+            const mensaje = mensajesPersonalizados[campo] || `Ingrese datos en el campo ${campo.replace('_', ' ')}`;
+            Toast.fire({
+                icon: 'info',
+                text: mensaje,
+            });
+            return false;
+        }
+    }
+
+    return true;
+};
+
 const formulario = document.getElementById('formularioProtocolo');
 const btnGuardar = document.getElementById('btnGuardar');
+
+
 const catalogo = document.getElementById('ste_cat')
 const nombre = document.getElementById('nombre');
 const grado = document.getElementById('ste_gra');
@@ -32,6 +69,9 @@ btnGuardar.parentElement.style.display = 'block';
 
 const guardar = async (evento) => {
     evento.preventDefault();
+    if (!validarFormularioProtocolo(formulario)) {
+        return;
+    }
     let ruta = formulario.pdf_ruta.value
     const body = new FormData(formulario);
     body.append('pdf_ruta',ruta)
@@ -193,10 +233,7 @@ grado2.value = dato.per_grado;
 empleo2.value = dato.org_plaza_desc
 comando2.value = dato.dep_llave
 
-
-
 }
-
 
 btnGuardar.addEventListener('click', guardar)
 

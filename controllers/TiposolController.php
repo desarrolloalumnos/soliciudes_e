@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use Exception;
-use Model\Tiposolicitudes;
+use Model\TipoSolicitudes;
 use MVC\Router;
 
 class TiposolController {
@@ -14,13 +14,18 @@ class TiposolController {
     public static function guardarAPI()
     {
         try {
-            $tiposolicitud = new Tiposolicitudes($_POST);
+            $tiposolicitud = new TipoSolicitudes($_POST);
             $resultado = $tiposolicitud->crear();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro guardado correctamente',
                     'codigo' => 1
+                ]);
+            } else {
+                echo json_encode([
+                    'mensaje' => 'Ocurrió un error',
+                    'codigo' => 0
                 ]);
             }
         } catch (Exception $e) {
@@ -35,7 +40,7 @@ class TiposolController {
     public static function modificarAPI()
     {
         try {
-            $tiposolicitud = new Tiposolicitudes($_POST);
+            $tiposolicitud = new TipoSolicitudes($_POST);
             $resultado = $tiposolicitud->actualizar();
 
             if ($resultado['resultado'] == 1) {
@@ -62,7 +67,7 @@ class TiposolController {
     {
         try {
             $tse_id = $_POST['tse_id'];
-            $tiposolicitud = Tiposolicitudes::find($tse_id);
+            $tiposolicitud = TipoSolicitudes::find($tse_id);
             $tiposolicitud->tse_situacion = 0;
             $resultado = $tiposolicitud->actualizar();
 
