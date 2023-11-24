@@ -21,6 +21,11 @@ const modalL = new Modal(document.getElementById('modalMostrarLicencias'), {
     backdrop: 'static',
     keyboard: false
 });
+const modalAceptar = new Modal(document.getElementById('modalAceptar'), {
+    backdrop: 'static',
+    keyboard: false
+});
+const formularioValidar = document.getElementById('formularioValidar');
 const formulario = document.getElementById('formularioDepersonal');
 const formulario2 = document.getElementById('formularioSalidapais');
 const formulario4 = document.getElementById('formularioCasamiento');
@@ -36,11 +41,33 @@ const btnBuscar = document.getElementById('btnBuscar')
 const divInpust = document.getElementById('masInputs');
 const iframe = document.getElementById('pdfSalidaPais')
 const iframeProto = document.getElementById('pdfSalida');
+const btnElevarSolicitudBoda = document.getElementById('aceptarFormulario');
+const btnCorregirSolicitudBoda = document.getElementById('corregirFormulario');
+const btnElevarSolicitudSalida = document.getElementById('aceptarFormularioSalida');
+const btnCorregirSolicitudSalida = document.getElementById('corregirFormularioSalida');
+const btnElevarSolicitudCombo = document.getElementById('aceptarFormularioCombo');
+const btnCorregirSolicitudCombo = document.getElementById('corregirFormularioCombo');
+const btnElevarSolicitudLicencia = document.getElementById('aceptarFormularioLicencia');
+const btnCorregirSolicitudLicencia = document.getElementById('corregirFormularioLicencia');
+const btnGuardarAutorizacion = document.getElementById('guardarAutorizacion');
+const btnGuardarCorreccion = document.getElementById('guardarCorreccion');
+const divCorregirSolicitud = document.getElementById('corregirSolicitud');
+const divElevarSolicitud = document.getElementById('autorizarSolicitud');
+const aut_solicitud = document.getElementById('aut_solicitud');
+const aut_cat = document.getElementById('aut_cat2');
+const nombre2 = document.getElementById('nombre2')
+const aut_cat2 = document.getElementById('aut_catalogo');
+const nombre = document.getElementById('nombre_autorizador')
+
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';
 formularioModal.ste_cat.disabled = true;
 formularioModal.nombre.disabled = true;
 
+let elementosFormulario4 = formulario4.elements;
+for (var i = 0; i < elementosFormulario4.length; i++) {
+    elementosFormulario4[i].disabled = true;
+}
 let contador = 1;
 const datatable = new Datatable('#tablaDepersonal', {
     language: lenguaje,
@@ -51,6 +78,7 @@ const datatable = new Datatable('#tablaDepersonal', {
             className: 'text-center',
             render: () => contador++
         },
+        { data: "sol_id" },
         {
             title: 'Solicitante',
             className: 'text-center',
@@ -135,12 +163,27 @@ const datatable = new Datatable('#tablaDepersonal', {
             orderable: false,
             render: function (data, type, row) {
                 if (type === 'display') {
-                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'>Revisar</button>`;
+                    if (row.sol_situacion !== '3') {
+                        return `
+                        <div  class="btn-group">
+                        <button class="btn btn-secondary">Enviado</button>
+                        <button class="btn btn-success"data-sol_id='${row.sol_id}'>Boleta</button>
+                         </div>
+                         `;
+                    } else {
+                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
                 }
+            }
                 return data;
             }
         },
-
+        
+    ],
+    columnDefs: [
+        {
+            targets: [1],
+            visible: false
+        },
     ],
 });
 
@@ -157,12 +200,10 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-
         datatable.clear().draw()
         if (data) {
             contador = 1;
             datatable.rows.add(data).draw();
-
         } else {
             Toast.fire({
                 title: 'No se encontraron registros',
@@ -177,18 +218,229 @@ const buscar = async () => {
     formulario.reset();
 }
 
+
+const buscarPdf = async (e) => {
+    e.preventDefault();
+
+    let boton = e.target
+    let solicitud = boton.dataset.sol_id
+  
+
+    const url = `/soliciudes_e/pdf/buscar?sol_id=${solicitud}`;
+
+    // const config = {
+    //     method: 'GET',
+    // }
+    try {
+        const respuesta = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'fetch'
+            }
+        });
+        // const respuesta = await fetch(url, config)
+        // const data = await respuesta.json();
+        // console.log(data);
+        // return
+
+        if (respuesta.ok) {
+            // Abre el PDF en una nueva ventana o pestaña del navegador
+            const blob = await respuesta.blob();
+            const urlBlob = window.URL.createObjectURL(blob);
+            window.open(urlBlob, '_blank');
+        } else {
+            console.log('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const elevarSolicitud = async (e) => {   
+    
+        modalAceptar.show()
+        divCorregirSolicitud.style.display = 'none';
+        divElevarSolicitud.style.display = 'block';
+        aut_cat.addEventListener('change', buscarCatalogo)
+    
+}
+const corregirSolicitud = async (e) => {
+
+    modalAceptar.show()
+    divCorregirSolicitud.style.display = 'block';
+    divElevarSolicitud.style.display = 'none';
+    aut_cat2.addEventListener('change', buscarCatalogo2)
+
+}
+
+const buscarCatalogo = async () => {
+    let validarCatalogo = aut_cat.value;
+    const url = `/soliciudes_e/API/casamientos/buscarCatalogo?per_catalogo=${validarCatalogo}`;
+    const config = {
+        method: 'GET',
+    }
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        if (data.length > 0) {
+            const dato = data[0];
+            nombre2.disabled = true
+            nombre2.value = dato.nombres
+            formularioValidar.aut_cat2.value = dato.per_catalogo
+            formularioValidar.aut_gra2.value = dato.per_grado
+            formularioValidar.aut_arm2.value = dato.per_arma
+            formularioValidar.aut_emp2.value = dato.org_plaza_desc
+            formularioValidar.aut_comando2.value = dato.dep_llave
+            Toast.fire({
+                title: 'Catálogo válido',
+                icon: 'success'
+            });
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+            });
+            return;
+        }
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+
+
+}
+const buscarCatalogo2 = async () => {
+    let validarCatalogo = aut_cat2.value;
+    const url = `/soliciudes_e/API/casamientos/buscarCatalogo?per_catalogo=${validarCatalogo}`;
+    const config = {
+        method: 'GET',
+    }
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+
+        if (data.length > 0) {
+            const dato = data[0];
+            nombre.disabled = true
+            nombre.value = dato.nombres
+            formularioValidar.aut_catalogo.value = dato.per_catalogo
+            formularioValidar.aut_gra.value = dato.per_grado
+            formularioValidar.aut_arm.value = dato.per_arma
+            formularioValidar.aut_emp.value = dato.org_plaza_desc
+            formularioValidar.aut_comando.value = dato.dep_llave
+
+            Toast.fire({
+                title: 'Catálogo válido',
+                icon: 'success'
+            });
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+            });
+            return;
+        }
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+
+
+}
+const guardarAutorizacion = async (evento) => {
+    evento.preventDefault();
+    const body = new FormData(formularioValidar);
+    const url = '/soliciudes_e/API/direccionpersonal/guardarAutorizador';
+    const config = {
+        method: 'POST',
+        body
+    };
+
+    try {
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.json();
+        
+        const { codigo, mensaje, detalle } = data;
+        let icon = 'info';
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                icon = 'success';
+                break;
+
+            case 0:
+                icon = 'error';
+                console.log(detalle);
+                break;
+
+            default:
+                break;
+        }
+        Toast.fire({
+            icon,
+            text: mensaje
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    location.reload();
+
+};
+const guardarCorreccion = async (evento) => {
+    evento.preventDefault();
+    const body = new FormData(formularioValidar);
+    const url = '/soliciudes_e/API/direccionpersonal/guardarAutorizadorCorreccion';
+    const config = {
+        method: 'POST',
+        body
+    };
+    try {
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.json(); 
+      
+        const { codigo, mensaje, detalle } = data;
+        let icon = 'info';
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                icon = 'success';
+                break;
+
+            case 0:
+                icon = 'error';
+                console.log(detalle);
+                break;
+
+            default:
+                break;
+        }
+        Toast.fire({
+            icon,
+            text: mensaje
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    location.reload();
+
+};
 const buscarModal = async (e) => {
 
     const boton = e.target
     let tse_id = boton.dataset.tse_id
-    let tipoSolicitud = tse_id
-    console.log(tipoSolicitud)
+    let tipoSolicitud = tse_id;  
+    let sol_id = boton.dataset.sol_id;
+    formularioValidar.aut_solicitud2.value = sol_id
+    formularioValidar.sol_id.value = sol_id
     try {
         const boton = e.target
         let ste_id = boton.dataset.id
         let id = ste_id
         if (tipoSolicitud == 1) {
-            console.log(id)
             const url = `/soliciudes_e/API/busquedasc/buscarModal?id=${id}`;
             const config = {
                 method: 'GET',
@@ -241,7 +493,6 @@ const buscarModal = async (e) => {
                 } else {
                     divMilitar.style.display = 'block';
                     divCivil.style.display = 'none';
-                    parejam_cat.addEventListener('change', buscarCatalogo)
 
                 }
 
@@ -320,7 +571,7 @@ const buscarModal = async (e) => {
                 }
                 formularioModal.lit_mes_consueldo.value = dato.lit_mes_consueldo;
                 formularioModal.lit_mes_sinsueldo.value = dato.lit_mes_sinsueldo;
-         
+
                 let fecha1SinFormato = dato.lit_fecha1
                 let fecha1ConFormato = formatearFecha(fecha1SinFormato)
                 formularioModal.lit_fecha1.value = fecha1ConFormato;
@@ -562,7 +813,6 @@ const buscarModal = async (e) => {
         console.log(error);
     }
 }
-
 const enviar = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
@@ -611,6 +861,16 @@ const enviar = async (e) => {
 }
 buscar();
 
-
+btnGuardarAutorizacion.addEventListener('click', guardarAutorizacion)
+btnGuardarCorreccion.addEventListener('click', guardarCorreccion)
 btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-primary', buscarModal);
+datatable.on('click','.btn-success',buscarPdf)
+btnElevarSolicitudBoda.addEventListener('click', elevarSolicitud)
+btnCorregirSolicitudBoda.addEventListener('click', corregirSolicitud)
+btnElevarSolicitudSalida.addEventListener('click', elevarSolicitud)
+btnCorregirSolicitudSalida.addEventListener('click', corregirSolicitud)
+btnElevarSolicitudCombo.addEventListener('click', elevarSolicitud)
+btnCorregirSolicitudCombo.addEventListener('click', corregirSolicitud)
+btnElevarSolicitudLicencia.addEventListener('click', elevarSolicitud)
+btnCorregirSolicitudLicencia.addEventListener('click', corregirSolicitud)

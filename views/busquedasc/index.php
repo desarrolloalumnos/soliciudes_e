@@ -113,21 +113,27 @@
                     <div class="row justify-content-around mb-4">
 
                         <div id="parejaCivil" class="col-lg-6">
-                            <label for="mat_fecha_lic_ini">Pareja Civil</label>
+                            <h1>Pareja</h1>
                             <input value="" type="hidden" name="mat_per_civil" id="mat_per_civil" class="form-control">
+                            <label><i class="bi bi-bag-heart"></i>Nombres</label>
                             <input value="" type="text" name="parejac_nombres" placeholder="nombres" id="parejac_nombres" class="form-control">
                             <input value="" type="hidden" name="parejac_id" id="parejac_id" class="form-control">
+                            <label><i class="bi bi-bag-heart"></i>Apellidos</label>
                             <input value="" type="text" name="parejac_apellidos" placeholder="apellidos" id="parejac_apellidos" class="form-control">
+                            <label><i class="bi bi-house-door-fill"></i>Direccion</label>
                             <input value="" type="text" name="parejac_direccion" placeholder="direccion" id="parejac_direccion" class="form-control">
+                            <label><i class="bi bi-key"></i>DPI</label>
                             <input value="" type="text" name="parejac_dpi" placeholder="DPI" id="parejac_dpi" class="form-control">
                         </div>
 
                         <div id="parejaMilitar" class="col-lg-6">
-                            <label for="mat_fecha_bodar">Pareja Militar</label>
+                            <h1>Pareja</h1>
                             <input value="" type="hidden" name="parejam_emp" id="parejam_emp" class="form-control">
                             <input value="" type="hidden" name="mat_per_army" id="mat_per_army" class="form-control">
                             <input value="" type="hidden" name="parejam_id" id="parejac_id" class="form-control">
+                            <label> <i class="bi bi-key"></i> Catalogo</label>
                             <input value="" type="text" name="parejam_cat" id="parejam_cat" class="form-control">
+                            <label><i class="bi bi-bag-heart"></i>Nombres</label>
                             <input value="" type="text" name="parejaNombre" id="parejaNombre" class="form-control">
                             <input value="" type="hidden" name="parejam_comando" id="parejam_comando" class="form-control">
                             <input value="" type="hidden" name="parejam_gra" id="parejam_gra" class="form-control">
@@ -167,7 +173,7 @@
 
                         <div class="col-lg-12">
                             <label for="pdf_ruta"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>
-                            <input value="" id="ste_cat2" name="ste_cat2" class="form-control"  type="hidden" placeholder="Número de catálogo">
+                            <input value="" id="ste_cat2" name="ste_cat2" class="form-control" type="hidden" placeholder="Número de catálogo">
                             <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
                             <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
                             <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">

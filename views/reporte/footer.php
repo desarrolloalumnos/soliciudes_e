@@ -1,0 +1,1 @@
+<p style="text-align: center;">"Soldado firme y leal a su nación"</p>

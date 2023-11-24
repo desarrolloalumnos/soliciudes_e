@@ -28,18 +28,18 @@ class BuscasController
         $fecha = $_GET['fecha'];
 
 
-        $sql = "SELECT  
-
+        $sql = "SELECT 
         ste_id,
         ste_cat,
         ste_telefono,
-        gra_desc_lg,
+        gra_desc_lg as grado_solicitante ,
+        sol_situacion,
         TRIM(parejac_nombres) || '' || (parejac_apellidos) AS pareja_civil,
         (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) FROM mper 
         INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
         WHERE per_catalogo = parejam_cat) AS grado_pareja,
         (SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper 
-        WHERE per_catalogo = parejam_cat) AS nombres_pareja,
+        WHERE per_catalogo = parejam_cat) AS nombre_pareja,
         TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombre_solicitante,
         mat_fecha_lic_ini,
         mat_fecha_lic_fin, 
@@ -56,10 +56,10 @@ class BuscasController
     LEFT JOIN se_pareja_militar ON mat_per_army = parejam_id
     LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
-    INNER JOIN se_pdf ON pdf_solicitud = sol_id 
-    WHERE mat_situacion = 1  
-    AND sol_situacion = 1           
-                ";
+    INNER JOIN se_pdf ON pdf_solicitud = sol_id   
+    AND (sol_situacion = 1 OR sol_situacion = 7)
+    ORDER BY ste_fecha DESC";
+
         if ($fecha != '') {
             $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
         }
@@ -250,19 +250,30 @@ class BuscasController
     {
         try {
 
-            $catalogo_doc = $_POST['ste_cat2'];
+            $catalogo_doc = $_POST['ste_catalogo'];
 
             if (!empty($_FILES['pdf_ruta']['name'])) {
+                // Obtener la ruta del archivo anterior desde la base de datos
+                $pdf_id = $_POST['pdf_id'];
+                $documentoExistente = Pdf::find($pdf_id);
+                $rutaAnterior = $documentoExistente->pdf_ruta;
+
+                // Generar la nueva ruta para el archivo PDF
                 $archivo = $_FILES['pdf_ruta'];
-                $ruta = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
-                $subido = move_uploaded_file($archivo['tmp_name'], $ruta);
+                $rutaNueva = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+
+                // Mover el nuevo archivo
+                $subido = move_uploaded_file($archivo['tmp_name'], $rutaNueva);
 
                 if ($subido) {
-                    $pdf_id = $_POST['pdf_id'];
-                    $nuevoDocumento = Pdf::find($pdf_id);
-                    $nuevoDocumento->pdf_solicitud = $_POST['pdf_solicitud'];
-                    $nuevoDocumento->pdf_ruta = $ruta;
-                    $resultado = $nuevoDocumento->actualizar();
+                    $documentoExistente->pdf_solicitud = $_POST['pdf_solicitud'];
+                    $documentoExistente->pdf_ruta = $rutaNueva;
+                    $resultado = $documentoExistente->actualizar();
+
+
+                    if ($resultado && file_exists($rutaAnterior)) {
+                        unlink($rutaAnterior);
+                    }
                 } else {
                 }
             }
@@ -294,6 +305,30 @@ class BuscasController
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => 'Registro eliminado correctamente',
+                    'codigo' => 1
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
+
+    public static function corregirApi()
+    {
+        try {
+
+            $solicitud_id = $_POST['sol_id'];
+            $solicitud = Solicitud::find($solicitud_id);
+            $solicitud->sol_situacion = 8;
+            $resultado = $solicitud->actualizar();
+
+            if ($resultado['resultado'] == 1) {
+                echo json_encode([
+                    'mensaje' => 'Registro corregido correctamente',
                     'codigo' => 1
                 ]);
             }

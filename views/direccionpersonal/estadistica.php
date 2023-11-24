@@ -15,7 +15,7 @@
                             <input type="date" class="form-control" id="fechaFin" name="fechaFin">
                         </div>
                         <div class="text-center">
-                        <button id="btnActualizar" class="btn btn-info mt-3">Actualizar</button>
+                        <button id="btnActualizar" class="btn btn-info mt-3">Buscar</button>
                         </div>
                     </form>
                 </div>
@@ -40,7 +40,7 @@
 
 <div class="row mt-5">
     <div class="col-lg-6 offset-lg-3">
-        <h1 class="text-center">Motivos de Las Solicitudes</h1>
+        <h1 class="text-center">Tipos de Solicitudes</h1>
     </div>
 </div>
 
@@ -48,7 +48,7 @@
     <div class="col-lg-6 offset-lg-3">
         <div class="d-flex justify-content-center align-items-center flex-column">
             <canvas id="chartMotivos" width="100%"></canvas>
-            <button id="btnActualizar" class="btn btn-info mt-3">Actualizar</button>
+            
         </div>
     </div>
 </div>

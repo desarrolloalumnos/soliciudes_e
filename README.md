@@ -11,3 +11,4 @@ las situaciones de las solicitudes seran de la siguiente manera
 5 autorizado
 6 rechazada 
 7 correcciones
+8 corregido

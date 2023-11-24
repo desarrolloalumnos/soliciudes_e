@@ -25,7 +25,7 @@ use Controllers\DetallemdnController;
 use Controllers\BuscasalpaisController;
 use Controllers\BuscaprotoController;
 use Controllers\DireccionpersonalController;
-
+use Controllers\ReporteController;
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
@@ -80,6 +80,7 @@ $router->get('/API/busquedasc/buscarModal', [BuscasController::class,'buscarModa
 $router->post('/API/busquedasc/modificar', [BuscasController::class,'modificarApi']);
 $router->post('/API/busquedasc/modificarPdf', [BuscasController::class,'modificarPdfApi']);
 $router->post('/API/busquedasc/eliminar', [BuscasController::class,'eliminarApi']);
+$router->post('/API/busquedasc/corregir', [BuscasController::class,'corregirApi']);
 $router->get('/API/busquedasc/pdf', [BuscasController::class,'VerPdf']);
 
 
@@ -145,6 +146,8 @@ $router->get('/API/direccionpersonal/buscar', [DireccionpersonalController::clas
 $router->post('/API/direccionpersonal/enviarMdn', [DireccionpersonalController::class,'enviarMdnApi']);
 $router->get('/direccionpersonal/mdn', [DireccionpersonalController::class,'mdn']);
 $router->get('/API/direccionpersonal/buscarMdn', [DireccionpersonalController::class,'buscarMdnApi']);
+$router->post('/API/direccionpersonal/guardarAutorizador', [DireccionpersonalController::class,'guardarAtorizacionDirPerApi']);
+$router->post('/API/direccionpersonal/guardarAutorizadorCorreccion', [DireccionpersonalController::class,'guardarCorreccionDirPerApi']);
 $router->post('/API/direccionpersonal/aprobarRechazarSolicitud', [DireccionpersonalController::class,'aprobarRechazarSolicitudApi']);
 
 
@@ -173,6 +176,9 @@ $router->get('/API/direccionpersonal/estadistica2', [DetalledpController::class,
 $router->get('/mdn/estadistica', [DetallemdnController::class,'estadistica']);
 $router->get('/API/mdn/estadistica', [DetallemdnController::class,'detalleApi']);
 $router->get('/API/mdn/estadistica2', [DetallemdnController::class,'detalle2Api']);
+
+$router->get('/pdf', [ReporteController::class,'pdf']);
+$router->get('/pdf/buscar', [ReporteController::class,'pdf']);
 
 
 

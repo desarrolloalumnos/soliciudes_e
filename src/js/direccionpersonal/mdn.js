@@ -38,10 +38,11 @@ const datatable = new Datatable('#tablaMdn', {
             data: 'motivo'
         },
         {
-            title: 'Autorizador',
+            title: 'Dependencia',
             className: 'text-center',
-            data: 'autorizador'
+            data: 'dependencia_solicitante'
         },
+        
         {
             title: 'Estado',
             className: 'text-center',
@@ -49,19 +50,44 @@ const datatable = new Datatable('#tablaMdn', {
             render: function (data, type, row) {
                 if (type === 'display') {
                     if (data === '1') {
-                        return `<span style="color: red;">COMANDO</span>`;
+                        return `
+            <span style="color: red;">COMANDO</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+                </div>
+            `;
                     } else if (data === '2') {
-                        return `<span >DGAEMDN</span>`;
+                        return `
+                        <span >DGAEMDN</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+                </div>
+            `;
                     } else if (data === '3') {
-                        return `<span >DPEMDN</span>`;
+                        return `
+                        <span >DPEMDN</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                </div>
+            `;
                     } else if (data === '4') {
-                        return `<span >MDN</span>`;
+                        return `
+                        <span >MDN</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                </div>
+            `;
                     } else if (data === '5') {
-                        return `<span>AUTORIZADO</span>`;
+                        return `
+                        <span>AUTORIZADO</span>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                </div>
+            `;
                     } else if (data === '6') {
-                        return `<span>RECHAZADA</span>`;
+                        return `<button class="btn btn-danger">RECHAZADA</button>`;
                     } else if (data === '7') {
-                        return `<button class="btn btn-danger">CORREGIR</button>`;
+                        return `<button class="btn btn-warning">CORRECCIONES</button>`;
                     } else {
                         return '';
                     }
@@ -72,22 +98,32 @@ const datatable = new Datatable('#tablaMdn', {
         {
             title: 'Autorización',
             className: 'text-center',
-            data: 'sol_situacion',
-            render: function(data, type, row) {
+            data: 'ste_id',
+            searchable: false,
+            orderable: false,
+            render: function (data, type, row) {
                 if (type === 'display') {
-                    if (data === '5') {
-                        return `<button class="btn btn-success btn-autorizar" data-id='${row.sol_id}'>Autorizado</button>`;
-                    } else if (data === '6') {
-                        return `<button class="btn btn-danger btn-rechazar" data-id='${row.sol_id}'>Rechazado</button>`;
-                    } else if (data === '7') {
-                        return `<button class="btn btn-danger">Correcciones</button>`;
+                    if (row.sol_situacion !== '3') {
+                        return `
+                        <div  class="btn-group">
+                        <button class="btn btn-secondary">Enviado</button>
+                        <button class="btn btn-success"data-sol_id='${row.sol_id}'>Boleta</button>
+                         </div>
+                         `;
                     } else {
-                        return '';
-                    }
+                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
                 }
+            }
                 return data;
             }
-        }
+        },
+        
+    ],
+    columnDefs: [
+        {
+            targets: [1],
+            visible: false
+        },
     ],
 });
 

@@ -84,7 +84,7 @@ const datatable = new Datatable('#tablaLicencias', {
             width: '150px'
         },
         {
-            title: 'MODIFICAR',
+            title: 'MODIFICAR', 
             className: 'text-center',
             data: 'ste_id',
             searchable: false,
@@ -107,6 +107,7 @@ const datatable = new Datatable('#tablaLicencias', {
             orderable: false,
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
         },
+      
     ],
 
 });
@@ -404,7 +405,59 @@ const eliminar = async (e) => {
 
     buscar();
 }
+const corregir = async (e) => {
+    const button = e.target;
+    const id = button.dataset.sol_id;
 
+    if (await confirmacion('warning', 'Desea corregir este registro?')) {
+
+        const body = new FormData()
+        body.append('sol_id', id)
+        const url = '/soliciudes_e/API/busquedasc/corregir';
+
+        const headers = new Headers();
+        headers.append("X-Requested-With", "fetch");
+        const config = {
+            method: 'POST',
+            body
+        }
+        try {
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
+     
+            const { codigo, mensaje, detalle } = data;
+            let icon = 'info'
+            switch (codigo) {
+                case 1:
+
+                    icon = 'success'
+
+                    break;
+
+                case 0:
+                    icon = 'error'
+                    console.log(detalle)
+                    break;
+
+                default:
+                    break;
+            }
+
+            Toast.fire({
+                icon,
+                text: mensaje
+            })
+
+
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    buscar();
+}
 
 const verPDF = (e) => {
     // const button = e.target;
@@ -425,3 +478,4 @@ datatable.on('click', '.btn-outline-warning', traePdf);
 btnModficarDatos.addEventListener('click', modificar);
 addPdf.addEventListener('click', modificarPdf);
 datatable.on('click', '.btn-danger', eliminar)
+datatable.on('click','.btn-success',corregir)

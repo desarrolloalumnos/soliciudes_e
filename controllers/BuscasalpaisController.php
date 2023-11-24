@@ -40,6 +40,7 @@ class BuscasalpaisController
         sal_id,
         ste_cat,
         gra_desc_lg,
+        sol_situacion,
         TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) nombre,
         sal_salida,
         sal_ingreso, 
@@ -54,7 +55,8 @@ class BuscasalpaisController
         inner join mper on ste_cat = per_catalogo
         inner join grados on ste_gra = gra_codigo
         inner join se_pdf on pdf_solicitud = sol_id 
-        where sol_situacion = 1 ";
+        AND (sol_situacion = 1 OR sol_situacion = 7)
+         ORDER BY ste_fecha DESC ";
          if ($fecha != '') {
             $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
         }
@@ -104,6 +106,7 @@ class BuscasalpaisController
                     'pdf_solicitud' => $value['pdf_solicitud'],
                     'ste_id' => $value['ste_id'],
                     'sol_id' => $value['sol_id'],
+                    'sol_situacion' => $value['sol_situacion'],
                     'paises' => $paises,
                     'ciudad' => $ciudad
                 ];
@@ -293,7 +296,7 @@ class BuscasalpaisController
     public static function modificarPdfApi()
     {
         try {
-
+            
             $catalogo_doc = $_POST['ste_cat2'];
 
             if (!empty($_FILES['pdf_ruta']['name'])) {
@@ -304,7 +307,7 @@ class BuscasalpaisController
 
                 // Generar la nueva ruta para el archivo PDF
                 $archivo = $_FILES['pdf_ruta'];
-                $rutaNueva = "../storage/matrimonio/$catalogo_doc" . uniqid() . ".pdf";
+                $rutaNueva = "../storage/salidapais/$catalogo_doc" . uniqid() . ".pdf";
 
                 // Mover el nuevo archivo
                 $subido = move_uploaded_file($archivo['tmp_name'], $rutaNueva);

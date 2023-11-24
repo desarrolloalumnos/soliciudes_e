@@ -395,7 +395,7 @@ const traePdf = (e) => {
 };
 
 
-const modificar = async (evento) => {
+ const modificarSal = async (evento) => {
 
     evento.preventDefault();
     let catalogo = formulario2.ste_cat2.value
@@ -543,6 +543,59 @@ const eliminar = async (e) => {
 
     buscar();
 }
+const corregir = async (e) => {
+    const button = e.target;
+    const id = button.dataset.sol_id;
+
+    if (await confirmacion('warning', 'Desea corregir este registro?')) {
+
+        const body = new FormData()
+        body.append('sol_id', id)
+        const url = '/soliciudes_e/API/busquedasc/corregir';
+
+        const headers = new Headers();
+        headers.append("X-Requested-With", "fetch");
+        const config = {
+            method: 'POST',
+            body
+        }
+        try {
+            const respuesta = await fetch(url, config)
+            const data = await respuesta.json();
+     
+            const { codigo, mensaje, detalle } = data;
+            let icon = 'info'
+            switch (codigo) {
+                case 1:
+
+                    icon = 'success'
+
+                    break;
+
+                case 0:
+                    icon = 'error'
+                    console.log(detalle)
+                    break;
+
+                default:
+                    break;
+            }
+
+            Toast.fire({
+                icon,
+                text: mensaje
+            })
+
+
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    buscar();
+}
 
 const verPDF = (e) => {
 
@@ -563,13 +616,14 @@ const borrarTodo = (e) => {
 buscar();
 
 btnBuscar.addEventListener('click', buscar);
-btnModificar.addEventListener('click', modificar)
+btnModificar.addEventListener('click', modificarSal)
 datatable.on('click', '.btn-warning', buscarModal);
 ofModal.addEventListener('click', borrarTodo);
 btnModificarPdf.addEventListener('click',modificarPdf);
 datatable.on('click', '.btn-outline-warning', traePdf);
 datatable.on('click', '.btn-outline-info', verPDF);
 datatable.on('click', '.btn-danger', eliminar);
+datatable.on('click','.btn-success',corregir)
 
 
 

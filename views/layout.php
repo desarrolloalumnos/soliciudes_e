@@ -90,12 +90,12 @@
                     <!-- MODULO DE ADMINISTRACION DE LAS OFICINAS DE PERSONAL COMANDOS Y BRIGADAS -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/administraciones" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-check2-square me-2"></i>Admon_OP
+                            <i class="bi bi-check2-square me-2"></i>Adminstracion
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/administraciones">
-                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Enviar
+                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Estado de la solicitud
                                 </a>
                             </li>
                             <li>
@@ -159,7 +159,7 @@
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
                                 <a class="dropdown-item" href="/soliciudes_e/direccionpersonal/mdn">
-                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Enviar
+                                    <i class="bi bi-file-earmark-arrow-up me-2"></i>Solicitudes Recibidas
                                 </a>
                             </li>
                             <li>
