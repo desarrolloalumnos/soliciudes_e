@@ -15,7 +15,7 @@ const modalPdf = new Modal(document.getElementById('modalPdf'), {
 const formulario = document.getElementById('formularioMatrimonio');
 const formulario2 = document.getElementById('formularioCasamiento');
 const pdf = document.getElementById('formularioPdf');
-const ste_cat2 = document.getElementById('ste_cat2');
+const ste_cat2 = document.getElementById('catalogo');
 const idPareja = document.getElementById('parejac_id')
 const iframe = document.getElementById('pdfIframe');
 const btnModificar = document.getElementById('btnModificar');
@@ -24,7 +24,6 @@ const addPdf = document.getElementById('addPdf');
 const parejam_cat = document.getElementById('parejam_cat');
 const divMilitar = document.getElementById('parejaMilitar');
 const divCivil = document.getElementById('parejaCivil');
-const formularioModal = document.getElementById('formularioPdf');
 
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';
@@ -130,22 +129,7 @@ const datatable = new Datatable('#tablaMatrimonios', {
             orderable: false,
             render: (data) => `<button class="btn btn-danger" data-id='${data}'>Eliminar</button>`
         },
-        {
-            title: 'CORREGIR',
-            className: 'text-center',
-            data: 'sol_situacion',
-            searchable: false,
-            orderable: false,
-            render: (data, type, row, meta) => {
-                // Agrega la condición para bloquear el botón si sol_situacion no es igual a 7
-                if (data !== '7') {
-                    return `<button id="corregir" class="btn btn-success" data-id='${data}' data-sol_id='${row["sol_id"]}' disabled>Enviar Correccion</button>`;
-                } else {
-                    return `<button class="btn btn-success" data-id='${data}' data-sol_id='${row["sol_id"]}'>Enviar Correccion</button>`;
-                }
-            }
-        },
-        
+                
     ],
 });
 
@@ -360,7 +344,6 @@ const modificar = async (evento) => {
 const modificarPdf = async (evento) => {
 
     evento.preventDefault();
-
 
     const body = new FormData(pdf);
     body.append('ste_cat2', ste_id)

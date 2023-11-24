@@ -195,7 +195,13 @@ class DireccionpersonalController
                 $solicitud->sol_situacion = 7;
                 $resultado2 = $solicitud->actualizar();
             }
-            if ($resultado2['resultado'] == 1) {
+            if($resultado2['resultado'] == 1){
+                $autorizador_id = $resultado['id'];
+                $autorizador = Autorizacion::find($autorizador_id);
+                $autorizador->aut_situacion = 3;
+                $resultado3 = $autorizador->actualizar();
+            }
+            if ($resultado3['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => "Guardado correctamente",
                     'codigo' => 1
@@ -209,34 +215,7 @@ class DireccionpersonalController
             ]);
         }
     }
-    public static function aprobarRechazarSolicitudApi()
-    {
-        try {
-            $solicitud_id = $_POST['sol_id'];
-            $accion = $_POST['accion'];
-
-            $solicitud = Solicitud::find($solicitud_id);
-
-            $nuevo_estado = ($accion === 'aprobar') ? 5 : 6;
-
-            $solicitud->sol_situacion = $nuevo_estado;
-            $resultado = $solicitud->actualizar();
-
-            if ($resultado['resultado'] == 1) {
-                echo json_encode([
-                    'mensaje' => "Solicitud $accion correctamente",
-                    'codigo' => 1
-                ]);
-            }
-        } catch (Exception $e) {
-            echo json_encode([
-                'detalle' => $e->getMessage(),
-                'mensaje' => 'Ocurrió un error',
-                'codigo' => 0
-            ]);
-        }
-    }
-
+ 
     public static function transportes()
     {
         $sql = "SELECT * FROM se_transporte WHERE transporte_situacion = 1";

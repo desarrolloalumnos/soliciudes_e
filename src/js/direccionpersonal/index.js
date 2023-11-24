@@ -64,10 +64,6 @@ divCivil.style.display = 'none';
 formularioModal.ste_cat.disabled = true;
 formularioModal.nombre.disabled = true;
 
-let elementosFormulario4 = formulario4.elements;
-for (var i = 0; i < elementosFormulario4.length; i++) {
-    elementosFormulario4[i].disabled = true;
-}
 let contador = 1;
 const datatable = new Datatable('#tablaDepersonal', {
     language: lenguaje,
@@ -148,6 +144,13 @@ const datatable = new Datatable('#tablaDepersonal', {
                         return `<button class="btn btn-danger">RECHAZADA</button>`;
                     } else if (data === '7') {
                         return `<button class="btn btn-warning">CORRECCIONES</button>`;
+                    } else if (data === '8') {
+                        return `
+                     <span style="color: red;">CORREGIDO</span>
+                    <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                    </div>
+                `;
                     } else {
                         return '';
                     }
@@ -163,7 +166,7 @@ const datatable = new Datatable('#tablaDepersonal', {
             orderable: false,
             render: function (data, type, row) {
                 if (type === 'display') {
-                    if (row.sol_situacion !== '3') {
+                    if (row.sol_situacion !== '3' && row.sol_situacion !== '8') {
                         return `
                         <div  class="btn-group">
                         <button class="btn btn-secondary">Enviado</button>
@@ -171,20 +174,29 @@ const datatable = new Datatable('#tablaDepersonal', {
                          </div>
                          `;
                     } else {
-                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                        return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                    }
                 }
-            }
                 return data;
             }
         },
-        
+
     ],
     columnDefs: [
         {
             targets: [1],
             visible: false
         },
+        { 
+            className: 'text-center', 
+            targets: '_all' 
+        },
+        { 
+            className: 'align-middle', 
+            targets: '_all' 
+        } 
     ],
+    
 });
 
 const buscar = async () => {
@@ -224,7 +236,7 @@ const buscarPdf = async (e) => {
 
     let boton = e.target
     let solicitud = boton.dataset.sol_id
-  
+
 
     const url = `/soliciudes_e/pdf/buscar?sol_id=${solicitud}`;
 
@@ -256,13 +268,13 @@ const buscarPdf = async (e) => {
     }
 }
 
-const elevarSolicitud = async (e) => {   
-    
-        modalAceptar.show()
-        divCorregirSolicitud.style.display = 'none';
-        divElevarSolicitud.style.display = 'block';
-        aut_cat.addEventListener('change', buscarCatalogo)
-    
+const elevarSolicitud = async (e) => {
+
+    modalAceptar.show()
+    divCorregirSolicitud.style.display = 'none';
+    divElevarSolicitud.style.display = 'block';
+    aut_cat.addEventListener('change', buscarCatalogo)
+
 }
 const corregirSolicitud = async (e) => {
 
@@ -361,7 +373,7 @@ const guardarAutorizacion = async (evento) => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-        
+
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         switch (codigo) {
@@ -399,8 +411,8 @@ const guardarCorreccion = async (evento) => {
     };
     try {
         const respuesta = await fetch(url, config);
-        const data = await respuesta.json(); 
-      
+        const data = await respuesta.json();
+
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         switch (codigo) {
@@ -432,7 +444,7 @@ const buscarModal = async (e) => {
 
     const boton = e.target
     let tse_id = boton.dataset.tse_id
-    let tipoSolicitud = tse_id;  
+    let tipoSolicitud = tse_id;
     let sol_id = boton.dataset.sol_id;
     formularioValidar.aut_solicitud2.value = sol_id
     formularioValidar.sol_id.value = sol_id
@@ -501,7 +513,10 @@ const buscarModal = async (e) => {
                 let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
 
                 iframeCasamiento.src = ver
-
+                let elementosformulario4 = formulario4.elements;
+                for (var i = 0; i < elementosformulario4.length; i++) {
+                    elementosformulario4[i].disabled = true;
+                }
                 modalM.show()
             } else {
                 Toast.fire({
@@ -525,7 +540,7 @@ const buscarModal = async (e) => {
                     icon: 'success'
 
                 })
-                modalL.show();
+                
                 const dato = data[0];
                 formularioModal.lit_id.value = dato.lit_id;
                 formularioModal.sol_id.value = dato.sol_id;
@@ -581,6 +596,11 @@ const buscarModal = async (e) => {
                 let pdf = btoa(btoa(btoa(dato.pdf_ruta)));
                 let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
                 iframeLicencias.src = ver
+                let elementosformularioModal = formularioModal.elements;
+                for (var i = 0; i < elementosformularioModal.length; i++) {
+                    elementosformularioModal[i].disabled = true;
+                }
+                modalL.show();
             } else {
                 Toast.fire({
                     title: 'No se encontraron registros',
@@ -743,6 +763,10 @@ const buscarModal = async (e) => {
                 let pdf = btoa(btoa(btoa(pdfCorregido)));
                 let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
                 iframe.src = ver
+                let elementosformulario2 = formulario2.elements;
+                for (var i = 0; i < elementosformulario2.length; i++) {
+                    elementosformulario2[i].disabled = true;
+                }
                 modalSalidapaises.show()
 
 
@@ -799,6 +823,10 @@ const buscarModal = async (e) => {
                 let verDoc = btoa(btoa(btoa(pdfCorregido)));
                 let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
                 iframeProto.src = ver
+                let elementosformulario3 = formulario3.elements;
+                for (var i = 0; i < elementosformulario3.length; i++) {
+                    elementosformulario3[i].disabled = true;
+                }
                 modalProtocolo.show()
 
             } else {
@@ -865,7 +893,7 @@ btnGuardarAutorizacion.addEventListener('click', guardarAutorizacion)
 btnGuardarCorreccion.addEventListener('click', guardarCorreccion)
 btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-primary', buscarModal);
-datatable.on('click','.btn-success',buscarPdf)
+datatable.on('click', '.btn-success', buscarPdf)
 btnElevarSolicitudBoda.addEventListener('click', elevarSolicitud)
 btnCorregirSolicitudBoda.addEventListener('click', corregirSolicitud)
 btnElevarSolicitudSalida.addEventListener('click', elevarSolicitud)

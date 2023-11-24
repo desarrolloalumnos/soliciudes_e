@@ -250,7 +250,7 @@ class BuscasController
     {
         try {
 
-            $catalogo_doc = $_POST['ste_catalogo'];
+            $catalogo_doc = $_POST['catalogo'];
 
             if (!empty($_FILES['pdf_ruta']['name'])) {
                 // Obtener la ruta del archivo anterior desde la base de datos
@@ -320,7 +320,6 @@ class BuscasController
     public static function corregirApi()
     {
         try {
-
             $solicitud_id = $_POST['sol_id'];
             $solicitud = Solicitud::find($solicitud_id);
             $solicitud->sol_situacion = 8;

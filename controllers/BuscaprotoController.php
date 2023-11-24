@@ -166,9 +166,6 @@ class BuscaprotoController
 
         try {
 
-            // echo json_encode($_POST);
-            // exit;
-
             $fechaInicioActividad = $_POST['pco_fechainicio'];
             $fechaFormateadaIni = date('Y-m-d H:i', strtotime($fechaInicioActividad));
             $_POST['pco_fechainicio'] = $fechaFormateadaIni;

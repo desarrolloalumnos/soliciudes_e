@@ -49,28 +49,7 @@ const datatable = new Datatable('#tablaMdn', {
             data: 'sol_situacion',
             render: function (data, type, row) {
                 if (type === 'display') {
-                    if (data === '1') {
-                        return `
-            <span style="color: red;">COMANDO</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
-                </div>
-            `;
-                    } else if (data === '2') {
-                        return `
-                        <span >DGAEMDN</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
-                </div>
-            `;
-                    } else if (data === '3') {
-                        return `
-                        <span >DPEMDN</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
-                </div>
-            `;
-                    } else if (data === '4') {
+                 if (data === '4') {
                         return `
                         <span >MDN</span>
                 <div class="progress">
@@ -86,9 +65,7 @@ const datatable = new Datatable('#tablaMdn', {
             `;
                     } else if (data === '6') {
                         return `<button class="btn btn-danger">RECHAZADA</button>`;
-                    } else if (data === '7') {
-                        return `<button class="btn btn-warning">CORRECCIONES</button>`;
-                    } else {
+                    }  else {
                         return '';
                     }
                 }
@@ -103,14 +80,15 @@ const datatable = new Datatable('#tablaMdn', {
             orderable: false,
             render: function (data, type, row) {
                 if (type === 'display') {
-                    if (row.sol_situacion !== '3') {
+                    if (row.sol_situacion === '6') {
                         return `
                         <div  class="btn-group">
-                        <button class="btn btn-secondary">Enviado</button>
-                        <button class="btn btn-success"data-sol_id='${row.sol_id}'>Boleta</button>
+                        <button class="btn btn-secondary">Autorizada</button>
+                        
                          </div>
                          `;
-                    } else {
+                    } else (row.sol_situacion === '4') 
+                    {
                     return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
                 }
             }
