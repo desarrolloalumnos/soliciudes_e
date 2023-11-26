@@ -1,6 +1,6 @@
-<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioSalida" name="formularioSalidapaises" style="min-height: 30vh; margin-top: 60px;">
+<form class="border bg-light p-4 mt-4 mx-auto w-75" id="formularioSalida" name="formularioSalidapaises" style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
-        <h1>Solicitudes de Salida del País</h1>
+        <h1>Solicitud de Salida del País</h1>
     </div>
 
     <div class="row mb-4">
@@ -70,7 +70,7 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="ste_fecha2">Fecha de Solicitud</label>
-                                <input id="ste_fecha2" name="ste_fecha2" class="form-control" type="date">
+                                <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha2" name="ste_fecha2" class="form-control" type="datetime" disabled>
 
                             </div>
                             <div class="col-lg-6">

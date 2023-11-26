@@ -51,8 +51,7 @@ class BuscalictController
     LEFT JOIN mper ON ste_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
     INNER JOIN se_pdf ON pdf_solicitud = sol_id 
-    AND (sol_situacion = 1 OR sol_situacion = 7)
-    ORDER BY ste_fecha DESC";
+    AND (sol_situacion = 1 OR sol_situacion = 7)";
 
 
                     if ($fecha != '') {
@@ -61,7 +60,7 @@ class BuscalictController
                     if ($catalogo != '') {
                         $sql .= " AND ste_cat = '$catalogo'";
                     }
-
+                    $sql.=" ORDER BY ste_fecha DESC ";
         // if ($cmv_dependencia != 0) {
         //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";
         // }

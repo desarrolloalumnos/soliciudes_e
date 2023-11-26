@@ -37,8 +37,10 @@ class AdministracionController
 
     public static function buscarApi()
     {
-        // $cmv_dependencia = $_GET['cmv_dependencia'];
-        // $cmv_tip = $_GET['cmv_tip'];
+        $catalogo = $_GET['catalogo'];
+        $fecha = $_GET['fecha'];
+        $estado = $_GET['estado'];
+        $tipo = $_GET['tipo'];
 
         $sql = "SELECT
                     s.sol_id,
@@ -65,8 +67,23 @@ class AdministracionController
                 INNER JOIN se_motivos m  ON s.sol_motivo = m.mot_id
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
                 INNER JOIN se_pdf ON pdf_solicitud = s.sol_id
-                WHERE s.sol_situacion >= 1
-                ORDER BY ste_fecha";
+                WHERE s.sol_situacion >= 1";
+
+                if ($fecha != '') {
+                    $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+                }
+                if ($catalogo != '') {
+                    $sql .= " AND ste_cat = '$catalogo' ";
+                }
+                if ($estado != '') {
+                    $sql .= " AND sol_situacion = '$estado' ";
+                }
+                if ($tipo != '') {
+                    $sql .= " AND tse_id = '$tipo' ";
+                }
+
+                $sql.=" ORDER BY ste_fecha DESC ";
+
 
         try {
             $resultado = Solicitud::fetchArray($sql);
@@ -82,8 +99,9 @@ class AdministracionController
 
     public static function buscarDireccionApi()
     {
-        // $cmv_dependencia = $_GET['cmv_dependencia'];
-        // $cmv_tip = $_GET['cmv_tip'];
+        $catalogo = $_GET['catalogo'];
+        $fecha = $_GET['fecha'];
+        $tipo = $_GET['tipo'];
 
         $sql = "SELECT
                     s.sol_id,
@@ -112,6 +130,17 @@ class AdministracionController
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
                 INNER JOIN se_autorizacion aut ON aut.aut_solicitud = s.sol_id
                 WHERE s.sol_situacion = 2";
+                 if ($fecha != '') {
+                    $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+                }
+                if ($catalogo != '') {
+                    $sql .= " AND ste_cat = '$catalogo' ";
+                }
+                if ($tipo != '') {
+                    $sql .= " AND tse_id = '$tipo' ";
+                }
+
+                $sql.=" ORDER BY ste_fecha DESC ";
 
         try {
             $resultado = Solicitud::fetchArray($sql);

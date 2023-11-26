@@ -1,4 +1,7 @@
-<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioProtocolo" name="formularioProtocolo"
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<form class="border bg-light p-4 mt-4 mx-auto w-75" id="formularioProtocolo" name="formularioProtocolo"
     style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
         <h1>Solicitud de banda o combo musical, marimba y valla</h1>
@@ -41,7 +44,7 @@
                     <h6 class="mb-3">Tipo de solicitud: <span id="detalleCombo" class="fw-bold"></span></h6>
                     <h6 class="mb-3">Fecha de Inicio de la actividad: <span id="detalleFechaInicio" class="fw-bold"></span></h6>
                     <h6 class="mb-3">Fecha de finalización de la actividad: <span id="detalleFechaFin" class="fw-bold"></span></h6>
-                    <h6>Lugar de la actividad: <span id="detalleLugar" class="fw-bold"></span></h6>
+                    <h6  class="mb-3">Lugar de la actividad: <span id="detalleLugar" class="fw-bold"></span></h6>
                 </div>
             </div>
             <div class="modal-footer">
@@ -112,7 +115,7 @@
                             <div class="col-lg-6">
                                 <label for="ste_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha de
                                     Solicitud</label>
-                                <input value="" id="ste_fecha2" name="ste_fecha2" class="form-control" type="date">
+                                <input value="<?php echo date('Y/m/d H:i')?>" value="" id="ste_fecha2" name="ste_fecha2" class="form-control" type="datetime">
                             </div>
                             <div class="col-lg-6">
                                 <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>

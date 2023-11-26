@@ -32,7 +32,7 @@
                 <div class="row justify-content-around mb-4">
                     <div class="col-lg-6">
                         <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                        <input id="ste_fecha" name="ste_fecha" class="form-control" type="date" required>
+                        <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
                     </div>
                     <div class="col-lg-6">
                         <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>

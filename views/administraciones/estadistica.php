@@ -1,4 +1,3 @@
-
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-6">
@@ -33,7 +32,7 @@
 <div class="row">
     <div class="col-lg-6 offset-lg-3">
         <div class="d-flex justify-content-center align-items-center flex-column">
-            <canvas id="chartEstados" width="100%"></canvas>
+            <canvas id="chartEstados" style="width: 100%;"></canvas>
         </div>
     </div>
 </div>
@@ -47,7 +46,7 @@
 <div class="row">
     <div class="col-lg-6 offset-lg-3">
         <div class="d-flex justify-content-center align-items-center flex-column">
-            <canvas id="chartMotivos" width="100%"></canvas>
+            <canvas id="chartMotivos" style="width: 100%;"></canvas>
            
         </div>
     </div>

@@ -194,7 +194,9 @@ const buscar = async () => {
     verTabla.style.display = 'block';
     const catalogo = formulario.ste_cat.value
     const fecha = formulario.ste_fecha.value
-// console.log(catalogo,fecha);
+
+    
+    console.log(catalogo,fecha);
     const url = `/soliciudes_e/API/busquedasproto/buscar?catalogo=${catalogo}&fecha=${fecha}`;
     const config = {
         method: 'GET',
@@ -203,7 +205,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log(data);
+        console.log(data);
         datatable.clear().draw()
 
         if (data) {
@@ -214,6 +216,7 @@ const buscar = async () => {
                     title: evento.titulo,
                     start: evento.pco_fechainicio,
                     end: evento.pco_fechafin,
+                    lugar: evento.pco_dir,
                 });
             });
 
@@ -500,4 +503,3 @@ datatable.on('click', '.btn-outline-warning', traePdf);
 addPdf.addEventListener('click',modificarPdf);
 datatable.on('click', '.btn-danger', eliminar);
 btnCalendario.addEventListener('click', buscarCalender);
-

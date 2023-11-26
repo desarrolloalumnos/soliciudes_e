@@ -1,4 +1,4 @@
-<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioAdministracion" name="formularioAdminitracion" style="min-height: 30vh; margin-top: 60px;">
+<form class="border bg-light p-4 mt-4 mx-auto w-75" id="formularioAdministracion" name="formularioAdminitracion" style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
         <h1>Solicitudes Realizadas</h1>
     </div>
@@ -10,7 +10,34 @@
         </div>
         <div class="col-lg-6">
             <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i> Fecha de Solicitud</label>
-            <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+            <input  id="ste_fecha" name="ste_fecha" class="form-control" type="date" placeholder="Fecha de la solicitud" >
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-6">
+            <label for="sol_situacion"><i class="bi bi-body-text"></i>Estado de la solicitud</label>
+            <select id="sol_situacion" name="sol_situacion" class="form-control">
+                <option value="">SELECCIONE..</option>
+                <option value="1">COMANDO/BRIGADA</option>
+                <option value="2">DGAEMDN</option>
+                <option value="3">DPEMDN</option>
+                <option value="4">MDN</option>
+                <option value="5">AUTORIZADAS</option>
+                <option value="6">RECHAZADAS</option>
+                <option value="7">CORRECIONES</option>
+                <option value="8">CORREGIDO</option>
+            </select>
+        </div>
+        <div class="col-lg-6">
+            <label for="tse_id"><i class="bi bi-body-text"></i>Tipo de Solicitud</label>
+            <select id="tse_id" name="tse_id" class="form-control">
+                <option value="">SELECCIONE..</option>
+                <option value="1">Matrimonio</option>
+                <option value="2">Licencia Temporal</option>
+                <option value="3">Salida del Pais</option>
+                <option value="4">Protocolo</option>
+            </select>  
         </div>
     </div>
 
@@ -67,7 +94,7 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="ste_fecha2">Fecha de Solicitud</label>
-                                <input id="ste_fecha2" name="ste_fecha2" class="form-control" type="date">
+                                <input id="ste_fecha2" name="ste_fecha2" class="form-control" type="datetime" placeholder="Fecha de la solicitud">
 
                             </div>
                             <div class="col-lg-6">
@@ -206,9 +233,8 @@
                         </div>
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
-                                <label for="ste_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha de
-                                    Solicitud</label>
-                                <input value="" id="ste_fecha2" name="ste_fecha2" class="form-control" type="date">
+                                <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de la Solicitud</label>
+                                    <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
                             </div>
                             <div class="col-lg-6">
                                 <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
@@ -370,11 +396,15 @@
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
-
-                                <div class="col-lg-6">
-                                    <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Telefono</label>
-                                    <input id="ste_telefono" name="ste_telefono" class="form-control" type="number">
-                                </div>
+                            <div class="col-lg-6">
+                                <label for="ste_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha de la Solicitud</label>
+                                    <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
+                                <input value="" id="ste_telefono" name="ste_telefono" class="form-control" type="number" placeholder="Número telefónico">
+                            </div>
+                        </div>
                                 <div class="col-lg-6">
                                     <label for="sol_motivo"><i class="bi bi-journal-check"></i>Motivos</label>
                                     <select name="sol_motivo" id="sol_motivo" class="form-select">
@@ -511,16 +541,15 @@
                         </div>
                     </div>
                     <div class="row justify-content-around mb-4">
-                        <div class="col-lg-6">
-                            <label for="ste_fecha">Fecha de Solicitud</label>
-                            <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
-
+                            <div class="col-lg-6">
+                                <label for="ste_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha de la Solicitud</label>
+                                    <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
+                                <input value="" id="ste_telefono" name="ste_telefono" class="form-control" type="number" placeholder="Número telefónico">
+                            </div>
                         </div>
-                        <div class="col-lg-6">
-                            <label for="ste_telefono">Telefono</label>
-                            <input id="ste_telefono" name="ste_telefono" class="form-control" type="number">
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-lg-12">

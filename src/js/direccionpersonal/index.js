@@ -201,8 +201,14 @@ const datatable = new Datatable('#tablaDepersonal', {
 
 const buscar = async () => {
 
+    const catalogo = formulario.ste_cat.value
+    const fecha = formulario.ste_fecha.value
+    const estado = formulario.sol_situacion.value
+    const tipo = formulario.tse_id.value
 
-    const url = `/soliciudes_e/API/direccionpersonal/buscar`;
+    // console.log(catalogo,fecha);
+
+    const url = `/soliciudes_e/API/direccionpersonal/buscar?catalogo=${catalogo}&fecha=${fecha}&estado=${estado}&tipo=${tipo}`;
 
 
     const config = {

@@ -42,31 +42,35 @@ const datatable = new Datatable('#tablaMdn', {
             className: 'text-center',
             data: 'dependencia_solicitante'
         },
-        
+
         {
             title: 'Estado',
             className: 'text-center',
             data: 'sol_situacion',
             render: function (data, type, row) {
                 if (type === 'display') {
-                 if (data === '4') {
+                    if (data === '4') {
                         return `
                         <span >MDN</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
-                </div>
-            `;
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                        </div>
+                    `;
                     } else if (data === '5') {
                         return `
                         <span>AUTORIZADO</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                </div>
-            `;
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                        </div>
+                        `;
                     } else if (data === '6') {
                         return `<button class="btn btn-danger">RECHAZADA</button>`;
-                    }  else {
-                        return '';
+                    } else if (data === '7') {
+                        return `<span>CORRECCIONES PENDIENTES</span>`;
+                    } else if (data === '8') {
+                        return `<span>CORRECCIONES APLICADAS</span>`;
+                    } else {
+                        return `<span>SITUACION NO COMTEMPLADA</span>`;
                     }
                 }
                 return data;
@@ -87,15 +91,15 @@ const datatable = new Datatable('#tablaMdn', {
                         
                          </div>
                          `;
-                    } else (row.sol_situacion === '4') 
+                    } else (row.sol_situacion === '4')
                     {
-                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                        return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                    }
                 }
-            }
                 return data;
             }
         },
-        
+
     ],
     columnDefs: [
         {
@@ -107,8 +111,12 @@ const datatable = new Datatable('#tablaMdn', {
 
 const buscar = async () => {
 
- 
-    const url = `/soliciudes_e/API/direccionpersonal/buscarMdn`;
+    const catalogo = formulario.ste_cat.value
+    const fecha = formulario.ste_fecha.value
+    const estado = formulario.sol_situacion.value
+    const tipo = formulario.tse_id.value
+
+    const url = `/soliciudes_e/API/direccionpersonal/buscar?catalogo=${catalogo}&fecha=${fecha}&estado=${estado}&tipo=${tipo}`;
 
 
     const config = {

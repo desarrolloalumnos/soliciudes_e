@@ -1,4 +1,4 @@
-<div class="row justify-content-center mt-5 mx-auto w-50">
+<div class="row justify-content-center mt-5 mx-auto w-75">
 
     <div class="col-lg-10">
         <div id="carouselSalidapaises" class="carousel slide">
@@ -42,7 +42,7 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                <input id="ste_fecha" name="ste_fecha" class="form-control" type="date" placeholder="Fecha de la solicitud">
+                                <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
                             </div>
 
                             <div class="col-lg-6">
