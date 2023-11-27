@@ -212,7 +212,9 @@ const datatable = new Datatable('#tablaAdministracion', {
                 if (type === 'display') {
                     if (row.sol_situacion === '7') {
                         return `<button id="enviarCorrecciones"class="btn btn-success" data-id='${data}'>Enviar Corrección</button>`;
-                    } else if (row.sol_situacion !== '1' && row.sol_situacion !== '7') {
+                    } else if (row.sol_situacion === '5') {
+                        return `<button id="verAutorizacion"class="btn btn-outline-primary" data-id='${data}'data-sol_tipo='${row.sol_tipo}'>Autorizado</button>`;
+                    }else if (row.sol_situacion !== '1' && row.sol_situacion !== '7') {
                         return `<button class="btn btn-secondary">Enviado</button>`;
                     } else {
                         return `<button class="btn btn-primary" data-id='${data}'>Enviar</button>`;
@@ -794,7 +796,6 @@ const buscarCatalogo = async () => {
         console.log(error);
     }
 }
-
 const modificarPdfSalidas = async (evento) => {
 
     evento.preventDefault();
@@ -1377,6 +1378,62 @@ const corregir = async (e) => {
     buscar();
 }
 
+const VerAutorizacion = async (e) => {
+    e.preventDefault();
+    const boton = e.target;
+    const tipoSol = boton.dataset.sol_tipo;
+    let ids = boton.dataset.id
+    
+    let id = ids
+ 
+    if (tipoSol === '1') {
+        const url = `/soliciudes_e/pdf/pdfMatrimonio?sol_id=${id}`;
+
+    // const config = {
+    //     method: 'GET',
+    // }
+    try {
+        const respuesta = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'fetch'
+            }
+        });
+        // const respuesta = await fetch(url, config)
+        // const data = await respuesta.json();
+        // console.log(data)
+        // return
+        
+
+        if (respuesta.ok) {
+            // Abre el PDF en una nueva ventana o pestaña del navegador
+            const blob = await respuesta.blob();
+            const urlBlob = window.URL.createObjectURL(blob);
+            window.open(urlBlob, '_blank');
+        } else {
+            console.log('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    
+    } else if (tipoSol === '2') {
+
+    
+    } else if (tipoSol === '3') {
+
+
+
+
+
+    } else if (tipoSol === '4') {
+       
+
+    }
+
+}
+
+
 buscar();
 
 btnBuscar.addEventListener('click', buscar);
@@ -1394,3 +1451,4 @@ btnModificarModificarCasamiento.addEventListener('click', modificarCasamiento);
 addPdf.addEventListener('click', modificarPdfCas);
 datatable.on('click', '#verPdf', buscarPdf);
 datatable.on('click', '#enviarCorrecciones', corregir)
+datatable.on('click', '#verAutorizacion', VerAutorizacion)

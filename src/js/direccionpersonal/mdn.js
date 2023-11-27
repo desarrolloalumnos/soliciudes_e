@@ -151,8 +151,7 @@ const datatable = new Datatable('#tablaMdn', {
                         return `
                         <div  class="btn-group">
                         <button class="btn btn-secondary">Rechazado</button>
-                        
-                         </div>
+                        </div>
                          `;
                     } else (row.sol_situacion === '4')
                     {
@@ -164,12 +163,7 @@ const datatable = new Datatable('#tablaMdn', {
         },
 
     ],
-    columnDefs: [
-        {
-            targets: [1],
-            visible: false
-        },
-    ],
+
 });
 
 const buscar = async () => {

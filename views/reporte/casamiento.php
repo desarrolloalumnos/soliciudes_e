@@ -16,6 +16,7 @@
 
         .container {
             width: 80%;
+            margin-bottom: 10px;
             margin: auto;
         }
 
@@ -25,19 +26,19 @@
         }
 
         .title {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
         .subtitle {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             margin-bottom: 10px;
         }
 
         .info-section {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .info-label {
@@ -52,39 +53,45 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">          
-            <p>Guatemala, 26 de Noviembre de 2023</p>
-            <p class="title">TIPO DE TRAMITE:</p>
-            <p>  </P>
-            <p>EMDN-DP-IMM-MAT-00000-2023</p>
+<?php foreach ($valores as $valor) : ?>
+    <div class="container" style="margin-top: 10px; page-break-inside: avoid;">
+        <div class="header">
+            <?php echo $enlace; ?>
+            <p style="margin: 0;"><?= $valor['dependencia'] ?></p>
+            <p style="margin: 0;"><?= $direccion[0] ?></p>
+            <p style="margin: 0;"><?= date('d-m-Y', strtotime($valor['fecha'])) ?></p>
+            <p class="title" style="margin-top: 10px;">TIPO DE TRÁMITE:</p>
+            <p style="margin: 0;"><?= $valor['tse_descripcion'] ?></p>
+            <p style="margin: 0;"><?= $valor['sol_identificador'] ?></p>
         </div>
 
-        <div class="info-section">
+        <div class="info-section" style="margin-top: 10px;">
             <p class="info-label">DATOS GENERALES:</p>
-            <p>COMANDO:</p>
-            <p>CATALOGO:</p>
-            <p>GRADO Y ARMA:</p>
-            <p>NOMBRE:</p>
-            <p>EMPLEO:</p>
+            <p style="margin: 0;">COMANDO: <?= $valor['ste_comando'] ?></p>
+            <p style="margin: 0;">GRADO Y ARMA: <?= $valor['grado_solicitante'] ?></p>
+            <p style="margin: 0;">NOMBRE: <?= $valor['nombre_solicitante'] ?></p>
+            <p style="margin: 0;">EMPLEO: <?= $valor['ste_emp'] ?></p>
         </div>
 
-        <div class="info-section">
+        <div class="info-section" style="margin-top: 10px;">
             <p class="info-label">DATOS DEL CÓNYUGE:</p>
-            <p>NOMBRE:</p>
-          
+            <?php if (!empty($valor['nombre_conyuge'])) : ?>
+                <p style="margin: 0;">NOMBRE: <?= $valor['nombre_conyuge'] ?></p>
+            <?php endif; ?>
         </div>
 
-        <div class="info-section">
-            <p class="info-label">DATOS DE LA SOLICITUD DE MATRIMONIO MATRIMONIO:</p>
-            <p>Casamiento Civil:</p>
-            <p>Casamiento Religioso:</p>
-            <p>Fecha de Inicio de la Licencia : Guatemala, 31 de Diciembre de 1969</p>
-            <p>Fecha de Finilaizacion de la licencia: Guatemala, 31 de Diciembre de 1969</p>
-            <p>Autorizado por:</p>
+        <div class="info-section" style="margin-top: 10px;">
+            <p class="info-label">DATOS DE LA SOLICITUD DE MATRIMONIO:</p>
+            <p style="margin: 0;">CASAMIENTO CIVIL: <?= $valor['mat_lugar_civil'] ?>,<?= date('d-m-Y', strtotime($valor['mat_fecha_bodac'])) ?></p>
+            <p style="margin: 0;">CASAMIENTO RELIGIOSO: <?= $valor['mat_lugar_religioso'] ?>,<?=date('d-m-Y', strtotime( $valor['mat_fecha_bodar'])) ?></p>
+            <p style="margin: 0;">FECHA DE INICIO DE LA LICENCIA: <?= date('d-m-Y', strtotime($valor['mat_fecha_lic_ini'] ))?></p>
+            <p style="margin: 0;">FECHA DE FINALIZACION DE LA LICENCIA: <?= date('d-m-Y', strtotime($valor['mat_fecha_lic_fin'])) ?></p>
+            <br>
+            <p style="margin: 0;">AUTORIZADO POR:</p><b> <?= $valor['autorizador'] ?></b>
         </div>
-
     </div>
+<?php endforeach; ?>
+
 </body>
 
 </html>
