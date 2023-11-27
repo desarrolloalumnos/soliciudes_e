@@ -401,9 +401,25 @@ const traePdf = (e) => {
     let catalogo = formulario2.ste_cat2.value
     let fecha = formulario2.ste_fecha2.value
 
+    let fecha_inicio = formulario2.sal_salida.value
+    let fecha_fin = formulario2.sal_ingreso.value
+
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
+
     const body = new FormData(formulario2);
     body.append('ste_cat2', catalogo)
     body.append('ste_fecha2', fecha)
+
+    for(var pair of body.entries()){
+        console.log(pair[0], pair[1]);
+    }
     const url = '/soliciudes_e/API/busquedasalpais/modificar';
     const headers = new Headers();
     headers.append("X-Requested-With", "fetch");

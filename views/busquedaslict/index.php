@@ -1,4 +1,4 @@
-<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioLicencia" name="formularioLicencia" style="min-height: 30vh; margin-top: 60px;">
+<form class="border bg-light p-4 mt-4 mx-auto w-75" id="formularioLicencia" name="formularioLicencia" style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
         <h1>Licencias Temporales</h1>
     </div>
@@ -10,7 +10,7 @@
         </div>
         <div class="col-lg-6">
             <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i> Fecha de Solicitud</label>
-            <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+            <input  id="ste_fecha" name="ste_fecha" class="form-control" type="date">
         </div>
     </div>
 
@@ -66,6 +66,11 @@
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
+
+                            <div class="col-lg-6">
+                                <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
+                                <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
+                            </div>
 
                                 <div class="col-lg-6">
                                     <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Telefono</label>

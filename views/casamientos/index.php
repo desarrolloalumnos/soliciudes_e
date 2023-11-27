@@ -1,5 +1,3 @@
-
-
 <div class="row justify-content-center mt-5 mx-auto w-50">
 
     <div class="col-lg-10">
@@ -15,7 +13,7 @@
             <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio"   style="min-height: 50vh;">
                 <div class="text-center">
                     <input value="1"type="hidden" id="tse_id" name="tse_id">
-                    <h2 class="text-center">Matrimonio</h2>
+                    <h2 class="text-center"> Solicitud de Matrimonio</h2>
                     <br>
                 </div>
                 <div class="carousel-item active"> 
@@ -49,7 +47,7 @@
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                    <input value="<?php echo date('d/m/Y H:i'); ?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud">
+                                    <input id="ste_fecha" name="ste_fecha" class="form-control" type="date" placeholder="Fecha de la solicitud">
 
                                 </div>
                                 <div class="col-lg-6">

@@ -1,6 +1,6 @@
-<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioMatrimonio" name="formularioMatrimonio" style="min-height: 30vh; margin-top: 60px;">
+<form class="border bg-light p-4 mt-4 mx-auto w-75" id="formularioMatrimonio" name="formularioMatrimonio" style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
-        <h1>Matrimonio</h1>
+        <h1>Solicitud de Matrimonio</h1>
     </div>
 
     <div class="row mb-4">
@@ -38,7 +38,7 @@
 
                     <div class="text-center">
                         <input value="1" type="hidden" id="tse_id" name="tse_id">
-                        <h1>Matrimonio</h1>
+                        <h1>Solicitud de Matrimonio</h1>
                     </div>
 
                     <div class="row">
@@ -65,7 +65,7 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
                             <label for="ste_fecha">Fecha de Solicitud</label>
-                            <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+                            <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
 
                         </div>
                         <div class="col-lg-6">

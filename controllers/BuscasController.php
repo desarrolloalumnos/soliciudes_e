@@ -73,17 +73,23 @@ class BuscasController
     LEFT JOIN se_pareja_militar ON mat_per_army = parejam_id
     LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
-    INNER JOIN se_pdf ON pdf_solicitud = sol_id
-    AND sol_situacion = 1";
+    INNER JOIN se_pdf ON pdf_solicitud = sol_id   
+    AND (sol_situacion = 1 OR sol_situacion = 7)
+    ORDER BY ste_fecha DESC";
+
         if ($fecha != '') {
             $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
         }
         if ($catalogo != '') {
             $sql .= " AND ste_cat = '$catalogo'";
         }
-        
-        $sql .= " ORDER BY ste_fecha DESC";
-      
+        // if ($cmv_dependencia != 0) {
+        //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";
+        // }
+
+        // if (!empty($cmv_tip)) {
+        //     $sql .= " AND cmv_tip = '$cmv_tip' ";
+        // }
 
 
         try {

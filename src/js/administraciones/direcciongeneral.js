@@ -90,10 +90,13 @@ const datatable = new Datatable('#tablaDirecciongeneral', {
 
 const buscar = async () => {
 
-    // let dep_valor = dependencias.value 
-    // let tipo = tipos.value 
+    const catalogo = formulario.ste_cat.value
+    const fecha = formulario.ste_fecha.value
+    const tipo = formulario.tse_id.value
 
-    const url = `/soliciudes_e/API/administraciones/buscarDireccion`;
+
+    
+    const url = `/soliciudes_e/API/administraciones/buscarDireccion?catalogo=${catalogo}&fecha=${fecha}&tipo=${tipo}`;
 
 
     const config = {

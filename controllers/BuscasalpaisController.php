@@ -55,7 +55,9 @@ class BuscasalpaisController
         inner join mper on ste_cat = per_catalogo
         inner join grados on ste_gra = gra_codigo
         inner join se_pdf on pdf_solicitud = sol_id 
+
         AND sol_situacion = 1";
+
          if ($fecha != '') {
             $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
         }
@@ -63,6 +65,8 @@ class BuscasalpaisController
             $sql .= " AND ste_cat = '$catalogo'";
         }
         $sql .= " ORDER BY ste_fecha DESC";
+
+        $sql.=" ORDER BY ste_fecha DESC ";
 
         $valores = [];
 
@@ -256,13 +260,25 @@ class BuscasalpaisController
             if (isset($_POST['dsal_id']) && !empty($_POST['dsal_id'])) {
                 $dsalId = $_POST['dsal_id'];
                 $detalleSalidaPais = Saldetpaises::find($dsalId);
-
                 if ($detalleSalidaPais) {
                     $detalleSalidaPais->dsal_ciudad = $_POST['dsal_ciudad'];
                     $detalleSalidaPais->dsal_pais = $_POST['dsal_pais'];
                     $detalleSalidaPais->dsal_transporte = $_POST['dsal_transporte'];
                     $detalleSalidaPaisResultado = $detalleSalidaPais->actualizar();
                     if ($detalleSalidaPaisResultado['resultado'] == 1) {
+                        $modificacionExitosa = true;
+                    }
+                }
+            }
+
+            if (isset($_POST['sol_id']) && !empty($_POST['sol_id'])) {
+                $sol_id = $_POST['sol_id'];
+                $detalleSolicitud = Solicitud::find($sol_id);
+                if ($detalleSolicitud) {
+                    $detalleSolicitud->sol_motivo = $_POST['sol_motivo'];
+                    $detalleSolicitud->sol_obs = $_POST['sol_obs'];
+                    $detalleSolicitudResultado = $detalleSolicitud->actualizar();
+                    if ($detalleSolicitudResultado['resultado'] == 1) {
                         $modificacionExitosa = true;
                     }
                 }

@@ -1,4 +1,4 @@
-<form class="border bg-light p-4 mt-4 mx-auto w-50" id="formularioMinisterio" name="formularioMinisterio" style="min-height: 30vh; margin-top: 60px;">
+<form class="border bg-light p-4 mt-4 mx-auto w-75" id="formularioMinisterio" name="formularioMinisterio" style="min-height: 30vh; margin-top: 60px;">
     <div class="text-center mb-4">
         <h1>Historial de solicitudes</h1>
     </div>

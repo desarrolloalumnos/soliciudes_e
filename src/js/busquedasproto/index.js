@@ -13,25 +13,6 @@ const modalProtocolo = new Modal(document.getElementById('modalProtocolo'), {
     keyboard: false
 });
 
-// const validarFormularioProtocolo = (formulario) => {
-//     const camposRequeridos = ['ste_cat', 'ste_fecha', 'nombre', 'sol_motivo', 'pco_cmbv', 'pco_just', 'pco_fechainicio', 'pco_fechafin', 'pco_dir'];
-
-//     for (const campo of camposRequeridos) {
-//         const input = formulario.querySelector(`[name="${campo}"]`);
-//         if (!input.value.trim()) {
-//             const mensaje = `Ingrese datos en el campo ${campo.replace('_', ' ')}`;
-//             Toast.fire({
-//                 icon: 'info',
-//                 text: mensaje,
-//             });
-//             return false;
-//         }
-//     }
-
-//     return true;
-// };
-
-
 
 const formulario = document.getElementById('formularioProtocolo');
 const formulario2 = document.getElementById('formularioProto');
@@ -47,7 +28,6 @@ const divProtocolo = document.getElementById('Protocolo');
 const addPdf = document.getElementById('addPdf')
 
 
-
 verCalendario.style.display = 'none'
 verTabla.style.display = 'none'
 formulario2.ste_cat2.disabled = true;
@@ -55,59 +35,68 @@ formulario2.ste_fecha2.disabled = true;
 formulario2.nombre.disabled = true;
 
 
+const abrirModalEvento = (evento) => {
+    const tipoevento = evento._def.title;
+    const fechainicio = evento._instance.range.start; 
+    const fechafin = evento._instance.range.end; 
+    const lugar = evento._def.extendedProps.lugar;
+
+    // Valores a los elementos del modal
+    document.getElementById('detalleCombo').innerText = tipoevento;
+    document.getElementById('detalleFechaInicio').innerText = fechainicio.toLocaleString(); 
+    document.getElementById('detalleFechaFin').innerText = fechafin.toLocaleString(); 
+    document.getElementById('detalleLugar').innerText = lugar;
+
+    // Abre el modal
+    $('#eventoModal').modal('show');
+};
+
 const buscarCalender = async () => {
     verCalendario.style.display = 'block';
     verTabla.style.display = 'none';
-    // let dep_valor = dependencias.value 
-    // let tipo = tipos.value 
 
     const url = `/soliciudes_e/API/busquedasproto/buscarCalender`;
 
-
     const config = {
         method: 'GET',
-    }
+    };
 
     try {
-        const respuesta = await fetch(url, config)
+        const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-        
-        
+
         if (data) {
+            const calendar = new Calendar(calendarEl, {
+                plugins: [dayGridPlugin],
+                initialView: 'dayGridMonth',
+                height: 'auto',
+                headerToolbar: {
+                    start: 'dayGridMonth,dayGridWeek,listWeek',
+                    center: 'title',
+                    end: 'today,prev,next',
+                    lugar: 'Ubicación del evento',
+                },
+                events: data,
+                dayMaxEvents: 5,
+                locale: 'es',
+                buttonText: {
+                    today: 'Hoy',
+                    month: 'Mes',
+                    week: 'Semana',
+                    list: 'Lista',
+                },
+                eventClick: function (info) {
+                    abrirModalEvento(info.event);
+                }
+            });
 
-        const calendar = new Calendar(calendarEl, {
-
-            plugins: [dayGridPlugin],
-            initialView: 'dayGridMonth',
-            height: 'auto',
-            headerToolbar: {
-                start: 'dayGridMonth,dayGridWeek,listWeek',
-                center: 'title',
-                end: 'today,prev,next',
-            },
-            events: data,
-            dayMaxEvents: 5,
-            locale: 'es',
-            buttonText: {
-                today: 'Hoy',
-                month: 'Mes',
-                week: 'Semana',
-                list: 'Lista',
-            }
-        });
-
-        calendar.render();
-
-        // return
-            
+            calendar.render();
         } else {
             Toast.fire({
                 title: 'No se encontraron registros',
                 icon: 'info'
-
-            })
+            });
         }
-
     } catch (error) {
         console.log(error);
     }
@@ -205,7 +194,9 @@ const buscar = async () => {
     verTabla.style.display = 'block';
     const catalogo = formulario.ste_cat.value
     const fecha = formulario.ste_fecha.value
-// console.log(catalogo,fecha);
+
+    
+    console.log(catalogo,fecha);
     const url = `/soliciudes_e/API/busquedasproto/buscar?catalogo=${catalogo}&fecha=${fecha}`;
     const config = {
         method: 'GET',
@@ -214,7 +205,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log(data);
+        console.log(data);
         datatable.clear().draw()
 
         if (data) {
@@ -225,6 +216,7 @@ const buscar = async () => {
                     title: evento.titulo,
                     start: evento.pco_fechainicio,
                     end: evento.pco_fechafin,
+                    lugar: evento.pco_dir,
                 });
             });
 
@@ -511,4 +503,3 @@ datatable.on('click', '.btn-outline-warning', traePdf);
 addPdf.addEventListener('click',modificarPdf);
 datatable.on('click', '.btn-danger', eliminar);
 btnCalendario.addEventListener('click', buscarCalender);
-

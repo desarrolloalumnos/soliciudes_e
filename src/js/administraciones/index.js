@@ -70,7 +70,7 @@ formulario2.ste_cat2.disabled = true;
 formulario2.nombre.disabled = true;
 formulario2.ste_fecha2.disabled = true;
 formularioProto.ste_cat2.disabled = true;
-formularioProto.ste_fecha2.disabled = true;
+formularioProto.ste_fecha.disabled = true;
 formularioProto.nombre.disabled = true;
 formularioModalLicencia.ste_cat.disabled = true;
 formularioModalLicencia.nombre.disabled = true;
@@ -139,8 +139,8 @@ const datatable = new Datatable('#tablaAdministracion', {
                     <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
                     </div>
                 `;
-            } else if (data === '8') {
-                return `
+                    } else if (data === '8') {
+                        return `
                  <span >DPEMDN CORREGIDO</span>
                     <div class="progress">
                     <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
@@ -177,7 +177,7 @@ const datatable = new Datatable('#tablaAdministracion', {
             data: 'sol_situacion',
             render: function (data, type, row) {
                 if (type === 'display') {
-                  if (data === '7') {
+                    if (data === '7') {
                         return `
                         <div class="btn-group">                        
                                      <button class="btn btn-warning" 
@@ -189,9 +189,9 @@ const datatable = new Datatable('#tablaAdministracion', {
                                     </div>`;
                     } else if (data === '8') {
                         return `<button  class="btn btn-warning" >CORREGIDO</button>`;
-                    }else if (data !== '7' && data !== '8' && data !== '1') {
+                    } else if (data !== '7' && data !== '8' && data !== '1') {
                         return `<span>SIN CORRECCIONES</span>`;
-                    }  else if (data === '1') {
+                    } else if (data === '1') {
                         return `<span> PENDIENTE DE ENVIAR </span>`;
                     } else {
                         return '';
@@ -200,7 +200,7 @@ const datatable = new Datatable('#tablaAdministracion', {
                 return data;
             }
         },
-    
+
 
         {
             title: 'Enviar',
@@ -225,7 +225,7 @@ const datatable = new Datatable('#tablaAdministracion', {
     ],
     columnDefs: [
         { className: 'text-center', targets: '_all' },
-        { className: 'align-middle', targets: '_all' } 
+        { className: 'align-middle', targets: '_all' }
     ]
 
 });
@@ -246,7 +246,7 @@ const CorreccionDatos = async (e) => {
         const config = {
             method: 'GET',
         }
-    
+
         try {
             const respuesta = await fetch(url, config)
             const data = await respuesta.json();
@@ -254,22 +254,22 @@ const CorreccionDatos = async (e) => {
                 Toast.fire({
                     title: 'Abriendo Solicitud',
                     icon: 'info'
-    
+
                 })
                 const dato = data[0];
-             
+
                 const mat_fecha_bodac = formatearFecha(dato.mat_fecha_bodac);
                 const mat_fecha_bodar = formatearFecha(dato.mat_fecha_bodar);
                 const mat_fecha_lic_ini = formatearFecha(dato.mat_fecha_lic_ini);
                 const mat_fecha_lic_fin = formatearFecha(dato.mat_fecha_lic_fin);
                 const ste_fecha = formatearFecha(dato.ste_fecha);
-                const partes = dato.pareja_civil.split(' ');                     
+                const partes = dato.pareja_civil.split(' ');
                 const maxNombres = 2;
                 const maxApellidos = 2;
                 const nombres = partes.slice(0, maxNombres).join(' ');
                 const apellidos = partes.slice(maxNombres, maxNombres + maxApellidos).join(' ');
                 formularioCorreccionCasamiento.parejac_nombres.value = nombres;
-                formularioCorreccionCasamiento.parejac_apellidos.value = apellidos;        
+                formularioCorreccionCasamiento.parejac_apellidos.value = apellidos;
                 formularioCorreccionCasamiento.ste_id.value = dato.ste_id;
                 formularioCorreccionCasamiento.ste_cat.value = dato.ste_cat;
                 formularioCorreccionCasamiento.nombre.value = dato.nombres_solicitante;
@@ -290,7 +290,7 @@ const CorreccionDatos = async (e) => {
                 formularioCorreccionCasamiento.parejaNombre.value = dato.nombres_pareja;
                 formularioCorreccionCasamiento.mat_fecha_lic_ini.value = mat_fecha_lic_ini;
                 formularioCorreccionCasamiento.mat_fecha_lic_fin.value = mat_fecha_lic_fin;
-            
+
                 if (parejam_cat.value === "") {
                     divMilitar.style.display = 'none';
                     divCivil.style.display = 'block';
@@ -298,26 +298,26 @@ const CorreccionDatos = async (e) => {
                     divMilitar.style.display = 'block';
                     divCivil.style.display = 'none';
                     parejam_cat.addEventListener('change', buscarCatalogo)
-            
+
                 }
-            
-            
+
+
                 let pdf = btoa(btoa(btoa(dato.pdf_ruta)));
                 let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${pdf}`;
-            
+
                 iframeCasamiento.src = ver
-    
-               modalCorreccionCasamiento.show()
-    
-    
+
+                modalCorreccionCasamiento.show()
+
+
             } else {
                 Toast.fire({
                     title: 'No se encontraron registros',
                     icon: 'info'
-    
+
                 })
             }
-    
+
         } catch (error) {
             console.log(error);
         }
@@ -336,7 +336,7 @@ const CorreccionDatos = async (e) => {
                     icon: 'success'
 
                 })
-               modalCorrecionLicencias.show();
+                modalCorrecionLicencias.show();
                 const dato = data[0];
                 divPdfLicencias.style.display = 'block';
                 formularioModalLicencia.lit_id.value = dato.lit_id;
@@ -426,14 +426,13 @@ const CorreccionDatos = async (e) => {
                 let fecha2 = dato.sal_ingreso
                 let fecha3 = dato.sal_salida
 
-                let fechaSolicitud = formatearFecha(fecha1)
                 let fechaIngreso = formatearFecha(fecha2)
                 let fechaSalida = formatearFecha(fecha3)
 
                 formulario2.ste_id.value = dato.ste_id
                 formulario2.ste_cat2.value = dato.ste_cat
                 formulario2.nombre.value = dato.nombre
-                formulario2.ste_fecha2.value = fechaSolicitud
+                formulario2.ste_fecha2.value = dato.ste_fecha
                 formulario2.ste_telefono.value = dato.ste_telefono
                 formulario2.sol_id.value = dato.sol_id
                 formulario2.sol_motivo.value = dato.sol_motivo
@@ -670,7 +669,7 @@ const CorreccionDatos = async (e) => {
                 formularioProto.ste_id.value = dato.ste_id
                 formularioProto.ste_cat2.value = dato.ste_cat
                 formularioProto.nombre.value = dato.nombre
-                formularioProto.ste_fecha2.value = fechaSolicitud
+                formularioProto.ste_fecha.value = fechaSolicitud
                 formularioProto.ste_telefono.value = dato.ste_telefono
                 formularioProto.sol_motivo.value = dato.sol_motivo
                 formularioProto.sol_obs2.value = dato.sol_obs
@@ -732,7 +731,7 @@ const modificarSal = async (evento) => {
         let icon = 'info'
         switch (codigo) {
             case 1:
-               
+
                 icon = 'success'
                 buscar();
                 modalSalCorrecciones.hide()
@@ -755,7 +754,7 @@ const modificarSal = async (evento) => {
     } catch (error) {
         console.log(error);
     }
-    
+
 }
 const buscarCatalogo = async () => {
 
@@ -772,7 +771,7 @@ const buscarCatalogo = async () => {
         const data = await respuesta.json();
         if (data.length > 0) {
             const dato = data[0]
-            formularioCorreccionCasamiento.parejam_arm.value = dato.per_arma;          
+            formularioCorreccionCasamiento.parejam_arm.value = dato.per_arma;
             formularioCorreccionCasamiento.parejam_gra.value = dato.per_grado;
             formularioCorreccionCasamiento.parejam_emp.value = dato.org_plaza_desc
             formularioCorreccionCasamiento.parejam_comando.value = dato.dep_llave
@@ -818,7 +817,7 @@ const modificarPdfSalidas = async (evento) => {
         let icon = 'info'
         switch (codigo) {
             case 1:
-                
+
                 icon = 'success'
                 buscar();
                 modalSalCorrecciones.hide()
@@ -841,13 +840,13 @@ const modificarPdfSalidas = async (evento) => {
     } catch (error) {
         console.log(error);
     }
-   
+
 }
 const modificarProtocolo = async (evento) => {
 
     evento.preventDefault();
     let catalogo = formularioProto.ste_cat2.value
-    let fecha = formularioProto.ste_fecha2.value
+    let fecha = formularioProto.ste_fecha.value
     const body = new FormData(formularioProto)
     body.append('ste_cat', catalogo)
     body.append('ste_fecha', fecha)
@@ -913,7 +912,7 @@ const modificarPdfProtocolo = async (evento) => {
         let icon = 'info'
         switch (codigo) {
             case 1:
-                
+
                 icon = 'success'
                 modalProtoCorrecciones.hide()
                 buscar();
@@ -936,7 +935,7 @@ const modificarPdfProtocolo = async (evento) => {
     } catch (error) {
         console.log(error);
     }
-   
+
 }
 const modificarLicencia = async (evento) => {
     evento.preventDefault();
@@ -956,7 +955,7 @@ const modificarLicencia = async (evento) => {
         let icon = 'info'
         switch (codigo) {
             case 1:
-              
+
                 icon = 'success'
                 buscar();
                 modalCorrecionLicencias.hide()
@@ -1093,7 +1092,7 @@ const modificarPdfCas = async (evento) => {
         const data = await respuesta.text();
         console.log(data)
         return
-       
+
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
         switch (codigo) {
@@ -1131,10 +1130,10 @@ const traePdfParaCorrecciones = (e) => {
         const ste_cat = button.dataset.ste_cat;
         const pdf_id = button.dataset.pdf_id;
         const pdf_solicitud = button.dataset.pdf_solicitud;
-    
-    
+
+
         const dataset = {
-    
+
             ste_cat,
             pdf_id,
             pdf_solicitud
@@ -1142,17 +1141,17 @@ const traePdfParaCorrecciones = (e) => {
         ste_cat2.value = dataset.ste_cat;
         pdf.pdf_solicitud.value = dataset.pdf_solicitud;
         pdf.pdf_id.value = dataset.pdf_id;
-    
+
     } else if (tipoSol === '2') {
         modalCorrecionLicencias.show()
         divPdfLicencias.style.display = 'none';
-        divLicencias.style.display = 'block';  
+        divLicencias.style.display = 'block';
         const button = e.target;
         const ste_cat = button.dataset.ste_cat;
         const pdf_id = button.dataset.pdf_id;
         const pdf_solicitud = button.dataset.pdf_solicitud;
         const dataset = {
-    
+
             ste_cat,
             pdf_id,
             pdf_solicitud
@@ -1204,10 +1203,12 @@ const traePdfParaCorrecciones = (e) => {
 };
 const buscar = async () => {
 
-    // let dep_valor = dependencias.value 
-    // let tipo = tipos.value 
+    const catalogo = formulario.ste_cat.value
+    const fecha = formulario.ste_fecha.value
+    const estado = formulario.sol_situacion.value
+    const tipo = formulario.tse_id.value
 
-    const url = `/soliciudes_e/API/administraciones/buscar`;
+    const url = `/soliciudes_e/API/administraciones/buscar?catalogo=${catalogo}&fecha=${fecha}&estado=${estado}&tipo=${tipo}`;
 
 
     const config = {
@@ -1292,7 +1293,7 @@ const buscarPdf = async (e) => {
 
     let boton = e.target
     let solicitud = boton.dataset.sol_id
-  
+
 
     const url = `/soliciudes_e/pdf/buscar?sol_id=${solicitud}`;
 
@@ -1341,7 +1342,7 @@ const corregir = async (e) => {
         }
         try {
             const respuesta = await fetch(url, config)
-            const data = await respuesta.json();     
+            const data = await respuesta.json();
             const { codigo, mensaje, detalle } = data;
             let icon = 'info'
             switch (codigo) {
@@ -1387,9 +1388,9 @@ btnModificarPdf.addEventListener('click', modificarPdfSalidas);
 datatable.on('click', '.btn-outline-warning', traePdfParaCorrecciones);
 btnModificarProtocolo.addEventListener('click', modificarProtocolo);
 btnModificarPdfProtocolo.addEventListener('click', modificarPdfProtocolo)
-btnModficarDatosLicencia.addEventListener('click',modificarLicencia);
-btnModificarPdfLicencia.addEventListener('click',modificarPdfLicencia);
-btnModificarModificarCasamiento.addEventListener('click',modificarCasamiento);
-addPdf.addEventListener('click',modificarPdfCas);
-datatable.on('click','#verPdf',buscarPdf);
-datatable.on('click','#enviarCorrecciones',corregir)
+btnModficarDatosLicencia.addEventListener('click', modificarLicencia);
+btnModificarPdfLicencia.addEventListener('click', modificarPdfLicencia);
+btnModificarModificarCasamiento.addEventListener('click', modificarCasamiento);
+addPdf.addEventListener('click', modificarPdfCas);
+datatable.on('click', '#verPdf', buscarPdf);
+datatable.on('click', '#enviarCorrecciones', corregir)

@@ -59,7 +59,6 @@ const empleo2 = document.getElementById('aut_emp');
 const comando2 = document.getElementById('aut_comando');
 
 
-
 // motivos.disabled = true;
 nombre.disabled = true;
 nombre2.disabled = true;

@@ -51,7 +51,10 @@ class BuscalictController
     LEFT JOIN mper ON ste_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
     INNER JOIN se_pdf ON pdf_solicitud = sol_id 
+
     AND sol_situacion = 1";
+ 
+
 
 
                     if ($fecha != '') {
@@ -61,7 +64,9 @@ class BuscalictController
                         $sql .= " AND ste_cat = '$catalogo'";
                     }
 
+
                     $sql .= " ORDER BY ste_fecha DESC";
+
         try {
             $resultado = Licenciatemporal::fetchArray($sql);
             echo json_encode($resultado);
