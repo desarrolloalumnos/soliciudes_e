@@ -1389,24 +1389,15 @@ const VerAutorizacion = async (e) => {
     if (tipoSol === '1') {
         const url = `/soliciudes_e/pdf/pdfMatrimonio?sol_id=${id}`;
 
-    // const config = {
-    //     method: 'GET',
-    // }
     try {
         const respuesta = await fetch(url, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'fetch'
             }
-        });
-        // const respuesta = await fetch(url, config)
-        // const data = await respuesta.json();
-        // console.log(data)
-        // return
-        
+        });           
 
         if (respuesta.ok) {
-            // Abre el PDF en una nueva ventana o pestaña del navegador
             const blob = await respuesta.blob();
             const urlBlob = window.URL.createObjectURL(blob);
             window.open(urlBlob, '_blank');
