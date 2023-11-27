@@ -53,11 +53,10 @@ const btnGuardarAutorizacion = document.getElementById('guardarAutorizacion');
 const btnGuardarCorreccion = document.getElementById('guardarCorreccion');
 const divCorregirSolicitud = document.getElementById('corregirSolicitud');
 const divElevarSolicitud = document.getElementById('autorizarSolicitud');
-const aut_solicitud = document.getElementById('aut_solicitud');
 const aut_cat = document.getElementById('aut_cat2');
-const nombre2 = document.getElementById('nombre2')
+const nombre2 = document.getElementById('nombre2');
 const aut_cat2 = document.getElementById('aut_catalogo');
-const nombre = document.getElementById('nombre_autorizador')
+const nombre = document.getElementById('nombre_autorizador');
 
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';
@@ -847,52 +846,7 @@ const buscarModal = async (e) => {
         console.log(error);
     }
 }
-const enviar = async (e) => {
-    const button = e.target;
-    const id = button.dataset.id;
 
-    if (await confirmacion('warning', 'Desea enviar esta solicitud?')) {
-        const body = new FormData()
-        body.append('sol_id', id)
-        const url = '/soliciudes_e/API/direccionpersonal/enviarMdn';
-        const headers = new Headers();
-        headers.append("X-Requested-With", "fetch");
-        const config = {
-            method: 'POST',
-            body
-        }
-        try {
-            const respuesta = await fetch(url, config)
-            const data = await respuesta.json();
-            console.log(data);
-
-            const { codigo, mensaje, detalle } = data;
-            let icon = 'info';
-            switch (codigo) {
-                case 1:
-                    icon = 'success';
-                    buscar();
-                    break;
-
-                case 0:
-                    icon = 'error';
-                    console.log(detalle);
-                    break;
-
-                default:
-                    break;
-            }
-
-            Toast.fire({
-                icon,
-                text: mensaje,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-}
 buscar();
 
 btnGuardarAutorizacion.addEventListener('click', guardarAutorizacion)

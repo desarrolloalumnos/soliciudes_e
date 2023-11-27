@@ -37,17 +37,70 @@ class LictempController
             'articulos' => $articulos
         ]);
     }
+    public static function generaIdentificador()
+    {
+
+        $sql = "SELECT dep_desc_ct as depCorto FROM mdep  inner join morg on org_dependencia = dep_llave inner join mper on per_plaza = org_plaza where per_catalogo = user";
+        $resultado =  Solicitante::fetchFirst($sql);
+        $nombreDependencia = trim($resultado['depcorto']);
+        
+        
+        $nombreComandante = static::getComandante();
+        
+        $nombreUsuario = static::nombre('user');
+        $numero = static::getNumeroSolicitud();
+        $numero = str_pad($numero, 3, "0", STR_PAD_LEFT);
+
+        $nombreDependencia = strpos($nombreDependencia, '.') ? static::getIniciales($nombreDependencia, '.') : $nombreDependencia;
+        $nombreComandante = static::getIniciales($nombreComandante, ' ');
+        $nombreUsuario = strtolower(static::getIniciales($nombreUsuario, ' '));
+
+        if (strpos($nombreDependencia, '.')) {
+            $nombreDependencia = static::getIniciales($nombreDependencia);
+        }
+        $nombreDependencia = str_replace(".", "", $nombreDependencia);
+
+        $identificador = "RR/OP-$nombreDependencia-OF-$numero-$nombreComandante-$nombreUsuario";
+        return $identificador;
+    }
+   public static  function getIniciales($cadena = "", $separador = "")
+    {
+        $iniciales = '';
+        $explode = explode($separador, $cadena);
+        foreach ($explode as $x) {
+            $iniciales .=  $x[0];
+        }
+        return $iniciales;
+    }
 
 
+    public static function  getComandante()
+    {
+        $sql = "SELECT trim(per_nom1) || ' ' || trim(per_nom2) || ' ' || trim(per_ape1) || ' ' || trim(per_ape2) as nombre  from mper where per_plaza = (select org_plaza from morg where org_dependencia in (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user) and org_ceom like '%90' and org_plaza_desc = 'COMANDANTE' and org_grado > 87)";
+        $resultado = Solicitante::fetchArray($sql);
+        // return $sql;
+        return $resultado[0]['nombre']; 
+    }
+    public static function nombre($validarCatalogo)
+    {
+        $sql = "SELECT trim(per_nom1) || ' ' || trim(per_nom2) || ' ' || trim(per_ape1) || ' ' || trim(per_ape2) as nombre , per_catalogo as catalogo  FROM mper inner join grados on per_grado = gra_codigo  inner join morg on per_plaza = org_plaza where per_catalogo = $validarCatalogo";
+        $resultado =  Autorizacion::fetchArray($sql);
+        return $resultado[0]['nombre'];
+    }
+   public static  function getNumeroSolicitud()
+    {
+        $sql = "SELECT  nvl(count(sol_id),0)  + 1 as numero from se_solicitudes  inner join se_solicitante  on ste_id = sol_solicitante   where year(ste_fecha) = year(current) and ste_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = 634576) and sol_situacion != 0 ";
+        $resultado = Solicitud::fetchArray($sql);
+        return $resultado[0]['numero'];
+    }
     public static function guardarApi()
     {
 
         try {
 
-            
+            $identificador = static::generaIdentificador();   
             $catalogo_doc = $_POST['ste_cat'];
-            $tiempo = $_POST['tiempo'];
-            
+            $tiempo = $_POST['tiempo'];           
             
             $numeroEntero = intval($tiempo);
             
@@ -99,6 +152,7 @@ class LictempController
                 $solicitanteId = $solicitanteResultado['id'];
 
                 $solicitud = new Solicitud($_POST);
+                $solicitud->sol_identificador = $identificador;
                 $solicitud->sol_solicitante = $solicitanteId;
                 $solicitudResultado = $solicitud->crear();
 

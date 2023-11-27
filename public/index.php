@@ -153,7 +153,10 @@ $router->get('/direccionpersonal/mdn', [DireccionpersonalController::class,'mdn'
 $router->get('/API/direccionpersonal/buscarMdn', [DireccionpersonalController::class,'buscarMdnApi']);
 $router->post('/API/direccionpersonal/guardarAutorizador', [DireccionpersonalController::class,'guardarAtorizacionDirPerApi']);
 $router->post('/API/direccionpersonal/guardarAutorizadorCorreccion', [DireccionpersonalController::class,'guardarCorreccionDirPerApi']);
-$router->post('/API/direccionpersonal/aprobarRechazarSolicitud', [DireccionpersonalController::class,'aprobarRechazarSolicitudApi']);
+$router->post('/API/direccionpersonal/guardarAtorizacionMdn', [DireccionpersonalController::class,'guardarAtorizacionMdnApi']);
+$router->post('/API/direccionpersonal/guardaRechazarMdn', [DireccionpersonalController::class,'guardaRechazarMdnApi']);
+
+
 
 
 $router->get('/historiales', [HistorialController::class,'index']);
@@ -184,7 +187,7 @@ $router->get('/API/mdn/estadistica2', [DetallemdnController::class,'detalle2Api'
 
 $router->get('/pdf', [ReporteController::class,'pdf']);
 $router->get('/pdf/buscar', [ReporteController::class,'pdf']);
-
+$router->get('/pdf/pdfMinisterio', [ReporteController::class,'pdfMinisterio']);
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador

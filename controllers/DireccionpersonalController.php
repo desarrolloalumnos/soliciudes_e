@@ -29,8 +29,16 @@ class DireccionpersonalController
 
     public static function mdn(Router $router)
     {
-
-        $router->render('direccionpersonal/mdn', []);
+        $motivos = static::motivos();
+        $paises = static::paises();
+        $combo = static::Protocolo();
+        $transportes = static::transportes();
+        $router->render('direccionpersonal/mdn', [
+            'motivos' => $motivos,
+            'paises' => $paises,
+            'combos' => $combo,
+            'transportes' => $transportes
+        ]);
     }
     public static function buscarApi()
     {
@@ -119,7 +127,7 @@ class DireccionpersonalController
                 INNER JOIN se_tipo_solicitud t  ON s.sol_tipo = t.tse_id
                 INNER JOIN se_motivos m  ON s.sol_motivo = m.mot_id
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
-                WHERE s.sol_situacion = 4";
+                WHERE s.sol_situacion IN (4, 5, 6)";
 
                 if ($fecha != '') {
                     $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
@@ -135,6 +143,7 @@ class DireccionpersonalController
                 }
 
                 $sql.=" ORDER BY ste_fecha DESC ";
+
 
         try {
             $resultado = Solicitud::fetchArray($sql);
@@ -175,7 +184,7 @@ class DireccionpersonalController
     public static function guardarAtorizacionDirPerApi()
     {
         try {
-           
+
             $fechaSolicito = $_POST['aut_fecha2'];
             $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
             $_POST['aut_fecha2'] = $fechaFormateadaSolicito;
@@ -188,9 +197,10 @@ class DireccionpersonalController
             $autorizacion->aut_emp = $_POST['aut_emp2'];
             $autorizacion->aut_fecha = $_POST['aut_fecha2'];
             $autorizacion->aut_obs = $_POST['aut_obs2'];
+            $autorizacion->aut_situacion = 4;
             $resultado = $autorizacion->crear();
 
-            if($resultado['resultado'] == 1){
+            if ($resultado['resultado'] == 1) {
                 $solicitud_id = $_POST['sol_id'];
                 $solicitud = Solicitud::find($solicitud_id);
                 $solicitud->sol_situacion = 4;
@@ -215,7 +225,7 @@ class DireccionpersonalController
     public static function guardarCorreccionDirPerApi()
     {
         try {
-           
+
             $fechaSolicito = $_POST['aut_fecha'];
             $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
             $_POST['aut_fecha'] = $fechaFormateadaSolicito;
@@ -228,21 +238,16 @@ class DireccionpersonalController
             $autorizacion->aut_emp = $_POST['aut_emp'];
             $autorizacion->aut_fecha = $_POST['aut_fecha'];
             $autorizacion->aut_obs = $_POST['aut_obs'];
+            $autorizacion->aut_situacion = 3;
             $resultado = $autorizacion->crear();
 
-            if($resultado['resultado'] == 1){
+            if ($resultado['resultado'] == 1) {
                 $solicitud_id = $_POST['sol_id'];
                 $solicitud = Solicitud::find($solicitud_id);
                 $solicitud->sol_situacion = 7;
                 $resultado2 = $solicitud->actualizar();
             }
-            if($resultado2['resultado'] == 1){
-                $autorizador_id = $resultado['id'];
-                $autorizador = Autorizacion::find($autorizador_id);
-                $autorizador->aut_situacion = 3;
-                $resultado3 = $autorizador->actualizar();
-            }
-            if ($resultado3['resultado'] == 1) {
+            if ($resultado2['resultado'] == 1) {
                 echo json_encode([
                     'mensaje' => "Guardado correctamente",
                     'codigo' => 1
@@ -256,7 +261,86 @@ class DireccionpersonalController
             ]);
         }
     }
- 
+    public static function guardarAtorizacionMdnApi()
+    {
+        try {
+
+            $fechaSolicito = $_POST['aut_fecha2'];
+            $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
+            $_POST['aut_fecha2'] = $fechaFormateadaSolicito;
+            $autorizacion = new Autorizacion($_POST);
+            $autorizacion->aut_solicitud = $_POST['aut_solicitud2'];
+            $autorizacion->aut_comando = $_POST['aut_comando2'];
+            $autorizacion->aut_cat = $_POST['aut_cat2'];
+            $autorizacion->aut_gra = $_POST['aut_gra2'];
+            $autorizacion->aut_arm = $_POST['aut_arm2'];
+            $autorizacion->aut_emp = $_POST['aut_emp2'];
+            $autorizacion->aut_fecha = $_POST['aut_fecha2'];
+            $autorizacion->aut_obs = $_POST['aut_obs2'];
+            $autorizacion->aut_situacion = 5;
+            $resultado = $autorizacion->crear();
+
+            if ($resultado['resultado'] == 1) {
+                $solicitud_id = $_POST['sol_id'];
+                $solicitud = Solicitud::find($solicitud_id);
+                $solicitud->sol_situacion = 5;
+                $resultado2 = $solicitud->actualizar();
+            }
+
+            if ($resultado2['resultado'] == 1) {
+                echo json_encode([
+                    'mensaje' => "Guardado correctamente",
+                    'codigo' => 1
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
+    public static function guardaRechazarMdnApi()
+    {
+        try {
+
+            $fechaSolicito = $_POST['aut_fecha'];
+            $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
+            $_POST['aut_fecha'] = $fechaFormateadaSolicito;
+            $autorizacion = new Autorizacion($_POST);
+            $autorizacion->aut_solicitud = $_POST['aut_solicitud2'];
+            $autorizacion->aut_comando = $_POST['aut_comando'];
+            $autorizacion->aut_cat = $_POST['aut_catalogo'];
+            $autorizacion->aut_gra = $_POST['aut_gra'];
+            $autorizacion->aut_arm = $_POST['aut_arm'];
+            $autorizacion->aut_emp = $_POST['aut_emp'];
+            $autorizacion->aut_fecha = $_POST['aut_fecha'];
+            $autorizacion->aut_obs = $_POST['aut_obs'];
+            $autorizacion->aut_situacion = 6;
+            $resultado = $autorizacion->crear();
+
+            if ($resultado['resultado'] == 1) {
+                $solicitud_id = $_POST['sol_id'];
+                $solicitud = Solicitud::find($solicitud_id);
+                $solicitud->sol_situacion = 6;
+                $resultado2 = $solicitud->actualizar();
+            }
+            if ($resultado2['resultado'] == 1) {
+                echo json_encode([
+                    'mensaje' => "Guardado correctamente",
+                    'codigo' => 1
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
+
     public static function transportes()
     {
         $sql = "SELECT * FROM se_transporte WHERE transporte_situacion = 1";
@@ -304,7 +388,8 @@ class DireccionpersonalController
         } catch (Exception $e) {
         }
     }
-    public static function Protocolo(){
+    public static function Protocolo()
+    {
         $sql = "SELECT 
         cmv_id,
         c.cmv_tip || ' - ' || m.dep_desc_lg AS tipo
@@ -316,17 +401,16 @@ class DireccionpersonalController
         mdep m ON c.cmv_dependencia = m.dep_llave
     WHERE 
         c.cmv_situacion = 1";
-    
+
         try {
             $combosMarimbasVallas = Protocolo::fetchArray($sql);
-    
-            if ($combosMarimbasVallas){
+
+            if ($combosMarimbasVallas) {
                 return $combosMarimbasVallas;
             } else {
                 return 0;
             }
         } catch (Exception $e) {
-            
         }
     }
 }

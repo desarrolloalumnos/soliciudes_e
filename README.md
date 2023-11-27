@@ -17,5 +17,7 @@ las situaciones para los autorizadores seran
 
 0 eliminado 
 1 comando 
-3 direccion de personal Estado Mayor 
-4 ministerio 
+3 correcciones Estado Mayor 
+4 autorizado estado mayor 
+5 autorizado ministerio 
+6 rechazado ministerio 
