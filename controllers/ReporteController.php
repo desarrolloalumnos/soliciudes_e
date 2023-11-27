@@ -14,7 +14,7 @@ class ReporteController
     {
         // Obtener los parámetros de búsqueda desde la solicitud GET
         $id = $_GET['sol_id'];
-        $sql = "SELECT  DISTINCT  sol_id, sol_tipo, aut_solicitud, tse_descripcion, sol_situacion,sol_identificador 
+        $sql = "SELECT DISTINCT sol_id, sol_tipo, aut_solicitud, tse_descripcion, sol_situacion,sol_identificador 
         FROM se_solicitudes
         INNER JOIN se_tipo_solicitud ON sol_tipo = tse_id  
         INNER JOIN se_autorizacion ON aut_solicitud = sol_id
@@ -43,16 +43,16 @@ class ReporteController
                           INNER JOIN armas ON mper.per_arma = armas.arm_codigo
                           WHERE per_catalogo = aut_cat) ||' '||(SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) 
                           FROM mper 
-                          WHERE per_catalogo = aut_cat) AS autorizador,                  
+                          WHERE per_catalogo = aut_cat) AS autorizador,                 
                          (SELECT dep_desc_lg 
                           FROM mper, morg, mdep 
                           WHERE per_plaza = org_plaza 
                           AND org_dependencia = dep_llave 
                           AND per_catalogo = aut_cat) AS dependencia  
-                  FROM se_autorizacion
-                  INNER JOIN se_solicitudes ON aut_solicitud = sol_id                                        
-                  WHERE sol_situacion >= 4  AND aut_solicitud = $ids AND aut_situacion = 3
-                  ORDER BY aut_fecha DESC ";
+                 FROM se_autorizacion
+                 INNER JOIN se_solicitudes ON aut_solicitud = sol_id                                       
+                 WHERE sol_situacion >= 4 AND aut_solicitud = $ids AND aut_situacion = 3
+                 ORDER BY aut_fecha DESC ";
 
                 $resultado1 = Autorizacion::fetchArray($sql1);
 
@@ -80,10 +80,6 @@ class ReporteController
                 ];
             }
 
-            // echo json_encode($valores);
-            // exit;
-
-            $direccion = ['DIRECCION DE PERSONAL'];
             // Crear el PDF
             $mpdf = new Mpdf([
                 "orientation" => "P",
@@ -96,14 +92,12 @@ class ReporteController
             $mpdf->SetMargins(30, 35, 25);
             $imgPath = './images/estadoMayor.png';
 
-
             $info = getimagesize($imgPath);
-
 
             $enlace = '<div style="text-align: center;"><a href="/soliciudes_e/" style="display: inline-block;"><img src="' . $imgPath . '" style="max-width: 8%; max-height: 8%;"></a></div>';
 
             $html = $router->load('reporte/pdf', [
-                'direccion' => $direccion,
+                'direccion' => ['DIRECCION DE PERSONAL'],
                 'valores' => $valores,
                 'enlace' => $enlace
             ]);
@@ -159,16 +153,16 @@ class ReporteController
                           INNER JOIN armas ON mper.per_arma = armas.arm_codigo
                           WHERE per_catalogo = aut_cat) ||' '||(SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) 
                           FROM mper 
-                          WHERE per_catalogo = aut_cat) AS autorizador,                  
+                          WHERE per_catalogo = aut_cat) AS autorizador,                 
                          (SELECT dep_desc_lg 
                           FROM mper, morg, mdep 
                           WHERE per_plaza = org_plaza 
                           AND org_dependencia = dep_llave 
                           AND per_catalogo = aut_cat) AS dependencia  
-                  FROM se_autorizacion
-                  INNER JOIN se_solicitudes ON aut_solicitud = sol_id                                        
-                  WHERE sol_situacion >= 5  AND aut_solicitud = $ids AND aut_situacion = 5
-                  ORDER BY aut_fecha DESC ";
+                 FROM se_autorizacion
+                 INNER JOIN se_solicitudes ON aut_solicitud = sol_id                                       
+                 WHERE sol_situacion >= 5 AND aut_solicitud = $ids AND aut_situacion = 5
+                 ORDER BY aut_fecha DESC ";
 
                 $resultado1 = Autorizacion::fetchArray($sql1);
 
@@ -206,6 +200,7 @@ class ReporteController
             } else {
                 exit;
             }
+
             // Crear el PDF
             $mpdf = new Mpdf([
                 "orientation" => "P",
@@ -218,9 +213,7 @@ class ReporteController
             $mpdf->SetMargins(30, 35, 25);
             $imgPath = './images/mdn.png';
 
-
             $info = getimagesize($imgPath);
-
 
             $enlace = '<div style="text-align: center;"><a href="/soliciudes_e/" style="display: inline-block;"><img src="' . $imgPath . '" style="max-width: 17%; max-height: 17%;"></a></div>';
 
@@ -256,7 +249,7 @@ class ReporteController
         ste_fecha,
         tse_descripcion, 
         sol_identificador,
-            (SELECT dep_desc_md as depCorto FROM mdep  inner join morg on org_dependencia = dep_llave inner join mper on per_plaza = org_plaza where per_catalogo = ste_cat) AS ste_comando, 
+            (SELECT dep_desc_md as depCorto FROM mdep inner join morg on org_dependencia = dep_llave inner join mper on per_plaza = org_plaza where per_catalogo = ste_cat) AS ste_comando, 
         (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md)
             FROM mper
             INNER JOIN grados ON mper.per_grado = grados.gra_codigo
@@ -305,22 +298,22 @@ class ReporteController
                 $dependencia = '';
                 $ids = $value['sol_id'];
 
-                $sql1 = "SELECT  
+                $sql1 = "SELECT 
                             (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) 
                             FROM mper 
                             INNER JOIN grados ON mper.per_grado = grados.gra_codigo 
                             INNER JOIN armas ON mper.per_arma = armas.arm_codigo
                             WHERE per_catalogo = aut_cat) ||' '||(SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) 
                             FROM mper 
-                            WHERE per_catalogo = aut_cat) AS autorizador,                  
+                            WHERE per_catalogo = aut_cat) AS autorizador,                 
                             (SELECT dep_desc_lg 
                             FROM mper, morg, mdep 
                             WHERE per_plaza = org_plaza 
                             AND org_dependencia = dep_llave 
                             AND per_catalogo = aut_cat) AS dependencia  
                             FROM se_autorizacion
-                            INNER JOIN se_solicitudes ON aut_solicitud = sol_id                                        
-                            WHERE sol_situacion = 5  AND aut_solicitud = $ids AND aut_situacion = 5 ";
+                            INNER JOIN se_solicitudes ON aut_solicitud = sol_id                                       
+                            WHERE sol_situacion = 5 AND aut_solicitud = $ids AND aut_situacion = 5 ";
 
                 $resultado1 = Autorizacion::fetchArray($sql1);
 
@@ -356,10 +349,6 @@ class ReporteController
                 ];
             }
 
-            // echo json_encode($valores);
-            // exit;
-
-            $direccion = ['DIRECCION DE PERSONAL'];
             // Crear el PDF
             $mpdf = new Mpdf([
                 "orientation" => "P",
@@ -370,16 +359,14 @@ class ReporteController
             ]);
 
             $mpdf->SetMargins(30, 35, 25);
-            $imgPath = './images/estadoMayor.png';
-
+            $imgPath = './images/escudo.png';
 
             $info = getimagesize($imgPath);
-
 
             $enlace = '<div style="text-align: center;"><a href="/soliciudes_e/" style="display: inline-block;"><img src="' . $imgPath . '" style="max-width: 8%; max-height: 8%;"></a></div>';
 
             $html = $router->load('reporte/pdf', [
-                'direccion' => $direccion,
+                'direccion' => ['DIRECCION DE PERSONAL'],
                 'valores' => $valores,
                 'enlace' => $enlace
             ]);
@@ -402,3 +389,4 @@ class ReporteController
         }
     }
 }
+

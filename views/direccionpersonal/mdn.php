@@ -573,10 +573,10 @@
                 </form>
                 <div class="row justify-content-center mt-12 mt-4 mb-4">
                     <div class="col-lg-2">
-                        <button id="aceptarFormularioLicencia" name="aceptarFormularioLicencia" class="btn btn-primary">Elevar Solicitud</button>
+                        <button id="aceptarFormularioLicencia" name="aceptarFormularioLicencia" class="btn btn-primary">Autorizar</button>
                     </div>
                     <div class="col-lg-2">
-                        <button id="corregirFormularioLicencia" name="corregirFormularioLicencia" class="btn btn-warning">Corregir</button>
+                        <button id="corregirFormularioLicencia" name="corregirFormularioLicencia" class="btn btn-warning">Rechazar</button>
                     </div>
                 </div>
 
