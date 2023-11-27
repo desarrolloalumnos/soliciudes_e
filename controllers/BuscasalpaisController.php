@@ -55,14 +55,14 @@ class BuscasalpaisController
         inner join mper on ste_cat = per_catalogo
         inner join grados on ste_gra = gra_codigo
         inner join se_pdf on pdf_solicitud = sol_id 
-        AND (sol_situacion = 1 OR sol_situacion = 7)
-         ORDER BY ste_fecha DESC ";
+        AND sol_situacion = 1";
          if ($fecha != '') {
             $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
         }
         if ($catalogo != '') {
             $sql .= " AND ste_cat = '$catalogo'";
         }
+        $sql .= " ORDER BY ste_fecha DESC";
 
         $valores = [];
 

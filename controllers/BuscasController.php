@@ -28,21 +28,38 @@ class BuscasController
         $fecha = $_GET['fecha'];
 
 
-        $sql = "SELECT 
+        $sql = "SELECT  
         ste_id,
         ste_cat,
         ste_telefono,
-        gra_desc_lg as grado_solicitante ,
+          (
+            SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md)
+            FROM mper
+            INNER JOIN grados ON mper.per_grado = grados.gra_codigo
+            INNER JOIN armas ON mper.per_arma = armas.arm_codigo
+            WHERE per_catalogo = ste_cat
+        ) as grado_solicitante,
         sol_situacion,
         TRIM(parejac_nombres) || '' || (parejac_apellidos) AS pareja_civil,
-        (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) FROM mper 
-        INNER JOIN grados ON mper.per_grado = grados.gra_codigo INNER JOIN armas ON mper.per_arma = armas.arm_codigo
-        WHERE per_catalogo = parejam_cat) AS grado_pareja,
-        (SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper 
-        WHERE per_catalogo = parejam_cat) AS nombre_pareja,
-        TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombre_solicitante,
+        (
+            SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md)
+            FROM mper
+            INNER JOIN grados ON mper.per_grado = grados.gra_codigo
+            INNER JOIN armas ON mper.per_arma = armas.arm_codigo
+            WHERE per_catalogo = parejam_cat
+        ) AS grado_pareja,
+        (
+            SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2)
+            FROM mper
+            WHERE per_catalogo = parejam_cat
+        ) AS nombre_pareja,
+    (
+            SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2)
+            FROM mper
+            WHERE per_catalogo = ste_cat
+        ) AS nombre_solicitante,
         mat_fecha_lic_ini,
-        mat_fecha_lic_fin, 
+        mat_fecha_lic_fin,
         pdf_solicitud,
         sol_id,
         pdf_id,
@@ -56,23 +73,17 @@ class BuscasController
     LEFT JOIN se_pareja_militar ON mat_per_army = parejam_id
     LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
-    INNER JOIN se_pdf ON pdf_solicitud = sol_id   
-    AND (sol_situacion = 1 OR sol_situacion = 7)
-    ORDER BY ste_fecha DESC";
-
+    INNER JOIN se_pdf ON pdf_solicitud = sol_id
+    AND sol_situacion = 1";
         if ($fecha != '') {
             $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
         }
         if ($catalogo != '') {
             $sql .= " AND ste_cat = '$catalogo'";
         }
-        // if ($cmv_dependencia != 0) {
-        //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";
-        // }
-
-        // if (!empty($cmv_tip)) {
-        //     $sql .= " AND cmv_tip = '$cmv_tip' ";
-        // }
+        
+        $sql .= " ORDER BY ste_fecha DESC";
+      
 
 
         try {

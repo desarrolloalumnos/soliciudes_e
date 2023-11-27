@@ -1,3 +1,5 @@
+
+
 <div class="row justify-content-center mt-5 mx-auto w-50">
 
     <div class="col-lg-10">
@@ -47,7 +49,7 @@
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                    <input id="ste_fecha" name="ste_fecha" class="form-control" type="date" placeholder="Fecha de la solicitud">
+                                    <input value="<?php echo date('d/m/Y H:i'); ?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud">
 
                                 </div>
                                 <div class="col-lg-6">
@@ -98,7 +100,7 @@
                                     <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date" placeholder="Fecha de autorización">
                                 </div>
                             </div>
-                        </div>
+                        
                     
                 </div>
 
@@ -124,7 +126,7 @@
                             <input id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
-                            <label for="mat_fecha_bodar"><i class="bi bi-calendar-date-fill"></i>Fecha de la boda Religiosa</label>
+                            <label for="mat_fecha_bodar"><i class="bi bi-bank"></i>Lugar de la boda Religiosa</label>
                             <input value="" id="mat_lugar_religioso" name="mat_lugar_religioso" class="form-control" type="text">
                         </div>
                     </div>
@@ -147,7 +149,7 @@
                             <label for="mat_fecha_bodar"><i class="bi bi-clipboard-data-fill"></i>Pareja Militar</label>
                             <input type="checkbox" id="pareja_militar" name="pareja_militar" class="form-check-input">
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <label for="mat_fecha_lic_ini"><i class="bi bi-clipboard-data-fill"></i>Pareja Civil</label>
                             <input type="checkbox" id="pareja_civil" name="pareja_civil" class="form-check-input">
                         </div>
@@ -191,8 +193,7 @@
 
                     <div class="row justify-content-center mt-12 mb-4">
                         <div class="col-lg-2">
-                            <button type="button" id="btnGuardar" name="btnGuardar"
-                                class="btn btn-outline-primary w-100 overflow-visible text-wrap">Guardar</button>
+                            <button type="button" id="btnGuardar" name="btnGuardar" class="btn btn-outline-primary w-100 overflow-visible text-wrap">Guardar</button>
                         </div>
                     </div>
                 </div>
