@@ -127,6 +127,7 @@ const guardar = async (evento) => {
     }
 
     const body = new FormData(formulario);
+    body.append('ste_fecha',formulario.ste_fecha.value)
     const url = '/soliciudes_e/API/casamientos/guardar';
     const config = {
         method: 'POST',

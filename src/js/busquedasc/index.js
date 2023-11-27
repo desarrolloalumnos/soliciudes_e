@@ -295,6 +295,43 @@ const modificar = async (evento) => {
     let catalogo = formulario2.ste_cat.value
     let fecha = formulario2.ste_fecha.value
 
+    let fecha_inicio = formulario2.mat_fecha_lic_ini.value
+    let fecha_fin= formulario2.mat_fecha_lic_fin.value
+
+    let lugar_civil = formulario2.mat_lugar_civil.value
+    let lugar_religioso= formulario2.mat_lugar_religioso.value
+
+    let fecha_civil = formulario2.mat_fecha_bodac.value
+    let fecha_religioso= formulario2.mat_fecha_bodar.value
+
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
+
+    if (lugar_civil ==='' &&  lugar_religioso ===''){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'Debe ingresar al menos un lugar para la ceremonia de matrimonio',
+        });
+        return;
+    }
+
+    if (fecha_civil ==='' &&  fecha_religioso ===''){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'Debe ingresar al menos una fecha para la ceremonia de matrimonio',
+        });
+        return;
+    }
+
+
 
     const body = new FormData(formulario2)
     body.append('ste_cat', catalogo)
@@ -448,6 +485,16 @@ const eliminar = async (e) => {
 const corregir = async (e) => {
     const button = e.target;
     const id = button.dataset.sol_id;
+
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
+    
 
     if (await confirmacion('warning', 'Desea corregir este registro?')) {
 

@@ -237,7 +237,22 @@ const buscarModal = async (e) => {
 }
 
 const modificar = async (evento) => {
+
     evento.preventDefault();
+
+    let fecha_inicio = formularioModal.lit_fecha1.value
+    let fecha_fin= formularioModal.lit_fecha2.value
+
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
+
+
     const body = new FormData(formularioModal)
     const url = '/soliciudes_e/API/busquedaslict/modificar';
     const headers = new Headers();

@@ -9,7 +9,6 @@
             </div>
 
             <form class="carousel-inner border bg-light p-4" id="formularioSalidapaises" style="min-height: 50vh;">
-
                 <div class="text-center">
                     <h2>Solicitud de Salida del País</h2>
                     <br>

@@ -306,11 +306,21 @@ const buscarModal = async (e) => {
 const modificar = async (evento) => {
 
     evento.preventDefault();
-    // let catalogo = formulario2.ste_cat2.value
-    // let fecha = formulario2.ste_fecha2.value
+
+    let fecha_inicio = formulario2.pco_fechainicio.value
+    let fecha_fin= formulario2.pco_fechafin.value
+
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
+    
     const body = new FormData(formulario2)
-    // body.append('ste_cat', catalogo)
-    // body.append('ste_fecha', fecha)
+   
     const url = '/soliciudes_e/API/busquedasproto/modificar';
     const headers = new Headers();
     headers.append("X-Requested-With", "fetch");

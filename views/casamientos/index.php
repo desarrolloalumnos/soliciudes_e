@@ -4,15 +4,13 @@
         <div id="carouselMatrimonio" class="carousel slide">
 
             <div class="carousel-indicators">
-                <button type="button" class="bg-dark active" data-bs-target="#carouselMatrimonio" data-bs-slide-to="0"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" class="bg-dark" id="botonSlide2" data-bs-target="#carouselMatrimonio"
-                    data-bs-slide-to="1" aria-label="Slide 2"></button>
-
+            <button type="button" class="bg-dark active" data-bs-target="#carouselMatrimonio" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" class="bg-dark" id="botonSlide2" data-bs-target="#carouselMatrimonio" data-bs-slide-to="1" aria-label="Slide 2"></button>
+           
             </div>
             <form class="carousel-inner border bg-light p-4" id="formularioMatrimonio" name="formularioMatrimonio"   style="min-height: 50vh;">
                 <div class="text-center">
-                    <input value="1"type="hidden" id="tse_id" name="tse_id">
+                    <input value="1" type="hidden" id="tse_id" name="tse_id">
                     <h2 class="text-center"> Solicitud de Matrimonio</h2>
                     <br>
                 </div>

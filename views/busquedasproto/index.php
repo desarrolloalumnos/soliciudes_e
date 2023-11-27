@@ -1,5 +1,5 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
 
 <form class="border bg-light p-4 mt-4 mx-auto w-75" id="formularioProtocolo" name="formularioProtocolo"
     style="min-height: 30vh; margin-top: 60px;">

@@ -227,6 +227,7 @@ const guardar = async (evento) => {
     let tiempo = formulario.tiempo_servicio.value
     const body = new FormData(formulario);
     body.append('tiempo_servicio', tiempo)
+    body.append('ste_fecha',formulario.ste_fecha.value)
     const url = '/soliciudes_e/API/licencias/guardar';
     const config = {
         method: 'POST',
