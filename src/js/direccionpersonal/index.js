@@ -165,7 +165,7 @@ const datatable = new Datatable('#tablaDepersonal', {
         orderable: false,
         render: function (data, type, row) {
             if (type === 'display') {
-                if (row.sol_situacion !== '3' && row.sol_situacion !== '8') {
+                if (row.sol_situacion !== '3' && row.sol_situacion !== '6') {
                     return `
                     <div class="btn-group" style="transform: scale(0.85, 0.85);">
                     <button class="btn btn-secondary">Enviado</button>
@@ -175,8 +175,10 @@ const datatable = new Datatable('#tablaDepersonal', {
                     ${row.sol_situacion === '5' ? `<button id="autorizacion" class="btn btn-outline-primary" data-sol_id='${row.sol_id}'>Autorizado</button>` : ''}
                 </div>
                 `;
-                } else {
-                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                } else if (row.sol_situacion === '6') {
+                    return `<button id="verRechazo" class="btn btn-secondary" data-sol_id='${row.sol_id}'>Ver Rechazo</button>`
+                }else if (row.sol_situacion === '3'){
+                   return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
                 }
             }
             return data;
@@ -903,13 +905,45 @@ const buscarPdfCorreccion = async (e) => {
         console.log(error);
     }
 }
+const buscarPdfRechazo= async (e) => {
+    e.preventDefault();
+
+    let boton = e.target
+    let solicitud = boton.dataset.sol_id
+
+
+    const url = `/soliciudes_e/pdf/buscarRechazo?sol_id=${solicitud}`;
+
+    
+    try {
+        const respuesta = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'fetch'
+            }
+        });
+      
+
+        if (respuesta.ok) {
+      
+            const blob = await respuesta.blob();
+            const urlBlob = window.URL.createObjectURL(blob);
+            window.open(urlBlob, '_blank');
+        } else {
+            console.log('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 buscar();
 
 btnGuardarAutorizacion.addEventListener('click', guardarAutorizacion)
 btnGuardarCorreccion.addEventListener('click', guardarCorreccion)
 btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-primary', buscarModal);
-datatable.on('click', '.btn-success', buscarPdf)
+datatable.on('click', '.btn-success', buscarPdf);
+datatable.on('click', '#verRechazo', buscarPdfRechazo)
 datatable.on('click', '.btn-warning', buscarPdfCorreccion)
 datatable.on('click', '#autorizacion', buscarPdfMdn)
 btnElevarSolicitudBoda.addEventListener('click', elevarSolicitud)

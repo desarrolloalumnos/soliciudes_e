@@ -203,26 +203,34 @@ const datatable = new Datatable('#tablaAdministracion', {
 
 
         {
-            title: 'Enviar',
+            title: 'Revision',
             className: 'text-center',
-            data: 'sol_id',
+            data: 'ste_id',
             searchable: false,
             orderable: false,
             render: function (data, type, row) {
                 if (type === 'display') {
-                    if (row.sol_situacion === '7') {
-                        return `<button id="enviarCorrecciones"class="btn btn-success" data-id='${data}'>Enviar Corrección</button>`;
-                    } else if (row.sol_situacion === '5') {
-                        return `<button id="verAutorizacion"class="btn btn-outline-primary" data-id='${data}'data-sol_tipo='${row.sol_tipo}'>Autorizado</button>`;
-                    }else if (row.sol_situacion !== '1' && row.sol_situacion !== '7') {
-                        return `<button class="btn btn-secondary">Enviado</button>`;
-                    } else {
-                        return `<button class="btn btn-primary" data-id='${data}'>Enviar</button>`;
+                    if (row.sol_situacion !== '1'&&row.sol_situacion !== '5'&&row.sol_situacion !== '6') {
+                        return `
+                        <div class="btn-group" style="transform: scale(0.85, 0.85);">
+                            <button class="btn btn-secondary">Enviado</button>
+                            <button id="correcAut" class="btn btn-${row.sol_situacion === '7' ? 'warning' : 'success'}" data-sol_id='${row.sol_id}'>
+                                ${row.sol_situacion === '7' ? 'Corrección' : 'Aprobado'}
+                            </button>                       
+                        </div>
+                        `;
+                    }else if (row.sol_situacion === '5') {
+                        return `<button id="autorizacion" class="btn btn-outline-primary" data-sol_id='${row.sol_id}'data-sol_tipo='${row.sol_tipo}'>Autorizado</button>`
+                    }else if (row.sol_situacion === '6') {
+                        return `<button id="verRechazo" class="btn btn-secondary" data-sol_id='${row.sol_id}'>Ver Rechazo</button>`
+                    }else if (row.sol_situacion === '1'){
+                        return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
                     }
                 }
                 return data;
             }
-        },
+        }
+        
 
     ],
     columnDefs: [
@@ -1382,9 +1390,10 @@ const VerAutorizacion = async (e) => {
     e.preventDefault();
     const boton = e.target;
     const tipoSol = boton.dataset.sol_tipo;
-    let ids = boton.dataset.id
+    let ids = boton.dataset.sol_id
     
     let id = ids
+
     
     if (tipoSol === '1') {
         const url = `/soliciudes_e/pdf/pdfMatrimonio?sol_id=${id}`;
@@ -1414,20 +1423,13 @@ const VerAutorizacion = async (e) => {
 
         const url = `/soliciudes_e/pdf/pdfLicenciaTemporal?sol_id=${id}`;
 
-    //        const config = {
-    //     method: 'GET',
-    // }
     try {
         const respuesta = await fetch(url, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'fetch'
             }
-        });
-        // const respuesta = await fetch(url, config)
-        // const data = await respuesta.json();
-        // console.log(data);
-        // return           
+        });       
     
             if (respuesta.ok) {
                 const blob = await respuesta.blob();
@@ -1490,6 +1492,37 @@ const VerAutorizacion = async (e) => {
     }
 
 }
+const buscarPdfRechazo= async (e) => {
+    e.preventDefault();
+
+    let boton = e.target
+    let solicitud = boton.dataset.sol_id
+
+
+    const url = `/soliciudes_e/pdf/buscarRechazo?sol_id=${solicitud}`;
+
+    
+    try {
+        const respuesta = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'fetch'
+            }
+        });
+      
+
+        if (respuesta.ok) {
+      
+            const blob = await respuesta.blob();
+            const urlBlob = window.URL.createObjectURL(blob);
+            window.open(urlBlob, '_blank');
+        } else {
+            console.log('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 buscar();
@@ -1497,7 +1530,8 @@ buscar();
 btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-primary', enviar);
 ofModal.addEventListener('click', borrarTodo);
-datatable.on('click', '.btn-warning', CorreccionDatos)
+datatable.on('click', '.btn-warning', CorreccionDatos);
+datatable.on('click', '#verRechazo', buscarPdfRechazo)
 btnModificarSalidas.addEventListener('click', modificarSal)
 btnModificarPdf.addEventListener('click', modificarPdfSalidas);
 datatable.on('click', '.btn-outline-warning', traePdfParaCorrecciones);
@@ -1509,4 +1543,4 @@ btnModificarModificarCasamiento.addEventListener('click', modificarCasamiento);
 addPdf.addEventListener('click', modificarPdfCas);
 datatable.on('click', '#verPdf', buscarPdf);
 datatable.on('click', '#enviarCorrecciones', corregir)
-datatable.on('click', '#verAutorizacion', VerAutorizacion)
+datatable.on('click', '#autorizacion', VerAutorizacion)

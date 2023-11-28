@@ -19,7 +19,7 @@
             <p><?= strtoupper($valor['tse_descripcion']) ?></p>
             <br>
             <p class="info-label" style="font-weight: bold;">ENVÍO LA BOLETA COMO:</p>
-            <p><?= $valor['sol_situacion'] == 4 || 5 ? 'AUTORIZADO' : ($valor['sol_situacion'] == 7 ? 'CORRECCIONES' : 'OTRO') ?></p>
+            <p><?= $valor['sol_situacion'] == 4 || $valor['sol_situacion'] == 5 ? 'AUTORIZADO' : ($valor['sol_situacion'] == 6 ? 'RECHAZADA' : ($valor['sol_situacion'] == 7 ? 'CORRECCIONES' : 'OTRO')) ?></p>
             <br>
             <p class="info-label" style="font-weight: bold;">OBSERVACIONES:</p>
             <p><?= strtoupper($valor['obs']) ?></p>

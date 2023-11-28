@@ -50,7 +50,7 @@ const btnElevarSolicitudLicencia = document.getElementById('aceptarFormularioLic
 const btnCorregirSolicitudLicencia = document.getElementById('corregirFormularioLicencia');
 const btnGuardarAutorizacion = document.getElementById('guardarAutorizacion');
 const btnGuardarRechazado = document.getElementById('guardarRechazado');
-const divCorregirSolicitud = document.getElementById('corregirSolicitud');
+const divCorregirSolicitud = document.getElementById('corregirRechazar');
 const divElevarSolicitud = document.getElementById('autorizarSolicitud');
 const aut_solicitud = document.getElementById('aut_solicitud');
 const aut_cat = document.getElementById('aut_cat2');
@@ -143,19 +143,24 @@ const datatable = new Datatable('#tablaMdn', {
                     if (row.sol_situacion === '5') {
                         return `
                         <div  class="btn-group">
-                        <button class="btn btn-secondary">Autorizado</button>
-                        <button class="btn btn-success"data-sol_id='${row.sol_id}'>Boleta</button>
+                        <button id="aprobado1"class="btn btn-success" data-sol_id='${row.sol_id}'>Aprobado</button>
+                        <button class="btn btn-outline-primary"data-sol_id='${row.sol_id}'>Autorizado</button>
                          </div>
                          `;
                     } else if (row.sol_situacion === '6') {
                         return `
                         <div  class="btn-group">
-                        <button class="btn btn-secondary">Rechazado</button>
+                        <button class="btn btn-secondary" data-sol_id='${row.sol_id}'>Boleta</button>
                         </div>
                          `;
                     } else (row.sol_situacion === '4')
                     {
-                        return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                        return `<div  class="btn-group">
+                        <button id="aprobado2" class="btn btn-success" data-sol_id='${row.sol_id}'>Aprobado</button>
+                        <button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}'data-sol_id='${row.sol_id}'data-sol_situacion='${row.sol_situacion}'>Revisar</button>
+                        </div>
+                        `;
+                   
                     }
                 }
                 return data;
@@ -173,7 +178,7 @@ const buscar = async () => {
     const estado = formulario.sol_situacion.value
     const tipo = formulario.tse_id.value
 
-    const url = `/soliciudes_e/API/direccionpersonal/buscar?catalogo=${catalogo}&fecha=${fecha}&estado=${estado}&tipo=${tipo}`;
+    const url = `/soliciudes_e/API/direccionpersonal/buscarMdn?catalogo=${catalogo}&fecha=${fecha}&estado=${estado}&tipo=${tipo}`;
 
 
     const config = {
@@ -183,7 +188,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log (data)     
+        console.log (data)     
         datatable.clear().draw()
         if (data) {
             contador = 1;
@@ -203,7 +208,7 @@ const buscar = async () => {
     formulario.reset();
 }
 
-const buscarPdf = async (e) => {
+const buscarPdfMdn = async (e) => {
     e.preventDefault();
 
     let boton = e.target
@@ -211,6 +216,66 @@ const buscarPdf = async (e) => {
 
 
     const url = `/soliciudes_e/pdf/pdfMinisterio?sol_id=${solicitud}`;
+
+    
+    try {
+        const respuesta = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'fetch'
+            }
+        });
+      
+
+        if (respuesta.ok) {
+      
+            const blob = await respuesta.blob();
+            const urlBlob = window.URL.createObjectURL(blob);
+            window.open(urlBlob, '_blank');
+        } else {
+            console.log('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+const buscarPdfEstadoMayor = async (e) => {
+    e.preventDefault();
+
+    let boton = e.target
+    let solicitud = boton.dataset.sol_id
+
+
+    const url = `/soliciudes_e/pdf/buscar?sol_id=${solicitud}`;
+
+   
+    try {
+        const respuesta = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'fetch'
+            }
+        });   
+
+        if (respuesta.ok) {
+            const blob = await respuesta.blob();
+            const urlBlob = window.URL.createObjectURL(blob);
+            window.open(urlBlob, '_blank');
+        } else {
+            console.log('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+const buscarPdfRechazo= async (e) => {
+    e.preventDefault();
+
+    let boton = e.target
+    let solicitud = boton.dataset.sol_id
+
+
+    const url = `/soliciudes_e/pdf/buscarRechazo?sol_id=${solicitud}`;
 
     
     try {
@@ -814,7 +879,10 @@ btnGuardarAutorizacion.addEventListener('click', guardarAutorizacion);
 btnGuardarRechazado.addEventListener('click', guardarRechazar);
 btnBuscar.addEventListener('click', buscar);
 datatable.on('click', '.btn-primary', buscarModal);
-datatable.on('click', '.btn-success', buscarPdf);
+datatable.on('click', '.btn-outline-primary', buscarPdfMdn);
+datatable.on('click', '#aprobado1', buscarPdfEstadoMayor);
+datatable.on('click', '#aprobado2', buscarPdfEstadoMayor);
+datatable.on('click', '.btn-secondary', buscarPdfRechazo);
 btnElevarSolicitudBoda.addEventListener('click', elevarSolicitud);
 btnCorregirSolicitudBoda.addEventListener('click', corregirSolicitud);
 btnElevarSolicitudSalida.addEventListener('click', elevarSolicitud);

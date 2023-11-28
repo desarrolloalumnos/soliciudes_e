@@ -70,7 +70,8 @@ class DireccionpersonalController
                 INNER JOIN se_tipo_solicitud t  ON s.sol_tipo = t.tse_id
                 INNER JOIN se_motivos m  ON s.sol_motivo = m.mot_id
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
-                WHERE s.sol_situacion >= 3  ";
+                WHERE s.sol_situacion >= 3  
+                AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT;";
 
                  if ($fecha != '') {
                     $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
@@ -122,12 +123,13 @@ class DireccionpersonalController
                     t.tse_descripcion AS tipo,
                     m.mot_descripcion AS motivo,
                     (select dep_desc_lg from mper, morg, mdep where per_plaza = org_plaza and org_dependencia = dep_llave and per_catalogo = ste.ste_cat) as dependencia_solicitante,
-                    s.sol_situacion    
+                    s.sol_situacion
                 FROM se_solicitudes s
                 INNER JOIN se_tipo_solicitud t  ON s.sol_tipo = t.tse_id
                 INNER JOIN se_motivos m  ON s.sol_motivo = m.mot_id
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
-                WHERE s.sol_situacion IN (4, 5, 6)";
+                WHERE s.sol_situacion IN (4, 5, 6)
+                AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT;";
 
                 if ($fecha != '') {
                     $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
