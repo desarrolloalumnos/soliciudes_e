@@ -78,8 +78,7 @@ const guardar = async (evento) => {
     body.append('pdf_ruta',ruta)
     body.append('ste_fecha',formulario.ste_fecha.value)
     body.append('aut_fecha',formulario.aut_fecha.value)
-
-  
+    
     const url = '/soliciudes_e/API/protocolosol/guardar';
     const config = {
         method: 'POST',
@@ -116,7 +115,7 @@ const guardar = async (evento) => {
         console.log(error);
     }
 
-   
+    location.reload();
 
 };
 

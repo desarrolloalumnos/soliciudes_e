@@ -187,9 +187,7 @@ const datatable = new Datatable('#tablaProtocolo', {
 });
 
 const buscar = async () => {
-    // if (!validarFormularioProtocolo(formulario)) {
-    //     return;
-    // }
+  
     verCalendario.style.display = 'none';
     verTabla.style.display = 'block';
     const catalogo = formulario.ste_cat.value
