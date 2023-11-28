@@ -67,8 +67,7 @@ class AdministracionController
                 INNER JOIN se_motivos m  ON s.sol_motivo = m.mot_id
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
                 INNER JOIN se_pdf ON pdf_solicitud = s.sol_id
-                WHERE s.sol_situacion >= 1
-                AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT";
+                WHERE s.sol_situacion >= 1";
 
                 if ($fecha != '') {
                     $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
@@ -82,7 +81,7 @@ class AdministracionController
                 if ($tipo != '') {
                     $sql .= " AND tse_id = '$tipo' ";
                 }
-
+                $sql.=" AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT";
                 $sql.=" ORDER BY ste_fecha DESC ";
 
 
