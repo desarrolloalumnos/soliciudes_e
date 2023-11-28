@@ -213,10 +213,7 @@ const datatable = new Datatable('#tablaAdministracion', {
                     if (row.sol_situacion !== '1'&&row.sol_situacion !== '5'&&row.sol_situacion !== '6') {
                         return `
                         <div class="btn-group" style="transform: scale(0.85, 0.85);">
-                            <button class="btn btn-secondary">Enviado</button>
-                            <button id="correcAut" class="btn btn-${row.sol_situacion === '7' ? 'warning' : 'success'}" data-sol_id='${row.sol_id}'>
-                                ${row.sol_situacion === '7' ? 'Corrección' : 'Aprobado'}
-                            </button>                       
+                            <button class="btn btn-secondary">Enviado</button>                                                 
                         </div>
                         `;
                     }else if (row.sol_situacion === '5') {
@@ -224,7 +221,9 @@ const datatable = new Datatable('#tablaAdministracion', {
                     }else if (row.sol_situacion === '6') {
                         return `<button id="verRechazo" class="btn btn-secondary" data-sol_id='${row.sol_id}'>Ver Rechazo</button>`
                     }else if (row.sol_situacion === '1'){
-                        return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                        return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Enviar</button>`;
+                    }else if (row.sol_situacion === '7'){
+                        return `<button id="correccion"class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Enviar Correccion</button>`;
                     }
                 }
                 return data;
@@ -1542,5 +1541,5 @@ btnModificarPdfLicencia.addEventListener('click', modificarPdfLicencia);
 btnModificarModificarCasamiento.addEventListener('click', modificarCasamiento);
 addPdf.addEventListener('click', modificarPdfCas);
 datatable.on('click', '#verPdf', buscarPdf);
-datatable.on('click', '#enviarCorrecciones', corregir)
+datatable.on('click', '#correccion', corregir)
 datatable.on('click', '#autorizacion', VerAutorizacion)

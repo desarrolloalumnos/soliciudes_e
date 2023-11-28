@@ -188,7 +188,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        console.log (data)     
+            
         datatable.clear().draw()
         if (data) {
             contador = 1;
