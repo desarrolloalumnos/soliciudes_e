@@ -166,10 +166,10 @@
                 </form>
                 <div class="row justify-content-center mt-12 mt-4 mb-4">
                     <div class="col-lg-2">
-                        <button id="aceptarFormularioSalida" name="aceptarFormularioSalida" class="btn btn-primary">Elevar Solicitud</button>
+                        <button id="aceptarFormularioSalida" name="aceptarFormularioSalida" class="btn btn-primary">Autorizar</button>
                     </div>
                     <div class="col-lg-2">
-                        <button id="corregirFormularioSalida" name="corregirFormularioSalida" class="btn btn-warning">Corregir</button>
+                        <button id="corregirFormularioSalida" name="corregirFormularioSalida" class="btn btn-warning">Rechazar</button>
                     </div>
                 </div>
 
@@ -309,10 +309,10 @@
                 </form>
                 <div class="row justify-content-center mt-12 mt-4 mb-4">
                     <div class="col-lg-2">
-                        <button id="aceptarFormularioCombo" name="aceptarFormularioCombo" class="btn btn-primary">Elevar Solicitud</button>
+                        <button id="aceptarFormularioCombo" name="aceptarFormularioCombo" class="btn btn-primary">Autorizar</button>
                     </div>
                     <div class="col-lg-2">
-                        <button id="corregirFormularioCombo" name="corregirFormularioCombo" class="btn btn-warning">Corregir</button>
+                        <button id="corregirFormularioCombo" name="corregirFormularioCombo" class="btn btn-warning">Rechazar</button>
                     </div>
                 </div>
             </div>
@@ -444,10 +444,10 @@
                 </form>
                 <div class="row justify-content-center mt-12 mt-4 mb-4">
                     <div class="col-lg-2">
-                        <button id="aceptarFormulario" name="aceptarFormulario" class="btn btn-primary">Elevar Solicitud</button>
+                        <button id="aceptarFormulario" name="aceptarFormulario" class="btn btn-primary">Atorizar</button>
                     </div>
                     <div class="col-lg-2">
-                        <button id="corregirFormulario" name="corregirFormulario" class="btn btn-warning">Corregir</button>
+                        <button id="corregirFormulario" name="corregirFormulario" class="btn btn-warning">Rechazar</button>
                     </div>
                 </div>
             </div>
@@ -631,7 +631,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="corregirSolicitud">
+                    <div id="corregirRechazar">
                         <div class="text-center">
                             <h1>Rechazar</h1>
                         </div>
