@@ -1385,7 +1385,7 @@ const VerAutorizacion = async (e) => {
     let ids = boton.dataset.id
     
     let id = ids
- 
+    
     if (tipoSol === '1') {
         const url = `/soliciudes_e/pdf/pdfMatrimonio?sol_id=${id}`;
 
@@ -1410,7 +1410,33 @@ const VerAutorizacion = async (e) => {
     
     } else if (tipoSol === '2') {
 
+        const url = `/soliciudes_e/pdf/pdfLicenciaTemporal?sol_id=${id}`;
+
+    //        const config = {
+    //     method: 'GET',
+    // }
+    try {
+        const respuesta = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'fetch'
+            }
+        });
+        // const respuesta = await fetch(url, config)
+        // const data = await respuesta.json();
+        // console.log(data);
+        // return           
     
+            if (respuesta.ok) {
+                const blob = await respuesta.blob();
+                const urlBlob = window.URL.createObjectURL(blob);
+                window.open(urlBlob, '_blank');
+            } else {
+                console.log('Error en la respuesta del servidor');
+            }
+        } catch (error) {
+            console.log(error);
+        }
     } else if (tipoSol === '3') {
 
 

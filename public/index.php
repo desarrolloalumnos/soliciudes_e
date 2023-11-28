@@ -189,6 +189,7 @@ $router->get('/pdf', [ReporteController::class,'pdf']);
 $router->get('/pdf/buscar', [ReporteController::class,'pdf']);
 $router->get('/pdf/pdfMinisterio', [ReporteController::class,'pdfMinisterio']);
 $router->get('/pdf/pdfMatrimonio', [ReporteController::class,'pdfMatrimonio']);
+$router->get('/pdf/pdfLicenciaTemporal', [ReporteController::class,'pdfLicenciaTemporal']);
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador

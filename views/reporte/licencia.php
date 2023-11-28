@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitud para Contraer Matrimonio</title>
+    <title>Solicitud para Licencia Temporal </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,18 +73,19 @@
             <p style="margin: 0;">EMPLEO: <?= $valor['ste_emp'] ?></p>
         </div>
 
-
         <div class="info-section" style="margin-top: 10px;">
-            <p class="info-label">DATOS DE LA SOLICITUD DE MATRIMONIO:</p>
+            <p class="info-label">DATOS DE LA SOLICITUD:</p>
+            <p style="margin: 0;">MOTIVO: <?= strtoupper($valor['mot_descripcion']) ?></p>
             <p style="margin: 0;">MESES CON SUELDO: <?= $valor['lit_mes_consueldo'] ?></p>
-            <p style="margin: 0;">MESES SIN SUELDO: <?= $valor['mat_lugar_religioso'] ?>,<?=date('d-m-Y', strtotime( $valor['mat_fecha_bodar'])) ?></p>
-            <p style="margin: 0;">FECHA DE INICIO DE LA LICENCIA: <?= date('d-m-Y', strtotime($valor['lit_fecha1'] ))?></p>
+            <p style="margin: 0;">MESES SIN SUELDO: <?= $valor['lit_mes_sinsueldo'] ?></p>
+            <p style="margin: 0;">FECHA DE INICIO DE LA LICENCIA: <?= date('d-m-Y', strtotime($valor['lit_fecha1'])) ?></p>
             <p style="margin: 0;">FECHA DE FINALIZACION DE LA LICENCIA: <?= date('d-m-Y', strtotime($valor['lit_fecha2'])) ?></p>
             <br>
             <p style="margin: 0;">AUTORIZADO POR:</p><b> <?= $valor['autorizador'] ?></b>
         </div>
     </div>
 <?php endforeach; ?>
+
 
 </body>
 
