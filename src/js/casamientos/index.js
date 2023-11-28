@@ -74,23 +74,23 @@ const mensajesPersonalizados = {
     pdf_ruta: 'Adjunte el documento PDF',
 };
 
-// const validarFormularioProtocolo = (formulario) => {
-//     const camposRequeridos = ['ste_cat', 'nombre', 'ste_fecha', 'ste_telefono', 'sol_motivo', 'aut_cat', 'nombre2', 'aut_fecha', 'mat_lugar_civil', 'mat_fecha_bodac', 'pco_fechainicio', 'mat_lugar_religioso', 'mat_fecha_bodar', 'mat_fecha_lic_ini', 'mat_fecha_lic_fin', 'pco_dir', 'pdf_ruta'];
+const validarFormularioMatrimonio = (formulario) => {
+    const camposRequeridos = ['ste_cat', 'nombre', 'ste_fecha', 'ste_telefono', 'sol_motivo', 'aut_cat', 'nombre2', 'aut_fecha', 'mat_lugar_civil', 'mat_fecha_bodac', 'mat_lugar_religioso', 'mat_fecha_bodar', 'mat_fecha_lic_ini', 'mat_fecha_lic_fin', 'pdf_ruta'];
 
-//     for (const campo of camposRequeridos) {
-//         const input = formulario.querySelector(`[name="${campo}"]`);
-//         if (!input.value.trim()) {
-//             const mensaje = mensajesPersonalizados[campo] || `Ingrese datos en el campo ${campo.replace('_', ' ')}`;
-//             Toast.fire({
-//                 icon: 'info',
-//                 text: mensaje,
-//             });
-//             return false;
-//         }
-//     }
+    for (const campo of camposRequeridos) {
+        const input = formulario.querySelector(`[name="${campo}"]`);
+        if (!input.value.trim()) {
+            const mensaje = mensajesPersonalizados[campo] || `Ingrese datos en el campo ${campo.replace('_', ' ')}`;
+            Toast.fire({
+                icon: 'info',
+                text: mensaje,
+            });
+            return false;
+        }
+    }
 
-//     return true;
-// };
+    return true;
+};
 
 nombre.disabled = true;
 nombre2.disabled = true;
@@ -122,12 +122,13 @@ checkboxMilitar.addEventListener('change', () => {
 
 const guardar = async (evento) => {
     evento.preventDefault();
-    // if (!validarFormularioProtocolo(formulario)) {
-    //     return;
-    // }
+    if (!validarFormularioMatrimonio(formulario)) {
+        return;
+    }
 
     const body = new FormData(formulario);
     body.append('ste_fecha',formulario.ste_fecha.value)
+    body.append('aut_fecha',formulario.aut_fecha.value)
     const url = '/soliciudes_e/API/casamientos/guardar';
     const config = {
         method: 'POST',

@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use DateTime;
 use Exception;
 use Model\Autorizacion;
 use Model\Matrimonio;
@@ -80,8 +81,9 @@ class CasamientoController
         $resultado = Solicitud::fetchArray($sql);
         return $resultado[0]['numero'];
     }
-    public static function guardarApi()
-    {
+
+
+    public static function guardarApi(){
         try {
 
             $identificador = static::generaIdentificador();
@@ -93,9 +95,11 @@ class CasamientoController
             $fechaFormateadaAutorizacion = date('Y-m-d H:i', strtotime($fechaAutorizacion));
             $_POST['aut_fecha'] = $fechaFormateadaAutorizacion;
 
+
             $fechaSolicito = $_POST['ste_fecha'];
             $fechaFormateadaSolicito = date('Y-m-d H:i', strtotime($fechaSolicito));
             $_POST['ste_fecha'] = $fechaFormateadaSolicito;
+
 
             $fechaIncioLicencia = $_POST['mat_fecha_lic_ini'];
             $fechaFormateadaIniLic = date('Y-m-d H:i', strtotime($fechaIncioLicencia));

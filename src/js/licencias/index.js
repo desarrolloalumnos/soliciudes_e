@@ -21,7 +21,7 @@ const mensajesPersonalizados = {
     pdf_ruta: 'Adjunte el documento PDF',
 };
 
-const validarFormularioProtocolo = (formulario) => {
+const validarFormularioLicencia = (formulario) => {
     const camposRequeridos = ['ste_cat', 'nombre', 'ste_fecha', 'ste_telefono', 'sol_motivo', 'aut_cat', 'nombre2', 'aut_fecha', 'lit_mes_consueldo', 'lit_mes_sinsueldo', 'lit_fecha1', 'lit_fecha2', 'lit_articulo', 'pdf_ruta'];
 
     for (const campo of camposRequeridos) {
@@ -221,13 +221,14 @@ const buscarCatalogo2 = async () => {
 
 const guardar = async (evento) => {
     evento.preventDefault();
-    if (!validarFormularioProtocolo(formulario)) {
+    if (!validarFormularioLicencia(formulario)) {
         return;
     }
     let tiempo = formulario.tiempo_servicio.value
     const body = new FormData(formulario);
     body.append('tiempo_servicio', tiempo)
     body.append('ste_fecha',formulario.ste_fecha.value)
+    body.append('aut_fecha',formulario.aut_fecha.value)
     const url = '/soliciudes_e/API/licencias/guardar';
     const config = {
         method: 'POST',
