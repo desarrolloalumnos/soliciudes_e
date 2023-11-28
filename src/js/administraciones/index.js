@@ -1395,7 +1395,9 @@ const VerAutorizacion = async (e) => {
             headers: {
                 'X-Requested-With': 'fetch'
             }
-        });           
+        });
+    
+                 
 
         if (respuesta.ok) {
             const blob = await respuesta.blob();
@@ -1438,13 +1440,52 @@ const VerAutorizacion = async (e) => {
             console.log(error);
         }
     } else if (tipoSol === '3') {
+        const url = `/soliciudes_e/pdf?sol_id=${id}`;
 
-
-
+        try {
+            const respuesta = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'fetch'
+                }
+            });
+               
+    
+            if (respuesta.ok) {
+                const blob = await respuesta.blob();
+                const urlBlob = window.URL.createObjectURL(blob);
+                window.open(urlBlob, '_blank');
+            } else {
+                console.log('Error en la respuesta del servidor');
+            }
+        } catch (error) {
+            console.log(error);
+        }   
 
 
     } else if (tipoSol === '4') {
-       
+      
+        const url = `/soliciudes_e/pdf?sol_id=${id}`;
+
+        try {
+            const respuesta = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'fetch'
+                }
+            });
+               
+    
+            if (respuesta.ok) {
+                const blob = await respuesta.blob();
+                const urlBlob = window.URL.createObjectURL(blob);
+                window.open(urlBlob, '_blank');
+            } else {
+                console.log('Error en la respuesta del servidor');
+            }
+        } catch (error) {
+            console.log(error);
+        }   
 
     }
 

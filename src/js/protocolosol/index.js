@@ -68,19 +68,18 @@ btnGuardar.parentElement.style.display = 'block';
 
 const guardar = async (evento) => {
     evento.preventDefault();
-    if (!validarFormularioProtocolo(formulario)) {
-        return;
-    }
+    // if (!validarFormularioProtocolo(formulario)) {
+    //     return;
+    // }
     let ruta = formulario.pdf_ruta.value
     const body = new FormData(formulario);
 
-    console.log(formulario.ste_fecha.value);
+
     body.append('pdf_ruta',ruta)
     body.append('ste_fecha',formulario.ste_fecha.value)
+    body.append('aut_fecha',formulario.aut_fecha.value)
 
-    for(var pair of body.entries()){
-        console.log(pair[0], pair[1]);
-    }
+  
     const url = '/soliciudes_e/API/protocolosol/guardar';
     const config = {
         method: 'POST',
@@ -90,10 +89,10 @@ const guardar = async (evento) => {
     try {
         evento.preventDefault();
         const respuesta = await fetch(url, config);
-        const data = await respuesta.json();
-        const { codigo, mensaje, detalle } = data;
+        const data = await respuesta.text();
         console.log(data);
-        // return
+        return
+        const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         switch (codigo) {
             case 1:
