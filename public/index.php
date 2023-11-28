@@ -191,6 +191,7 @@ $router->get('/pdf', [ReporteController::class,'pdf']);
 $router->get('/pdf/buscar', [ReporteController::class,'pdf']);
 $router->get('/pdf/pdfMinisterio', [ReporteController::class,'pdfMinisterio']);
 $router->get('/pdf/pdfMatrimonio', [ReporteController::class,'pdfMatrimonio']);
+$router->get('/pdf/pdfLicenciaTemporal', [ReporteController::class,'pdfLicenciaTemporal']);
 
 
 $router->get('/pdf', [PdfProtocoloController::class,'pdf']);
