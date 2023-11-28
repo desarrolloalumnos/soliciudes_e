@@ -1,4 +1,4 @@
-<div class="row justify-content-center mt-5 mx-auto w-50">
+<div class="row justify-content-center mt-5 mx-auto w-75">
 
     <div class="col-lg-10">
         <div id="carouselMatrimonio" class="carousel slide">

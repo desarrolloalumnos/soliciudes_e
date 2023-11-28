@@ -26,6 +26,8 @@ use Controllers\BuscasalpaisController;
 use Controllers\BuscaprotoController;
 use Controllers\DireccionpersonalController;
 use Controllers\ReporteController;
+use Controllers\PdfProtocoloController;
+use Controllers\PdfSalidapaisController;
 
 $router = new Router();
 $router->setBaseURL('/' . $_ENV['APP_NAME']);
@@ -190,6 +192,10 @@ $router->get('/pdf/buscar', [ReporteController::class,'pdf']);
 $router->get('/pdf/pdfMinisterio', [ReporteController::class,'pdfMinisterio']);
 $router->get('/pdf/pdfMatrimonio', [ReporteController::class,'pdfMatrimonio']);
 
+
+$router->get('/pdf', [PdfProtocoloController::class,'pdf']);
+
+$router->get('/pdf', [PdfSalidapaisController::class,'pdf']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

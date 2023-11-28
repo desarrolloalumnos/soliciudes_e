@@ -32,7 +32,7 @@
                 <div class="row justify-content-around mb-4">
                     <div class="col-lg-6">
                         <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                        <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
+                        <input value="<?php echo date('Y/m/d H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
                     </div>
                     <div class="col-lg-6">
                         <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
@@ -82,8 +82,8 @@
                         <input value="" id="nombre2" name="nombre2" class="form-control" type="text">
                     </div>
                     <div class="col-lg-4">
-                        <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                        <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date" required>
+                        <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de autorización</label>
+                        <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime">
                     </div>
                 </div>
 
@@ -116,11 +116,11 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
                             <label for="pco_fechainicio"><i class="bi bi-calendar-date-fill"></i>Fecha de inicio</label>
-                            <input value="" id="pco_fechainicio" name="pco_fechainicio" class="form-control" type="date" required>
+                            <input value="<?php echo date('Y/m/d H:i')?>" id="pco_fechainicio" name="pco_fechainicio" class="form-control" type="datetime-local" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="pco_fechafin"><i class="bi bi-calendar-date-fill"></i>Fecha de finalización</label>
-                            <input value="" id="pco_fechafin" name="pco_fechafin" class="form-control" type="date" required>
+                            <input value="<?php echo date('Y/m/d H:i')?>" id="pco_fechafin" name="pco_fechafin" class="form-control" type="datetime-local" required>
                         </div>
                     </div>
                     <div class="row justify-content-around mb-4">

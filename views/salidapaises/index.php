@@ -10,6 +10,7 @@
 
             <form class="carousel-inner border bg-light p-4" id="formularioSalidapaises" style="min-height: 50vh;">
                 <div class="text-center">
+                    <input value="1" type="hidden" id="tse_id" name="tse_id">
                     <h2>Solicitud de Salida del País</h2>
                     <br>
                     <input value="" id="sal_id" name="sal_id" class="form-control" type="hidden">
@@ -41,7 +42,7 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
+                                <input value="<?php echo date('Y/m/d H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
                             </div>
 
                             <div class="col-lg-6">

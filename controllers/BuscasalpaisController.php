@@ -66,8 +66,6 @@ class BuscasalpaisController
         }
         $sql .= " ORDER BY ste_fecha DESC";
 
-        $sql.=" ORDER BY ste_fecha DESC ";
-
         $valores = [];
 
         try {

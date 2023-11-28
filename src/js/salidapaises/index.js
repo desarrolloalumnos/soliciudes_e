@@ -22,7 +22,7 @@ const mensajesPersonalizados = {
     
 };
 
-// Función para validar el formulario
+//Función para validar el formulario
 const validarFormularioSalidaPaises = (formulario) => {
     const camposRequeridos = ['ste_cat', 'nombre', 'ste_fecha', 'ste_telefono', 'sol_motivo', 'aut_cat', 'nombre2', 'aut_fecha', 'sal_salida', 'sal_ingreso','pdf_ruta'];
     
