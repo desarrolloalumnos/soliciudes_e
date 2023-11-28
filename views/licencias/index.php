@@ -29,7 +29,7 @@
                                     <input value="" id="aut_id" name="aut_id" class="form-control" type="hidden">
                                     <input value="" type="hidden" name="ste_id" id="ste_id" class="form-control">
                                     <label for="ste_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
-                                    <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="Número de catalogo">
+                                    <input value="" id="ste_cat" name="ste_cat" class="form-control" type="number" placeholder="Número de catálogo">
                                     <input value="" id="ste_gra" name="ste_gra" class="form-control" type="hidden">
                                     <input value="" id="ste_arm" name="ste_arm" class="form-control" type="hidden">
                                     <input value="" id="ste_emp" name="ste_emp" class="form-control" type="hidden">
@@ -43,7 +43,7 @@
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                    <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
+                                    <input value="<?php echo date('Y/m/d H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
 
                                 </div>
                                 <div class="col-lg-6">
@@ -83,7 +83,7 @@
                                 <div class="col-lg-4">
                                     <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
                                     <label for="aut_cat"><i class="bi bi-universal-access">Catálogo</i></label>
-                                    <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="numero de catalogo">
+                                    <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catálogo">
                                     <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                                     <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
                                     <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
@@ -95,8 +95,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                                    <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date">
-
+                                    <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime" disabled>
                                 </div>
                             </div>
                         </div>
@@ -131,13 +130,13 @@
                             <input id="lit_mes_sinsueldo" name="lit_mes_sinsueldo" class="form-control" type="number" type="number" min="0" max="0">
                         </div>
                         <div class="col-lg-6">
-                            <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i> de inicio de licencia Temporal</label>
+                            <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i>Fecha de inicio de licencia Temporal</label>
                             <input value="" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
                         </div>
                     </div>
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
-                            <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i> de fin de licencia Temporal</label>
+                            <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha de fin de licencia Temporal</label>
                             <input id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
                         </div>
                         <div class="col-lg-6">

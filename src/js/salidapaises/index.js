@@ -245,6 +245,7 @@ const guardar = async (evento) => {
     
     const body = new FormData(formulario);
     body.append('ste_fecha',formulario.ste_fecha.value)
+    body.append('aut_fecha',formulario.aut_fecha.value)
     const url = '/soliciudes_e/API/salidapaises/guardar';
     const config = {
         method: 'POST',

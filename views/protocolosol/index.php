@@ -83,7 +83,7 @@
                     </div>
                     <div class="col-lg-4">
                         <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de autorización</label>
-                        <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime">
+                        <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime" disabled>
                     </div>
                 </div>
 

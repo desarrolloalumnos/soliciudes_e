@@ -45,7 +45,7 @@
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                    <input id="ste_fecha" name="ste_fecha" class="form-control" type="date" placeholder="Fecha de la solicitud">
+                                    <input value="<?php echo date('Y/m/d H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
 
                                 </div>
                                 <div class="col-lg-6">
@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                                    <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date" placeholder="Fecha de autorización">
+                                    <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime" disabled>
                                 </div>
                             </div>
                         

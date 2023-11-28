@@ -68,9 +68,9 @@ btnGuardar.parentElement.style.display = 'block';
 
 const guardar = async (evento) => {
     evento.preventDefault();
-    // if (!validarFormularioProtocolo(formulario)) {
-    //     return;
-    // }
+    if (!validarFormularioProtocolo(formulario)) {
+        return;
+    }
     let ruta = formulario.pdf_ruta.value
     const body = new FormData(formulario);
 
@@ -90,8 +90,8 @@ const guardar = async (evento) => {
         evento.preventDefault();
         const respuesta = await fetch(url, config);
         const data = await respuesta.text();
-        console.log(data);
-        return
+        // console.log(data);
+        // return
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         switch (codigo) {
