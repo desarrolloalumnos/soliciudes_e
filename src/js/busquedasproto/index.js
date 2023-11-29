@@ -7,6 +7,7 @@ import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion,formatearFecha } from "../funciones";
+import { data } from "jquery";
 
 const modalProtocolo = new Modal(document.getElementById('modalProtocolo'), {
     backdrop: 'static',
@@ -16,12 +17,14 @@ const modalProtocolo = new Modal(document.getElementById('modalProtocolo'), {
 
 const formulario = document.getElementById('formularioProtocolo');
 const formulario2 = document.getElementById('formularioProto');
+const formularioEvento = document.getElementById('formularioEvento');
+const btnGuardar = document.getElementById('btnGuardar');
 const btnBuscar = document.getElementById('btnBuscar');
-const btnModficarDatos = document.getElementById('modificar');
+const btnModificarDatos = document.getElementById('modificar');
 const calendarEl = document.getElementById('calendar');
-const verTabla = document.getElementById('dataTabla')
-const verCalendario = document.getElementById('calendario')
-const btnCalendario = document.getElementById('btnCalendario')
+const verTabla = document.getElementById('dataTabla');
+const verCalendario = document.getElementById('calendario');
+const btnCalendario = document.getElementById('btnCalendario');
 const iframe = document.getElementById('pdfSalida');
 const divPdf = document.getElementById('pdf');
 const divProtocolo = document.getElementById('Protocolo');
@@ -35,21 +38,80 @@ formulario2.ste_fecha2.disabled = true;
 formulario2.nombre.disabled = true;
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendario');
+    var formularioEvento = document.getElementById('formularioEvento');
+    
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        // Otras configuraciones del calendario...
+
+        eventClick: function(info) {
+            // Acceder a los datos del evento
+            var titulo = info.event.title;
+            var fechaInicio = info.event.start.toISOString().slice(0, 16);
+            var fechaFin = info.event.end ? info.event.end.toISOString().slice(0, 16) : null;
+            var lugar = info.event.extendedProps.lugar;
+
+            // Llenar el formulario con los datos del evento
+            document.getElementById('pco_fechainicio').value = fechaInicio;
+            document.getElementById('pco_fechafin').value = fechaFin;
+
+            // Otros campos del formulario
+            // ...
+
+            // Mostrar el modal del formulario
+            var eventoModal = new bootstrap.Modal(document.getElementById('eventoModal'));
+            $('#eventoModal').modal('show');
+        }
+    });
+
+    calendar.render();
+});
+
 const abrirModalEvento = (evento) => {
-    const tipoevento = evento._def.title;
-    const fechainicio = evento._instance.range.start; 
-    const fechafin = evento._instance.range.end; 
-    const lugar = evento._def.extendedProps.lugar;
 
-    // Valores a los elementos del modal
-    document.getElementById('detalleCombo').innerText = tipoevento;
-    document.getElementById('detalleFechaInicio').innerText = fechainicio.toLocaleString(); 
-    document.getElementById('detalleFechaFin').innerText = fechafin.toLocaleString(); 
-    document.getElementById('detalleLugar').innerText = lugar;
-
-    // Abre el modal
+    
     $('#eventoModal').modal('show');
 };
+
+const guardarEvento = async () => {
+    // Lógica para guardar el evento en el servidor
+    // Puedes usar fetch u otra lógica para enviar los datos al servidor
+    // Aquí puedes obtener los valores del formularioEvento y enviarlos al servidor
+    // Puedes usar FormData para enviar el formulario completo
+
+    const formData = new FormData(formularioEvento);
+
+    try {
+        const response = await fetch('/ruta-para-guardar-evento', {
+            method: 'POST',
+            body: formData,
+        });
+
+        // Manejar la respuesta del servidor
+        // Puedes mostrar una notificación o realizar otras acciones según la respuesta
+
+        if (response.ok) {
+            // Éxito, puedes mostrar una notificación de éxito o cerrar el modal, etc.
+            Toast.fire({
+                title: 'Evento guardado con éxito',
+                icon: 'success',
+            });
+
+            // Cerrar el modal
+            $('#eventoModal').modal('hide');
+        } else {
+            // Error, puedes mostrar una notificación de error o realizar otras acciones según la respuesta
+            Toast.fire({
+                title: 'Error al guardar el evento',
+                icon: 'error',
+            });
+        }
+    } catch (error) {
+        console.error('Error al procesar la solicitud:', error);
+    }
+};
+
 
 const buscarCalender = async () => {
     verCalendario.style.display = 'block';
@@ -504,7 +566,7 @@ const verPDF = (e) => {
 buscar();
 
 btnBuscar.addEventListener('click', buscar);
-btnModficarDatos.addEventListener('click', modificar);
+btnModificarDatos.addEventListener('click', modificar);
 datatable.on('click', '.btn-outline-info', verPDF);
 datatable.on('click', '.btn-warning', buscarModal);
 datatable.on('click', '.btn-outline-warning', traePdf);

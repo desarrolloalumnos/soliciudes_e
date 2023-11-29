@@ -1,4 +1,8 @@
 import Swal from "sweetalert2";
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
@@ -25,6 +29,7 @@ const modalPdfCorreccionCasamiento = new Modal(document.getElementById('modalPdf
     backdrop: 'static',
     keyboard: false
 });
+
 const formulario = document.getElementById('formularioAdministracion');
 const btnBuscar = document.getElementById('btnBuscar');
 const btnModificarPdf = document.getElementById('addPdf');
@@ -35,6 +40,14 @@ const divPdf = document.getElementById('divPdf');
 const iframe = document.getElementById('pdfSalidaPais')
 const ofModal = document.getElementById('cerrarModal')
 const btnModificarSalidas = document.getElementById('modificarSalidas');
+
+//FULL CALENDAR
+const calendarEl = document.getElementById('calendar');
+const verTabla = document.getElementById('dataTabla');
+const verCalendario = document.getElementById('calendario');
+const btnCalendario = document.getElementById('btnCalendario');
+
+
 //modal para modificar protocolo 
 const formularioProto = document.getElementById('formularioProto');
 const iframeProto = document.getElementById('pdfSalida');
@@ -60,6 +73,81 @@ const addPdf = document.getElementById('modificarPdfCas');
 const parejam_cat = document.getElementById('parejam_cat');
 const divMilitar = document.getElementById('parejaMilitar');
 const divCivil = document.getElementById('parejaCivil');
+
+
+//FULLCALENDAR
+verCalendario.style.display = 'none'
+verTabla.style.display = 'none'
+
+const abrirModalEvento = (evento) => {
+    const tipoevento = evento._def.title;
+    const fechainicio = evento._instance.range.start; 
+    const fechafin = evento._instance.range.end; 
+    const lugar = evento._def.extendedProps.lugar;
+
+    // Valores a los elementos del modal
+    document.getElementById('detalleCombo').innerText = tipoevento;
+    document.getElementById('detalleFechaInicio').innerText = fechainicio.toLocaleString(); 
+    document.getElementById('detalleFechaFin').innerText = fechafin.toLocaleString(); 
+    document.getElementById('detalleLugar').innerText = lugar;
+
+    // Abre el modal
+    $('#eventoModal').modal('show');
+};
+
+const buscarCalender = async () => {
+    verCalendario.style.display = 'block';
+    verTabla.style.display = 'none';
+
+    const url = `/soliciudes_e/API/administraciones/buscarCalender`;
+
+    const config = {
+        method: 'GET',
+    };
+
+    try {
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.json();
+
+        if (data) {
+            const calendar = new Calendar(calendarEl, {
+                plugins: [dayGridPlugin],
+                initialView: 'dayGridMonth',
+                height: 'auto',
+                headerToolbar: {
+                    start: 'dayGridMonth,dayGridWeek,listWeek',
+                    center: 'title',
+                    end: 'today,prev,next',
+                    lugar: 'Ubicación del evento',
+                },
+                events: data,
+                dayMaxEvents: 5,
+                locale: 'es',
+                buttonText: {
+                    today: 'Hoy',
+                    month: 'Mes',
+                    week: 'Semana',
+                    list: 'Lista',
+                },
+                eventClick: function (info) {
+                    abrirModalEvento(info.event);
+                }
+            });
+
+            calendar.render();
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+            });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    formulario.reset();
+};
+
+
 
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';
@@ -1209,42 +1297,57 @@ const traePdfParaCorrecciones = (e) => {
 
 
 };
-const buscar = async () => {
 
-    const catalogo = formulario.ste_cat.value
-    const fecha = formulario.ste_fecha.value
-    const estado = formulario.sol_situacion.value
-    const tipo = formulario.tse_id.value
+
+const buscar = async () => {
+    verCalendario.style.display = 'none';
+    verTabla.style.display = 'block';
+
+    const catalogo = formulario.ste_cat.value;
+    const fecha = formulario.ste_fecha.value;
+    const estado = formulario.sol_situacion.value;
+    const tipo = formulario.tse_id.value;
 
     const url = `/soliciudes_e/API/administraciones/buscar?catalogo=${catalogo}&fecha=${fecha}&estado=${estado}&tipo=${tipo}`;
 
-
     const config = {
         method: 'GET',
-    }
+    };
+
     try {
-        const respuesta = await fetch(url, config)
+        const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-        // console.log (data)
-        // return;      
-        datatable.clear().draw()
+        console.log(data);
+        datatable.clear().draw();
+        // Calendar.removeAllEvents(); 
+
         if (data) {
             contador = 1;
             datatable.rows.add(data).draw();
 
+            data.forEach((evento) => {
+                Calendar.addEvent({
+                    title: evento.titulo,
+                    start: evento.pco_fechainicio,
+                    end: evento.pco_fechafin,
+                    lugar: evento.pco_dir,
+                    color: '#2ecc71',
+                });
+            });
+
+            // Calendar.refetchEvents();
         } else {
             Toast.fire({
                 title: 'No se encontraron registros',
-                icon: 'info'
-
-            })
+                icon: 'info',
+            });
         }
-
     } catch (error) {
         console.log(error);
     }
     formulario.reset();
-}
+};
+
 
 const enviar = async (e) => {
     const button = e.target;
@@ -1543,3 +1646,4 @@ addPdf.addEventListener('click', modificarPdfCas);
 datatable.on('click', '#verPdf', buscarPdf);
 datatable.on('click', '#correccion', corregir)
 datatable.on('click', '#autorizacion', VerAutorizacion)
+btnCalendario.addEventListener('click', buscarCalender);
