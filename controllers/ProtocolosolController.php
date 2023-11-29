@@ -69,7 +69,7 @@ class ProtocolosolController
 
     public static function  getComandante()
     {
-        $sql = "SELECT trim(per_nom1) || ' ' || trim(per_nom2) || ' ' || trim(per_ape1) || ' ' || trim(per_ape2) as nombre  from mper where per_plaza = (select org_plaza from morg where org_dependencia in (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = 634576) and org_ceom like '%90' and org_plaza_desc = 'COMANDANTE' and org_grado > 87)";
+        $sql = "SELECT trim(per_nom1) || ' ' || trim(per_nom2) || ' ' || trim(per_ape1) || ' ' || trim(per_ape2) as nombre  from mper where per_plaza = (select org_plaza from morg where org_dependencia in (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user) and org_ceom like '%90' and org_plaza_desc = 'COMANDANTE' and org_grado > 87)";
         $resultado = Solicitante::fetchArray($sql);
         // return $sql;
         return $resultado[0]['nombre']; 
@@ -84,7 +84,7 @@ class ProtocolosolController
     {
 
         
-        $sql = "SELECT  nvl(count(sol_id),0)  + 1 as numero from se_solicitudes  inner join se_solicitante  on ste_id = sol_solicitante   where year(ste_fecha) = year(current) and ste_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = 634576) and sol_situacion != 0 ";
+        $sql = "SELECT  nvl(count(sol_id),0)  + 1 as numero from se_solicitudes  inner join se_solicitante  on ste_id = sol_solicitante   where year(ste_fecha) = year(current) and ste_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user) and sol_situacion != 0 ";
         $resultado = Solicitud::fetchArray($sql);
         return $resultado[0]['numero'];
     }

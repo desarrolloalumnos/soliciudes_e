@@ -48,7 +48,7 @@ class DireccionpersonalController
         $estado = $_GET['estado'];
         $tipo = $_GET['tipo'];
 
-        
+
 
         $sql = "SELECT
                     s.sol_id,
@@ -70,23 +70,22 @@ class DireccionpersonalController
                 INNER JOIN se_tipo_solicitud t  ON s.sol_tipo = t.tse_id
                 INNER JOIN se_motivos m  ON s.sol_motivo = m.mot_id
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
-                WHERE s.sol_situacion >= 3  
-                AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT;";
+                WHERE s.sol_situacion >= 3 ";
 
-                 if ($fecha != '') {
-                    $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
-                }
-                if ($catalogo != '') {
-                    $sql .= " AND ste_cat = '$catalogo' ";
-                }
-                if ($estado != '') {
-                    $sql .= " AND sol_situacion = '$estado' ";
-                }
-                if ($tipo != '') {
-                    $sql .= " AND tse_id = '$tipo' ";
-                }
-
-                $sql.=" ORDER BY ste_fecha DESC ";
+        if ($fecha != '') {
+            $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+        }
+        if ($catalogo != '') {
+            $sql .= " AND ste_cat = '$catalogo' ";
+        }
+        if ($estado != '') {
+            $sql .= " AND sol_situacion = '$estado' ";
+        }
+        if ($tipo != '') {
+            $sql .= " AND tse_id = '$tipo' ";
+        }
+        $sql.=" AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT";
+        $sql .= " ORDER BY ste_fecha DESC ";
 
 
         try {
@@ -128,23 +127,22 @@ class DireccionpersonalController
                 INNER JOIN se_tipo_solicitud t  ON s.sol_tipo = t.tse_id
                 INNER JOIN se_motivos m  ON s.sol_motivo = m.mot_id
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
-                WHERE s.sol_situacion IN (4, 5, 6)
-                AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT;";
+                WHERE s.sol_situacion IN (4, 5, 6)";
 
-                if ($fecha != '') {
-                    $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
-                }
-                if ($catalogo != '') {
-                    $sql .= " AND ste_cat = '$catalogo' ";
-                }
-                if ($estado != '') {
-                    $sql .= " AND sol_situacion = '$estado' ";
-                }
-                if ($tipo != '') {
-                    $sql .= " AND tse_id = '$tipo' ";
-                }
-
-                $sql.=" ORDER BY ste_fecha DESC ";
+        if ($fecha != '') {
+            $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+        }
+        if ($catalogo != '') {
+            $sql .= " AND ste_cat = '$catalogo' ";
+        }
+        if ($estado != '') {
+            $sql .= " AND sol_situacion = '$estado' ";
+        }
+        if ($tipo != '') {
+            $sql .= " AND tse_id = '$tipo' ";
+        }
+        $sql .= " AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT";
+        $sql .= " ORDER BY ste_fecha DESC ";
 
 
         try {

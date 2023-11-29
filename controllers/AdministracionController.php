@@ -67,7 +67,9 @@ class AdministracionController
                 INNER JOIN se_motivos m  ON s.sol_motivo = m.mot_id
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
                 INNER JOIN se_pdf ON pdf_solicitud = s.sol_id
-                WHERE s.sol_situacion >= 1";
+                WHERE s.sol_situacion >= 1 
+                AND ste_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user)";
+                
 
                 if ($fecha != '') {
                     $sql .= " AND cast(ste_fecha as date) = '$fecha' ";

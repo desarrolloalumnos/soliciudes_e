@@ -82,7 +82,7 @@ class SalidapaisController
     }
    public static  function getNumeroSolicitud()
     {
-        $sql = "SELECT  nvl(count(sol_id),0)  + 1 as numero from se_solicitudes  inner join se_solicitante  on ste_id = sol_solicitante   where year(ste_fecha) = year(current) and ste_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = 634576) and sol_situacion != 0 ";
+        $sql = "SELECT  nvl(count(sol_id),0)  + 1 as numero from se_solicitudes  inner join se_solicitante  on ste_id = sol_solicitante   where year(ste_fecha) = year(current) and ste_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user) and sol_situacion != 0 ";
         $resultado = Solicitud::fetchArray($sql);
         return $resultado[0]['numero'];
     }
