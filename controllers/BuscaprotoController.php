@@ -135,18 +135,20 @@ class BuscaprotoController
 
         try {
             $sql = "   SELECT 
-            c.cmv_tip || ' - ' || m.dep_desc_lg AS title,
-            p.pco_fechainicio AS start,
-            p.pco_fechafin AS end,
-            p.pco_dir AS lugar
+            cmv_tip || ' - ' || dep_desc_lg AS title,
+            pco_fechainicio AS start,
+            pco_fechafin AS end,
+            pco_dir AS lugar
         FROM 
             se_protocolo p
-        JOIN 
-            se_combos_marimbas_vallas c ON p.pco_cmbv = c.cmv_id
-        JOIN 
-            mdep m ON c.cmv_dependencia = m.dep_llave
+        INNER JOIN 
+            se_combos_marimbas_vallas c ON pco_cmbv = cmv_id
+        INNER JOIN 
+            mdep m ON cmv_dependencia = dep_llave
+        INNER JOIN se_autorizacion ON pco_autorizacion = aut_id
+        INNER JOIN se_solicitudes ON aut_solicitud = sol_id 
         WHERE 
-            p.pco_situacion = 1";
+            sol_situacion = 5";
 
 
             $resultado = Protocolosol::fetchArray($sql);

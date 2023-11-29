@@ -8,6 +8,7 @@ use Model\Motivos;
 use Model\Paises;
 use Model\Transportes;
 use Model\Protocolo;
+use Model\Protocolosol;
 use MVC\Router;
 
 class AdministracionController
@@ -18,6 +19,7 @@ class AdministracionController
         $paises = static::paises();
         $combo = static::Protocolo();
         $transportes = static::transportes();
+       
         
         $router->render('administraciones/index', [
             'motivos' => $motivos,
@@ -272,4 +274,40 @@ class AdministracionController
             
         }
     }
+
+    public static function buscarCalender()
+    {
+
+        try {
+            $sql = "   SELECT 
+            c.cmv_tip || ' - ' || m.dep_desc_lg AS title,
+            p.pco_fechainicio AS start,
+            p.pco_fechafin AS end,
+            p.pco_dir AS lugar
+        FROM 
+            se_protocolo p
+        JOIN 
+            se_combos_marimbas_vallas c ON p.pco_cmbv = c.cmv_id
+        JOIN 
+            mdep m ON c.cmv_dependencia = m.dep_llave
+        WHERE 
+            p.pco_situacion = 1";
+
+
+            $resultado = Protocolosol::fetchArray($sql);
+
+
+
+            echo json_encode($resultado);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+
+    }
+
+
 }
