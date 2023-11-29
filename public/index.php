@@ -177,16 +177,24 @@ $router->get('/API/historialmdn/buscar', [HistorialmdnController::class,'buscarA
 $router->get('/administraciones/estadistica', [DetalleController::class,'estadistica']);
 $router->get('/API/administraciones/estadistica', [DetalleController::class,'detalleApi']);
 $router->get('/API/administraciones/estadistica2', [DetalleController::class,'detalle2Api']);
-
+$router->get('/API/administraciones/detalleConcurrenciaApi', [DetalleController::class,'detalleConcurrenciaApi']);
+$router->get('/API/administraciones/detalleOficialApi', [DetalleController::class,'detalleOficialApi']);
+$router->get('/API/administraciones/detallePaisesApi', [DetalleController::class,'detallePaisesApi']);
 
 $router->get('/direccionpersonal/estadistica', [DetalledpController::class,'estadistica']);
 $router->get('/API/direccionpersonal/estadistica', [DetalledpController::class,'detalleApi']);
 $router->get('/API/direccionpersonal/estadistica2', [DetalledpController::class,'detalle2Api']);
+$router->get('/API/direccionpersonal/detalleConcurrenciaApi', [DetalledpController::class,'detalleConcurrenciaApi']);
+$router->get('/API/direccionpersonal/detalleOficialApi', [DetalledpController::class,'detalleOficialApi']);
+$router->get('/API/direccionpersonal/detallePaisesApi', [DetalledpController::class,'detallePaisesApi']);
 
 
 $router->get('/mdn/estadistica', [DetallemdnController::class,'estadistica']);
 $router->get('/API/mdn/estadistica', [DetallemdnController::class,'detalleApi']);
 $router->get('/API/mdn/estadistica2', [DetallemdnController::class,'detalle2Api']);
+$router->get('/API/mdn/detalleConcurrenciaApi', [DetallemdnController::class,'detalleConcurrenciaApi']);
+$router->get('/API/mdn/detalleOficialApi', [DetallemdnController::class,'detalleOficialApi']);
+$router->get('/API/mdn/detallePaisesApi', [DetallemdnController::class,'detallePaisesApi']);
 
 $router->get('/pdf', [ReporteController::class,'pdf']);
 $router->get('/pdf/buscar', [ReporteController::class,'pdf']);
