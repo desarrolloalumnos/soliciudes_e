@@ -66,7 +66,7 @@
                         <div class="col-lg-6">
                             <label for="ste_fecha">Fecha de Solicitud</label>
                             <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
-
+                            
                         </div>
                         <div class="col-lg-6">
                             <label for="ste_telefono">Telefono</label>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodac">Fecha de la boda Civil</label>
-                            <input id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_lugar_religioso">Lugar de la boda Religiosa</label>
@@ -98,15 +98,15 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodar">Fecha de la boda Religiosa</label>
-                            <input id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_ini">Inicio de la licencia</label>
-                            <input value="" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_fin">Finalizacion de la licencia</label>
-                            <input value="" id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
                         </div>
                     </div>
 

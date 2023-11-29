@@ -616,7 +616,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label for="aut_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                                <input value="" id="aut_fecha2" name="aut_fecha2" class="form-control" type="date">
+                                <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha2" name="aut_fecha2" class="form-control" type="datetime" disabled>
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">
@@ -651,7 +651,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                                <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date">
+                                <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime" disabled>
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">

@@ -93,7 +93,7 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="ste_fecha2">Fecha de Solicitud</label>
-                                <input id="ste_fecha2" name="ste_fecha2" class="form-control" type="date">
+                                <input value="<?php echo date('Y/m/d H:i')?>"id="ste_fecha2" name="ste_fecha2" class="form-control" type="datetime" disabled>
 
                             </div>
                             <div class="col-lg-6">
@@ -135,11 +135,11 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="sal_salida"><i class="bi bi-calendar-date-fill"></i>Fecha de la salida del país</label>
-                                <input value="" id="sal_salida" name="sal_salida" class="form-control" type="date">
+                                <input value="<?php echo date('Y/m/d')?>" id="sal_salida" name="sal_salida" class="form-control" type="date">
                             </div>
                             <div class="col-lg-6">
                                 <label for="sal_ingreso"><i class="bi bi-calendar-date-fill"></i>Fecha del ingreso al país</label>
-                                <input value="" id="sal_ingreso" name="sal_ingreso" class="form-control" type="date">
+                                <input value="<?php echo date('Y/m/d')?>" id="sal_ingreso" name="sal_ingreso" class="form-control" type="date">
                             </div>
                         </div>
 
@@ -217,9 +217,8 @@
                         </div>
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
-                                <label for="ste_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha de
-                                    Solicitud</label>
-                                <input value="" id="ste_fecha2" name="ste_fecha2" class="form-control" type="date">
+                                <label for="ste_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
+                                <input value="<?php echo date('Y/m/d H:i')?>" id="ste_fecha2" name="ste_fecha2" class="form-control" type="datetime" disabled>
                             </div>
                             <div class="col-lg-6">
                                 <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Teléfono</label>
@@ -278,14 +277,12 @@
                         </div>
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
-                                <label for="pco_fechainicio"><i class="bi bi-calendar-date-fill"></i>Fecha de
-                                    inicio</label>
-                                <input value="" id="pco_fechainicio" name="pco_fechainicio" class="form-control" type="date">
+                                <label for="pco_fechainicio"><i class="bi bi-calendar-date-fill"></i>Fecha de inicio</label>
+                                <input value="<?php echo date('Y/m/d')?>" id="pco_fechainicio" name="pco_fechainicio" class="form-control" type="date">
                             </div>
                             <div class="col-lg-6">
-                                <label for="pco_fechafin"><i class="bi bi-calendar-date-fill"></i>Fecha de
-                                    finalización</label>
-                                <input value="" id="pco_fechafin" name="pco_fechafin" class="form-control" type="date">
+                                <label for="pco_fechafin"><i class="bi bi-calendar-date-fill"></i>Fecha de  finalización</label>
+                                <input value="<?php echo date('Y/m/d')?>" id="pco_fechafin" name="pco_fechafin" class="form-control" type="date">
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">
@@ -359,7 +356,7 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
                             <label for="ste_fecha">Fecha de Solicitud</label>
-                            <input id="ste_fecha" name="ste_fecha" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime">
 
                         </div>
                         <div class="col-lg-6">
@@ -382,7 +379,7 @@
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodac">Fecha de la boda Civil</label>
-                            <input id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_lugar_religioso">Lugar de la boda Religiosa</label>
@@ -392,15 +389,15 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodar">Fecha de la boda Religiosa</label>
-                            <input id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_ini">Inicio de la licencia</label>
-                            <input value="" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_fin">Finalizacion de la licencia</label>
-                            <input value="" id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
                         </div>
                     </div>
 
@@ -495,6 +492,10 @@
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
+                            <div class="col-lg-6">
+                                <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
+                                <input value="<?php echo date('Y/m/d H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
+                            </div>
 
                                 <div class="col-lg-6">
                                     <label for="ste_telefono"><i class="bi bi-telephone-inbound-fill"></i>Telefono</label>
@@ -553,13 +554,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i>Inicio de licencia Temporal</label>
-                                    <input value="" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
+                                    <input value="<?php echo date('Y/m/d')?>" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i>Fin de licencia Temporal</label>
-                                    <input id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
+                                    <input value="<?php echo date('Y/m/d')?>" id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
                                 </div>
                             </div>
                             <div class="row justify-content-center mt-12 mb-4">
@@ -615,7 +616,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label for="aut_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                                <input value="" id="aut_fecha2" name="aut_fecha2" class="form-control" type="date">
+                                <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha2" name="aut_fecha2" class="form-control" type="datetime" disabled>
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">
@@ -650,7 +651,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                                <input value="" id="aut_fecha" name="aut_fecha" class="form-control" type="date">
+                                <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime" disabled>
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">

@@ -69,7 +69,7 @@
 
                             <div class="col-lg-6">
                                 <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                <input value="<?php echo date('d/m/Y H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
+                                <input value="<?php echo date('Y/m/d H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
                             </div>
 
                                 <div class="col-lg-6">
@@ -129,13 +129,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i>Inicio de licencia Temporal</label>
-                                    <input value="" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
+                                    <input value="<?php echo date('Y/m/d')?>" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i>Fin de licencia Temporal</label>
-                                    <input id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
+                                    <input value="<?php echo date('Y/m/d')?>" id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
                                 </div>
                             </div>
                             <div class="row justify-content-center mt-12 mb-4">

@@ -131,13 +131,13 @@
                         </div>
                         <div class="col-lg-6">
                             <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i>Fecha de inicio de licencia Temporal</label>
-                            <input value="" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
                         </div>
                     </div>
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
                             <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i>Fecha de fin de licencia Temporal</label>
-                            <input id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d')?>" id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
                         </div>
                         <div class="col-lg-6">
                             <label for="pdf_ruta"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>

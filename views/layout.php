@@ -58,6 +58,7 @@
                         </ul>
                     </div>
                     <!-- div para busqueda de solicitudes  -->
+                 
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">
                             <i class="ms-lg-0 ms-2 bi bi-search me-2"></i>Revisar Solicitud
@@ -150,7 +151,7 @@
                             </li>
                         </ul>
                     </div>
-
+                    
                     <!-- MODULO DE ADMINISTRACION DEL MINISTERIO DE LA DEFENSA NACIONAL -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/soliciudes_e/" role="button" data-bs-toggle="dropdown">

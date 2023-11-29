@@ -42,7 +42,7 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="ste_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha de Solicitud</label>
-                                <input value="<?php echo date('Y/m/d H:i')?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
+                                <input value="<?php echo date('Y/m/d H:i') ?>" id="ste_fecha" name="ste_fecha" class="form-control" type="datetime" placeholder="Fecha de la solicitud" disabled>
                             </div>
 
                             <div class="col-lg-6">
@@ -98,7 +98,7 @@
 
                             <div class="col-lg-4">
                                 <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                                <input value="<?php echo date('Y/m/d H:i')?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime" disabled>
+                                <input value="<?php echo date('Y/m/d H:i') ?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime" disabled>
                             </div>
                         </div>
                     </div>
@@ -117,11 +117,21 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
                             <label for="sal_salida"><i class="bi bi-calendar-date-fill"></i>Fecha de la salida del país</label>
-                            <input value="" id="sal_salida" name="sal_salida" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d') ?>" id="sal_salida" name="sal_salida" class="form-control" type="date">
                         </div>
                         <div class="col-lg-6">
                             <label for="sal_ingreso"><i class="bi bi-calendar-date-fill"></i>Fecha del ingreso al país</label>
-                            <input value="" id="sal_ingreso" name="sal_ingreso" class="form-control" type="date">
+                            <input value="<?php echo date('Y/m/d') ?>" id="sal_ingreso" name="sal_ingreso" class="form-control" type="date">
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-5 mb-3">
+                                
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-outline-success w-100" id="addPais">+</button>
+                            </div>
                         </div>
                     </div>
 
@@ -132,7 +142,7 @@
                                     <input value="" id="dsal_id" name="dsal_id" class="form-control" type="hidden">
                                     <input value="" type="hidden" name="dsal_sol_salida" id="dsal_sol_salida" class="form-control">
                                     <label for="dsal_pais" class="form-label"><i class="bi bi-globe-americas"></i>Seleccione el país a viajar:</label>
-                                    <select name="dsal_pais []" id="dsal_pais" class="form-select">
+                                    <select name="dsal_pais[]" id="dsal_pais" class="form-select">
                                         <option value="">Seleccione el país</option>
                                         <?php foreach ($paises as $pais) { ?>
                                             <option value="<?= $pais['pai_codigo'] ?>">
@@ -141,9 +151,9 @@
                                         <?php } ?>
                                     </select>
                                 </div>
-                                <div class="col-lg-4 mb-3">
+                                <div class="col-lg-4 mb-4">
                                     <label for="dsal_transporte" class="form-label"><i class="bi bi-airplane-fill"></i>Seleccione el transporte:</label>
-                                    <select name="dsal_transporte []" id="dsal_transporte" class="form-select">
+                                    <select name="dsal_transporte[]" id="dsal_transporte" class="form-select">
                                         <option value="">Seleccione el transporte</option>
                                         <?php foreach ($transportes as $transporte) { ?>
                                             <option value="<?= $transporte['transporte_id'] ?>">
@@ -155,23 +165,15 @@
 
                                 <div class="col-lg-4 mb-3">
                                     <label for="dsal_ciudad"><i class="bi bi-file-image-fill"></i>Ciudad del país a visitar</label>
-                                    <input value="" id="dsal_ciudad" name="dsal_ciudad []" class="form-control" type="text">
+                                    <input value="" id="dsal_ciudad" name="dsal_ciudad[]" class="form-control" type="text">
                                 </div>
                             </div>
                         </div>
                     </div>
 
+
                     <div class="row justify-content-around mb-4">
-                        <div class="col-lg-3">
-                            <div class="row">
-                                <div class="col-lg-12 mb-3">
-                                    <label for=""><i class="bi bi-luggage-fill"></i>Mas destinos</label>
-                                </div>
-                                <div class="col-lg-8">
-                                    <button class="btn btn-outline-success w-100" id="addPais">+</button>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="col-lg-9">
                             <div class="row">
                                 <div class="col-lg-12 mb-3">
@@ -200,8 +202,8 @@
 </div>
 
 <script>
-        var paisesData = <?php echo json_encode($paises); ?>;
-        var transporteData = <?php echo json_encode($transportes); ?>;
-    </script>
+    var paisesData = <?php echo json_encode($paises); ?>;
+    var transporteData = <?php echo json_encode($transportes); ?>;
+</script>
 
 <script src="./build/js/salidapaises/index.js"></script>

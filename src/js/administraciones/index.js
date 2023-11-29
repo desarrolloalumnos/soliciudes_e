@@ -1186,8 +1186,7 @@ const modificarPdfCas = async (evento) => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.text();
-        console.log(data)
-        return
+      
 
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
