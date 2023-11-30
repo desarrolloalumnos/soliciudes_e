@@ -109,8 +109,8 @@ const guardar = async (evento) => {
     try {
         evento.preventDefault();
         const respuesta = await fetch(url, config);
-        const data = await respuesta.text();
-        // console.log(data);
+        const data = await respuesta.json();
+       
         // return
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
@@ -136,7 +136,7 @@ const guardar = async (evento) => {
         console.log(error);
     }
 
-    location.reload();
+    // location.reload();
 
 };
 
@@ -251,6 +251,7 @@ try {
 async function colocarCatalogo2(datos) {
 
 const dato = datos[0]
+console.log(dato[0]);
 catalogo2.value = dato.per_catalogo
 arma2.value = dato.per_arma;
 nombre2.value = dato.nombres;

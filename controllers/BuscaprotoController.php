@@ -90,6 +90,7 @@ class BuscaprotoController
         $id = $_GET['id'];
         $sql = " SELECT
         ste_id,
+        sol_id,
         pco_id,
         pco_autorizacion,
         ste_cat,

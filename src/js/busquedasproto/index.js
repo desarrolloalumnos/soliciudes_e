@@ -351,7 +351,7 @@ const buscarModal = async (e) => {
             let fecha3SinFormato = dato.pco_fechafin
             let fechaFin = formatearFecha(fecha3SinFormato)
 
-            
+            formulario2.sol_id.value=dato.sol_id
             formulario2.ste_id.value = dato.ste_id
             formulario2.ste_cat2.value = dato.ste_cat
             formulario2.nombre.value = dato.nombre
@@ -404,7 +404,9 @@ const modificar = async (evento) => {
     }
     
     const body = new FormData(formulario2)
-   
+    for(var pair of body.entries()){
+        console.log(pair[0], pair[1]);
+    }
     const url = '/soliciudes_e/API/busquedasproto/modificar';
     const headers = new Headers();
     headers.append("X-Requested-With", "fetch");
@@ -450,6 +452,7 @@ const modificar = async (evento) => {
     } catch (error) {
         console.log(error);
     }
+    location.reload()
 }
 
 const traePdf = (e) => {    

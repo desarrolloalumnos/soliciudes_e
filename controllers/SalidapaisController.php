@@ -113,9 +113,9 @@ class SalidapaisController
         try {
          
             $identificador = static::generaIdentificador();  
-            $paises_array = $_POST['dsal_pais_'];
-            $transportes_array = $_POST['dsal_transporte_'];
-            $ciudades_array = $_POST['dsal_ciudad_'];
+            $paises_array = $_POST['dsal_pais'];
+            $transportes_array = $_POST['dsal_transporte'];
+            $ciudades_array = $_POST['dsal_ciudad'];
             
             $num_elementos = count($paises_array);
 

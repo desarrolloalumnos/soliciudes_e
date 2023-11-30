@@ -266,6 +266,9 @@ const guardar = async (evento) => {
     const body = new FormData(formulario);
     body.append('ste_fecha',formulario.ste_fecha.value)
     body.append('aut_fecha',formulario.aut_fecha.value)
+    for(var pair of body.entries()){
+        console.log(pair[0], pair[1]);
+    }
     const url = '/soliciudes_e/API/salidapaises/guardar';
     const config = {
         method: 'POST',
@@ -276,7 +279,8 @@ const guardar = async (evento) => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-      
+
+   
         const { codigo, mensaje, detalle } = data;
         let icon = 'info';
         switch (codigo) {
@@ -301,7 +305,7 @@ const guardar = async (evento) => {
             console.log(error);
         }
         
-        location.reload();
+        // location.reload();
 };
 
 const agregaDiv = async(evento) =>{
