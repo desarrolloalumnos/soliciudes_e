@@ -206,12 +206,11 @@
     </div>
 </div>
 
-<div class="row justify-content-center">
-    <div class="col table-responsive" id='dataTabla' style="max-width: 80%; padding: 10px;">
-        <table id="tablaMdn" class="table table-bordered table-hover">
+    <div class="col table-responsive" id='dataTabla' style="max-width: 100%; padding: 10px;">
+        <table id="tablaMdn" class="table table-bordered table-hover" style="width: 100%;">
         </table>
     </div>
-</div>
+
 
 <div class="modal fade modal-xl" id="modalMdnSalidaP" tabindroleex="-1" role="dialog" aria-labelledby="modalMdnSalidaPLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -119,7 +119,7 @@
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodac"><i class="bi bi-calendar-date-fill"></i>Fecha de la boda Civil</label>
-                            <input  value="" id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="">
+                            <input  value="" id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodar"><i class="bi bi-bank"></i>Lugar de la boda Religiosa</label>

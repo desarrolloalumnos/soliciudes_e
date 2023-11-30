@@ -325,7 +325,7 @@ const datatable = new Datatable('#tablaAdministracion', {
                                     DATOS
                                     </button>
                                     <button class="btn btn-outline-warning" data-id="${data}"data-sol_tipo='${row.sol_tipo}' data-pdf_id='${row["pdf_id"]}' data-ste_cat='${row["ste_cat"]}'data-pdf_solicitud='${row["pdf_solicitud"]}'>PDF</button>
-                                    <button id="verPdf" class="btn btn-success"data-sol_id='${row.sol_id}'>Boleta</button> 
+                                    <button id="verPdfCorreccion" class="btn btn-success"data-sol_id='${row.sol_id}'>Boleta</button> 
                                     </div>`;
                     } else if (data === '8') {
                         return `<button  class="btn btn-warning" >CORREGIDO</button>`;
@@ -350,20 +350,20 @@ const datatable = new Datatable('#tablaAdministracion', {
             orderable: false,
             render: function (data, type, row) {
                 if (type === 'display') {
-                    if (row.sol_situacion !== '1'&&row.sol_situacion !== '5'&&row.sol_situacion !== '6') {
+                    if (row.sol_situacion !== '1'&&row.sol_situacion !== '5'&&row.sol_situacion !== '6'&&row.sol_situacion !== '7') {
                         return `
                         <div class="btn-group" style="transform: scale(0.85, 0.85);">
                             <button class="btn btn-secondary">Enviado</button>                                                 
                         </div>
                         `;
                     }else if (row.sol_situacion === '5') {
-                        return `<button id="autorizacion" class="btn btn-outline-primary" data-sol_id='${row.sol_id}'data-sol_tipo='${row.sol_tipo}'>Autorizado</button>`
+                        return `<button id="autorizacion" class="btn btn-outline-primary" data-sol_id='${row.sol_id}' data-sol_tipo='${row.sol_tipo}'>Autorizado</button>`
                     }else if (row.sol_situacion === '6') {
                         return `<button id="verRechazo" class="btn btn-secondary" data-sol_id='${row.sol_id}'>Ver Rechazo</button>`
                     }else if (row.sol_situacion === '1'){
-                        return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Enviar</button>`;
+                        return `<button class="btn btn-primary" data-id='${row.sol_id}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Enviar</button>`;
                     }else if (row.sol_situacion === '7'){
-                        return `<button id="correccion"class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Enviar Correccion</button>`;
+                        return `<button id="correccion" class="btn btn-primary" data-id='${row.sol_id}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Enviar Correccion</button>`;
                     }
                 }
                 return data;
@@ -1557,13 +1557,16 @@ const buscar = async () => {
 const enviar = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
+    console.log(id);
 
     if (await confirmacion('warning', 'Desea enviar esta solicitud?')) {
         const body = new FormData()
         body.append('sol_id', id)
+        
+        for(var pair of body.entries()){
+            console.log(pair[0], pair[1]);
+        }
         const url = '/soliciudes_e/API/administraciones/enviarDga';
-        const headers = new Headers();
-        headers.append("X-Requested-With", "fetch");
         const config = {
             method: 'POST',
             body
@@ -1644,7 +1647,7 @@ const corregir = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
 
-    if (await confirmacion('warning', 'Desea corregir este registro?')) {
+       if (await confirmacion('warning', 'Desea corregir este registro?')) {
 
         const body = new FormData()
         body.append('sol_id', id)
@@ -1749,7 +1752,7 @@ const VerAutorizacion = async (e) => {
             console.log(error);
         }
     } else if (tipoSol === '3') {
-        const url = `/soliciudes_e/pdf?sol_id=${id}`;
+        const url = `/soliciudes_e/pdf/salida?sol_id=${id}`;
 
         try {
             const respuesta = await fetch(url, {
@@ -1774,7 +1777,7 @@ const VerAutorizacion = async (e) => {
 
     } else if (tipoSol === '4') {
       
-        const url = `/soliciudes_e/pdf?sol_id=${id}`;
+        const url = `/soliciudes_e/pdf/proto?sol_id=${id}`;
 
         try {
             const respuesta = await fetch(url, {
@@ -1830,6 +1833,35 @@ const buscarPdfRechazo= async (e) => {
         console.log(error);
     }
 }
+const buscarPdfCorreccion = async (e) => {
+    e.preventDefault();
+
+    let boton = e.target
+    let solicitud = boton.dataset.sol_id
+
+
+    const url = `/soliciudes_e/pdf/buscarCorreccion?sol_id=${solicitud}`;
+
+   
+    try {
+        const respuesta = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'fetch'
+            }
+        });   
+
+        if (respuesta.ok) {
+            const blob = await respuesta.blob();
+            const urlBlob = window.URL.createObjectURL(blob);
+            window.open(urlBlob, '_blank');
+        } else {
+            console.log('Error en la respuesta del servidor');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 buscar();
@@ -1852,4 +1884,5 @@ addPdf.addEventListener('click', modificarPdfCas);
 datatable.on('click', '#verPdf', buscarPdf);
 datatable.on('click', '#correccion', corregir)
 datatable.on('click', '#autorizacion', VerAutorizacion)
+datatable.on('click', '#verPdfCorreccion', buscarPdfCorreccion)
 btnCalendario.addEventListener('click', buscarCalender);

@@ -211,12 +211,12 @@
 
 
 
-<div class="row justify-content-center">
-    <div id="dataTabla" class="col table-responsive" style="max-width: 80%; padding: 10px;">
-        <table id="tablaAdministracion" class="table table-bordered table-hover">
+
+    <div id="dataTabla" class="col table-responsive" style="max-width: 100%; padding: 10px;">
+        <table id="tablaAdministracion" class="table table-bordered table-hover" style="width: 100%;">
         </table>
     </div>
-</div>
+
 
 
 <div class="modal fade modal-xl" id="modalSalCorrecciones" tabindroleex="-1" role="dialog"

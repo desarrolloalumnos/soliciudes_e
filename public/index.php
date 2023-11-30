@@ -208,9 +208,9 @@ $router->get('/pdf/pdfMatrimonio', [ReporteController::class,'pdfMatrimonio']);
 $router->get('/pdf/pdfLicenciaTemporal', [ReporteController::class,'pdfLicenciaTemporal']);
 
 
-$router->get('/pdf', [PdfProtocoloController::class,'pdf']);
+$router->get('/pdf/proto', [PdfProtocoloController::class,'pdf']);
 
-$router->get('/pdf', [PdfSalidapaisController::class,'pdf']);
+$router->get('/pdf/salida', [PdfSalidapaisController::class,'pdf']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

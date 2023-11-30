@@ -337,6 +337,7 @@ class BuscasController
     public static function corregirApi()
     {
         try {
+        
             $solicitud_id = $_POST['sol_id'];
             $solicitud = Solicitud::find($solicitud_id);
             $solicitud->sol_situacion = 8;

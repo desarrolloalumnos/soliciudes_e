@@ -276,12 +276,12 @@ const datatable = new Datatable('#tablaDepersonal', {
                 </div>
             `;
                     } else if (data === '6') {
-                        return `<button class="btn btn-danger">RECHAZADA</button>`;
+                        return `<button id="#" class="btn btn-danger">RECHAZADA</button>`;
                     } else if (data === '7') {
                         return `<button class="btn btn-warning">CORRECCIONES</button>`;
                     } else if (data === '8') {
                         return `
-                     <span style="color: red;">CORREGIDO</span>
+                     <span style="color: red;">DPEMDN CORREGIDO</span>
                     <div class="progress">
                     <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
                     </div>
@@ -301,7 +301,7 @@ const datatable = new Datatable('#tablaDepersonal', {
         orderable: false,
         render: function (data, type, row) {
             if (type === 'display') {
-                if (row.sol_situacion !== '3' && row.sol_situacion !== '6') {
+                if (row.sol_situacion !== '3' && row.sol_situacion !== '6' && row.sol_situacion !== '8') {
                     return `
                     <div class="btn-group" style="transform: scale(0.85, 0.85);">
                     <button class="btn btn-secondary">Enviado</button>
@@ -315,7 +315,9 @@ const datatable = new Datatable('#tablaDepersonal', {
                     return `<button id="verRechazo" class="btn btn-secondary" data-sol_id='${row.sol_id}'>Ver Rechazo</button>`
                 }else if (row.sol_situacion === '3'){
                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
-                }
+                } else if (row.sol_situacion === '8'){
+                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                 }
             }
             return data;
         }
