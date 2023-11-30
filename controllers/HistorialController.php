@@ -24,35 +24,37 @@ class HistorialController
 
 
 
-        $sql = "  SELECT s.sol_id,
-        (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) 
-        FROM mper 
-        INNER JOIN grados ON mper.per_grado = grados.gra_codigo 
-        INNER JOIN armas ON mper.per_arma = armas.arm_codigo
-        WHERE per_catalogo = ste.ste_cat) ||' '||(SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) 
-        FROM mper 
-        WHERE per_catalogo = ste.ste_cat) AS solicitante,
+        $sql = " SELECT 
+        s.sol_id,
+        TRIM(grados_solicitante.gra_desc_md) || ' DE ' || TRIM(armas_solicitante.arm_desc_md) ||
+        ' ' || TRIM(per_solicitante.per_nom1) || ' ' || TRIM(per_solicitante.per_nom2) || ' ' ||
+        TRIM(per_solicitante.per_ape1) || ' ' || TRIM(per_solicitante.per_ape2) AS solicitante,
         ste.ste_telefono,
         t.tse_descripcion AS tipo,
         m.mot_descripcion AS motivo,
-        (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) 
-        FROM mper 
-        INNER JOIN grados ON mper.per_grado = grados.gra_codigo 
-        INNER JOIN armas ON mper.per_arma = armas.arm_codigo
-        WHERE per_catalogo = aut.aut_cat) ||' '||(SELECT TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) 
-        FROM mper 
-        WHERE per_catalogo = aut.aut_cat) AS autorizador,
-        s.sol_situacion    
-    FROM se_solicitudes s
-    INNER JOIN se_tipo_solicitud t
-    ON s.sol_tipo = t.tse_id
-    INNER JOIN se_motivos m
-    ON s.sol_motivo = m.mot_id
-    INNER JOIN se_solicitante ste
-    ON s.sol_solicitante = ste.ste_id
-    INNER JOIN se_autorizacion aut
-    ON aut.aut_solicitud = s.sol_id
-    WHERE s.sol_situacion IN (5,6) AND aut.aut_situacion = 5";
+        TRIM(grados_autorizador.gra_desc_md) || ' DE ' || TRIM(armas_autorizador.arm_desc_md) ||
+        ' ' || TRIM(per_autorizador.per_nom1) || ' ' || TRIM(per_autorizador.per_nom2) || ' ' ||
+        TRIM(per_autorizador.per_ape1) || ' ' || TRIM(per_autorizador.per_ape2) AS autorizador,
+        s.sol_situacion
+    FROM
+        se_solicitudes s
+    INNER JOIN se_tipo_solicitud t ON s.sol_tipo = t.tse_id
+    INNER JOIN se_motivos m ON s.sol_motivo = m.mot_id
+    INNER JOIN se_solicitante ste ON s.sol_solicitante = ste.ste_id
+    INNER JOIN se_autorizacion aut ON aut.aut_solicitud = s.sol_id
+    INNER JOIN mper per_solicitante ON per_solicitante.per_catalogo = ste.ste_cat
+    INNER JOIN grados grados_solicitante ON per_solicitante.per_grado = grados_solicitante.gra_codigo
+    INNER JOIN armas armas_solicitante ON per_solicitante.per_arma = armas_solicitante.arm_codigo
+    INNER  JOIN mper per_autorizador ON per_autorizador.per_catalogo = aut.aut_cat
+    INNER JOIN grados grados_autorizador ON per_autorizador.per_grado = grados_autorizador.gra_codigo
+    INNER  JOIN armas armas_autorizador ON per_autorizador.per_arma = armas_autorizador.arm_codigo
+    WHERE
+        s.sol_situacion IN (5,6) and aut.aut_situacion IN (5,6)";
+
+
+$sql.=" AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT";
+$sql .= " ORDER BY ste_fecha DESC ";
+
 
         try {
             $resultado = Solicitud::fetchArray($sql);

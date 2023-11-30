@@ -263,7 +263,18 @@ const verificarDPI = (e) => {
 }
 const guardar = async (evento) => {
     evento.preventDefault();
+    let fecha_inicio = formulario.mat_fecha_lic_ini.value
+    let fecha_fin= formulario.mat_fecha_lic_fin.value
     if (!validarFormularioMatrimonio(formulario)) {
+        return;
+    }
+
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
         return;
     }
     const fileInput = document.getElementById('pdf_ruta');

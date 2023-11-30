@@ -24,7 +24,7 @@ const addPdf = document.getElementById('addPdf');
 const parejam_cat = document.getElementById('parejam_cat');
 const divMilitar = document.getElementById('parejaMilitar');
 const divCivil = document.getElementById('parejaCivil');
-const fileInputs = document.querySelectorAll('input[style="file"]');
+
 
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';
@@ -329,9 +329,7 @@ const modificar = async (evento) => {
         });
         return;
     }
-
-
-
+    
     const body = new FormData(formulario2)
     body.append('ste_cat', catalogo)
     body.append('ste_fecha', fecha)
@@ -380,26 +378,28 @@ const modificar = async (evento) => {
 const modificarPdf = async (evento) => {
 
     evento.preventDefault();
-    if (!file) {
+    const fileInput = document.getElementById('pdf_ruta');
+
+    if (!fileInput.files || !fileInput.files[0]) {
         Toast.fire({
             icon: 'info',
             text: 'Por favor, selecciona un archivo PDF.'
-        })
+        });
         return;
     }
-
+    
+    const file = fileInput.files[0];
+    
     const allowedExtensions = /(\.pdf)$/i;
-
+    
     if (!allowedExtensions.test(file.name)) {
         Toast.fire({
             icon: 'info',
             text: 'Por favor, selecciona un archivo PDF válido.'
-        })
+        });
         fileInput.value = ''; 
         return;
     }
-
-
     const body = new FormData(pdf);
     body.append('ste_cat2', ste_id)
     const url = '/soliciudes_e/API/busquedasc/modificarPdf';

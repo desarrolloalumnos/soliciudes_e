@@ -230,6 +230,18 @@ const guardar = async (evento) => {
     if (!validarFormularioLicencia(formulario)) {
         return;
     }
+    let fecha_inicio = formulario.lit_fecha1.value
+    let fecha_fin= formulario.lit_fecha2.value
+
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
+
     const fileInput = document.getElementById('pdf_ruta');
     const file = fileInput.files[0];
     if (!file) {

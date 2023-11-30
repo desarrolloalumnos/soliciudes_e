@@ -848,7 +848,7 @@
                             <div class="col-lg-4">
                                 <input value="" id="aut_solicitud2" name="aut_solicitud2" class="form-control"
                                     type="hidden">
-                                <input value="" id="sol_id" name="sol_id" class="form-control" type="text">
+                                <input value="" id="sol_id" name="sol_id" class="form-control" type="hidden">
                                 <label for="aut_cat2"><i class="bi bi-universal-access">Catalogo</i></label>
                                 <input value="" id="aut_cat2" name="aut_cat2" class="form-control" type="number"
                                     placeholder="numero de catalogo">
@@ -890,23 +890,19 @@
                             <div class="col-lg-4">
 
                                 <label for="aut_catalogo"><i class="bi bi-universal-access">Catalogo</i></label>
-                                <input value="" id="aut_catalogo" name="aut_catalogo" class="form-control" type="number"
-                                    placeholder="numero de catalogo">
+                                <input value="" id="aut_catalogo" name="aut_catalogo" class="form-control" type="number" placeholder="numero de catalogo">
                                 <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                                 <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
                                 <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
                                 <input value="" id="aut_comando" name="aut_comando" class="form-control" type="hidden">
                             </div>
                             <div class="col-lg-4">
-                                <label for="nombre_autorizador"><i class="bi bi-clipboard-data-fill"></i>Nombres y
-                                    Apellidos</label>
-                                <input value="" id="nombre_autorizador" name="nombre_autorizador" class="form-control"
-                                    type="text">
+                                <label for="nombre_autorizador"><i class="bi bi-clipboard-data-fill"></i>Nombres y Apellidos</label>
+                                <input value="" id="nombre_autorizador" name="nombre_autorizador" class="form-control"type="text">
                             </div>
                             <div class="col-lg-4">
                                 <label for="aut_fecha"><i class="bi bi-calendar-date-fill"></i>Fecha</label>
-                                <input value="<?php echo date('Y/m/d H:i') ?>" id="aut_fecha" name="aut_fecha"
-                                    class="form-control" type="datetime" disabled>
+                                <input value="<?php echo date('Y/m/d H:i') ?>" id="aut_fecha" name="aut_fecha" class="form-control" type="datetime" disabled>
                             </div>
                         </div>
                         <div class="row justify-content-around mb-4">
@@ -917,8 +913,7 @@
                         </div>
                         <div class="row justify-content-center mt-12 mt-4 mb-4">
                             <div class="col-lg-2">
-                                <button id="guardarCorreccion" name="guardarCorreccion"
-                                    class="btn btn-primary">Guardar</button>
+                                <button id="guardarCorreccion" name="guardarCorreccion" class="btn btn-primary">Guardar</button>
                             </div>
                         </div>
                     </div>

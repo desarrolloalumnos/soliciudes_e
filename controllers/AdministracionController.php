@@ -65,12 +65,13 @@ class AdministracionController
                     (select dep_desc_lg from mper, morg, mdep where per_plaza = org_plaza and org_dependencia = dep_llave and per_catalogo = ste.ste_cat) as dependencia_solicitante,
                     s.sol_situacion    
                 FROM se_solicitudes s
+                INNER JOIN se_autorizacion ON aut_solicitud = sol_id
                 INNER JOIN se_tipo_solicitud t  ON s.sol_tipo = t.tse_id
                 INNER JOIN se_motivos m  ON s.sol_motivo = m.mot_id
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
                 INNER JOIN se_pdf ON pdf_solicitud = s.sol_id
                 WHERE s.sol_situacion >= 1 
-                AND ste_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user)";
+                AND  aut_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user)";
                 
 
                 if ($fecha != '') {

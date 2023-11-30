@@ -71,6 +71,16 @@ const guardar = async (evento) => {
     if (!validarFormularioProtocolo(formulario)) {
         return;
     }
+    let fecha_inicio = formulario.pco_fechainicio.value
+    let fecha_fin= formulario.pco_fechafin.value
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
     const fileInput = document.getElementById('pdf_ruta');
     const file = fileInput.files[0];
     if (!file) {

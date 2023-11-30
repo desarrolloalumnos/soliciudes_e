@@ -234,6 +234,16 @@ const guardar = async (evento) => {
     if (!validarFormularioSalidaPaises(formulario)) {
         return;
     }
+    let fecha_inicio = formulario.sal_salida.value
+    let fecha_fin= formulario.sal_ingreso.value
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
     let paisSeleccionado = formulario.dsal_pais.value;
     
     if (paisSeleccionado === 596 || paisSeleccionado === 504 || paisSeleccionado === 55 || paisSeleccionado === 506 || paisSeleccionado === 507) {
@@ -266,9 +276,6 @@ const guardar = async (evento) => {
     const body = new FormData(formulario);
     body.append('ste_fecha',formulario.ste_fecha.value)
     body.append('aut_fecha',formulario.aut_fecha.value)
-    for(var pair of body.entries()){
-        console.log(pair[0], pair[1]);
-    }
     const url = '/soliciudes_e/API/salidapaises/guardar';
     const config = {
         method: 'POST',
