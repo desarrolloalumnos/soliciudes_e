@@ -71,7 +71,7 @@
                     <div class="col-lg-4">
                         <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
                         <label for="aut_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
-                        <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catálogo" required>
+                        <input value="<?php echo $aut_cat; ?>" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catálogo" required>
                         <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                         <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
                         <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
@@ -116,11 +116,11 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
                             <label for="pco_fechainicio"><i class="bi bi-calendar-date-fill"></i>Fecha de inicio</label>
-                            <input value="<?php echo date('Y/m/d H:i')?>" id="pco_fechainicio" name="pco_fechainicio" class="form-control" type="datetime-local" required>
+                            <input value="" id="pco_fechainicio" name="pco_fechainicio" class="form-control" type="datetime-local" required>
                         </div>
                         <div class="col-lg-6">
                             <label for="pco_fechafin"><i class="bi bi-calendar-date-fill"></i>Fecha de finalización</label>
-                            <input value="<?php echo date('Y/m/d H:i')?>" id="pco_fechafin" name="pco_fechafin" class="form-control" type="datetime-local" required>
+                            <input value="" id="pco_fechafin" name="pco_fechafin" class="form-control" type="datetime-local" required>
                         </div>
                     </div>
                     <div class="row justify-content-around mb-4">

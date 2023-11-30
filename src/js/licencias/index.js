@@ -3,6 +3,13 @@ import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion, formatoTiempo } from "../funciones";
+const formulario = document.getElementById('formularioLicencias');
+const btnGuardar = document.getElementById('btnGuardar');
+
+formulario.tiempo_servicio.disabled = true;
+formulario.nombre.disabled = true;
+formulario.nombre2.disabled = true;
+btnGuardar.parentElement.style.display = 'block';
 
 const mensajesPersonalizados = {
     ste_cat: 'Ingrese el número de catálogo del solicitante',
@@ -39,13 +46,6 @@ const validarFormularioLicencia = (formulario) => {
     return true;
 };
 
-const formulario = document.getElementById('formularioLicencias');
-const btnGuardar = document.getElementById('btnGuardar');
-
-formulario.tiempo_servicio.disabled = true;
-formulario.nombre.disabled = true;
-formulario.nombre2.disabled = true;
-btnGuardar.parentElement.style.display = 'block';
 
 
 formulario.ste_cat.addEventListener('change', async (e) => {
@@ -167,6 +167,7 @@ formulario.aut_cat.addEventListener('change', async (e) => {
 });
 
 
+
 const buscarCatalogo2 = async () => {
     let validarCatalogo = formulario.ste_cat.value
     let validarCatalogo2 = formulario.aut_cat.value;
@@ -218,10 +219,25 @@ const buscarCatalogo2 = async () => {
 
 }
 
+document.addEventListener('DOMContentLoaded', async () => {
+    const autorizador = await buscarCatalogo2();
+    colocarCatalogo2(autorizador);
+});
+
 
 const guardar = async (evento) => {
     evento.preventDefault();
     if (!validarFormularioLicencia(formulario)) {
+        return;
+    }
+    const fileInput = document.getElementById('pdf_ruta');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
+        })
         return;
     }
     let tiempo = formulario.tiempo_servicio.value

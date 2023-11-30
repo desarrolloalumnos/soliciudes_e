@@ -29,7 +29,7 @@ const iframe = document.getElementById('pdfSalida');
 const divPdf = document.getElementById('pdf');
 const divProtocolo = document.getElementById('Protocolo');
 const addPdf = document.getElementById('addPdf')
-
+const fileInputs = document.querySelectorAll('input[style="file"]');
 
 verCalendario.style.display = 'none'
 verTabla.style.display = 'none'
@@ -292,7 +292,6 @@ const buscar = async () => {
     formulario.reset();
 }
 
-
 const buscarModal = async (e) => {
     const boton = e.target;
     let ids = boton.dataset.id;
@@ -456,7 +455,19 @@ const modificarPdf = async (evento) => {
 
     evento.preventDefault();
 
-
+    for (var i = 0; i < fileInputs.length; i++) {
+        
+        fileInputs[i].addEventListener('change', function() {
+          const file = this.files[0];
+          const allowedExtensions = /(\.pdf)$/i;
+      
+          if (!allowedExtensions.exec(file.name)) {
+            alert('Por favor, selecciona un archivo PDF válido.');
+            this.value = '';
+            return false;
+          }
+        });
+      }
     const body = new FormData(formulario2);
     body.append('ste_catalogo', ste_id)
     const url = '/soliciudes_e/API/busquedasproto/modificarPdf';

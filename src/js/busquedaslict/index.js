@@ -18,8 +18,7 @@ const btnBuscar = document.getElementById('btnBuscar');
 const btnModficarDatos = document.getElementById('modificar')
 const divPdf = document.getElementById('licencias');
 const divLicencias = document.getElementById('pdf');
-const addPdf = document.getElementById('addPdf')
-
+const addPdf = document.getElementById('addPdf');
 
 formularioModal.ste_cat.disabled = true;
 formularioModal.nombre.disabled = true;
@@ -320,7 +319,27 @@ const traePdf = (e) => {
 const modificarPdf = async (evento) => {
 
     evento.preventDefault();
+    const fileInput = document.getElementById('pdf_ruta');
+    const file = fileInput.files[0];
 
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
+        })
+        return;
+    }
+
+    const allowedExtensions = /(\.pdf)$/i;
+
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        })
+        fileInput.value = ''; // Limpiar el valor del input
+        return;
+    }
 
     const body = new FormData(formularioModal);
     body.append('ste_catalogo', ste_id)
