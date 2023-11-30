@@ -71,7 +71,8 @@ const guardar = async (evento) => {
     if (!validarFormularioProtocolo(formulario)) {
         return;
     }
-
+    const fileInput = document.getElementById('pdf_ruta');
+    const file = fileInput.files[0];
     if (!file) {
         Toast.fire({
             icon: 'info',
