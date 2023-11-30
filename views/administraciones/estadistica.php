@@ -61,6 +61,14 @@
             border-radius: 10px;
             box-sizing: border-box;
             margin-right: 30px;
+            position: relative;
+            z-index: 1;
+
+        }
+        .card:hover {
+            transform: scale(1.3);
+            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.5);
+            z-index: 2;
         }
 
         .card:last-child {
@@ -73,10 +81,6 @@
             }
         }
 
-        .card:hover {
-            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.5);
-            transform: translateY(-10px);
-        }
 
         .card h4 {
             font-size: 24px;
@@ -86,6 +90,7 @@
         }
     </style>
 </head>
+
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -119,30 +124,32 @@
         <h1 class="reporte-titulo">ESTADISTICAS</h1>
         <div class="row">
             <div class="card">
-                <h4>Paises mas Visitados</h4>
+                <h2>Paises mas Visitados</h2>
                 <canvas id="chartTopPaises"></canvas>
             </div>
             <div class="card">
-                <h4>Oficiales con mas solicitudes</h4>
+                <h2>Oficiales con mas solicitudes</h2>
                 <canvas id="chartTop5"></canvas>
             </div>
             <div class="card">
-                <h4>Concurrencia</h4>
+                <h2>Concurrencia</h2>
                 <canvas id="chartConcurrencia"></canvas>
             </div>
             <div class="card">
-                <h4>Tipos de Solicitudes</h4>
+                <h2>Tipos de Solicitudes</h2>
                 <canvas id="chartMotivos"></canvas>
             </div>
             <div class="card">
-                <h4>Estados de Las Solicitudes</h4>
+                <h2>Estados de Las Solicitudes</h2>
                 <canvas id="chartEstados"></canvas>
             </div>
 
         </div>
     </div>
 
+
     <script src="<?= asset('./build/js/administraciones/estadistica.js') ?>"></script>
+
 
 </body>
 

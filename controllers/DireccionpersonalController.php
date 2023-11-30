@@ -27,6 +27,8 @@ class DireccionpersonalController
         ]);
     }
 
+    
+
     public static function mdn(Router $router)
     {
         $motivos = static::motivos();

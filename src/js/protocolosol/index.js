@@ -72,14 +72,22 @@ const guardar = async (evento) => {
         return;
     }
 
-    const fileInput = document.getElementById('pdf_ruta');
-    const file = fileInput.files[0];
-
     if (!file) {
         Toast.fire({
             icon: 'info',
             text: 'Por favor, selecciona un archivo PDF.'
         })
+        return;
+    }
+
+    const allowedExtensions = /(\.pdf)$/i;
+
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        })
+        fileInput.value = ''; 
         return;
     }
 

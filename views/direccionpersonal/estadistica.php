@@ -25,7 +25,25 @@
         .reporte-titulo:hover {
             color: #2079b0;
         }
+        .card {
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            margin-bottom: 30px;
+            flex: 0 0 calc(50% - 30px);
+            border-radius: 10px;
+            box-sizing: border-box;
+            margin-right: 30px;
+            position: relative;
+            z-index: 1;
 
+        }
+        .card:hover {
+            transform: scale(1.3);
+            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.5);
+            z-index: 2;
+        }
         #btnActualizar {
             background-color: #3498db;
             color: #fff;
@@ -73,12 +91,7 @@
             }
         }
 
-        .card:hover {
-            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.5);
-            transform: translateY(-10px);
-        }
-
-        .card h4 {
+            .card h4 {
             font-size: 24px;
             color: #333;
             text-align: center;

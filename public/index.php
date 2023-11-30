@@ -149,6 +149,8 @@ $router->get('/administraciones/direcciongeneral', [AdministracionController::cl
 $router->get('/administraciones/buscarCalender', [AdministracionController::class,'buscarCalender']);
 $router->get('/API/administraciones/buscarEventos', [AdministracionController::class,'buscarEventos']);
 
+
+
 $router->get('/direccionpersonal', [DireccionpersonalController::class,'index']);
 $router->get('/API/direccionpersonal/buscar', [DireccionpersonalController::class,'buscarApi']);
 $router->post('/API/direccionpersonal/enviarMdn', [DireccionpersonalController::class,'enviarMdnApi']);
@@ -158,6 +160,7 @@ $router->post('/API/direccionpersonal/guardarAutorizador', [DireccionpersonalCon
 $router->post('/API/direccionpersonal/guardarAutorizadorCorreccion', [DireccionpersonalController::class,'guardarCorreccionDirPerApi']);
 $router->post('/API/direccionpersonal/guardarAtorizacionMdn', [DireccionpersonalController::class,'guardarAtorizacionMdnApi']);
 $router->post('/API/direccionpersonal/guardaRechazarMdn', [DireccionpersonalController::class,'guardaRechazarMdnApi']);
+
 
 
 

@@ -100,7 +100,7 @@ class AdministracionController
             ]);
         }
     }
-
+    
     public static function buscarDireccionApi()
     {
         $catalogo = $_GET['catalogo'];
@@ -182,6 +182,7 @@ class AdministracionController
 
     public static function enviarDgaApi() {
         try {
+         
             $solicitud_id = $_POST['sol_id'];
             $solicitud = Solicitud::find($solicitud_id);
             $solicitud->sol_situacion = 2;
@@ -200,6 +201,7 @@ class AdministracionController
                 'codigo' => 0
             ]);
         }
+    
     }
 
     public static function transportes()

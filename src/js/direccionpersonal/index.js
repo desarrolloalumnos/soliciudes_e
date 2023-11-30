@@ -63,6 +63,7 @@ divCivil.style.display = 'none';
 formularioModal.ste_cat.disabled = true;
 formularioModal.nombre.disabled = true;
 
+
 let contador = 1;
 const datatable = new Datatable('#tablaDepersonal', {
     language: lenguaje,
@@ -203,6 +204,9 @@ const datatable = new Datatable('#tablaDepersonal', {
     ],
     
 });
+
+
+
 
 const buscar = async () => {
 

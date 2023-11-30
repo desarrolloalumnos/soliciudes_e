@@ -230,9 +230,6 @@ const guardar = async (evento) => {
     if (!validarFormularioLicencia(formulario)) {
         return;
     }
-    const fileInput = document.getElementById('pdf_ruta');
-    const file = fileInput.files[0];
-
     if (!file) {
         Toast.fire({
             icon: 'info',
@@ -240,6 +237,18 @@ const guardar = async (evento) => {
         })
         return;
     }
+
+    const allowedExtensions = /(\.pdf)$/i;
+
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        })
+        fileInput.value = ''; 
+        return;
+    }
+
     let tiempo = formulario.tiempo_servicio.value
     const body = new FormData(formulario);
     body.append('tiempo_servicio', tiempo)
