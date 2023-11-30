@@ -119,7 +119,7 @@ $router->get('/busquedasproto', [BuscaprotoController::class,'index']);
 $router->get('/API/busquedasproto/buscar', [BuscaprotoController::class,'buscarApi']);
 $router->get('/API/busquedasproto/buscarModal', [BuscaprotoController::class,'buscarModalApi']);
 $router->get('/API/busquedasproto/buscarCalender', [BuscaprotoController::class,'buscarCalender']);
-$router->get('/API/busquedasproto/buscarEventos', [BuscaprotoController::class,'buscarEventos']);
+$router->get('/API/busquedasproto/buscarEventos', [BuscaprotoController::class,'buscarModalEventoApi']);
 $router->post('/API/busquedasproto/modificar', [BuscaprotoController::class,'modificarApi']);
 $router->post('/API/busquedasproto/modificarPdf', [BuscaprotoController::class,'modificarPdfApi']);
 $router->post('/API/busquedasproto/eliminar', [BuscaprotoController::class,'eliminarApi']);

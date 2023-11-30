@@ -9,6 +9,7 @@ import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion,formatearFecha } from "../funciones";
 import { data } from "jquery";
 
+
 const modalProtocolo = new Modal(document.getElementById('modalProtocolo'), {
     backdrop: 'static',
     keyboard: false
@@ -26,6 +27,7 @@ const verTabla = document.getElementById('dataTabla');
 const verCalendario = document.getElementById('calendario');
 const btnCalendario = document.getElementById('btnCalendario');
 const iframe = document.getElementById('pdfSalida');
+const iframe2 = document.getElementById('pdfSalidaEvento')
 const divPdf = document.getElementById('pdf');
 const divProtocolo = document.getElementById('Protocolo');
 const addPdf = document.getElementById('addPdf')
@@ -37,59 +39,21 @@ formulario2.ste_cat2.disabled = true;
 formulario2.ste_fecha2.disabled = true;
 formulario2.nombre.disabled = true;
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendario');
-    var formularioEvento = document.getElementById('formularioEvento');
-    
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        // Otras configuraciones del calendario...
-
-        eventClick: function(info) {
-            // Acceder a los datos del evento
-            var titulo = info.event.title;
-            var fechaInicio = info.event.start.toISOString().slice(0, 16);
-            var fechaFin = info.event.end ? info.event.end.toISOString().slice(0, 16) : null;
-            var lugar = info.event.extendedProps.lugar;
-
-            // Llenar el formulario con los datos del evento
-            document.getElementById('pco_fechainicio').value = fechaInicio;
-            document.getElementById('pco_fechafin').value = fechaFin;
-
-            // Otros campos del formulario
-            // ...
-
-            // Mostrar el modal del formulario
-            var eventoModal = new bootstrap.Modal(document.getElementById('eventoModal'));
-            $('#eventoModal').modal('show');
-        }
-    });
-
-    calendar.render();
-});
-
 const abrirModalEvento = (evento) => {
-
-    
+    const id_solicitud = evento.extendedProps.sol_id;
+    console.log(id_solicitud);
+    buscarEvento(id_solicitud)
     $('#eventoModal').modal('show');
 };
 
 const guardarEvento = async () => {
-    // Lógica para guardar el evento en el servidor
-    // Puedes usar fetch u otra lógica para enviar los datos al servidor
-    // Aquí puedes obtener los valores del formularioEvento y enviarlos al servidor
-    // Puedes usar FormData para enviar el formulario completo
-
     const formData = new FormData(formularioEvento);
 
     try {
-        const response = await fetch('/ruta-para-guardar-evento', {
+        const response = await fetch('/soliciudes_e/API/busquedasproto/guardarEvento', {
             method: 'POST',
             body: formData,
         });
-
-        // Manejar la respuesta del servidor
-        // Puedes mostrar una notificación o realizar otras acciones según la respuesta
 
         if (response.ok) {
             // Éxito, puedes mostrar una notificación de éxito o cerrar el modal, etc.
@@ -126,7 +90,7 @@ const buscarCalender = async () => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-
+        console.log(data);
         if (data) {
             const calendar = new Calendar(calendarEl, {
                 plugins: [dayGridPlugin],
@@ -137,6 +101,7 @@ const buscarCalender = async () => {
                     center: 'title',
                     end: 'today,prev,next',
                     lugar: 'Ubicación del evento',
+                    id: 'sol_id'
                 },
                 events: data,
                 dayMaxEvents: 5,
@@ -164,7 +129,6 @@ const buscarCalender = async () => {
     }
     formulario.reset();
 };
-
 
 
 let contador = 1;
@@ -249,14 +213,14 @@ const datatable = new Datatable('#tablaProtocolo', {
 });
 
 const buscar = async () => {
-  
+
     verCalendario.style.display = 'none';
     verTabla.style.display = 'block';
     const catalogo = formulario.ste_cat.value
     const fecha = formulario.ste_fecha.value
 
-    
-    console.log(catalogo,fecha);
+
+    console.log(catalogo, fecha);
     const url = `/soliciudes_e/API/busquedasproto/buscar?catalogo=${catalogo}&fecha=${fecha}`;
     const config = {
         method: 'GET',
@@ -291,6 +255,64 @@ const buscar = async () => {
     }
     formulario.reset();
 }
+
+const buscarEvento = async (id_solicitud) => {
+    console.log(id_solicitud);
+   
+    const url = `/soliciudes_e/API/busquedasproto/buscarEventos?id=${id_solicitud}`;
+    const config = {
+        method: 'GET',
+    }
+
+    // try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        console.log(data);
+        if (data) {
+            Toast.fire({
+                title: 'Abriendo Solicitud',
+                icon: 'success'
+            })
+           
+
+            formularioEvento.ste_id.value = data[0].ste_id
+            formularioEvento.ste_cat.value = data[0].ste_cat
+            formularioEvento.nombre.value = data[0].nombre
+            formularioEvento.ste_fecha.value = data[0].ste_fecha
+            formularioEvento.ste_telefono.value = data[0].ste_telefono
+            formularioEvento.sol_motivo.value = data[0].sol_motivo
+            formularioEvento.sol_obs.value = data[0].sol_obs
+            formularioEvento.pco_autorizacion.value = data[0].pco_autorizacion
+            formularioEvento.pco_id.value = data[0].pco_id
+            formularioEvento.pco_cmbv.value = data[0].cmv_id
+            formularioEvento.pco_just.value = data[0].pco_just
+            formularioEvento.pco_fechainicio.value = data[0].pco_fechainicio
+            formularioEvento.pco_fechafin.value = data[0].pco_fechafin
+            formularioEvento.pco_dir.value = data[0].pco_dir
+            let pdfSinCorregir = data[0].pdf_ruta;
+            let pdfCorregido = pdfSinCorregir.substring(10);
+            
+            let verDoc = btoa(btoa(btoa(pdfCorregido)));
+            let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
+            iframe2.src = ver
+
+
+
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+
+            })
+        }
+
+    // } catch (error) {
+    //     console.log(error);
+    // }
+
+}
+
+
 
 
 const buscarModal = async (e) => {
