@@ -146,7 +146,7 @@ $router->get('/API/administraciones/buscarDireccion', [AdministracionController:
 $router->post('/API/administraciones/enviarEmdn', [AdministracionController::class,'enviarEmdnApi']);
 $router->post('/API/administraciones/enviarDga', [AdministracionController::class,'enviarDgaApi']);
 $router->get('/administraciones/direcciongeneral', [AdministracionController::class,'direccionGeneral']);
-$router->get('/administraciones/buscarCalender', [AdministracionController::class,'buscarCalender']);
+$router->get('/API/administraciones/buscarCalender', [AdministracionController::class,'buscarCalender']);
 $router->get('/API/administraciones/buscarEventos', [AdministracionController::class,'buscarEventos']);
 
 $router->get('/direccionpersonal', [DireccionpersonalController::class,'index']);

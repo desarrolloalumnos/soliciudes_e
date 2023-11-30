@@ -32,6 +32,7 @@ const modalPdfCorreccionCasamiento = new Modal(document.getElementById('modalPdf
 
 const formulario = document.getElementById('formularioAdministracion');
 const btnBuscar = document.getElementById('btnBuscar');
+const btnModificarEvento = document.getElementById('btnModificarEvento');
 const btnModificarPdf = document.getElementById('addPdf');
 const divInpust = document.getElementById('masInputs');
 const formulario2 = document.getElementById('formularioSalidapais');
@@ -46,13 +47,15 @@ const calendarEl = document.getElementById('calendar');
 const verTabla = document.getElementById('dataTabla');
 const verCalendario = document.getElementById('calendario');
 const btnCalendario = document.getElementById('btnCalendario');
-
+const iframe2 = document.getElementById('pdfSalidaEvento')
+const formularioEvento = document.getElementById('formularioEvento')
 
 //modal para modificar protocolo 
 const formularioProto = document.getElementById('formularioProto');
 const iframeProto = document.getElementById('pdfSalida');
 const divPdfProto = document.getElementById('pdf');
 const divProtocolo = document.getElementById('Protocolo');
+
 const btnModificarPdfProtocolo = document.getElementById('pdfProtocolo')
 const btnModificarProtocolo = document.getElementById('modificarProtocolo');
 //modal para modificar licencias temporales
@@ -81,21 +84,67 @@ verCalendario.style.display = 'none'
 verTabla.style.display = 'none'
 
 const abrirModalEvento = (evento) => {
-    const tipoevento = evento._def.title;
-    const fechainicio = evento._instance.range.start; 
-    const fechafin = evento._instance.range.end; 
-    const lugar = evento._def.extendedProps.lugar;
-
-    // Valores a los elementos del modal
-    document.getElementById('detalleCombo').innerText = tipoevento;
-    document.getElementById('detalleFechaInicio').innerText = fechainicio.toLocaleString(); 
-    document.getElementById('detalleFechaFin').innerText = fechafin.toLocaleString(); 
-    document.getElementById('detalleLugar').innerText = lugar;
-
-    // Abre el modal
+    const id_solicitud = evento.extendedProps.sol_id;
+    console.log(id_solicitud);
+    buscarEvento(id_solicitud)
     $('#eventoModal').modal('show');
 };
 
+const buscarEvento = async (id_solicitud) => {
+    console.log(id_solicitud);
+   
+    const url = `/soliciudes_e/API/busquedasproto/buscarEventos?id=${id_solicitud}`;
+    const config = {
+        method: 'GET',
+    }
+
+    // try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        console.log(data);
+        if (data) {
+            Toast.fire({
+                title: 'Abriendo Solicitud',
+                icon: 'success'
+            })
+           
+
+            formularioEvento.ste_id.value = data[0].ste_id
+            formularioEvento.ste_cat.value = data[0].ste_cat
+            formularioEvento.nombre.value = data[0].nombre
+            formularioEvento.ste_fecha.value = data[0].ste_fecha
+            formularioEvento.ste_telefono.value = data[0].ste_telefono
+            formularioEvento.sol_motivo.value = data[0].sol_motivo
+            formularioEvento.sol_obs.value = data[0].sol_obs
+            formularioEvento.pco_autorizacion.value = data[0].pco_autorizacion
+            formularioEvento.pco_id.value = data[0].pco_id
+            formularioEvento.pco_cmbv.value = data[0].cmv_id
+            formularioEvento.pco_just.value = data[0].pco_just
+            formularioEvento.pco_fechainicio.value = data[0].pco_fechainicio
+            formularioEvento.pco_fechafin.value = data[0].pco_fechafin
+            formularioEvento.pco_dir.value = data[0].pco_dir
+            let pdfSinCorregir = data[0].pdf_ruta;
+            let pdfCorregido = pdfSinCorregir.substring(10);
+            
+            let verDoc = btoa(btoa(btoa(pdfCorregido)));
+            let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
+            iframe2.src = ver
+
+
+
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+
+            })
+        }
+
+    // } catch (error) {
+    //     console.log(error);
+    // }
+
+}
 const buscarCalender = async () => {
     verCalendario.style.display = 'block';
     verTabla.style.display = 'none';
@@ -109,7 +158,7 @@ const buscarCalender = async () => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-
+        console.log(data);
         if (data) {
             const calendar = new Calendar(calendarEl, {
                 plugins: [dayGridPlugin],
@@ -120,6 +169,7 @@ const buscarCalender = async () => {
                     center: 'title',
                     end: 'today,prev,next',
                     lugar: 'Ubicación del evento',
+                    id: 'sol_id'
                 },
                 events: data,
                 dayMaxEvents: 5,
@@ -889,6 +939,73 @@ const buscarCatalogo = async () => {
         }
 
         return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+const modificarEvento = async (evento) => {
+
+    evento.preventDefault();
+
+    let fecha_inicio = formularioEvento.pco_fechainicio.value
+    let fecha_fin= formularioEvento.pco_fechafin.value
+
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
+    
+    const body = new FormData(formularioEvento)
+    body.append('ste_telefono',formularioEvento.ste_telefono.value)
+    // for(var pair of body.entries()){
+    //     console.log(pair[0], pair[1]);
+    // }
+    const url = '/soliciudes_e/API/busquedasproto/modificar';
+    const headers = new Headers();
+    headers.append("X-Requested-With", "fetch");
+
+    // for (var pair of body.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+    const config = {
+        method: 'POST',
+        body
+    }
+
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        // console.log(data)
+        // return
+
+        const { codigo, mensaje, detalle } = data;
+        let icon = 'info'
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                icon = 'success'
+                buscar();
+               
+                break;
+
+            case 0:
+                icon = 'error'
+                console.log(detalle)
+                break;
+
+            default:
+                break;
+        }
+
+        Toast.fire({
+            icon,
+            text: mensaje
+        })
+
     } catch (error) {
         console.log(error);
     }
@@ -1683,6 +1800,7 @@ const buscarPdfRechazo= async (e) => {
 buscar();
 
 btnBuscar.addEventListener('click', buscar);
+btnModificarEvento.addEventListener('click', modificarEvento);
 datatable.on('click', '.btn-primary', enviar);
 ofModal.addEventListener('click', borrarTodo);
 datatable.on('click', '.btn-warning', CorreccionDatos);

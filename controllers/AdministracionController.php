@@ -275,23 +275,71 @@ class AdministracionController
         }
     }
 
+    public static function buscarModalEventoApi(){
+
+        $id = $_GET['id'];
+        $sql = " SELECT
+        ste_id,
+        pco_id,
+        pco_autorizacion,
+        ste_cat,
+        gra_desc_lg,
+        TRIM(per_nom1) || ' ' || TRIM(per_nom2) || ' ' || TRIM(per_ape1) || ' ' || TRIM(per_ape2) AS nombre,
+        ste_fecha,
+        ste_telefono,
+        cmv_id,
+        pco_fechainicio,
+        sol_motivo,
+        sol_obs,
+        pco_just,
+        pco_fechafin,
+        pco_dir,
+        pdf_ruta
+        FROM se_protocolo
+        INNER JOIN se_combos_marimbas_vallas ON pco_cmbv = cmv_id  
+        inner join mdep on cmv_dependencia = dep_llave
+        inner join se_autorizacion on aut_id = pco_autorizacion
+        inner join se_solicitudes on aut_solicitud = sol_id
+        inner join se_solicitante on sol_solicitante= ste_id
+        inner join mper on ste_cat = per_catalogo
+        inner join se_pdf on pdf_solicitud = sol_id
+        inner join grados on ste_gra = gra_codigo
+        WHERE pco_situacion = 1  AND sol_id = $id";
+
+
+        try {
+            $resultado = Protocolosol::fetchArray($sql);
+            echo json_encode($resultado);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+
+    }
+
     public static function buscarCalender()
     {
 
         try {
             $sql = "   SELECT 
-            c.cmv_tip || ' - ' || m.dep_desc_lg AS title,
-            p.pco_fechainicio AS start,
-            p.pco_fechafin AS end,
-            p.pco_dir AS lugar
+            cmv_tip || ' - ' || dep_desc_lg AS title,
+            pco_fechainicio AS start,
+            pco_fechafin AS end,
+            pco_dir AS lugar,
+            sol_id
         FROM 
             se_protocolo p
-        JOIN 
-            se_combos_marimbas_vallas c ON p.pco_cmbv = c.cmv_id
-        JOIN 
-            mdep m ON c.cmv_dependencia = m.dep_llave
+        INNER JOIN 
+            se_combos_marimbas_vallas c ON pco_cmbv = cmv_id
+        INNER JOIN 
+            mdep m ON cmv_dependencia = dep_llave
+        INNER JOIN se_autorizacion ON pco_autorizacion = aut_id
+        INNER JOIN se_solicitudes ON aut_solicitud = sol_id 
         WHERE 
-            p.pco_situacion = 1";
+            sol_situacion = 5";
 
 
             $resultado = Protocolosol::fetchArray($sql);
@@ -309,5 +357,4 @@ class AdministracionController
 
     }
 
-
-}
+}   

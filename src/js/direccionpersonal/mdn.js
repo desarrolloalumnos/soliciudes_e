@@ -1,8 +1,14 @@
 import Swal from "sweetalert2";
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion, formatearFecha, formatoTiempo } from "../funciones";
+import { data } from "jquery";
+
 
 const modalMdnSalidaP = new Modal(document.getElementById('modalMdnSalidaP'), {
     backdrop: 'static',
@@ -26,6 +32,7 @@ const modalMdnAceptar = new Modal(document.getElementById('modalMdnAceptar'), {
 });
 const formulario = document.getElementById('formularioMdn');
 const btnBuscar = document.getElementById('btnBuscar');
+const btnModificarEvento = document.getElementById('btnModificarEvento');
 const formularioValidar = document.getElementById('formularioValidar');
 const formulario2 = document.getElementById('formularioSalidapais');
 const formulario4 = document.getElementById('formularioCasamiento');
@@ -57,6 +64,136 @@ const aut_cat = document.getElementById('aut_cat2');
 const nombre2 = document.getElementById('nombre2')
 const aut_cat2 = document.getElementById('aut_catalogo');
 const nombre = document.getElementById('nombre_autorizador')
+
+
+//FULL CALENDAR
+const calendarEl = document.getElementById('calendar');
+const verTabla = document.getElementById('dataTabla');
+const verCalendario = document.getElementById('calendario');
+const btnCalendario = document.getElementById('btnCalendario');
+const iframe2 = document.getElementById('pdfSalidaEvento')
+const formularioEvento = document.getElementById('formularioEvento')
+
+
+//FULLCALENDAR
+verCalendario.style.display = 'none'
+verTabla.style.display = 'none'
+
+const abrirModalEvento = (evento) => {
+    const id_solicitud = evento.extendedProps.sol_id;
+    console.log(id_solicitud);
+    buscarEvento(id_solicitud)
+    $('#eventoModal').modal('show');
+};
+
+const buscarEvento = async (id_solicitud) => {
+    console.log(id_solicitud);
+   
+    const url = `/soliciudes_e/API/busquedasproto/buscarEventos?id=${id_solicitud}`;
+    const config = {
+        method: 'GET',
+    }
+
+    // try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        console.log(data);
+        if (data) {
+            Toast.fire({
+                title: 'Abriendo Solicitud',
+                icon: 'success'
+            })
+           
+
+            formularioEvento.ste_id.value = data[0].ste_id
+            formularioEvento.ste_cat.value = data[0].ste_cat
+            formularioEvento.nombre.value = data[0].nombre
+            formularioEvento.ste_fecha.value = data[0].ste_fecha
+            formularioEvento.ste_telefono.value = data[0].ste_telefono
+            formularioEvento.sol_motivo.value = data[0].sol_motivo
+            formularioEvento.sol_obs.value = data[0].sol_obs
+            formularioEvento.pco_autorizacion.value = data[0].pco_autorizacion
+            formularioEvento.pco_id.value = data[0].pco_id
+            formularioEvento.pco_cmbv.value = data[0].cmv_id
+            formularioEvento.pco_just.value = data[0].pco_just
+            formularioEvento.pco_fechainicio.value = data[0].pco_fechainicio
+            formularioEvento.pco_fechafin.value = data[0].pco_fechafin
+            formularioEvento.pco_dir.value = data[0].pco_dir
+            let pdfSinCorregir = data[0].pdf_ruta;
+            let pdfCorregido = pdfSinCorregir.substring(10);
+            
+            let verDoc = btoa(btoa(btoa(pdfCorregido)));
+            let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
+            iframe2.src = ver
+
+
+
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+
+            })
+        }
+
+    // } catch (error) {
+    //     console.log(error);
+    // }
+
+}
+const buscarCalender = async () => {
+    verCalendario.style.display = 'block';
+    verTabla.style.display = 'none';
+
+    const url = `/soliciudes_e/API/administraciones/buscarCalender`;
+
+    const config = {
+        method: 'GET',
+    };
+
+    try {
+        const respuesta = await fetch(url, config);
+        const data = await respuesta.json();
+        console.log(data);
+        if (data) {
+            const calendar = new Calendar(calendarEl, {
+                plugins: [dayGridPlugin],
+                initialView: 'dayGridMonth',
+                height: 'auto',
+                headerToolbar: {
+                    start: 'dayGridMonth,dayGridWeek,listWeek',
+                    center: 'title',
+                    end: 'today,prev,next',
+                    lugar: 'Ubicación del evento',
+                    id: 'sol_id'
+                },
+                events: data,
+                dayMaxEvents: 5,
+                locale: 'es',
+                buttonText: {
+                    today: 'Hoy',
+                    month: 'Mes',
+                    week: 'Semana',
+                    list: 'Lista',
+                },
+                eventClick: function (info) {
+                    abrirModalEvento(info.event);
+                }
+            });
+
+            calendar.render();
+        } else {
+            Toast.fire({
+                title: 'No se encontraron registros',
+                icon: 'info'
+            });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    formulario.reset();
+};
+
 
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';
@@ -173,6 +310,9 @@ const datatable = new Datatable('#tablaMdn', {
 
 const buscar = async () => {
 
+    verCalendario.style.display = 'none';
+    verTabla.style.display = 'block';
+
     const catalogo = formulario.ste_cat.value
     const fecha = formulario.ste_fecha.value
     const estado = formulario.sol_situacion.value
@@ -186,27 +326,38 @@ const buscar = async () => {
     }
 
     try {
-        const respuesta = await fetch(url, config)
+        const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-            
-        datatable.clear().draw()
+        console.log(data);
+        datatable.clear().draw();
+        // Calendar.removeAllEvents(); 
+
         if (data) {
             contador = 1;
             datatable.rows.add(data).draw();
 
+            data.forEach((evento) => {
+                Calendar.addEvent({
+                    title: evento.titulo,
+                    start: evento.pco_fechainicio,
+                    end: evento.pco_fechafin,
+                    lugar: evento.pco_dir,
+                    color: '#2ecc71',
+                });
+            });
+
+            // Calendar.refetchEvents();
         } else {
             Toast.fire({
                 title: 'No se encontraron registros',
-                icon: 'info'
-
-            })
+                icon: 'info',
+            });
         }
-
     } catch (error) {
         console.log(error);
     }
     formulario.reset();
-}
+};
 
 const buscarPdfMdn = async (e) => {
     e.preventDefault();
@@ -352,7 +503,6 @@ const buscarCatalogo = async () => {
         console.log(error);
     }
 
-
 }
 const buscarCatalogo2 = async () => {
     let validarCatalogo = aut_cat2.value;
@@ -393,6 +543,79 @@ const buscarCatalogo2 = async () => {
 
 
 }
+
+const modificarEvento = async (evento) => {
+
+    evento.preventDefault();
+
+    let fecha_inicio = formularioEvento.pco_fechainicio.value
+    let fecha_fin= formularioEvento.pco_fechafin.value
+
+    if (fecha_fin < fecha_inicio){
+        let icon = 'info'
+        Toast.fire({
+            icon,
+            text: 'La fecha de finalizacion no puede ser menor a la fecha de inicio',
+        });
+        return;
+    }
+    
+    const body = new FormData(formularioEvento)
+    body.append('ste_telefono',formularioEvento.ste_telefono.value)
+    body.append('sol_obs',formularioEvento.sol_obs.value)
+    body.append('pco_just',formularioEvento.pco_just.value)
+    body.append('pco_cmbv',formularioEvento.pco_cmbv.value)
+    // for(var pair of body.entries()){
+    //     console.log(pair[0], pair[1]);
+    // }
+    const url = '/soliciudes_e/API/busquedasproto/modificar';
+    const headers = new Headers();
+    headers.append("X-Requested-With", "fetch");
+
+    // for (var pair of body.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+    const config = {
+        method: 'POST',
+        body
+    }
+
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.json();
+        // console.log(data)
+        // return
+
+        const { codigo, mensaje, detalle } = data;
+        let icon = 'info'
+        switch (codigo) {
+            case 1:
+                formulario.reset();
+                icon = 'success'
+                buscar();
+               
+                break;
+
+            case 0:
+                icon = 'error'
+                console.log(detalle)
+                break;
+
+            default:
+                break;
+        }
+
+        Toast.fire({
+            icon,
+            text: mensaje
+        })
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 const guardarAutorizacion = async (evento) => {
     evento.preventDefault();
     const body = new FormData(formularioValidar);
@@ -875,6 +1098,7 @@ const buscarModal = async (e) => {
 buscar();
 
 btnBuscar.addEventListener('click', buscar);
+btnModificarEvento.addEventListener('click', modificarEvento);
 btnGuardarAutorizacion.addEventListener('click', guardarAutorizacion);
 btnGuardarRechazado.addEventListener('click', guardarRechazar);
 btnBuscar.addEventListener('click', buscar);
@@ -891,4 +1115,5 @@ btnElevarSolicitudCombo.addEventListener('click', elevarSolicitud);
 btnCorregirSolicitudCombo.addEventListener('click', corregirSolicitud);
 btnElevarSolicitudLicencia.addEventListener('click', elevarSolicitud);
 btnCorregirSolicitudLicencia.addEventListener('click', corregirSolicitud);
+btnCalendario.addEventListener('click', buscarCalender);
 
