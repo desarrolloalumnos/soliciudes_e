@@ -242,9 +242,6 @@ const guardar = async (evento) => {
         formulario.sol_situacion.value = 1;
     }
     
-    const fileInput = document.getElementById('pdf_ruta');
-    const file = fileInput.files[0];
-
     if (!file) {
         Toast.fire({
             icon: 'info',
@@ -252,6 +249,18 @@ const guardar = async (evento) => {
         })
         return;
     }
+
+    const allowedExtensions = /(\.pdf)$/i;
+
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        })
+        fileInput.value = ''; 
+        return;
+    }
+
     const body = new FormData(formulario);
     body.append('ste_fecha',formulario.ste_fecha.value)
     body.append('aut_fecha',formulario.aut_fecha.value)

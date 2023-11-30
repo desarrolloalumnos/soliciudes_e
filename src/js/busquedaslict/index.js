@@ -337,7 +337,7 @@ const modificarPdf = async (evento) => {
             icon: 'info',
             text: 'Por favor, selecciona un archivo PDF válido.'
         })
-        fileInput.value = ''; // Limpiar el valor del input
+        fileInput.value = ''; 
         return;
     }
 

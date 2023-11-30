@@ -61,8 +61,15 @@
             border-radius: 10px;
             box-sizing: border-box;
             margin-right: 30px;
-        }
+            position: relative;
+            z-index: 1;
 
+        }
+        .card:hover {
+            transform: scale(1.3);
+            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.5);
+            z-index: 2;
+        }
         .card:last-child {
             margin-right: 0;
         }
@@ -73,11 +80,7 @@
             }
         }
 
-        .card:hover {
-            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.5);
-            transform: translateY(-10px);
-        }
-
+    
         .card h4 {
             font-size: 24px;
             color: #333;

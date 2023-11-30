@@ -378,6 +378,8 @@ const datatable = new Datatable('#tablaAdministracion', {
     ]
 
 });
+
+
 const CorreccionDatos = async (e) => {
     e.preventDefault();
     const boton = e.target;
@@ -1014,20 +1016,27 @@ const modificarPdfSalidas = async (evento) => {
 
     evento.preventDefault();
     let ste_id = formulario2.ste_cat2.value
-    for (var i = 0; i < fileInputs.length; i++) {
-        // Agregar un escucha de eventos "change" a cada elemento input
-        fileInputs[i].addEventListener('change', function() {
-          const file = this.files[0];
-          const allowedExtensions = /(\.pdf)$/i;
-      
-          if (!allowedExtensions.exec(file.name)) {
-            alert('Por favor, selecciona un archivo PDF válido.');
-            this.value = '';
-            return false;
-          }
+    const fileInput = document.querySelector('input[name="pdf_ruta"]');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
         });
-      }
-
+        return;
+    }
+    
+    const allowedExtensions = /(\.pdf)$/i;
+    
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        });
+        fileInput.value = '';
+        return;
+    }
     const body = new FormData(formulario2);
     body.append('ste_cat2', ste_id)
     const url = '/soliciudes_e/API/busquedasalpais/modificarPdf';
@@ -1123,19 +1132,28 @@ const modificarProtocolo = async (evento) => {
 const modificarPdfProtocolo = async (evento) => {
     evento.preventDefault();
     let ste_id = formularioProto.ste_cat2.value
-    for (var i = 0; i < fileInputs.length; i++) {
-        // Agregar un escucha de eventos "change" a cada elemento input
-        fileInputs[i].addEventListener('change', function() {
-          const file = this.files[0];
-          const allowedExtensions = /(\.pdf)$/i;
-      
-          if (!allowedExtensions.exec(file.name)) {
-            alert('Por favor, selecciona un archivo PDF válido.');
-            this.value = '';
-            return false;
-          }
+    const fileInput = document.querySelector('input[name="pdf_ruta"]');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
         });
-      }
+        return;
+    }
+    
+    const allowedExtensions = /(\.pdf)$/i;
+    
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        });
+        fileInput.value = '';
+        return;
+    }
+
     const body = new FormData(formularioProto);
     body.append('ste_catalogo', ste_id)
     const url = '/soliciudes_e/API/busquedasproto/modificarPdf';
@@ -1223,20 +1241,28 @@ const modificarLicencia = async (evento) => {
 }
 const modificarPdfLicencia = async (evento) => {
     evento.preventDefault();
-    let ste_id = formulario2.ste_cat2.value
-    for (var i = 0; i < fileInputs.length; i++) {
-        // Agregar un escucha de eventos "change" a cada elemento input
-        fileInputs[i].addEventListener('change', function() {
-          const file = this.files[0];
-          const allowedExtensions = /(\.pdf)$/i;
-      
-          if (!allowedExtensions.exec(file.name)) {
-            alert('Por favor, selecciona un archivo PDF válido.');
-            this.value = '';
-            return false;
-          }
+    let ste_id = formularioModalLicencia.ste_cat2.value
+    const fileInput = document.querySelector('input[name="pdf_ruta"]');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
         });
-      }
+        return;
+    }
+    
+    const allowedExtensions = /(\.pdf)$/i;
+    
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        });
+        fileInput.value = '';
+        return;
+    }
     const body = new FormData(formularioModalLicencia);
     body.append('ste_catalogo', ste_id)
     const url = '/soliciudes_e/API/busquedaslict/modificarPdf';
@@ -1330,19 +1356,28 @@ const modificarCasamiento = async (evento) => {
 const modificarPdfCas = async (evento) => {
 
     evento.preventDefault();
-    for (var i = 0; i < fileInputs.length; i++) {
-        // Agregar un escucha de eventos "change" a cada elemento input
-        fileInputs[i].addEventListener('change', function() {
-          const file = this.files[0];
-          const allowedExtensions = /(\.pdf)$/i;
-      
-          if (!allowedExtensions.exec(file.name)) {
-            alert('Por favor, selecciona un archivo PDF válido.');
-            this.value = '';
-            return false;
-          }
+    let ste_id = pdf.ste_cat2.value
+    const fileInput = document.querySelector('input[name="pdf_ruta"]');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
         });
-      }
+        return;
+    }
+    
+    const allowedExtensions = /(\.pdf)$/i;
+    
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        });
+        fileInput.value = '';
+        return;
+    }
 
     const body = new FormData(pdf);
     body.append('ste_cat2', ste_id)
@@ -1389,7 +1424,8 @@ const modificarPdfCas = async (evento) => {
 const traePdfParaCorrecciones = (e) => {
     const boton = e.target;
     const tipoSol = boton.dataset.sol_tipo;
-    console.log(tipoSol)
+    
+    
     if (tipoSol === '1') {
         modalPdfCorreccionCasamiento.show()
         const button = e.target;
@@ -1486,8 +1522,7 @@ const buscar = async () => {
 
     try {
         const respuesta = await fetch(url, config);
-        const data = await respuesta.json();
-        console.log(data);
+        const data = await respuesta.json();      
         datatable.clear().draw();
         // Calendar.removeAllEvents(); 
 
@@ -1536,7 +1571,7 @@ const enviar = async (e) => {
         try {
             const respuesta = await fetch(url, config)
             const data = await respuesta.json();
-
+        
             const { codigo, mensaje, detalle } = data;
             let icon = 'info';
             switch (codigo) {

@@ -305,16 +305,12 @@
 
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
-                                <label for="sal_salida"><i class="bi bi-calendar-date-fill"></i>Fecha de la salida del
-                                    país</label>
-                                <input value="<?php echo date('Y/m/d') ?>" id="sal_salida" name="sal_salida"
-                                    class="form-control" type="date">
+                                <label for="sal_salida"><i class="bi bi-calendar-date-fill"></i>Fecha de la salida del país</label>
+                                <input value="" id="sal_salida" name="sal_salida" class="form-control" type="date">
                             </div>
                             <div class="col-lg-6">
-                                <label for="sal_ingreso"><i class="bi bi-calendar-date-fill"></i>Fecha del ingreso al
-                                    país</label>
-                                <input value="<?php echo date('Y/m/d') ?>" id="sal_ingreso" name="sal_ingreso"
-                                    class="form-control" type="date">
+                                <label for="sal_ingreso"><i class="bi bi-calendar-date-fill"></i>Fecha del ingreso al país</label>
+                                <input value="" id="sal_ingreso" name="sal_ingreso" class="form-control" type="date">
                             </div>
                         </div>
 
@@ -484,10 +480,8 @@
                         </div>
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
-                                <label for="pco_fechainicio"><i class="bi bi-calendar-date-fill"></i>Fecha de
-                                    inicio</label>
-                                <input value="<?php echo date('Y/m/d H:i') ?>" id="pco_fechainicio"
-                                    name="pco_fechainicio" class="form-control" type="datetime">
+                                <label for="pco_fechainicio"><i class="bi bi-calendar-date-fill"></i>Fecha de inicio</label>
+                                <input value="" id="pco_fechainicio" name="pco_fechainicio" class="form-control" type="datetime">
                             </div>
                             <div class="col-lg-6">
                                 <label for="pco_fechafin"><i class="bi bi-calendar-date-fill"></i>Fecha de
@@ -650,47 +644,38 @@
                         </div>
 
 
-                        <div class="row justify-content-around mb-4">
-                            <div class="col-lg-6">
-                                <label for="tiempo_servicio"><i class="bi bi-calendar-date-fill"></i>Tiempo de
-                                    Servicio</label>
-                                <input value="" id="tiempo_servicio" name="tiempo_servicio" class="form-control"
-                                    type="text">
-                                <input value="" id="tiempo" name="tiempo" class="form-control" type="hidden">
+                            <div class="row justify-content-around mb-4">
+                                <div class="col-lg-6">
+                                    <label for="tiempo_servicio"><i class="bi bi-calendar-date-fill"></i>Tiempo de Servicio</label>
+                                    <input value="" id="tiempo_servicio" name="tiempo_servicio" class="form-control" type="text">
+                                    <input value="" id="tiempo" name="tiempo" class="form-control" type="hidden">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="lit_mes_consueldo"><i class="bi bi-body-text"></i>Meses con Sueldo </label>
+                                    <input value="" id="lit_mes_consueldo" name="lit_mes_consueldo" class="form-control" type="number" min="0" max="0">
+                                </div>
                             </div>
-                            <div class="col-lg-6">
-                                <label for="lit_mes_consueldo"><i class="bi bi-body-text"></i>Meses con Sueldo </label>
-                                <input value="" id="lit_mes_consueldo" name="lit_mes_consueldo" class="form-control"
-                                    type="number" min="0" max="0">
+                            <div class="row justify-content-around mb-4">
+                                <div class="col-lg-6">
+                                    <label for="lit_mes_sinsueldo"><i class="bi bi-body-text"></i>Meses sin Sueldo</label>
+                                    <input id="lit_mes_sinsueldo" name="lit_mes_sinsueldo" class="form-control" type="number" type="number" min="0" max="0">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i>Inicio de licencia Temporal</label>
+                                    <input value="" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row justify-content-around mb-4">
-                            <div class="col-lg-6">
-                                <label for="lit_mes_sinsueldo"><i class="bi bi-body-text"></i>Meses sin Sueldo</label>
-                                <input id="lit_mes_sinsueldo" name="lit_mes_sinsueldo" class="form-control"
-                                    type="number" type="number" min="0" max="0">
+                            <div class="row justify-content-around mb-4">
+                                <div class="col-lg-6">
+                                    <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i>Fin de licencia Temporal</label>
+                                    <input value="" id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
+                                </div>
                             </div>
-                            <div class="col-lg-6">
-                                <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i>Inicio de licencia
-                                    Temporal</label>
-                                <input value="<?php echo date('Y/m/d') ?>" id="lit_fecha1" name="lit_fecha1"
-                                    class="form-control" type="date">
+                            <div class="row justify-content-center mt-12 mb-4">
+                                <div class="col-lg-12">
+                                    <iframe id="pdfLicencia" title="PDF" class="text-center" width="100%" height="500px" src=""></iframe>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row justify-content-around mb-4">
-                            <div class="col-lg-6">
-                                <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i>Fin de licencia
-                                    Temporal</label>
-                                <input value="<?php echo date('Y/m/d') ?>" id="lit_fecha2" name="lit_fecha2"
-                                    class="form-control" type="date">
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mt-12 mb-4">
-                            <div class="col-lg-12">
-                                <iframe id="pdfLicencia" title="PDF" class="text-center" width="100%" height="500px"
-                                    src=""></iframe>
-                            </div>
-                        </div>
 
                         <div class="row justify-content-center mt-12 mb-4" style="margin-top: 20px;">
                             <div class="col-lg-2">
@@ -795,8 +780,7 @@
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodac">Fecha de la boda Civil</label>
-                            <input value="<?php echo date('Y/m/d') ?>" id="mat_fecha_bodac" name="mat_fecha_bodac"
-                                class="form-control" type="date">
+                            <input value="" id="mat_fecha_bodac" name="mat_fecha_bodac" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_lugar_religioso">Lugar de la boda Religiosa</label>
@@ -807,18 +791,15 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-4">
                             <label for="mat_fecha_bodar">Fecha de la boda Religiosa</label>
-                            <input value="<?php echo date('Y/m/d') ?>" id="mat_fecha_bodar" name="mat_fecha_bodar"
-                                class="form-control" type="date">
+                            <input value="" id="mat_fecha_bodar" name="mat_fecha_bodar" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_ini">Inicio de la licencia</label>
-                            <input value="<?php echo date('Y/m/d') ?>" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini"
-                                class="form-control" type="date">
+                            <input value="" id="mat_fecha_lic_ini" name="mat_fecha_lic_ini" class="form-control" type="date">
                         </div>
                         <div class="col-lg-4">
                             <label for="mat_fecha_lic_fin">Finalizacion de la licencia</label>
-                            <input value="<?php echo date('Y/m/d') ?>" id="mat_fecha_lic_fin" name="mat_fecha_lic_fin"
-                                class="form-control" type="date">
+                            <input value="" id="mat_fecha_lic_fin" name="mat_fecha_lic_fin" class="form-control" type="date">
                         </div>
                     </div>
 

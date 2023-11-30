@@ -476,6 +476,28 @@ const modificarPdf = async (evento) => {
 
     evento.preventDefault();
     let ste_id = formulario2.ste_cat2.value
+    const fileInput = document.getElementById('pdf_ruta');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
+        })
+        return;
+    }
+
+    const allowedExtensions = /(\.pdf)$/i;
+
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        })
+        fileInput.value = ''; 
+        return;
+    }
+
     const body = new FormData(formulario2);
     body.append('ste_cat2', ste_id)
     const url = '/soliciudes_e/API/busquedasalpais/modificarPdf';

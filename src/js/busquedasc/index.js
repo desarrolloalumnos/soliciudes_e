@@ -380,19 +380,25 @@ const modificar = async (evento) => {
 const modificarPdf = async (evento) => {
 
     evento.preventDefault();
-    for (var i = 0; i < fileInputs.length; i++) {
-      
-        fileInputs[i].addEventListener('change', function() {
-          const file = this.files[0];
-          const allowedExtensions = /(\.pdf)$/i;
-      
-          if (!allowedExtensions.exec(file.name)) {
-            alert('Por favor, selecciona un archivo PDF válido.');
-            this.value = '';
-            return false;
-          }
-        });
-      }
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
+        })
+        return;
+    }
+
+    const allowedExtensions = /(\.pdf)$/i;
+
+    if (!allowedExtensions.test(file.name)) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF válido.'
+        })
+        fileInput.value = ''; 
+        return;
+    }
+
 
     const body = new FormData(pdf);
     body.append('ste_cat2', ste_id)
