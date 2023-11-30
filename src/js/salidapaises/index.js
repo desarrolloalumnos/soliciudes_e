@@ -148,8 +148,6 @@ const buscarCatalogo = async () => {
     
 }
 
-
-
 async function colocarCatalogo(datos) {
     
     const dato = datos[0]
@@ -161,14 +159,15 @@ async function colocarCatalogo(datos) {
     formulario.ste_comando.value = dato.dep_llave
 }
 
-
-
 formulario.aut_cat.addEventListener('change', async (e) => {
     const autorizador = await buscarCatalogo2();
     colocarCatalogo2(autorizador)
 
 });
-
+document.addEventListener('DOMContentLoaded', async () => {
+    const autorizador = await buscarCatalogo2();
+    colocarCatalogo2(autorizador);
+});
 
 const buscarCatalogo2 = async () => {
     let validarCatalogo = formulario.ste_cat.value
@@ -243,6 +242,16 @@ const guardar = async (evento) => {
         formulario.sol_situacion.value = 1;
     }
     
+    const fileInput = document.getElementById('pdf_ruta');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
+        })
+        return;
+    }
     const body = new FormData(formulario);
     body.append('ste_fecha',formulario.ste_fecha.value)
     body.append('aut_fecha',formulario.aut_fecha.value)

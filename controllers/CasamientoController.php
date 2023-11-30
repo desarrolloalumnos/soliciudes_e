@@ -282,14 +282,10 @@ class CasamientoController
     {
         $sql = "SELECT trim(per_nom1) || ' ' || trim(per_nom2) || ' ' || trim(per_ape1) || ' ' || trim(per_ape2) as nombre, per_catalogo  from mper where per_plaza = (select org_plaza from morg where org_dependencia in (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user) and org_ceom like '%90' and org_plaza_desc = 'COMANDANTE' and org_grado > 87)";
         $resultado1 = Solicitante::fetchFirst($sql);
-        $catalogo19 = $resultado1['per_catalogo'];
-        
-        $sql2 = "SELECT per_catalogo FROM mper where trim(per_nom1) || ' ' || trim(per_nom2) || ' ' || trim(per_ape1) || ' ' || trim(per_ape2) as nombre  like '$resultado1' ";
-        
+        $catalogo19 = $resultado1['per_catalogo'];        
+       
         try {
             
-            // $catalogo19 = Solicitante::fetchFirst($sql2);
-            // $catalogo19 = $catalogo19['nombre'];
 
             if ($catalogo19) {
 

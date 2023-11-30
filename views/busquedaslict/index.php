@@ -158,7 +158,7 @@
                                 <label for="pdf_ruta"><i class="bi bi-file-pdf-fill"></i>Documentos PDF</label>
                                 <input value="" id="ste_catalogo" name="ste_catalogo" class="form-control" type="hidden" placeholder="Número de catálogo">
                                 <input value="" id="pdf_id" name="pdf_id" class="form-control" type="hidden">
-                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="text">
+                                <input value="" id="pdf_solicitud" name="pdf_solicitud" class="form-control" type="hidden">
                                 <input value="" id="pdf_ruta" name="pdf_ruta" class="form-control" type="file">
                             </div>
                         </div>

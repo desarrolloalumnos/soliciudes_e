@@ -71,6 +71,18 @@ const guardar = async (evento) => {
     if (!validarFormularioProtocolo(formulario)) {
         return;
     }
+
+    const fileInput = document.getElementById('pdf_ruta');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
+        })
+        return;
+    }
+
     let ruta = formulario.pdf_ruta.value
     const body = new FormData(formulario);
 
@@ -238,6 +250,12 @@ empleo2.value = dato.org_plaza_desc
 comando2.value = dato.dep_llave
 
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const autorizador = await buscarCatalogo2();
+    colocarCatalogo2(autorizador);
+});
+
 
 btnGuardar.addEventListener('click', guardar)
 

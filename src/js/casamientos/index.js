@@ -266,17 +266,16 @@ const guardar = async (evento) => {
     if (!validarFormularioMatrimonio(formulario)) {
         return;
     }
-    fileInput.addEventListener('change', function() {
-        const file = fileInput.files[0];
-        const allowedExtensions = /(\.pdf)$/i;
-      
-        if (!allowedExtensions.exec(file.name)) {
-          alert('Por favor, selecciona un archivo PDF válido.');
-          fileInput.value = '';
-          return false;
-        }
-      });
+    const fileInput = document.getElementById('pdf_ruta');
+    const file = fileInput.files[0];
 
+    if (!file) {
+        Toast.fire({
+            icon: 'info',
+            text: 'Por favor, selecciona un archivo PDF.'
+        })
+        return;
+    }
     const body = new FormData(formulario);
     body.append('ste_fecha',formulario.ste_fecha.value)
     body.append('aut_fecha',formulario.aut_fecha.value)
@@ -378,7 +377,11 @@ async function colocarCatalogo(datos) {
 catalogo2.addEventListener('change', async (e) => {
     const autorizador = await buscarCatalogo2();
     colocarCatalogo2(autorizador);
+});
 
+document.addEventListener('DOMContentLoaded', async () => {
+    const autorizador = await buscarCatalogo2();
+    colocarCatalogo2(autorizador);
 });
 
 const buscarCatalogo2 = async () => {

@@ -85,7 +85,7 @@
                             <div class="col-lg-4">
                                 <input value="" id="aut_solicitud" name="aut_solicitud" class="form-control" type="hidden">
                                 <label for="aut_cat"><i class="bi bi-universal-access"></i>Catálogo</label>
-                                <input value="" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catálogo">
+                                <input value="<?php echo $aut_cat; ?>" id="aut_cat" name="aut_cat" class="form-control" type="number" placeholder="Número de catálogo">
                                 <input value="" id="aut_gra" name="aut_gra" class="form-control" type="hidden">
                                 <input value="" id="aut_arm" name="aut_arm" class="form-control" type="hidden">
                                 <input value="" id="aut_emp" name="aut_emp" class="form-control" type="hidden">
@@ -117,11 +117,11 @@
                     <div class="row justify-content-around mb-4">
                         <div class="col-lg-6">
                             <label for="sal_salida"><i class="bi bi-calendar-date-fill"></i>Fecha de la salida del país</label>
-                            <input value="<?php echo date('Y/m/d') ?>" id="sal_salida" name="sal_salida" class="form-control" type="date">
+                            <input value="" id="sal_salida" name="sal_salida" class="form-control" type="date">
                         </div>
                         <div class="col-lg-6">
                             <label for="sal_ingreso"><i class="bi bi-calendar-date-fill"></i>Fecha del ingreso al país</label>
-                            <input value="<?php echo date('Y/m/d') ?>" id="sal_ingreso" name="sal_ingreso" class="form-control" type="date">
+                            <input value="" id="sal_ingreso" name="sal_ingreso" class="form-control" type="date">
                         </div>
                     </div>
                     <div class="col-lg-12">

@@ -9,6 +9,7 @@ const modalSalidapaises = new Modal(document.getElementById('modalSalidapaises')
     keyboard: false
 });
 const divInpust = document.getElementById('masInputs');
+const fileInput = document.getElementById('pdf_ruta');
 const formulario = document.getElementById('formularioSalida');
 const formulario2 = document.getElementById('formularioSalidapais');
 const btnModificar = document.getElementById('modificarSalidas');
@@ -412,6 +413,16 @@ const traePdf = (e) => {
         });
         return;
     }
+    fileInput.addEventListener('change', function() {
+        const file = fileInput.files[0];
+        const allowedExtensions = /(\.pdf)$/i;
+      
+        if (!allowedExtensions.exec(file.name)) {
+          alert('Por favor, selecciona un archivo PDF válido.');
+          fileInput.value = '';
+          return false;
+        }
+      });
 
     const body = new FormData(formulario2);
     body.append('ste_cat2', catalogo)

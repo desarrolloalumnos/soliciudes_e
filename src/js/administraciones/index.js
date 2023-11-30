@@ -73,6 +73,7 @@ const addPdf = document.getElementById('modificarPdfCas');
 const parejam_cat = document.getElementById('parejam_cat');
 const divMilitar = document.getElementById('parejaMilitar');
 const divCivil = document.getElementById('parejaCivil');
+const fileInputs = document.querySelectorAll('input[style="file"]');
 
 
 //FULLCALENDAR
@@ -165,6 +166,7 @@ formularioModalLicencia.nombre.disabled = true;
 
 let contador = 1;
 const datatable = new Datatable('#tablaAdministracion', {
+   
     language: lenguaje,
     data: null,
     columns: [
@@ -895,6 +897,20 @@ const modificarPdfSalidas = async (evento) => {
 
     evento.preventDefault();
     let ste_id = formulario2.ste_cat2.value
+    for (var i = 0; i < fileInputs.length; i++) {
+        // Agregar un escucha de eventos "change" a cada elemento input
+        fileInputs[i].addEventListener('change', function() {
+          const file = this.files[0];
+          const allowedExtensions = /(\.pdf)$/i;
+      
+          if (!allowedExtensions.exec(file.name)) {
+            alert('Por favor, selecciona un archivo PDF válido.');
+            this.value = '';
+            return false;
+          }
+        });
+      }
+
     const body = new FormData(formulario2);
     body.append('ste_cat2', ste_id)
     const url = '/soliciudes_e/API/busquedasalpais/modificarPdf';
@@ -990,6 +1006,19 @@ const modificarProtocolo = async (evento) => {
 const modificarPdfProtocolo = async (evento) => {
     evento.preventDefault();
     let ste_id = formularioProto.ste_cat2.value
+    for (var i = 0; i < fileInputs.length; i++) {
+        // Agregar un escucha de eventos "change" a cada elemento input
+        fileInputs[i].addEventListener('change', function() {
+          const file = this.files[0];
+          const allowedExtensions = /(\.pdf)$/i;
+      
+          if (!allowedExtensions.exec(file.name)) {
+            alert('Por favor, selecciona un archivo PDF válido.');
+            this.value = '';
+            return false;
+          }
+        });
+      }
     const body = new FormData(formularioProto);
     body.append('ste_catalogo', ste_id)
     const url = '/soliciudes_e/API/busquedasproto/modificarPdf';
@@ -1078,6 +1107,19 @@ const modificarLicencia = async (evento) => {
 const modificarPdfLicencia = async (evento) => {
     evento.preventDefault();
     let ste_id = formulario2.ste_cat2.value
+    for (var i = 0; i < fileInputs.length; i++) {
+        // Agregar un escucha de eventos "change" a cada elemento input
+        fileInputs[i].addEventListener('change', function() {
+          const file = this.files[0];
+          const allowedExtensions = /(\.pdf)$/i;
+      
+          if (!allowedExtensions.exec(file.name)) {
+            alert('Por favor, selecciona un archivo PDF válido.');
+            this.value = '';
+            return false;
+          }
+        });
+      }
     const body = new FormData(formularioModalLicencia);
     body.append('ste_catalogo', ste_id)
     const url = '/soliciudes_e/API/busquedaslict/modificarPdf';
@@ -1171,7 +1213,19 @@ const modificarCasamiento = async (evento) => {
 const modificarPdfCas = async (evento) => {
 
     evento.preventDefault();
-
+    for (var i = 0; i < fileInputs.length; i++) {
+        // Agregar un escucha de eventos "change" a cada elemento input
+        fileInputs[i].addEventListener('change', function() {
+          const file = this.files[0];
+          const allowedExtensions = /(\.pdf)$/i;
+      
+          if (!allowedExtensions.exec(file.name)) {
+            alert('Por favor, selecciona un archivo PDF válido.');
+            this.value = '';
+            return false;
+          }
+        });
+      }
 
     const body = new FormData(pdf);
     body.append('ste_cat2', ste_id)

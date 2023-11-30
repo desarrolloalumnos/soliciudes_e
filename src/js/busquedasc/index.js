@@ -24,6 +24,7 @@ const addPdf = document.getElementById('addPdf');
 const parejam_cat = document.getElementById('parejam_cat');
 const divMilitar = document.getElementById('parejaMilitar');
 const divCivil = document.getElementById('parejaCivil');
+const fileInputs = document.querySelectorAll('input[style="file"]');
 
 divMilitar.style.display = 'none';
 divCivil.style.display = 'none';
@@ -287,8 +288,6 @@ const colocarPdf = (dataset) => {
 
 }
 
-
-
 const modificar = async (evento) => {
 
     evento.preventDefault();
@@ -381,6 +380,19 @@ const modificar = async (evento) => {
 const modificarPdf = async (evento) => {
 
     evento.preventDefault();
+    for (var i = 0; i < fileInputs.length; i++) {
+      
+        fileInputs[i].addEventListener('change', function() {
+          const file = this.files[0];
+          const allowedExtensions = /(\.pdf)$/i;
+      
+          if (!allowedExtensions.exec(file.name)) {
+            alert('Por favor, selecciona un archivo PDF válido.');
+            this.value = '';
+            return false;
+          }
+        });
+      }
 
     const body = new FormData(pdf);
     body.append('ste_cat2', ste_id)

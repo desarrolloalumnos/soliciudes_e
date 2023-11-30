@@ -25,12 +25,32 @@ class SalidapaisController
         $motivos = static::motivos();
         $paises = static::paises();
         $transportes = static::transportes();
-
+        $catalogo = static::getComandanteCatalogo();
         $router->render('salidapaises/index', [
             'motivos' => $motivos,
             'paises' => $paises,
-            'transportes' => $transportes
+            'transportes' => $transportes,
+            'aut_cat' => $catalogo
         ]);
+    }
+
+    public static function  getComandanteCatalogo()
+    {
+        $sql = "SELECT trim(per_nom1) || ' ' || trim(per_nom2) || ' ' || trim(per_ape1) || ' ' || trim(per_ape2) as nombre, per_catalogo  from mper where per_plaza = (select org_plaza from morg where org_dependencia in (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user) and org_ceom like '%90' and org_plaza_desc = 'COMANDANTE' and org_grado > 87)";
+        $resultado1 = Solicitante::fetchFirst($sql);
+        $catalogo19 = $resultado1['per_catalogo'];        
+       
+        try {
+            
+
+            if ($catalogo19) {
+
+                return $catalogo19;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+        }
     }
     public static function generaIdentificador()
     {
