@@ -112,11 +112,11 @@
                         <div class="row justify-content-around mb-4">
                             <div class="col-lg-6">
                                 <label for="sal_salida"><i class="bi bi-calendar-date-fill"></i>Fecha de la salida del país</label>
-                                <input value="<?php echo date('Y/m/d')?>" id="sal_salida" name="sal_salida" class="form-control" type="date">
+                                <input value="" id="sal_salida" name="sal_salida" class="form-control" type="date">
                             </div>
                             <div class="col-lg-6">
                                 <label for="sal_ingreso"><i class="bi bi-calendar-date-fill"></i>Fecha del ingreso al país</label>
-                                <input value="<?php echo date('Y/m/d')?>" id="sal_ingreso" name="sal_ingreso" class="form-control" type="date">
+                                <input value="" id="sal_ingreso" name="sal_ingreso" class="form-control" type="date">
                             </div>
                         </div>
 
