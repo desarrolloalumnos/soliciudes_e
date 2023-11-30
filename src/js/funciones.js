@@ -1,6 +1,8 @@
 import Swal from 'sweetalert2';
 export const validarFormulario = (formulario, excepciones = [] ) => {
     const elements = formulario.querySelectorAll("input, select, textarea");
+
+    
     let validarFormulario = []
     elements.forEach( element => {
         if(!element.value.trim() && ! excepciones.includes(element.id) ){
@@ -28,3 +30,49 @@ export const Toast = Swal.mixin({
       toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
 })
+
+export const confirmacion = async (icon = 'warning', text = '¿Esta seguro que desea realizar esta acción?', confirmButtonText = 'Si') => {
+    const alerta = Swal.fire({
+        title : 'Confirmación',
+        icon,
+        text,
+        showCancelButton : true,
+        confirmButtonColor : '#3085d6',
+        cancelButtonColor : '#d33',
+        confirmButtonText,
+        cancelButtonText: 'Cancelar'
+    })
+    const resultado = (await alerta).isConfirmed
+    return resultado;
+}
+
+
+export const formatearFecha = (fechaConCeros) => {
+    var componentes = fechaConCeros.split(" ")[0].split("-");
+    var dia = componentes[2];
+    var mes = componentes[1];
+    var anio = componentes[0];
+    var fechaFormateada = anio + "-" + mes + "-" + dia;
+    return fechaFormateada;
+}
+
+
+export const formatoTiempo = (numero) =>{
+    return new Promise((resolve) => {
+        const numeroStr = String(numero);
+        const anios = numeroStr.slice(0, -4);
+        const meses = numeroStr.slice(-4, -2);
+        const dias = numeroStr.slice(-2);
+
+        const aniosTexto = anios + (anios === '1' ? ' año' : ' años');
+        const mesesTexto = meses + ' meses';
+        const diasTexto = dias + ' días';
+
+        const resultado = `${aniosTexto} ${mesesTexto} ${diasTexto}`;
+
+        resolve(resultado);
+    });
+}
+
+
+  

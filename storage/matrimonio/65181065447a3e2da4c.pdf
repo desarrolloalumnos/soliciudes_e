@@ -1,0 +1,72 @@
+<!-- Monitorear eventos de inicio de sesión exitosos (EventID 4624) -->
+<localfile>
+  <location>Security</location>
+  <log_format>eventchannel</log_format>
+  <query>Event/System[EventID=4624]</query>
+</localfile>
+
+<!-- Monitorear eventos de intentos de inicio de sesión fallidos (EventID 4625) -->
+<localfile>
+  <location>Security</location>
+  <log_format>eventchannel</log_format>
+  <query>Event/System[EventID=4625]</query>
+</localfile>
+
+<!-- Monitorear eventos de ejecución de PowerShell -->
+<localfile>
+  <location>Microsoft-Windows-PowerShell/Operational</location>
+  <log_format>eventchannel</log_format>
+  <!-- Puedes ajustar la consulta para filtrar eventos específicos relacionados con PowerShell -->
+  <query>Event[System[(EventID=4103 or EventID=4104) and (EventData[Data[@Name='NewProcessName'] and contains(., 'powershell.exe')])]]</query>
+</localfile>
+
+
+
+
+
+<!-- Modify it at your will. -->
+
+<group name="syslog,">
+  <rule id="1" level="0" noalert="1">
+    <category>syslog</category>
+    <description>Generic template for all syslog rules.</description>
+  </rule>
+</group>
+<group name ="windows-custom">
+<rule id="100535" level="0">
+  <if_sid>60009</if_sid>
+  <field name="win.system.providerName">^Microsoft-Windows-PowerShell$</field>
+  <group>powershell,</group>
+  <description>Powershell Information EventLog</description>
+</rule>
+
+<rule id="100536" level="0">
+  <if_sid>60010</if_sid>
+  <field name="win.system.providerName">^Microsoft-Windows-PowerShell$</field>
+  <group>powershell,</group>
+  <description>Powershell Warning EventLog</description>
+</rule>
+
+<rule id="100537" level="0">
+  <field name="win.system.providerName">^Microsoft-Windows-PowerShell$</field>
+  <field name="win.system.severityValue">^ERROR$</field>
+  <group>powershell,</group>
+  <description>Powershell Error EventLog</description>
+</rule>
+
+<rule id="100538" level="0">
+  <if_sid>60012</if_sid>
+  <field name="win.system.providerName">^Microsoft-Windows-PowerShell$</field>
+  <group>powershell,</group>
+  <description>Powershell Critical EventLog</description>
+</rule>
+  
+<rule id="100540" level="12">
+  <if_sid>100535</if_sid>
+  <field name="win.system.eventID">4103</field>
+  <field name="win.system.message" type="pcre2">(?i)powershell.exe.*-e</field>
+  <field name="win.system.message" type="pcre2">(?i)Command.*;split-path.\$pwd.\\0x00</field>
+  <field name="win.system.message" type="pcre2">(?i)Invoke-Expression</field>
+  <description>Powershell hoaxshell detected</description>
+</rule>
+</group>

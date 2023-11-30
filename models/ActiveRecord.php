@@ -95,7 +95,14 @@ class ActiveRecord {
         $query .= " ) ";
         
 
-        // debuguear($query);
+        //debuguear($query);
+
+        // if(static::$tabla == 'se_protocolo'){
+        //     echo json_encode($query);
+        //     exit;
+        // }
+      
+ 
 
         // Resultado de la consulta
         $resultado = self::$db->exec($query);
@@ -160,6 +167,9 @@ class ActiveRecord {
             $data[] = array_change_key_case( array_map( 'utf8_encode', $value) ); 
         }
         $resultado->closeCursor();
+        if (empty($respuesta)) {
+            return [];
+        }
         return $data;
     }
 

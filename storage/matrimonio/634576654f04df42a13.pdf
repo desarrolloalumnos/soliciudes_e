@@ -1,0 +1,245 @@
+ 
+CREATE TABLE se_combos_marimbas_vallas  ( 
+	cmv_id 	SERIAL PRIMARY KEY,
+	cmv_dependencia SMALLINT,
+	cmv_tip	VARCHAR (20) NOT NULL,
+	cmv_situacion	SMALLINT DEFAULT 1,
+	FOREIGN KEY (cmv_dependencia) REFERENCES mdep(dep_llave)	
+);
+
+CREATE TABLE se_motivos (
+	mot_id SERIAL PRIMARY KEY,
+	mot_descripcion VARCHAR (50),
+	mot_situacion SMALLINT DEFAULT 1
+);
+
+CREATE TABLE se_pareja_civil(
+	parejac_id 			SERIAL PRIMARY KEY,
+	parejac_nombres		CHAR (30) NOT NULL,
+	parejac_apellidos	CHAR (30) NOT NULL,
+	parejac_direccion    CHAR (30) NOT NULL,
+	parejac_dpi			CHAR (30) NOT NULL,
+	parejac_situacion    SMALLINT DEFAULT 1
+);
+
+CREATE TABLE se_pareja_militar(
+	parejam_id			SERIAL PRIMARY KEY,
+	parejam_cat           	INTEGER,
+	parejam_comando       	SMALLINT NOT NULL,
+	parejam_gra           	SMALLINT NOT NULL,
+	parejam_arm           	SMALLINT NOT NULL,
+	parejam_emp           	VARCHAR (100) NOT NULL,
+	parejam_situacion		SMALLINT DEFAULT 1,
+	FOREIGN KEY (parejam_cat ) REFERENCES mper (per_catalogo)	
+);
+
+CREATE TABLE se_tipo_solicitud (
+	tse_id SERIAL PRIMARY KEY,
+	tse_descripcion VARCHAR (50),
+	tse_situacion SMALLINT DEFAULT 1
+);
+CREATE TABLE se_articulos (
+	art_id SERIAL PRIMARY KEY,
+	art_descripcion VARCHAR (50),
+	art_situacion SMALLINT DEFAULT 1
+);
+CREATE TABLE se_transporte (
+	transporte_id SERIAL PRIMARY KEY,
+	transporte_descripcion VARCHAR (50),
+	transporte_situacion SMALLINT DEFAULT 1
+);
+
+
+create table se_solicitante(
+	ste_id 				SERIAL PRIMARY KEY,
+	ste_comando        	SMALLINT NOT NULL,
+	ste_cat           	INTEGER NOT NULL,
+	ste_gra           	SMALLINT NOT NULL,
+	ste_arm           	SMALLINT NOT NULL,
+	ste_emp           	VARCHAR (100) NOT NULL,
+	ste_fecha			DATETIME YEAR TO MINUTE,
+	ste_telefono		INTEGER NOT NULL,
+	ste_situacion      SMALLINT DEFAULT 1,
+    FOREIGN KEY (ste_cat) REFERENCES mper (per_catalogo)
+);
+
+
+CREATE TABLE se_autorizacion (
+	aut_id				SERIAL PRIMARY KEY,
+	aut_solicitud		INTEGER NOT NULL,
+	aut_comando       	SMALLINT NOT NULL,
+	aut_cat           	INTEGER NOT NULL,
+	aut_gra          	SMALLINT NOT NULL,
+	aut_arm           	SMALLINT NOT NULL,
+	aut_emp           	VARCHAR (100) NOT NULL,
+	aut_fecha			DATETIME YEAR TO MINUTE,
+	aut_situacion		SMALLINT DEFAULT 1,
+    FOREIGN KEY (aut_cat) REFERENCES mper (per_catalogo),
+	FOREIGN KEY (aut_solicitud) REFERENCES se_solicitudes (sol_id)
+ );
+
+CREATE TABLE se_pdf(
+	pdf_id 			SERIAL PRIMARY KEY,
+	pdf_ruta		VARCHAR (200) NOT NULL,
+	pdf_solicitud   INTEGER NOT NULL,
+	pdf_situacion 	SMALLINT DEFAULT 1,
+	FOREIGN KEY (pdf_solicitud) REFERENCES se_solicitudes (sol_id)
+
+);
+CREATE TABLE se_solicitudes (
+	sol_id			SERIAL PRIMARY KEY,
+	sol_tipo 		INTEGER NOT NULL,
+	sol_solicitante	INTEGER NOT NULL,
+	sol_obs			VARCHAR (200),
+	sol_motivo		INTEGER,
+	sol_situacion	SMALLINT DEFAULT 1,
+	FOREIGN KEY (sol_tipo) REFERENCES se_tipo_solicitud (tse_id),
+	FOREIGN KEY (sol_solicitante) REFERENCES se_solicitante(ste_id),
+	FOREIGN KEY (sol_motivo) REFERENCES se_motivos (mot_id)
+
+);
+
+CREATE TABLE se_dsalpais (
+	dsal_id  				SERIAL PRIMARY KEY,
+	dsal_sol_salida			INTEGER,
+	dsal_ciudad				VARCHAR(200) NOT NULL,
+	dsal_pais  				SMALLINT NOT NULL,
+	dsal_transporte 		INTEGER NOT NULL,
+	dsal_situacion 			SMALLINT DEFAULT 1,
+	FOREIGN KEY (dsal_sol_salida) REFERENCES se_salpais (sal_id),
+	FOREIGN KEY (dsal_transporte) REFERENCES se_transporte (transporte_id),
+	FOREIGN KEY (dsal_pais) REFERENCES paises (pai_codigo)
+);
+
+CREATE TABLE se_salpais  ( 
+	sal_id    				SERIAL PRIMARY KEY,
+	sal_autorizacion		INTEGER NOT NULL,
+	sal_salida				DATETIME YEAR TO MINUTE NOT NULL,
+	sal_ingreso				DATETIME  YEAR TO MINUTE NOT NULL,
+	sal_situacion  			SMALLINT DEFAULT 1,
+	FOREIGN KEY (sal_autorizacion) REFERENCES	se_autorizacion (aut_id)
+
+);
+
+
+CREATE TABLE se_licencia_temporal  ( 
+	lit_id          	SERIAL PRIMARY KEY,
+	lit_autorizacion	INTEGER NOT NULL,
+	lit_mes_consueldo   INTEGER,
+	lit_mes_sinsueldo	INTEGER,
+	lit_fecha1      	DATETIME YEAR TO MINUTE NOT NULL,
+	lit_fecha2      	DATETIME YEAR TO MINUTE NOT NULL,
+	lit_articulo       	INTEGER,
+	lit_situacion       SMALLINT DEFAULT 1,
+	FOREIGN KEY (lit_autorizacion) REFERENCES	se_autorizacion (aut_id),
+	FOREIGN KEY (lit_articulo) REFERENCES se_articulos (art_id)
+);
+
+CREATE TABLE se_matrimonio  ( 
+	mat_id             	SERIAL PRIMARY KEY,
+	mat_autorizacion    INTEGER NOT NULL,
+	mat_lugar_civil    	VARCHAR(125),
+	mat_fecha_bodac   	DATETIME YEAR TO MINUTE,
+	mat_lugar_religioso	VARCHAR(125),
+	mat_fecha_bodar   	DATETIME YEAR TO MINUTE,
+	mat_per_civil	    INTEGER,
+	mat_per_army	    INTEGER,
+	mat_fecha_lic_ini	DATETIME YEAR TO MINUTE NOT NULL,
+	mat_fecha_lic_fin   DATETIME YEAR TO MINUTE NOT NULL,
+	mat_situacion      	SMALLINT DEFAULT 1,
+	FOREIGN KEY (mat_autorizacion) REFERENCES	se_autorizacion (aut_id),
+	FOREIGN KEY (mat_per_civil) REFERENCES	se_pareja_civil (parejac_id),
+	FOREIGN KEY (mat_per_army)  REFERENCES	se_pareja_militar (parejam_id)
+	
+);
+
+CREATE TABLE se_protocolo  ( 
+	pco_id     		SERIAL PRIMARY KEY,
+	pco_autorizacion INTEGER NOT NULL,
+	pco_cmbv   		INTEGER NOT NULL,
+	pco_civil   	TEXT,
+	pco_fechainicio DATETIME YEAR TO MINUTE,
+	pco_fechafin  	DATETIME YEAR TO MINUTE,
+	pco_dir    		VARCHAR (50),
+	pco_just   		VARCHAR (100),
+	pco_situacion  	SMALLINT DEFAULT 1,
+	FOREIGN KEY (pco_autorizacion) REFERENCES	se_autorizacion (aut_id),
+	FOREIGN KEY (pco_cmbv) REFERENCES  se_combos_marimbas_vallas (cmv_id)	
+);
+
+
+
+
+select per_nom1,per_nom2,per_ape1,per_ape2, per_grado 
+from mper,
+where  per_catalogo = 634576
+select  dep_desc_md,org_plaza,per_grado, per_arma, per_catalogo from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = 634576 
+
+
+select  dep_desc_md,org_plaza,per_grado, per_arma, per_catalogo from mper, morg, mdep where per_plaza = org_plaza AND org_dependencia= dep_llave and per_catalogo = 634576 
+ 
+select * from  mper
+
+select * from morg where where per_plaza = org_plaza and org_dependencia= dep_llave and per_catalogo = 634576
+
+
+select * from paises
+
+select * from morg
+
+insert into se_motivos (mot_descripcion) values('Matrimonio');
+insert into se_motivos (mot_descripcion) values('Vacaciones');
+insert into se_motivos (mot_descripcion) values('Situacion medica');
+insert into se_motivos (mot_descripcion) values('Cursos');
+insert into se_motivos (mot_descripcion) values('Tramites personales');
+insert into se_motivos (mot_descripcion) values('Eventos festivos');
+insert into se_motivos (mot_descripcion) values('Otros');
+
+
+insert into se_tipo_solicitud (tse_descripcion) values ('matrimonio');
+insert into se_tipo_solicitud (tse_descripcion) values ('salida del pais');
+insert into se_tipo_solicitud (tse_descripcion) values ('licencia temporal');
+insert into se_tipo_solicitud (tse_descripcion) values ('protocolo');
+
+class="bi-layout-text-window-reverse bi bi-file-music-fill"
+
+                                    <select name="sol_motivo" id="sol_motivo" class="form-select" style="display: none">
+                                        <option value="1" selected>Matrimonio</option>
+                                        <?php foreach ($motivos as $motivo) { ?>
+                                            <option value="<?= $motivo['mot_id'] ?>"><?= $motivo['mot_descripcion'] ?></option>
+
+                                        <?php } ?>
+                                    </select>
+
+SELECT
+  se_matrimonio.mat_id,
+  se_matrimonio.mat_autorizacion,
+  se_matrimonio.mat_lugar_civil,
+  se_matrimonio.mat_fecha_bodac,
+  se_matrimonio.mat_lugar_religioso,
+  se_matrimonio.mat_fecha_bodar,
+  se_matrimonio.mat_per_civil,
+  TRIM(parejac_nombres) || ' ' || TRIM(parejac_apellidos) AS nombres,
+  se_matrimonio.mat_per_army,    
+  parejam_cat,
+  (SELECT TRIM(per_nom1) || ' ' ||TRIM(per_nom2) || ' ' ||TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper WHERE per_catalogo = se_pareja_militar.parejam_cat) AS nombres_pareja,
+  se_matrimonio.mat_fecha_lic_ini,
+  se_matrimonio.mat_fecha_lic_fin,
+  se_matrimonio.mat_situacion,    
+  (SELECT TRIM(per_nom1) || ' ' ||TRIM(per_nom2) || ' ' ||TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper WHERE per_catalogo = se_solicitante.ste_cat) AS nombres_solicitante,
+  se_solicitante.ste_cat,  
+  (SELECT TRIM(per_nom1) || ' ' ||TRIM(per_nom2) || ' ' ||TRIM(per_ape1) || ' ' || TRIM(per_ape2) FROM mper WHERE per_catalogo = se_autorizacion.aut_cat) AS nombres_autorizacion,
+  se_autorizacion.aut_cat
+FROM
+  se_matrimonio
+LEFT JOIN
+  se_pareja_civil ON se_matrimonio.mat_per_civil = se_pareja_civil.parejac_id
+LEFT JOIN
+  se_pareja_militar ON se_matrimonio.mat_per_army = se_pareja_militar.parejam_id
+LEFT JOIN
+  se_autorizacion ON se_matrimonio.mat_autorizacion = se_autorizacion.aut_id
+LEFT JOIN
+  se_solicitudes ON se_autorizacion.aut_solicitud = se_solicitudes.sol_id
+LEFT JOIN
+  se_solicitante ON se_solicitudes.sol_solicitante = se_solicitante.ste_id
+where mat_situacion = 1 
