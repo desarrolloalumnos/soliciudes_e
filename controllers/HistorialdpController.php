@@ -19,6 +19,10 @@ class HistorialdpController
     public static function buscarApi()
     {
 
+        $catalogo = $_GET['catalogo'];
+        $fecha = $_GET['fecha'];
+        $estado = $_GET['estado'];
+        $tipo = $_GET['tipo'];
 
         $sql = " SELECT 
         s.sol_id,
@@ -47,7 +51,18 @@ class HistorialdpController
     WHERE
         s.sol_situacion IN (5,6) and aut.aut_situacion IN (5,6)";
 
-
+        if ($fecha != '') {
+            $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+        }
+        if ($catalogo != '') {
+            $sql .= " AND ste_cat = '$catalogo' ";
+        }
+        if ($estado != '') {
+            $sql .= " AND sol_situacion = '$estado' ";
+        }
+        if ($tipo != '') {
+            $sql .= " AND tse_id = '$tipo' ";
+        }
         $sql .= " AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT";
         $sql .= " ORDER BY ste_fecha DESC ";
 

@@ -42,6 +42,7 @@ const datatable = new Datatable('#tablaDirecciongeneral', {
             data: 'autorizador'
         },
         {
+
             title: 'Estado',
             className: 'text-center',
             data: 'sol_situacion',
@@ -74,12 +75,23 @@ const datatable = new Datatable('#tablaDirecciongeneral', {
             data: 'sol_id',
             searchable: false,
             orderable: false,
-            render: function(data, type, row) {
+            render: function (data, type, row) {
                 if (type === 'display') {
                     if (row.sol_situacion !== '2') {
                         return `<button class="btn btn-secondary">Enviado</button>`;
                     } else {
-                        return `<button class="btn btn-primary" data-id='${data}'>Enviar</button>`;
+                        return `
+                        <select class="form-select" style="margin-bottom: 10px;">
+                        <option value="">Seleccione</option>
+                    <option value="d1">Dirección de Personal</option>
+                    <option value="d2">Dirección de Inteligencia</option>
+                    <option value="d3">Dirección de Operaciones</option>
+                    <option value="d4">Dirección de Logística</option>
+                    <option value="d5">Dirección de Relaciones Civiles Militares</option>
+                </select>
+                <button class="btn btn-primary" data-id='${data}'>Enviar</button>
+            
+                    `;
                     }
                 }
                 return data;
@@ -95,7 +107,7 @@ const buscar = async () => {
     const tipo = formulario.tse_id.value
 
 
-    
+
     const url = `/soliciudes_e/API/administraciones/buscarDireccion?catalogo=${catalogo}&fecha=${fecha}&tipo=${tipo}`;
 
 

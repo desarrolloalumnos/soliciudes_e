@@ -132,7 +132,7 @@
                 <canvas id="chartTop5"></canvas>
             </div>
             <div class="card">
-                <h2>Concurrencia</h2>
+                <h2>Top 5 comandos </h2>
                 <canvas id="chartConcurrencia"></canvas>
             </div>
             <div class="card">

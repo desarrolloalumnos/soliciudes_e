@@ -3,7 +3,7 @@ import { Dropdown, Modal } from "bootstrap";
 import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
-const formulario = document.getElementById('formularioDepersonal');
+const formulario = document.getElementById('formularioHistorial');
 const btnBuscar = document.getElementById('btnBuscar');
 
 
@@ -64,8 +64,12 @@ const datatable = new Datatable('#tablaDepersonal', {
 });
 
 const buscar = async () => {
+    const catalogo = formulario.ste_cat.value
+    const fecha = formulario.ste_fecha.value
 
-    const url = `/soliciudes_e/API/historialdp/buscar`;
+    const tipo = formulario.tse_id.value
+
+    const url = `/soliciudes_e/API/historialdp/buscar?catalogo=${catalogo}&fecha=${fecha}&tipo=${tipo}`;
 
 
     const config = {

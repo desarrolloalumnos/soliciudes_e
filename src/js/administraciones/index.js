@@ -92,53 +92,52 @@ const abrirModalEvento = (evento) => {
 
 const buscarEvento = async (id_solicitud) => {
     console.log(id_solicitud);
-   
+
     const url = `/soliciudes_e/API/busquedasproto/buscarEventos?id=${id_solicitud}`;
     const config = {
         method: 'GET',
     }
 
     // try {
-        const respuesta = await fetch(url, config)
-        const data = await respuesta.json();
-        console.log(data);
-        if (data) {
-            Toast.fire({
-                title: 'Abriendo Solicitud',
-                icon: 'success'
-            })
-           
+    const respuesta = await fetch(url, config)
+    const data = await respuesta.json();
+    console.log(data);
+    if (data) {
+        Toast.fire({
+            title: 'Abriendo Solicitud',
+            icon: 'success'
+        })
 
-            formularioEvento.ste_id.value = data[0].ste_id
-            formularioEvento.ste_cat.value = data[0].ste_cat
-            formularioEvento.nombre.value = data[0].nombre
-            formularioEvento.ste_fecha.value = data[0].ste_fecha
-            formularioEvento.ste_telefono.value = data[0].ste_telefono
-            formularioEvento.sol_motivo.value = data[0].sol_motivo
-            formularioEvento.sol_obs.value = data[0].sol_obs
-            formularioEvento.pco_autorizacion.value = data[0].pco_autorizacion
-            formularioEvento.pco_id.value = data[0].pco_id
-            formularioEvento.pco_cmbv.value = data[0].cmv_id
-            formularioEvento.pco_just.value = data[0].pco_just
-            formularioEvento.pco_fechainicio.value = data[0].pco_fechainicio
-            formularioEvento.pco_fechafin.value = data[0].pco_fechafin
-            formularioEvento.pco_dir.value = data[0].pco_dir
-            let pdfSinCorregir = data[0].pdf_ruta;
-            let pdfCorregido = pdfSinCorregir.substring(10);
-            
-            let verDoc = btoa(btoa(btoa(pdfCorregido)));
-            let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
-            iframe2.src = ver
+        formularioEvento.ste_id.value = data[0].ste_id
+        formularioEvento.ste_cat.value = data[0].ste_cat
+        formularioEvento.nombre.value = data[0].nombre
+        formularioEvento.ste_fecha.value = data[0].ste_fecha
+        formularioEvento.ste_telefono.value = data[0].ste_telefono
+        formularioEvento.sol_motivo.value = data[0].sol_motivo
+        formularioEvento.sol_obs.value = data[0].sol_obs
+        formularioEvento.pco_autorizacion.value = data[0].pco_autorizacion
+        formularioEvento.pco_id.value = data[0].pco_id
+        formularioEvento.pco_cmbv.value = data[0].cmv_id
+        formularioEvento.pco_just.value = data[0].pco_just
+        formularioEvento.pco_fechainicio.value = data[0].pco_fechainicio
+        formularioEvento.pco_fechafin.value = data[0].pco_fechafin
+        formularioEvento.pco_dir.value = data[0].pco_dir
+        let pdfSinCorregir = data[0].pdf_ruta;
+        let pdfCorregido = pdfSinCorregir.substring(10);
 
+        let verDoc = btoa(btoa(btoa(pdfCorregido)));
+        let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
+        iframe2.src = ver
 
 
-        } else {
-            Toast.fire({
-                title: 'No se encontraron registros',
-                icon: 'info'
 
-            })
-        }
+    } else {
+        Toast.fire({
+            title: 'No se encontraron registros',
+            icon: 'info'
+
+        })
+    }
 
     // } catch (error) {
     //     console.log(error);
@@ -216,7 +215,7 @@ formularioModalLicencia.nombre.disabled = true;
 
 let contador = 1;
 const datatable = new Datatable('#tablaAdministracion', {
-   
+
     language: lenguaje,
     data: null,
     columns: [
@@ -252,54 +251,69 @@ const datatable = new Datatable('#tablaAdministracion', {
             render: function (data, type, row) {
                 if (type === 'display') {
                     if (data === '1') {
-                        return `
-            <span style="color: red;">COMANDO</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
-                </div>
-            `;
+                        const currentDate = new Date();
+                        const fechaSol = new Date(row.ste_fecha);
+                        const diffInDays = Math.floor((currentDate - fechaSol) / (1000 * 60 * 60 * 24));
+                        if (diffInDays > 1) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Alerta',
+                                html: 'Hay solicitudes que llevan más de un día sin darle seguimiento. Busca el icono de <img src="./images/alerta.png" alt="Ícono Formulario" class="menu-icon" style="width: 1cm; height: 1cm;"> y envía para eliminar este mensaje',
+                                showCancelButton: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: 'Aceptar',
+                            });
+                            return `     <img src="./images/alerta.png" alt="Ícono Formulario" class="menu-icon"
+                            style="width: 1cm; height: 1cm;">
+                                <span style="color: red;">
+                                    COMANDO
+                                </span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+                                </div>`;
+                        } else {
+                            return `
+                                <span style="color: red;">COMANDO</span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+                                </div>`;
+                        }
                     } else if (data === '2') {
                         return `
-                        <span >DGAEMDN</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
-                </div>
-            `;
+                            <span >DGAEMDN</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+                            </div>`;
                     } else if (data === '3') {
                         return `
-                        <span >DPEMDN</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
-                </div>
-            `;
+                            <span >DPEMDN</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                            </div>`;
                     } else if (data === '7') {
                         return `
-                     <span style="color: red;">COMANDO CORRECCIONES</span>
-                    <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
-                    </div>
-                `;
+                            <span style="color: red;">COMANDO CORRECCIONES</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                            </div>`;
                     } else if (data === '8') {
                         return `
-                 <span >DPEMDN CORREGIDO</span>
-                    <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
-                 </div>
-                `;
+                            <span >DPEMDN CORREGIDO</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                            </div>`;
                     } else if (data === '4') {
                         return `
-                        <span >MDN</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
-                </div>
-            `;
+                            <span >MDN</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                            </div>`;
                     } else if (data === '5') {
                         return `
-                        <span>AUTORIZADO</span>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                </div>
-            `;
+                            <span>AUTORIZADO</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                            </div>`;
                     } else if (data === '6') {
                         return `<button class="btn btn-danger">RECHAZADA</button>`;
                     } else if (data === '8') {
@@ -311,6 +325,7 @@ const datatable = new Datatable('#tablaAdministracion', {
                 return data;
             }
         },
+        
         {
             title: 'CORRECCIONES',
             className: 'text-center',
@@ -350,26 +365,26 @@ const datatable = new Datatable('#tablaAdministracion', {
             orderable: false,
             render: function (data, type, row) {
                 if (type === 'display') {
-                    if (row.sol_situacion !== '1'&&row.sol_situacion !== '5'&&row.sol_situacion !== '6'&&row.sol_situacion !== '7') {
+                    if (row.sol_situacion !== '1' && row.sol_situacion !== '5' && row.sol_situacion !== '6' && row.sol_situacion !== '7') {
                         return `
                         <div class="btn-group" style="transform: scale(0.85, 0.85);">
                             <button class="btn btn-secondary">Enviado</button>                                                 
                         </div>
                         `;
-                    }else if (row.sol_situacion === '5') {
+                    } else if (row.sol_situacion === '5') {
                         return `<button id="autorizacion" class="btn btn-outline-primary" data-sol_id='${row.sol_id}' data-sol_tipo='${row.sol_tipo}'>Autorizado</button>`
-                    }else if (row.sol_situacion === '6') {
+                    } else if (row.sol_situacion === '6') {
                         return `<button id="verRechazo" class="btn btn-secondary" data-sol_id='${row.sol_id}'>Ver Rechazo</button>`
-                    }else if (row.sol_situacion === '1'){
+                    } else if (row.sol_situacion === '1') {
                         return `<button class="btn btn-primary" data-id='${row.sol_id}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Enviar</button>`;
-                    }else if (row.sol_situacion === '7'){
+                    } else if (row.sol_situacion === '7') {
                         return `<button id="correccion" class="btn btn-primary" data-id='${row.sol_id}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Enviar Correccion</button>`;
                     }
                 }
                 return data;
             }
         }
-        
+
 
     ],
     columnDefs: [
@@ -950,9 +965,9 @@ const modificarEvento = async (evento) => {
     evento.preventDefault();
 
     let fecha_inicio = formularioEvento.pco_fechainicio.value
-    let fecha_fin= formularioEvento.pco_fechafin.value
+    let fecha_fin = formularioEvento.pco_fechafin.value
 
-    if (fecha_fin < fecha_inicio){
+    if (fecha_fin < fecha_inicio) {
         let icon = 'info'
         Toast.fire({
             icon,
@@ -960,9 +975,9 @@ const modificarEvento = async (evento) => {
         });
         return;
     }
-    
+
     const body = new FormData(formularioEvento)
-    body.append('ste_telefono',formularioEvento.ste_telefono.value)
+    body.append('ste_telefono', formularioEvento.ste_telefono.value)
     // for(var pair of body.entries()){
     //     console.log(pair[0], pair[1]);
     // }
@@ -991,7 +1006,7 @@ const modificarEvento = async (evento) => {
                 formulario.reset();
                 icon = 'success'
                 buscar();
-               
+
                 break;
 
             case 0:
@@ -1018,7 +1033,7 @@ const modificarPdfSalidas = async (evento) => {
     let ste_id = formulario2.ste_cat2.value
     const fileInput = document.querySelector('input[name="pdf_ruta"]');
     const file = fileInput.files[0];
-    
+
     if (!file) {
         Toast.fire({
             icon: 'info',
@@ -1026,9 +1041,9 @@ const modificarPdfSalidas = async (evento) => {
         });
         return;
     }
-    
+
     const allowedExtensions = /(\.pdf)$/i;
-    
+
     if (!allowedExtensions.test(file.name)) {
         Toast.fire({
             icon: 'info',
@@ -1134,7 +1149,7 @@ const modificarPdfProtocolo = async (evento) => {
     let ste_id = formularioProto.ste_cat2.value
     const fileInput = document.querySelector('input[name="pdf_ruta"]');
     const file = fileInput.files[0];
-    
+
     if (!file) {
         Toast.fire({
             icon: 'info',
@@ -1142,9 +1157,9 @@ const modificarPdfProtocolo = async (evento) => {
         });
         return;
     }
-    
+
     const allowedExtensions = /(\.pdf)$/i;
-    
+
     if (!allowedExtensions.test(file.name)) {
         Toast.fire({
             icon: 'info',
@@ -1244,7 +1259,7 @@ const modificarPdfLicencia = async (evento) => {
     let ste_id = formularioModalLicencia.ste_cat2.value
     const fileInput = document.querySelector('input[name="pdf_ruta"]');
     const file = fileInput.files[0];
-    
+
     if (!file) {
         Toast.fire({
             icon: 'info',
@@ -1252,9 +1267,9 @@ const modificarPdfLicencia = async (evento) => {
         });
         return;
     }
-    
+
     const allowedExtensions = /(\.pdf)$/i;
-    
+
     if (!allowedExtensions.test(file.name)) {
         Toast.fire({
             icon: 'info',
@@ -1359,7 +1374,7 @@ const modificarPdfCas = async (evento) => {
     let ste_id = pdf.ste_cat2.value
     const fileInput = document.querySelector('input[name="pdf_ruta"]');
     const file = fileInput.files[0];
-    
+
     if (!file) {
         Toast.fire({
             icon: 'info',
@@ -1367,9 +1382,9 @@ const modificarPdfCas = async (evento) => {
         });
         return;
     }
-    
+
     const allowedExtensions = /(\.pdf)$/i;
-    
+
     if (!allowedExtensions.test(file.name)) {
         Toast.fire({
             icon: 'info',
@@ -1392,7 +1407,7 @@ const modificarPdfCas = async (evento) => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.text();
-      
+
 
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
@@ -1424,8 +1439,8 @@ const modificarPdfCas = async (evento) => {
 const traePdfParaCorrecciones = (e) => {
     const boton = e.target;
     const tipoSol = boton.dataset.sol_tipo;
-    
-    
+
+
     if (tipoSol === '1') {
         modalPdfCorreccionCasamiento.show()
         const button = e.target;
@@ -1522,7 +1537,7 @@ const buscar = async () => {
 
     try {
         const respuesta = await fetch(url, config);
-        const data = await respuesta.json();      
+        const data = await respuesta.json();
         datatable.clear().draw();
         // Calendar.removeAllEvents(); 
 
@@ -1562,8 +1577,8 @@ const enviar = async (e) => {
     if (await confirmacion('warning', 'Desea enviar esta solicitud?')) {
         const body = new FormData()
         body.append('sol_id', id)
-        
-        for(var pair of body.entries()){
+
+        for (var pair of body.entries()) {
             console.log(pair[0], pair[1]);
         }
         const url = '/soliciudes_e/API/administraciones/enviarDga';
@@ -1574,7 +1589,7 @@ const enviar = async (e) => {
         try {
             const respuesta = await fetch(url, config)
             const data = await respuesta.json();
-        
+
             const { codigo, mensaje, detalle } = data;
             let icon = 'info';
             switch (codigo) {
@@ -1647,7 +1662,7 @@ const corregir = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
 
-       if (await confirmacion('warning', 'Desea corregir este registro?')) {
+    if (await confirmacion('warning', 'Desea corregir este registro?')) {
 
         const body = new FormData()
         body.append('sol_id', id)
@@ -1701,46 +1716,46 @@ const VerAutorizacion = async (e) => {
     const boton = e.target;
     const tipoSol = boton.dataset.sol_tipo;
     let ids = boton.dataset.sol_id
-    
+
     let id = ids
 
-    
+
     if (tipoSol === '1') {
         const url = `/soliciudes_e/pdf/pdfMatrimonio?sol_id=${id}`;
 
-    try {
-        const respuesta = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'fetch'
-            }
-        });
-    
-                 
+        try {
+            const respuesta = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'fetch'
+                }
+            });
 
-        if (respuesta.ok) {
-            const blob = await respuesta.blob();
-            const urlBlob = window.URL.createObjectURL(blob);
-            window.open(urlBlob, '_blank');
-        } else {
-            console.log('Error en la respuesta del servidor');
+
+
+            if (respuesta.ok) {
+                const blob = await respuesta.blob();
+                const urlBlob = window.URL.createObjectURL(blob);
+                window.open(urlBlob, '_blank');
+            } else {
+                console.log('Error en la respuesta del servidor');
+            }
+        } catch (error) {
+            console.log(error);
         }
-    } catch (error) {
-        console.log(error);
-    }
-    
+
     } else if (tipoSol === '2') {
 
         const url = `/soliciudes_e/pdf/pdfLicenciaTemporal?sol_id=${id}`;
 
-    try {
-        const respuesta = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'fetch'
-            }
-        });       
-    
+        try {
+            const respuesta = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'fetch'
+                }
+            });
+
             if (respuesta.ok) {
                 const blob = await respuesta.blob();
                 const urlBlob = window.URL.createObjectURL(blob);
@@ -1761,8 +1776,8 @@ const VerAutorizacion = async (e) => {
                     'X-Requested-With': 'fetch'
                 }
             });
-               
-    
+
+
             if (respuesta.ok) {
                 const blob = await respuesta.blob();
                 const urlBlob = window.URL.createObjectURL(blob);
@@ -1772,11 +1787,11 @@ const VerAutorizacion = async (e) => {
             }
         } catch (error) {
             console.log(error);
-        }   
+        }
 
 
     } else if (tipoSol === '4') {
-      
+
         const url = `/soliciudes_e/pdf/proto?sol_id=${id}`;
 
         try {
@@ -1786,8 +1801,8 @@ const VerAutorizacion = async (e) => {
                     'X-Requested-With': 'fetch'
                 }
             });
-               
-    
+
+
             if (respuesta.ok) {
                 const blob = await respuesta.blob();
                 const urlBlob = window.URL.createObjectURL(blob);
@@ -1797,12 +1812,12 @@ const VerAutorizacion = async (e) => {
             }
         } catch (error) {
             console.log(error);
-        }   
+        }
 
     }
 
 }
-const buscarPdfRechazo= async (e) => {
+const buscarPdfRechazo = async (e) => {
     e.preventDefault();
 
     let boton = e.target
@@ -1811,7 +1826,7 @@ const buscarPdfRechazo= async (e) => {
 
     const url = `/soliciudes_e/pdf/buscarRechazo?sol_id=${solicitud}`;
 
-    
+
     try {
         const respuesta = await fetch(url, {
             method: 'GET',
@@ -1819,10 +1834,10 @@ const buscarPdfRechazo= async (e) => {
                 'X-Requested-With': 'fetch'
             }
         });
-      
+
 
         if (respuesta.ok) {
-      
+
             const blob = await respuesta.blob();
             const urlBlob = window.URL.createObjectURL(blob);
             window.open(urlBlob, '_blank');
@@ -1842,14 +1857,14 @@ const buscarPdfCorreccion = async (e) => {
 
     const url = `/soliciudes_e/pdf/buscarCorreccion?sol_id=${solicitud}`;
 
-   
+
     try {
         const respuesta = await fetch(url, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'fetch'
             }
-        });   
+        });
 
         if (respuesta.ok) {
             const blob = await respuesta.blob();

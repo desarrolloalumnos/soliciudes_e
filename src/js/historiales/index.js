@@ -64,10 +64,12 @@ const datatable = new Datatable('#tablaHistorial', {
 
 const buscar = async () => {
 
-    // let dep_valor = dependencias.value 
-    // let tipo = tipos.value 
+    const catalogo = formulario.ste_cat.value
+    const fecha = formulario.ste_fecha.value
 
-    const url = `/soliciudes_e/API/historiales/buscar`;
+    const tipo = formulario.tse_id.value
+
+    const url = `/soliciudes_e/API/historiales/buscar?catalogo=${catalogo}&fecha=${fecha}&tipo=${tipo}`;
 
 
     const config = {
@@ -77,8 +79,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        // console.log (data)
-        // return;      
+           
         datatable.clear().draw()
         if (data) {
             contador = 1;

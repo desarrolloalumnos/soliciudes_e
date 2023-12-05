@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Exception;
+use Model\Solicitante;
 use Model\Solicitud;
 use MVC\Router;
 
@@ -52,24 +53,20 @@ class DetalleController
 
     public static function detalleConcurrenciaApi()
     {
-     
-        $sql = "SELECT
-                            se_tipo_solicitud.tse_descripcion AS tipo,
-                            COUNT(*) AS cantidad
-                        FROM
-                            se_solicitudes
-                        INNER JOIN
-                            se_solicitante ON se_solicitudes.sol_solicitante = se_solicitante.ste_id
-                        INNER JOIN
-                            se_tipo_solicitud ON se_solicitudes.sol_tipo = se_tipo_solicitud.tse_id
-                        WHERE
-                            se_solicitante.ste_fecha >= (CURRENT YEAR TO MONTH - 3 UNITS MONTH)
-                        GROUP BY
-                            tipo
-                        ORDER BY
-                            cantidad DESC";
-
-
+        $sql = "SELECT FIRST 5
+                        dep_desc_md AS dependencia,
+                        COUNT(*) AS cantidad
+                    FROM
+                        se_solicitudes
+                    INNER JOIN se_solicitante ON se_solicitudes.sol_solicitante = se_solicitante.ste_id
+                    INNER JOIN mdep     ON  ste_comando = dep_llave
+                    INNER JOIN se_tipo_solicitud ON se_solicitudes.sol_tipo = se_tipo_solicitud.tse_id
+                    WHERE
+                        se_solicitante.ste_fecha >= (CURRENT YEAR TO MONTH - 3 UNITS MONTH)
+                    GROUP BY
+                        dependencia
+                    ORDER BY
+                        cantidad DESC";
 
         try {
 
@@ -133,17 +130,16 @@ class DetalleController
         INNER JOIN se_solicitante ON sol_solicitante = ste_id
          WHERE sol_situacion >= 1 ";
 
-                if ($fechaInicio != '' and $fechaFin != '') {
-                    $sql .= " AND cast(ste.ste_fecha as date) between '$fechaInicio' and '$fechaFin' ";
-                } elseif ($fechaInicio != '') {
-                    $sql .= " AND cast(ste.ste_fecha as date) >= '$fechaInicio' ";
+        if ($fechaInicio != '' and $fechaFin != '') {
+            $sql .= " AND cast(ste.ste_fecha as date) between '$fechaInicio' and '$fechaFin' ";
+        } elseif ($fechaInicio != '') {
+            $sql .= " AND cast(ste.ste_fecha as date) >= '$fechaInicio' ";
+        } elseif ($fechaFin != '') {
+            $sql .= " AND cast(ste.ste_fecha as date) <= '$fechaFin' ";
+        }
 
-                } elseif ($fechaFin != '') {
-                    $sql .= " AND cast(ste.ste_fecha as date) <= '$fechaFin' ";
-                }
-
-                $sql .= " GROUP BY pais ";
-                $sql .= " ORDER BY cantidad_visitas DESC";
+        $sql .= " GROUP BY pais ";
+        $sql .= " ORDER BY cantidad_visitas DESC";
 
         try {
 
@@ -175,18 +171,18 @@ class DetalleController
                     COUNT(*) AS cantidad
                 FROM se_solicitudes  
                 INNER JOIN se_solicitante ON sol_solicitante = ste_id ";
-      
-      if ($fechaInicio != '' and $fechaFin != '') {
-        $sql .= " WHERE ste.ste_fecha between EXTEND('$fechaInicio', YEAR TO DAY) AND EXTEND('$fechaFin', YEAR TO DAY)";
-      } elseif ($fechaInicio != '') {
-        $sql .= " WHERE ste.ste_fecha >= EXTEND('$fechaInicio', YEAR TO DAY)";
-      } elseif ($fechaFin != '') {
-        $sql .= " WHERE ste.ste_fecha <= EXTEND('$fechaFin', YEAR TO DAY)";
-      }
-   
-      $sql .= " GROUP BY solicitante ";
-      $sql .= " ORDER BY cantidad DESC";
-      
+
+        if ($fechaInicio != '' and $fechaFin != '') {
+            $sql .= " WHERE ste.ste_fecha between EXTEND('$fechaInicio', YEAR TO DAY) AND EXTEND('$fechaFin', YEAR TO DAY)";
+        } elseif ($fechaInicio != '') {
+            $sql .= " WHERE ste.ste_fecha >= EXTEND('$fechaInicio', YEAR TO DAY)";
+        } elseif ($fechaFin != '') {
+            $sql .= " WHERE ste.ste_fecha <= EXTEND('$fechaFin', YEAR TO DAY)";
+        }
+
+        $sql .= " GROUP BY solicitante ";
+        $sql .= " ORDER BY cantidad DESC";
+
         try {
 
             $productos = Solicitud::fetchArray($sql);

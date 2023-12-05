@@ -65,6 +65,7 @@ class DireccionpersonalController
                     FROM mper 
                     WHERE per_catalogo = ste.ste_cat) AS solicitante,
                     ste.ste_telefono,
+                    ste.ste_fecha,
                     t.tse_descripcion AS tipo,
                     m.mot_descripcion AS motivo,
                     (select dep_desc_lg from mper, morg, mdep where per_plaza = org_plaza and org_dependencia = dep_llave and per_catalogo = ste.ste_cat) as dependencia_solicitante,
@@ -113,6 +114,7 @@ class DireccionpersonalController
         $sql = "SELECT
                     s.sol_id,
                     ste.ste_id,
+                    ste.ste_fecha,
                     t.tse_id,
                     (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) 
                     FROM mper 

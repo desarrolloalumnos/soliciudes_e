@@ -19,9 +19,10 @@ class HistorialController
 
     public static function buscarApi()
     {
-        // $cmv_dependencia = $_GET['cmv_dependencia'];
-        // $cmv_tip = $_GET['cmv_tip'];
-
+        $catalogo = $_GET['catalogo'];
+        $fecha = $_GET['fecha'];
+        $estado = $_GET['estado'];
+        $tipo = $_GET['tipo'];
 
 
         $sql = " SELECT 
@@ -50,10 +51,21 @@ class HistorialController
     INNER  JOIN armas armas_autorizador ON per_autorizador.per_arma = armas_autorizador.arm_codigo
     WHERE
         s.sol_situacion IN (5,6) and aut.aut_situacion IN (5,6)";
-
-
-$sql.=" AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT";
-$sql .= " ORDER BY ste_fecha DESC ";
+        
+    if ($fecha != '') {
+        $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
+    }
+    if ($catalogo != '') {
+        $sql .= " AND ste_cat = '$catalogo' ";
+    }
+    if ($estado != '') {
+        $sql .= " AND sol_situacion = '$estado' ";
+    }
+    if ($tipo != '') {
+        $sql .= " AND tse_id = '$tipo' ";
+    }
+    $sql.=" AND ste.ste_fecha BETWEEN (CURRENT YEAR TO MONTH) - 2 UNITS MONTH AND CURRENT";
+    $sql .= " ORDER BY ste_fecha DESC ";
 
 
         try {

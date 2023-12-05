@@ -145,7 +145,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/direccionpersonal/estadistica">
+                                <a class="dropdown-item" href="/soliciudes_e/administraciones/estadistica">
                                     <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas
                                 </a>
                             </li>
@@ -169,7 +169,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/mdn/estadistica">
+                                <a class="dropdown-item" href="/soliciudes_e/administraciones/estadistica">
                                     <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas
                                 </a>
                             </li>
@@ -183,7 +183,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="dropdownSolicitudGestionar">
                             <li>
-                                <a class="dropdown-item" href="/soliciudes_e/mdn/estadistica">
+                                <a class="dropdown-item" href="/soliciudes_e/administraciones/estadistica">
                                     <i class="ms-lg-0 ms-2 bi bi-bar-chart me-2"></i>Estadísticas Solicitudes
                                 </a>
                             </li>

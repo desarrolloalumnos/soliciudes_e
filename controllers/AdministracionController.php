@@ -50,6 +50,7 @@ class AdministracionController
                     t.tse_id,
                     ste.ste_cat,
                     s.sol_tipo,
+                    ste.ste_fecha,
                     pdf_id,
                     pdf_solicitud,
                     (SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md) 

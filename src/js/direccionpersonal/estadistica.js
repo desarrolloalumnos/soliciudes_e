@@ -10,15 +10,15 @@ const inputFechaInicio = document.getElementById('fechaInicio')
 const inputFechaFin = document.getElementById('fechaFin')
 
 
-const canvas = document.getElementById('chart2Estados')
+const canvas = document.getElementById('chartEstados')
 const context = canvas.getContext('2d');
-const canvas2 = document.getElementById('chart2Motivos')
+const canvas2 = document.getElementById('chartMotivos')
 const context2 = canvas2.getContext('2d');
-const canvas3 = document.getElementById('chart2Concurrencia')
+const canvas3 = document.getElementById('chartConcurrencia')
 const context3 = canvas3.getContext('2d');
-const canvas4 = document.getElementById('chart2Top5')
+const canvas4 = document.getElementById('chartTop5')
 const context4 = canvas4.getContext('2d');
-const canvas5 = document.getElementById('chart2TopPaises')
+const canvas5 = document.getElementById('chartTopPaises')
 const context5 = canvas5.getContext('2d');
 
 
@@ -117,7 +117,7 @@ const chartPaises = new Chart(context5, {
 const getTop5 = async () => {
     const fechaInicio = inputFechaInicio.value;
     const fechaFin = inputFechaFin.value;
-    let url = `/soliciudes_e/API/direccionpersonal/detalleOficialApi`;
+    let url = `/soliciudes_e/API/administraciones/detalleOficialApi`;
     if (fechaInicio && fechaFin) {
         url += `?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     }
@@ -133,7 +133,7 @@ const getTop5 = async () => {
             const respuesta = await fetch(url, config);
             data = await respuesta.json();
             if (Array.isArray(data) && data.length === 0) {
-                url = `/soliciudes_e/API/direccionpersonal/detalleOficialApi`;
+                url = `/soliciudes_e/API/administraciones/detalleOficialApi`;
                 const respuesta2 = await fetch(url, config);
                 data = await respuesta2.json();
             }
@@ -167,7 +167,7 @@ const getTop5 = async () => {
 const getTopPaises = async () => {
     const fechaInicio = inputFechaInicio.value;
     const fechaFin = inputFechaFin.value;
-    let url = `/soliciudes_e/API/direccionpersonal/detallePaisesApi`;
+    let url = `/soliciudes_e/API/administraciones/detallePaisesApi`;
     if (fechaInicio && fechaFin) {
         url += `?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     }
@@ -183,7 +183,7 @@ const getTopPaises = async () => {
             const respuesta = await fetch(url, config);
             data = await respuesta.json();
             if (Array.isArray(data) && data.length === 0) {
-                url = `/soliciudes_e/API/direccionpersonal/detallePaisesApi`;
+                url = `/soliciudes_e/API/administraciones/detallePaisesApi`;
                 const respuesta2 = await fetch(url, config);
                 data = await respuesta2.json();
             }
@@ -220,7 +220,7 @@ const getEstadisticas = async () => {
     const fechaFin=inputFechaFin.value
 
 
-    const url = `/soliciudes_e/API/direccionpersonal/estadistica?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+    const url = `/soliciudes_e/API/administraciones/estadistica?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     const config = {
         method: 'GET'
     }
@@ -250,7 +250,7 @@ const getEstadisticas = async () => {
 const getConcurrencia = async () => {
     const fechaInicio=inputFechaInicio.value
     const fechaFin=inputFechaFin.value
-    const url = `/soliciudes_e/API/direccionpersonal/detalleConcurrenciaApi?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+    const url = `/soliciudes_e/API/administraciones/detalleConcurrenciaApi?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     const config = {
         method: 'GET'
     }   
@@ -285,7 +285,7 @@ const getConcurrencia = async () => {
 const getEstadisticas2 = async () => {
     const fechaInicio=inputFechaInicio.value
     const fechaFin=inputFechaFin.value
-    const url = `/soliciudes_e/API/direccionpersonal/estadistica2?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+    const url = `/soliciudes_e/API/administraciones/estadistica2?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
     const config = {
         method: 'GET'
     }   

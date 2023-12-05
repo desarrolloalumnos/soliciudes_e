@@ -83,54 +83,54 @@ const abrirModalEvento = (evento) => {
 };
 
 const buscarEvento = async (id_solicitud) => {
-    console.log(id_solicitud);
-   
+    // console.log(id_solicitud);
+
     const url = `/soliciudes_e/API/busquedasproto/buscarEventos?id=${id_solicitud}`;
     const config = {
         method: 'GET',
     }
 
     // try {
-        const respuesta = await fetch(url, config)
-        const data = await respuesta.json();
-        console.log(data);
-        if (data) {
-            Toast.fire({
-                title: 'Abriendo Solicitud',
-                icon: 'success'
-            })
-           
-
-            formularioEvento.ste_id.value = data[0].ste_id
-            formularioEvento.ste_cat.value = data[0].ste_cat
-            formularioEvento.nombre.value = data[0].nombre
-            formularioEvento.ste_fecha.value = data[0].ste_fecha
-            formularioEvento.ste_telefono.value = data[0].ste_telefono
-            formularioEvento.sol_motivo.value = data[0].sol_motivo
-            formularioEvento.sol_obs.value = data[0].sol_obs
-            formularioEvento.pco_autorizacion.value = data[0].pco_autorizacion
-            formularioEvento.pco_id.value = data[0].pco_id
-            formularioEvento.pco_cmbv.value = data[0].cmv_id
-            formularioEvento.pco_just.value = data[0].pco_just
-            formularioEvento.pco_fechainicio.value = data[0].pco_fechainicio
-            formularioEvento.pco_fechafin.value = data[0].pco_fechafin
-            formularioEvento.pco_dir.value = data[0].pco_dir
-            let pdfSinCorregir = data[0].pdf_ruta;
-            let pdfCorregido = pdfSinCorregir.substring(10);
-            
-            let verDoc = btoa(btoa(btoa(pdfCorregido)));
-            let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
-            iframe2.src = ver
+    const respuesta = await fetch(url, config)
+    const data = await respuesta.json();
+    console.log(data);
+    if (data) {
+        Toast.fire({
+            title: 'Abriendo Solicitud',
+            icon: 'success'
+        })
 
 
+        formularioEvento.ste_id.value = data[0].ste_id
+        formularioEvento.ste_cat.value = data[0].ste_cat
+        formularioEvento.nombre.value = data[0].nombre
+        formularioEvento.ste_fecha.value = data[0].ste_fecha
+        formularioEvento.ste_telefono.value = data[0].ste_telefono
+        formularioEvento.sol_motivo.value = data[0].sol_motivo
+        formularioEvento.sol_obs.value = data[0].sol_obs
+        formularioEvento.pco_autorizacion.value = data[0].pco_autorizacion
+        formularioEvento.pco_id.value = data[0].pco_id
+        formularioEvento.pco_cmbv.value = data[0].cmv_id
+        formularioEvento.pco_just.value = data[0].pco_just
+        formularioEvento.pco_fechainicio.value = data[0].pco_fechainicio
+        formularioEvento.pco_fechafin.value = data[0].pco_fechafin
+        formularioEvento.pco_dir.value = data[0].pco_dir
+        let pdfSinCorregir = data[0].pdf_ruta;
+        let pdfCorregido = pdfSinCorregir.substring(10);
 
-        } else {
-            Toast.fire({
-                title: 'No se encontraron registros',
-                icon: 'info'
+        let verDoc = btoa(btoa(btoa(pdfCorregido)));
+        let ver = `/soliciudes_e/API/busquedasc/pdf?ruta=${verDoc}`
+        iframe2.src = ver
 
-            })
-        }
+
+
+    } else {
+        Toast.fire({
+            title: 'No se encontraron registros',
+            icon: 'info'
+
+        })
+    }
 
     // } catch (error) {
     //     console.log(error);
@@ -241,6 +241,7 @@ const datatable = new Datatable('#tablaDepersonal', {
             render: function (data, type, row) {
                 if (type === 'display') {
                     if (data === '1') {
+
                         return `
             <span style="color: red;">COMANDO</span>
                 <div class="progress">
@@ -255,12 +256,34 @@ const datatable = new Datatable('#tablaDepersonal', {
                 </div>
             `;
                     } else if (data === '3') {
-                        return `
+                        const currentDate = new Date();
+                        const fechaSol = new Date(row.ste_fecha);
+                        const diffInDays = Math.floor((currentDate - fechaSol) / (1000 * 60 * 60 * 24));
+                        if (diffInDays > 2) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Alerta',
+                                html: 'Hay solicitudes que llevan más de 2 dias de haberse generado. Busca el icono de <img src="./images/alerta.png" alt="Ícono Formulario" class="menu-icon" style="width: 1cm; height: 1cm;"> y envía para eliminar este mensaje',
+                                showCancelButton: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: 'Aceptar',
+                            });
+                            return `     <img src="./images/alerta.png" alt="Ícono Formulario" class="menu-icon"
+                            style="width: 1cm; height: 1cm;">
+                                <span style="color: red;">
+                                DPEMDN
+                                </span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                                </div>`;
+                        } else {
+                            return `
                         <span >DPEMDN</span>
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
                 </div>
             `;
+                        }
                     } else if (data === '4') {
                         return `
                         <span >MDN</span>
@@ -294,15 +317,15 @@ const datatable = new Datatable('#tablaDepersonal', {
             }
         },
         {
-        title: 'Revision',
-        className: 'text-center',
-        data: 'ste_id',
-        searchable: false,
-        orderable: false,
-        render: function (data, type, row) {
-            if (type === 'display') {
-                if (row.sol_situacion !== '3' && row.sol_situacion !== '6' && row.sol_situacion !== '8') {
-                    return `
+            title: 'Revision',
+            className: 'text-center',
+            data: 'ste_id',
+            searchable: false,
+            orderable: false,
+            render: function (data, type, row) {
+                if (type === 'display') {
+                    if (row.sol_situacion !== '3' && row.sol_situacion !== '6' && row.sol_situacion !== '8') {
+                        return `
                     <div class="btn-group" style="transform: scale(0.85, 0.85);">
                     <button class="btn btn-secondary">Enviado</button>
                     <button id="correcAut" class="btn btn-${row.sol_situacion === '7' ? 'warning' : 'success'}" data-sol_id='${row.sol_id}'>
@@ -311,17 +334,17 @@ const datatable = new Datatable('#tablaDepersonal', {
                     ${row.sol_situacion === '5' ? `<button id="autorizacion" class="btn btn-outline-primary" data-sol_id='${row.sol_id}'>Autorizado</button>` : ''}
                 </div>
                 `;
-                } else if (row.sol_situacion === '6') {
-                    return `<button id="verRechazo" class="btn btn-secondary" data-sol_id='${row.sol_id}'>Ver Rechazo</button>`
-                }else if (row.sol_situacion === '3'){
-                   return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
-                } else if (row.sol_situacion === '8'){
-                    return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
-                 }
+                    } else if (row.sol_situacion === '6') {
+                        return `<button id="verRechazo" class="btn btn-secondary" data-sol_id='${row.sol_id}'>Ver Rechazo</button>`
+                    } else if (row.sol_situacion === '3') {
+                        return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                    } else if (row.sol_situacion === '8') {
+                        return `<button class="btn btn-primary" data-id='${data}' data-tse_id='${row.tse_id}' data-sol_id='${row.sol_id}' data-sol_situacion='${row.sol_situacion}'>Revisar</button>`;
+                    }
+                }
+                return data;
             }
-            return data;
-        }
-        
+
         },
 
     ],
@@ -330,16 +353,16 @@ const datatable = new Datatable('#tablaDepersonal', {
             targets: [1],
             visible: false
         },
-        { 
-            className: 'text-center', 
-            targets: '_all' 
+        {
+            className: 'text-center',
+            targets: '_all'
         },
-        { 
-            className: 'align-middle', 
-            targets: '_all' 
-        } 
+        {
+            className: 'align-middle',
+            targets: '_all'
+        }
     ],
-    
+
 });
 
 
@@ -393,14 +416,14 @@ const buscarPdf = async (e) => {
 
     const url = `/soliciudes_e/pdf/buscar?sol_id=${solicitud}`;
 
-   
+
     try {
         const respuesta = await fetch(url, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'fetch'
             }
-        });   
+        });
 
         if (respuesta.ok) {
             const blob = await respuesta.blob();
@@ -439,7 +462,7 @@ const buscarPdfMdn = async (e) => {
 
     const url = `/soliciudes_e/pdf/pdfMinisterio?sol_id=${solicitud}`;
 
-    
+
     try {
         const respuesta = await fetch(url, {
             method: 'GET',
@@ -447,10 +470,10 @@ const buscarPdfMdn = async (e) => {
                 'X-Requested-With': 'fetch'
             }
         });
-      
+
 
         if (respuesta.ok) {
-      
+
             const blob = await respuesta.blob();
             const urlBlob = window.URL.createObjectURL(blob);
             window.open(urlBlob, '_blank');
@@ -716,7 +739,7 @@ const buscarModal = async (e) => {
                     icon: 'success'
 
                 })
-                
+
                 const dato = data[0];
                 formularioModal.lit_id.value = dato.lit_id;
                 formularioModal.sol_id.value = dato.sol_id;
@@ -1029,14 +1052,14 @@ const buscarPdfCorreccion = async (e) => {
 
     const url = `/soliciudes_e/pdf/buscarCorreccion?sol_id=${solicitud}`;
 
-   
+
     try {
         const respuesta = await fetch(url, {
             method: 'GET',
             headers: {
                 'X-Requested-With': 'fetch'
             }
-        });   
+        });
 
         if (respuesta.ok) {
             const blob = await respuesta.blob();
@@ -1049,7 +1072,7 @@ const buscarPdfCorreccion = async (e) => {
         console.log(error);
     }
 }
-const buscarPdfRechazo= async (e) => {
+const buscarPdfRechazo = async (e) => {
     e.preventDefault();
 
     let boton = e.target
@@ -1058,7 +1081,7 @@ const buscarPdfRechazo= async (e) => {
 
     const url = `/soliciudes_e/pdf/buscarRechazo?sol_id=${solicitud}`;
 
-    
+
     try {
         const respuesta = await fetch(url, {
             method: 'GET',
@@ -1066,10 +1089,10 @@ const buscarPdfRechazo= async (e) => {
                 'X-Requested-With': 'fetch'
             }
         });
-      
+
 
         if (respuesta.ok) {
-      
+
             const blob = await respuesta.blob();
             const urlBlob = window.URL.createObjectURL(blob);
             window.open(urlBlob, '_blank');

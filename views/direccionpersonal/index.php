@@ -798,7 +798,7 @@
                                 <div class="col-lg-6">
                                     <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i>Fin de licencia
                                         Temporal</label>
-                                    <input value="<?php echo date('Y/m/d') ?>" id="lit_fecha2" name="lit_fecha2"
+                                    <input value="" id="lit_fecha2" name="lit_fecha2"
                                         class="form-control" type="date">
                                 </div>
                             </div>

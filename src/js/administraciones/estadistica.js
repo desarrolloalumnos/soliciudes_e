@@ -46,7 +46,7 @@ const chartConcurrencia = new Chart(context3, {
         labels: [],
         datasets: [
             {
-                label: 'Concurrencias',
+                label: 'Top 5 ',
                 data: [],
                 backgroundColor: []
             }
@@ -250,21 +250,22 @@ const getEstadisticas = async () => {
 const getConcurrencia = async () => {
     const fechaInicio=inputFechaInicio.value
     const fechaFin=inputFechaFin.value
-    const url = `/soliciudes_e/API/administraciones/detalleConcurrenciaApi?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+    const url = `/soliciudes_e/API/administraciones/detalleConcurrenciaApi`;
     const config = {
         method: 'GET'
     }   
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        
+        // console.log(data);
+        // return
         chartConcurrencia.data.labels = [];
         chartConcurrencia.data.datasets[0].data = [];
         chartConcurrencia.data.datasets[0].backgroundColor = [];
         
         if (data) {
             data.forEach(registro => {
-                chartConcurrencia.data.labels.push(registro.tipo);
+                chartConcurrencia.data.labels.push(registro.dependencia);
                 chartConcurrencia.data.datasets[0].data.push(registro.cantidad);
                 chartConcurrencia.data.datasets[0].backgroundColor.push(getRandomColor());
             });
@@ -324,7 +325,7 @@ const getRandomColor = () => {
 
 getTop5();
 getTopPaises();
-
+getConcurrencia();
 btnActualizar.addEventListener("click", async (event) => {
     event.preventDefault();
 

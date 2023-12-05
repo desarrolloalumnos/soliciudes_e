@@ -243,12 +243,33 @@ const datatable = new Datatable('#tablaMdn', {
             render: function (data, type, row) {
                 if (type === 'display') {
                     if (data === '4') {
+                        const currentDate = new Date();
+                        const fechaSol = new Date(row.ste_fecha);
+                        const diffInDays = Math.floor((currentDate - fechaSol) / (1000 * 60 * 60 * 24));
+                        if (diffInDays > 2) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Alerta',
+                                html: 'Hay solicitudes que llevan más de 3 dias de haberse generado. Busca el icono de <img src="./images/alerta.png" alt="Ícono Formulario" class="menu-icon" style="width: 1cm; height: 1cm;"> y envía para eliminar este mensaje',
+                                showCancelButton: false,
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: 'Aceptar',
+                            });
+                            return `     <img src="./images/alerta.png" alt="Ícono Formulario" class="menu-icon"
+                            style="width: 1cm; height: 1cm;">
+                                <span style="color: red;">
+                                MDN
+                                </span>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">80%</div>
+                                </div>`;
+                        } else {
                         return `
                         <span >MDN</span>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
                         </div>
-                    `;
+                    `;}
                     } else if (data === '5') {
                         return `
                         <span>AUTORIZADO</span>
