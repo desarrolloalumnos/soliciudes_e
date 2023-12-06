@@ -172,7 +172,7 @@ try {
     const respuesta = await fetch(url, config)
     const data = await respuesta.json();
 
-    console.log(data);
+    // console.log(data);
 
     if (data.length > 0) {
         Toast.fire({
@@ -197,7 +197,7 @@ try {
 
 async function colocarCatalogo(datos) {
 const dato = datos[0]
-console.log(dato);
+// console.log(dato);
 catalogo.value = dato.per_catalogo
 arma.value = dato.per_arma;
 nombre.value = dato.nombres;
@@ -261,7 +261,7 @@ try {
 async function colocarCatalogo2(datos) {
 
 const dato = datos[0]
-console.log(dato[0]);
+// console.log(dato[0]);
 catalogo2.value = dato.per_catalogo
 arma2.value = dato.per_arma;
 nombre2.value = dato.nombres;

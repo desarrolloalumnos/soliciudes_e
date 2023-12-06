@@ -22,16 +22,16 @@ class BuscasController
 
     public static function buscarApi()
     {
-        // $cmv_dependencia = $_GET['cmv_dependencia'];
-        // $cmv_tip = $_GET['cmv_tip'];
+        
         $catalogo = $_GET['catalogo'];
         $fecha = $_GET['fecha'];
 
 
-        $sql = "SELECT  
+        $sql = "SELECT DISTINCT
         ste_id,
         ste_cat,
         ste_telefono,
+        ste_fecha,
           (
             SELECT TRIM(grados.gra_desc_md) || ' DE ' || TRIM(armas.arm_desc_md)
             FROM mper
@@ -74,8 +74,7 @@ class BuscasController
     LEFT JOIN mper ON ste_cat = per_catalogo OR parejam_cat = per_catalogo
     INNER JOIN grados ON ste_gra = gra_codigo
     INNER JOIN se_pdf ON pdf_solicitud = sol_id   
-    AND (sol_situacion = 1 OR sol_situacion = 7)
-    ORDER BY ste_fecha DESC";
+    AND sol_situacion = 1";
 
         if ($fecha != '') {
             $sql .= " AND cast(ste_fecha as date) = '$fecha' ";
@@ -83,13 +82,8 @@ class BuscasController
         if ($catalogo != '') {
             $sql .= " AND ste_cat = '$catalogo'";
         }
-        // if ($cmv_dependencia != 0) {
-        //     $sql .= " AND cmv_dependencia = $cmv_dependencia ";
-        // }
+        $sql .= " ORDER BY ste_fecha DESC";
 
-        // if (!empty($cmv_tip)) {
-        //     $sql .= " AND cmv_tip = '$cmv_tip' ";
-        // }
 
 
         try {

@@ -32,11 +32,13 @@
 
 <br>
 
-<div class="d-flex justify-content-center align-items-center">
-    <div id="dataTabla" class="col table-responsive" style="max-width: 1100px;">
-        <table id="tablaProtocolo" class="table table-bordered table-hover" style="max-width: 1000px;"></table>
-    </div>
+
+<div id="dataTabla" class="col table-responsive mx-auto my-auto" style="max-width: 80%; padding: 10px;">
+    <table id="tablaProtocolo" class="table table-bordered table-hover" style="width: 100%;">
+    </table>
 </div>
+
+
 
 <div id="calendario">
     <div style="max-width: 1000px; margin:auto" id='calendar'></div>

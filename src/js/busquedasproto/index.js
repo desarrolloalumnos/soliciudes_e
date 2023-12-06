@@ -41,7 +41,7 @@ formulario2.nombre.disabled = true;
 
 const abrirModalEvento = (evento) => {
     const id_solicitud = evento.extendedProps.sol_id;
-    console.log(id_solicitud);
+    // console.log(id_solicitud);
     buscarEvento(id_solicitud)
     $('#eventoModal').modal('show');
 };
@@ -90,7 +90,7 @@ const buscarCalender = async () => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
-        console.log(data);
+        // console.log(data);
         if (data) {
             const calendar = new Calendar(calendarEl, {
                 plugins: [dayGridPlugin],
@@ -220,7 +220,7 @@ const buscar = async () => {
     const fecha = formulario.ste_fecha.value
 
 
-    console.log(catalogo, fecha);
+    // console.log(catalogo, fecha);
     const url = `/soliciudes_e/API/busquedasproto/buscar?catalogo=${catalogo}&fecha=${fecha}`;
     const config = {
         method: 'GET',
@@ -229,7 +229,7 @@ const buscar = async () => {
     try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        console.log(data);
+        // console.log(data);
         datatable.clear().draw()
 
         if (data) {
@@ -258,7 +258,7 @@ const buscar = async () => {
 
 
 const buscarEvento = async (id_solicitud) => {
-    console.log(id_solicitud);
+    // console.log(id_solicitud);
    
     const url = `/soliciudes_e/API/busquedasproto/buscarEventos?id=${id_solicitud}`;
     const config = {
@@ -268,7 +268,7 @@ const buscarEvento = async (id_solicitud) => {
     // try {
         const respuesta = await fetch(url, config)
         const data = await respuesta.json();
-        console.log(data);
+        // console.log(data);
         if (data) {
             Toast.fire({
                 title: 'Abriendo Solicitud',
@@ -404,9 +404,9 @@ const modificar = async (evento) => {
     }
     
     const body = new FormData(formulario2)
-    for(var pair of body.entries()){
-        console.log(pair[0], pair[1]);
-    }
+    // for(var pair of body.entries()){
+    //     // console.log(pair[0], pair[1]);
+    // }
     const url = '/soliciudes_e/API/busquedasproto/modificar';
     const headers = new Headers();
     headers.append("X-Requested-With", "fetch");
@@ -530,7 +530,7 @@ const modificarPdf = async (evento) => {
                 icon = 'error'
                 console.log(detalle)
                 break;
-
+sss
             default:
                 break;
         }

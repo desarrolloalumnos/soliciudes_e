@@ -157,7 +157,7 @@ const buscarModal = async (e) => {
                 icon: 'success'
             });
             const dato = data[0]
-            console.log(dato)
+            // console.log(dato)
             let fecha1 = dato.ste_fecha
             let fecha2 = dato.sal_ingreso
             let fecha3 = dato.sal_salida
@@ -175,6 +175,7 @@ const buscarModal = async (e) => {
             formulario2.sol_motivo.value = dato.sol_motivo
             formulario2.sol_obs.value = dato.sol_obs
             formulario2.sal_id.value = dato.sal_id
+            formulario2.dsal_id.value = dato.dsal_id
             formulario2.sal_salida.value = fechaSalida
             formulario2.sal_ingreso.value = fechaIngreso
 
@@ -428,9 +429,7 @@ const traePdf = (e) => {
     body.append('ste_cat2', catalogo)
     body.append('ste_fecha2', fecha)
 
-    for(var pair of body.entries()){
-        console.log(pair[0], pair[1]);
-    }
+
     const url = '/soliciudes_e/API/busquedasalpais/modificar';
     const headers = new Headers();
     headers.append("X-Requested-With", "fetch");
@@ -442,6 +441,7 @@ const traePdf = (e) => {
     try {
         const respuesta = await fetch(url, config);
         const data = await respuesta.json();
+     
     
         const { codigo, mensaje, detalle } = data;
         let icon = 'info'
@@ -470,6 +470,7 @@ const traePdf = (e) => {
     } catch (error) {
         console.log(error);
     }
+buscar()
 }
 
 const modificarPdf = async (evento) => {

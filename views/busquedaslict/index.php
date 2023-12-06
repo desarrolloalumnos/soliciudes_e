@@ -21,12 +21,12 @@
     </div>
 </form>
 
-<div class="row justify-content-center">
-    <div class="col table-responsive" style="max-width: 80%; padding: 10px;">
+
+    <div class="col table-responsive" style="max-width: 100%; padding: 10px;">
         <table id="tablaLicencias" class="table table-bordered table-hover">
         </table>
     </div>
-</div>
+
 
 <div class="modal fade modal-xl" id="modalLicencia" tabindex="-1" role="dialog" aria-labelledby="modalLicenciaLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -129,13 +129,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="lit_fecha1"><i class="bi bi-calendar-date-fill"></i>Inicio de licencia Temporal</label>
-                                    <input value="<?php echo date('Y/m/d')?>" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
+                                    <input value="" id="lit_fecha1" name="lit_fecha1" class="form-control" type="date">
                                 </div>
                             </div>
                             <div class="row justify-content-around mb-4">
                                 <div class="col-lg-6">
                                     <label for="lit_fecha2"><i class="bi bi-calendar-date-fill"></i>Fin de licencia Temporal</label>
-                                    <input value="<?php echo date('Y/m/d')?>" id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
+                                    <input value="" id="lit_fecha2" name="lit_fecha2" class="form-control" type="date">
                                 </div>
                             </div>
                             <div class="row justify-content-center mt-12 mb-4">

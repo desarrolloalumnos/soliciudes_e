@@ -104,6 +104,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <input value="" id="sal_id" name="sal_id" class="form-control" type="hidden">
+                                <input value="" id="dsal_id" name="dsal_id" class="form-control" type="hidden">
                                 <input value="" id="sal_autorizacion" name="sal_autorizacion" class="form-control" type="hidden">
                                 <h2>Solicitud</h2>
                             </div>

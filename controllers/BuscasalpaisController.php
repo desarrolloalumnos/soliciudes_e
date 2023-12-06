@@ -210,20 +210,23 @@ class BuscasalpaisController
                 'codigo' => 0
             ]);
         }
-    }
-    public static function modificarApi()
+    }public static function modificarApi()
     {
         try {
+            $paises_array = isset($_POST['dsal_pais0']) ? $_POST['dsal_pais0'] : [];
+            $transportes_array = isset($_POST['dsal_transporte0']) ? $_POST['dsal_transporte0'] : [];
+            $ciudades_array = isset($_POST['dsal_ciudad0']) ? $_POST['dsal_ciudad0'] : [];
+            $num_elementos = count($paises_array);
             $modificacionExitosa = false;
-
+    
             $fechaSalida = $_POST['sal_salida'];
             $fechaFormateadaSalida = date('Y-m-d H:i', strtotime($fechaSalida));
             $_POST['sal_salida'] = $fechaFormateadaSalida;
-
+    
             $fechaIngreso = $_POST['sal_ingreso'];
             $fechaFormateadaIngreso = date('Y-m-d H:i', strtotime($fechaIngreso));
             $_POST['sal_ingreso'] = $fechaFormateadaIngreso;
-
+    
             if (isset($_POST['ste_id']) && !empty($_POST['ste_id'])) {
                 $id = $_POST['ste_id'];
                 $solicitante = Solicitante::find($id);
@@ -233,7 +236,7 @@ class BuscasalpaisController
                     $modificacionExitosa = true;
                 }
             }
-
+    
             if (isset($_POST['pai_codigo']) && !empty($_POST['pai_codigo'])) {
                 $paisId = $_POST['pai_codigo'];
                 $pais = Paises::find($paisId);
@@ -243,7 +246,7 @@ class BuscasalpaisController
                     $modificacionExitosa = true;
                 }
             }
-
+    
             if (isset($_POST['sal_id']) && !empty($_POST['sal_id'])) {
                 $salId = $_POST['sal_id'];
                 $salidaPais = Salidapais::find($salId);
@@ -254,21 +257,31 @@ class BuscasalpaisController
                     $modificacionExitosa = true;
                 }
             }
-
+    
             if (isset($_POST['dsal_id']) && !empty($_POST['dsal_id'])) {
                 $dsalId = $_POST['dsal_id'];
-                $detalleSalidaPais = Saldetpaises::find($dsalId);
-                if ($detalleSalidaPais) {
-                    $detalleSalidaPais->dsal_ciudad = $_POST['dsal_ciudad'];
-                    $detalleSalidaPais->dsal_pais = $_POST['dsal_pais'];
-                    $detalleSalidaPais->dsal_transporte = $_POST['dsal_transporte'];
-                    $detalleSalidaPaisResultado = $detalleSalidaPais->actualizar();
-                    if ($detalleSalidaPaisResultado['resultado'] == 1) {
-                        $modificacionExitosa = true;
+    
+                for ($i = 0; $i < $num_elementos; $i++) {
+                    $valor_paises = $paises_array[$i];
+                    $valor_transportes = $transportes_array[$i];
+                    $valor_ciudades = $ciudades_array[$i];
+    
+                    $detalleSalidaPais = Saldetpaises::find($dsalId);
+    
+                    if ($detalleSalidaPais) {
+                        $detalleSalidaPais->dsal_ciudad = $valor_ciudades;
+                        $detalleSalidaPais->dsal_pais = $valor_paises;
+                        $detalleSalidaPais->dsal_transporte = $valor_transportes;
+    
+                        $detalleSalidaPaisResultado = $detalleSalidaPais->actualizar();
+    
+                        if ($detalleSalidaPaisResultado['resultado'] == 1) {
+                            $modificacionExitosa = true;
+                        }
                     }
                 }
             }
-
+    
             if (isset($_POST['sol_id']) && !empty($_POST['sol_id'])) {
                 $sol_id = $_POST['sol_id'];
                 $detalleSolicitud = Solicitud::find($sol_id);
@@ -281,7 +294,7 @@ class BuscasalpaisController
                     }
                 }
             }
-
+    
             if ($modificacionExitosa) {
                 echo json_encode([
                     'mensaje' => 'Registro modificado correctamente',
@@ -296,7 +309,7 @@ class BuscasalpaisController
             ]);
         }
     }
-
+    
 
 
     public static function VerPdf(Router $router)
