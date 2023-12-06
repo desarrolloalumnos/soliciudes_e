@@ -44,7 +44,7 @@ class AdministracionController
         $estado = $_GET['estado'];
         $tipo = $_GET['tipo'];
 
-        $sql = "SELECT
+        $sql = "SELECT DISTINCT
                     s.sol_id,
                     ste.ste_id,
                     t.tse_id,
@@ -72,7 +72,8 @@ class AdministracionController
                 INNER JOIN se_solicitante ste  ON s.sol_solicitante = ste.ste_id
                 INNER JOIN se_pdf ON pdf_solicitud = s.sol_id
                 WHERE s.sol_situacion >= 1 
-                AND  aut_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user)";
+                AND  aut_comando = (select org_dependencia from mper inner join morg on per_plaza = org_plaza where per_catalogo = user)
+                ";
                 
 
                 if ($fecha != '') {

@@ -210,10 +210,7 @@
                     </div>
 
                     <div class="row justify-content-center mt-4 mb-4">
-                        <div class="col-lg-4">
-                            <button type="button" id="btnGuardar" name="btnGuardar"
-                                class="btn btn-outline-primary w-100">MODIFICAR<span class="ai-redo"></span></button>
-                        </div>
+                
                     </div>
                 </form>
             </div>
