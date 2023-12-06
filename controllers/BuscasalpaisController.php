@@ -210,7 +210,8 @@ class BuscasalpaisController
                 'codigo' => 0
             ]);
         }
-    }public static function modificarApi()
+    }
+    public static function modificarApi()
     {
         try {
             $paises_array = isset($_POST['dsal_pais0']) ? $_POST['dsal_pais0'] : [];
@@ -259,28 +260,51 @@ class BuscasalpaisController
             }
     
             if (isset($_POST['dsal_id']) && !empty($_POST['dsal_id'])) {
-                $dsalId = $_POST['dsal_id'];
-    
+                $dsalIds = $_POST['dsal_id'];
+            
                 for ($i = 0; $i < $num_elementos; $i++) {
+                    $dsalId = isset($dsalIds[$i]) ? $dsalIds[$i] : null;
                     $valor_paises = $paises_array[$i];
                     $valor_transportes = $transportes_array[$i];
                     $valor_ciudades = $ciudades_array[$i];
-    
-                    $detalleSalidaPais = Saldetpaises::find($dsalId);
-    
-                    if ($detalleSalidaPais) {
-                        $detalleSalidaPais->dsal_ciudad = $valor_ciudades;
-                        $detalleSalidaPais->dsal_pais = $valor_paises;
-                        $detalleSalidaPais->dsal_transporte = $valor_transportes;
-    
-                        $detalleSalidaPaisResultado = $detalleSalidaPais->actualizar();
-    
-                        if ($detalleSalidaPaisResultado['resultado'] == 1) {
+            
+                    // Verificar si dsal_id no es nulo
+                    if ($dsalId !== null) {
+                        $detalleSalidaPais = Saldetpaises::find($dsalId);
+            
+                        if ($detalleSalidaPais) {
+                            $detalleSalidaPais->dsal_ciudad = $valor_ciudades;
+                            $detalleSalidaPais->dsal_pais = $valor_paises;
+                            $detalleSalidaPais->dsal_transporte = $valor_transportes;
+            
+                            $detalleSalidaPaisResultado = $detalleSalidaPais->actualizar();
+            
+                            if ($detalleSalidaPaisResultado['resultado'] == 1) {
+                                $modificacionExitosa = true;
+                            }
+                        }
+                    } else {
+                       
+                        $nuevoDetalleSalidaPais = new Saldetpaises([
+                            'dsal_pais' => $valor_paises,
+                            'dsal_transporte' => $valor_transportes,
+                            'dsal_ciudad' => $valor_ciudades,
+                            'dsal_sol_salida'=>$salId
+                        ]);
+            
+                        $nuevoDetalleSalidaPaisResultado = $nuevoDetalleSalidaPais->crear();
+            
+                        if ($nuevoDetalleSalidaPaisResultado['resultado'] != 1) {
+                       
+                        } else {
                             $modificacionExitosa = true;
                         }
                     }
                 }
             }
+            
+            
+            
     
             if (isset($_POST['sol_id']) && !empty($_POST['sol_id'])) {
                 $sol_id = $_POST['sol_id'];
